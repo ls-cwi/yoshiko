@@ -1,0 +1,6 @@
+#ifndef CONFIG_H
+#define CONFIG_H
+
+#define YOSHIKO_VERSION @YOSHIKO_VERSION@
+
+#endif // CONFIG_H
