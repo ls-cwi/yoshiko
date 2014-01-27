@@ -59,7 +59,7 @@ Running yoshiko
 
 To run yoshiko on the test instance:
 
-    ./yoshiko -f ../data/test/fusarium.txt
+    ./yoshiko -f ../data/test/fusarium.txt -v 4
 
 Get a list of options:
 
