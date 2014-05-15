@@ -1,6 +1,6 @@
 /*
  * File:   ClusterEditingInstance.cpp
- * Author: emanuellaude
+ * Author: emanuellaude, guwek
  *
  * Created on 25. August 2012, 14:50
  */
@@ -194,24 +194,25 @@ void ClusterEditingInstance::parseSIFFormat(std::istream &is) {
         string line; int n = 0;
         while (getline(is, line)) {
             vector<string> tokens;
-            tokenize(line, tokens, " \t\"");
+	    // gunnar: there was a bug in reading in SIF files (DOS line break). I added '\r' so it should work now
+            tokenize(line, tokens, " \t\"\r");
             if (nodeID.find(tokens[0]) == nodeID.end()) {
                 nodeID[tokens[0]] = n; nodeName[n++] = tokens[0];
             }
             
             if (nodeID.find(tokens[2]) == nodeID.end()) {
-                nodeID[tokens[2]] = n; nodeName[n++] = tokens[2];
+		nodeID[tokens[2]] = n; nodeName[n++] = tokens[2];
+		
             }
         }
         
-        //cout << "parsed " << n << " nodes" << endl;
         init(n);
         
-		for (FullGraph::NodeIt v(_orig); v != INVALID; ++v) {
-            vector<int> cluster;
-            cluster.push_back(_orig.id(v));
-            initNode(v, nodeName[_orig.id(v)], cluster);
-		}
+	for (FullGraph::NodeIt v(_orig); v != INVALID; ++v) {
+	  vector<int> cluster;
+	  cluster.push_back(_orig.id(v));
+	  initNode(v, nodeName[_orig.id(v)], cluster);
+	}
         
         // initialize edges to be absent
         for (FullGraph::EdgeIt e(_orig); e != INVALID; ++e)
@@ -223,7 +224,8 @@ void ClusterEditingInstance::parseSIFFormat(std::istream &is) {
         
         while (getline(is, line)) {
             vector<string> tokens;
-            tokenize(line, tokens, " \t\"");
+	    // gunnar: same here, added 'r'
+            tokenize(line, tokens, " \t\"\r");
             FullGraph::Edge e = _orig.edge(_orig.nodeFromId(nodeID[tokens[0]]), _orig.nodeFromId(nodeID[tokens[2]]));
             initEdge(e, 1.0, false, false);
         }
