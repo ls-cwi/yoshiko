@@ -11,6 +11,7 @@
 #include "GMLOutput.h"
 #include "NullOutput.h"
 #include "TableOutput.h"
+#include "TableAppOutput.h"
 #include "CSVOutput.h"
 #include "PajekOutput.h"
 
@@ -31,6 +32,8 @@ ClusterEditingOutput* ClusterEditingOutput::newInstance(ClusterEditingInstance &
                 return new XGMMLOutput(inst, solutions, filename, ".xgmml", label);
             case 4:
                 return new PajekOutput(inst, solutions, filename, ".net", label);
+            case 5:
+                return new TableAppOutput(inst, solutions, filename, ".txt", label);
             default:
                 return new NullOutput(inst, solutions, filename, "", label);
         }

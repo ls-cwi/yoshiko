@@ -29,6 +29,7 @@ set( Yoshiko_Hdr
   src/ParameterizedInstance.h
   src/SimilarNeighboorhoodRule.h
   src/TableOutput.h
+  src/TableAppOutput.h
   src/WorkingCopyInstance.h
   src/XGMMLOutput.h
   src/Yoshiko.h
@@ -47,6 +48,7 @@ set( Yoshiko_Src
   src/Delta.cpp
   src/InducedCostsHeuristic.cpp
   src/TableOutput.cpp
+  src/TableAppOutput.cpp
   src/ClusterEditingInstance.cpp
   src/DynProgTable.cpp
   src/MergingRule.cpp
