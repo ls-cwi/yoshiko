@@ -78,7 +78,7 @@ int main(int argc, char * const argv[]) {
 	ap.refOption("f", "Name of file that contains input []", inputFilename, true);
   ap.refOption("F", "input file format, 0 = Jena, 1 = Clever, 2 = SIF []", inputFileFormat, false);
   ap.refOption("o", "Name of output file(s) []", outputFilename, false);
-  ap.refOption("O", "output file format 0 = csv, 1 = table (line one: number of nodes, line two: number of clusters, column one: node name, column two: cluster ID), 2 = gml, 3 = xgmml (Cytoscape) 4 = Pajek [0]", outputFileFormat, false);
+  ap.refOption("O", "output file format 0 = csv, 1 = table (line one: number of nodes, line two: number of clusters, column one: node name, column two: cluster ID), 2 = gml, 3 = xgmml (Cytoscape) 4 = Pajek [0], 5 = table (Cytoscape app)", outputFileFormat, false);
 	ap.refOption("v", "verbosity, 0 = silent, 5 = full [0]", verbosity, false);
   ap.refOption("H", "utilize heuristic instead of ILP, [false]", heuristic, false);
 	ap.refOption("T", "CPU time limit (s), -1 = no limit [-1]", time_limit, false);
