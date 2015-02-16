@@ -23,12 +23,6 @@ Get yoshiko from github:
 
 First, LEMON 1.3 needs to be installed:
 
-    wget http://lemon.cs.elte.hu/pub/sources/lemon-1.3.tar.gz
-    tar xvzf lemon-1.3.tar.gz
-    cd lemon-1.3
-    cmake -DCMAKE_INSTALL_PREFIX=~/lemon
-    make install
-    
 Note: On Mac OS 10.9, comment out the following two lines and add the code below at line 162 in `CMakeLists.txt` before `make install`
 
     #ADD_SUBDIRECTORY(demo) 
@@ -38,9 +32,16 @@ Note: On Mac OS 10.9, comment out the following two lines and add the code below
       set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libstdc++ " )
     endif()
 
+
+    wget http://lemon.cs.elte.hu/pub/sources/lemon-1.3.tar.gz
+    tar xvzf lemon-1.3.tar.gz
+    cd lemon-1.3
+    cmake -DCMAKE_INSTALL_PREFIX=~/lemon
+    make install
+    
 You can remove the LEMON sources now, i.e., `rm -rf lemon-1.3`.
 
-CPLEX is a commercial product owned by IBM. For academic purposed it can be obtained at no charge via IBM's Academic Initiative programme:
+CPLEX is a commercial product owned by IBM. For academic purposes it can be obtained at no charge via IBM's Academic Initiative programme:
 
   http://www-03.ibm.com/ibm/university/academic/pub/page/membership
 
