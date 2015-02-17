@@ -205,18 +205,25 @@ void ClusterEditingInstance::parseSIFFormat(std::istream &is) {
 		
             }
         }
-        
+        //cout << "read " << n << " nodes" << endl;
+       
+        //cout << "initializing... " << flush; 
         init(n);
+        //cout << "done." << endl;
         
+        //cout << "setting up clusters... " << flush; 
 	for (FullGraph::NodeIt v(_orig); v != INVALID; ++v) {
 	  vector<int> cluster;
 	  cluster.push_back(_orig.id(v));
 	  initNode(v, nodeName[_orig.id(v)], cluster);
 	}
+        //cout << "done." << endl;
         
+        //cout << "initializing edges... " << flush; 
         // initialize edges to be absent
         for (FullGraph::EdgeIt e(_orig); e != INVALID; ++e)
             initEdge(e, -1.0, false, false);
+        //cout << "done." << endl;
         
         //jump back to beginning of stream
 		is.clear();
@@ -226,8 +233,12 @@ void ClusterEditingInstance::parseSIFFormat(std::istream &is) {
             vector<string> tokens;
 	    // gunnar: same here, added 'r'
             tokenize(line, tokens, " \t\"\r");
-            FullGraph::Edge e = _orig.edge(_orig.nodeFromId(nodeID[tokens[0]]), _orig.nodeFromId(nodeID[tokens[2]]));
-            initEdge(e, 1.0, false, false);
+	    if (tokens[0] == tokens[2]) cerr << "skipping self loop " << tokens[0] << " -- " << tokens[2] << endl;	
+            else 
+            {
+              FullGraph::Edge e = _orig.edge(_orig.nodeFromId(nodeID[tokens[0]]), _orig.nodeFromId(nodeID[tokens[2]]));
+              initEdge(e, 1.0, false, false);
+            }
         }
         
         
