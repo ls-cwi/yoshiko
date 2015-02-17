@@ -134,10 +134,10 @@ configure_file( src/config.h.in ${PROJECT_SOURCE_DIR}/src/config.h )
 
 message("CMAKE_SYSTEM_NAME: ${CMAKE_SYSTEM_NAME}")
 
-#if( ${CMAKE_SYSTEM_NAME} MATCHES "Darwin" )
-  #set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++ " )
-  #set( CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY "libc++" )
-#endif()
+if( ${CMAKE_SYSTEM_NAME} MATCHES "Darwin" )
+  set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libstdc++ " )
+  set( CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY "libstdc++" )
+endif()
 
 include_directories( ${CPLEX_INC_DIR} ${CONCERT_INC_DIR} "${LIBLEMON_ROOT}/include" "src" "src/externlib" )
 link_directories( ${CPLEX_LIB_DIR} ${CONCERT_LIB_DIR} "${LIBLEMON_ROOT}/lib" )
