@@ -1,6 +1,6 @@
 /*
- * File:   main.cpp
- * Author: emanuellaude
+ * File:   yoshiko_main.cpp
+ * Author: emanuellaude, gunnar klau
  *
  * Created on 26. August 2012, 20:07
  */
