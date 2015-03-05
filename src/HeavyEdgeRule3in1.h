@@ -19,10 +19,17 @@
 #include "WorkingCopyInstance.h"
 #include "FPTReductionRule.h"
 
+namespace ysk {
 
 class HeavyEdgeRule3in1 : public FPTReductionRule {
 public:
-  HeavyEdgeRule3in1(WorkingCopyInstance& inst, bool conserveMultipleSolutions) : FPTReductionRule(inst, "Heavy Edge Rule 3 in 1", conserveMultipleSolutions), _r1(inst.getGraph()), _r2(inst.getGraph()), _r3(inst.getGraph(), -std::numeric_limits<double>::infinity()) {
+  HeavyEdgeRule3in1(WorkingCopyInstance& inst,
+                    bool conserveMultipleSolutions)
+    : FPTReductionRule(inst, "Heavy Edge Rule 3 in 1", conserveMultipleSolutions)
+    , _r1(inst.getGraph())
+    , _r2(inst.getGraph())
+    , _r3(inst.getGraph(), -std::numeric_limits<double>::infinity())
+  {
   }
   virtual ~HeavyEdgeRule3in1();
   
@@ -35,7 +42,8 @@ private:
   void setPermanent(WorkingCopyGraph::Edge& uv);
   void beforeSetForbidden(WorkingCopyGraph::Edge& uv);
   void beforeSetPermanent(WorkingCopyGraph::Edge uv);
-  void afterSetPermanent(const WorkingCopyGraph::Edge &uv, WorkingCopyGraph::Node &proxy);
+  void afterSetPermanent(const WorkingCopyGraph::Edge &uv,
+                         WorkingCopyGraph::Node &proxy);
   
   WorkingCopyGraph::NodeMap<WorkingCopyGraph::NodeMap<double>* > _r1;
   WorkingCopyGraph::NodeMap<WorkingCopyGraph::NodeMap<double>* > _r2;
@@ -45,6 +53,6 @@ private:
   std::list<WorkingCopyGraph::Edge> _permanent;
 };
 
+} // namespace ysk
+
 #endif	/* HEAVYEDGERULE3IN1_H */
-
-

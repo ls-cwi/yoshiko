@@ -10,6 +10,7 @@
 
 using namespace std;
 
+namespace ysk {
 
 void TableOutput::writeHeader(string label, size_t solution, size_t numberOfNodes, size_t numberOfClusters) {
     _os<<numberOfNodes<<endl;
@@ -52,3 +53,5 @@ void TableOutput::writeEndCluster() {
 void TableOutput::writeFooter() {
     //
 }
+
+} // namespace ysk

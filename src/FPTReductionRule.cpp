@@ -1,7 +1,7 @@
-/* 
+/*
  * File:   FPTReductionRule.cpp
  * Author: emanuellaude
- * 
+ *
  * Created on 26. August 2012, 12:14
  */
 
@@ -9,14 +9,17 @@
 
 using namespace std;
 
+namespace ysk {
+
 bool FPTReductionRule::isSuccess() {
-    return _success;
+  return _success;
 }
 
 string FPTReductionRule::getName() {
-    return _name;
+  return _name;
 }
 
 FPTReductionRule::~FPTReductionRule() {
-    
 }
+
+} // namespace ysk

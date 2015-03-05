@@ -10,7 +10,8 @@
 
 using namespace std;
 
-
+namespace ysk {
+  
 void XGMMLOutput::writeHeader(string label, size_t solution, size_t numberOfNodes, size_t numberOfClusters) {
     _os<<"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"<<endl;
     _os<<"<graph label=\""<<label<< "_"<<solution<<"\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\""<<endl;
@@ -77,3 +78,4 @@ void XGMMLOutput::writeFooter() {
     _os<<"</graph>"<<endl;
 }
 
+} // namespace ysk

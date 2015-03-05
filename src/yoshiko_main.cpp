@@ -28,9 +28,9 @@
 #include "Yoshiko.h"
 #include "Globals.h"
 
-
 using namespace std;
 using namespace lemon;
+using namespace ysk;
 
 /*
  =========================================================================
@@ -51,18 +51,21 @@ using namespace lemon;
  * edge index. make faster by directly computing index from i and j. think about (common) solution for directed and undirected graphs
  */
 
-
-
 //replace reduced cluster by single nodes
-void expandSolutions(ClusterEditingInstance& cei, ClusterEditingSolutions& ces, vector<vector<vector<int> > >& partitions);
+void expandSolutions(ClusterEditingInstance& cei,
+                     ClusterEditingSolutions& ces,
+                     vector<vector<vector<int> > >& partitions);
 
-void mergeSolutions(size_t i, size_t& k, vector<vector<int> >& partition, ClusterEditingSolutions& solutions, vector<vector<vector<vector<int> > > >& instances);
+void mergeSolutions(size_t i,
+                    size_t& k,
+                    vector<vector<int> >& partition,
+                    ClusterEditingSolutions& solutions, vector<vector<vector<vector<int> > > >& instances);
 
 int main(int argc, char * const argv[]) {
-	// Initialize the argument parser
-	ArgParser ap(argc, argv);
+  // Initialize the argument parser
+  ArgParser ap(argc, argv);
   
-	string inputFilename, outputFilename;
+  string inputFilename, outputFilename;
   string graphLabel = "cluster_solution";
   int inputFileFormat = 0;
   int outputFileFormat = 0;
@@ -74,16 +77,16 @@ int main(int argc, char * const argv[]) {
   string rulesBitMask = "111111";
   double multiplicativeFactor = 1;
   
-	// Add a string option with storage reference for file name
-	ap.refOption("f", "Name of file that contains input []", inputFilename, true);
+  // Add a string option with storage reference for file name
+  ap.refOption("f", "Name of file that contains input []", inputFilename, true);
   ap.refOption("F", "input file format, 0 = Jena, 1 = Clever, 2 = SIF []", inputFileFormat, false);
   ap.refOption("o", "Name of output file(s) []", outputFilename, false);
   ap.refOption("O", "output file format 0 = csv, 1 = table (line one: number of nodes, line two: number of clusters, column one: node name, column two: cluster ID), 2 = gml, 3 = xgmml (Cytoscape) 4 = Pajek [0], 5 = table (Cytoscape app)", outputFileFormat, false);
-	ap.refOption("v", "verbosity, 0 = silent, 5 = full [0]", verbosity, false);
+  ap.refOption("v", "verbosity, 0 = silent, 5 = full [0]", verbosity, false);
   ap.refOption("H", "utilize heuristic instead of ILP, [false]", heuristic, false);
-	ap.refOption("T", "CPU time limit (s), -1 = no limit [-1]", time_limit, false);
+  ap.refOption("T", "CPU time limit (s), -1 = no limit [-1]", time_limit, false);
   ap.refOption("threads", "number of threads [max]", no_threads, false);
-	ap.refOption("e", "export LP [false]", exportLP, false);
+  ap.refOption("e", "export LP [false]", exportLP, false);
   ap.refOption("st", "separate triangles [false]", separateTriangles, false);
   ap.refOption("sp", "separate partition cuts [false]", separatePartitionCuts, false);
   ap.refOption("n", "number of optimal solutions [1]", noOptimalSolutions, false);
@@ -91,9 +94,9 @@ int main(int argc, char * const argv[]) {
   ap.refOption("g", "graph label []", graphLabel, false);
   ap.refOption("r", "explicitly turn on/off reduction rules, bit string (right to left): bit 0 = CliqueRule, bit 1 = CriticalCliqueRule, bit 2 = AlmostCliqueRule, bit 3 = HeavyEdgeRule3in1, bit 4 = ParameterDependentReductionRule, bit 5 = SimilarNeighborhoodRule [111111]", rulesBitMask, false);
   
-	// Perform the parsing process
-	// (in case of any error it terminates the program)
-	ap.parse();
+  // Perform the parsing process
+  // (in case of any error it terminates the program)
+  ap.parse();
   
   
   // Check each option if it has been given and print its value
@@ -126,8 +129,8 @@ int main(int argc, char * const argv[]) {
     exit(-1);
   }
   
-	ClusterEditingInstance instance;
-	
+  ClusterEditingInstance instance;
+  
   
   switch (inputFileFormat) {
     case 0:
@@ -212,8 +215,8 @@ int main(int argc, char * const argv[]) {
     long numberOfSolutions = 1;
     if(!heuristic) {
       try {
-	Yoshiko y(separateTriangles, separatePartitionCuts, noOptimalSolutions);
-	numberOfSolutions = y.solve(i, s);
+        Yoshiko y(separateTriangles, separatePartitionCuts, noOptimalSolutions);
+        numberOfSolutions = y.solve(i, s);
       } catch (IloException &e) {
         cout << "CPLEX error: " << e.getMessage() << endl;
       }

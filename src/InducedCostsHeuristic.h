@@ -19,24 +19,31 @@
 #include "ClusterEditingInstance.h"
 #include "ClusterEditingSolutions.h"
 
+namespace ysk {
 
 class InducedCostsHeuristic {
 public:
-    InducedCostsHeuristic(ParameterizedInstance& inst) {
-        init(inst);
-    }
-    
-    virtual ~InducedCostsHeuristic();
-    double getUpperBound();
-    void getSolution(ClusterEditingSolutions& solution);
-    void start();
+  InducedCostsHeuristic(ParameterizedInstance& inst)
+    : _upperBound(0)
+    , _instance()
+    , _parameterizedInstance(NULL)
+  {
+    init(inst);
+  }
+  
+  virtual ~InducedCostsHeuristic();
+  double getUpperBound();
+  void getSolution(ClusterEditingSolutions& solution);
+  void start();
+  
 private:
-    void init(ParameterizedInstance& inst);
-    
-    double _upperBound;
-
-    ClusterEditingInstance _instance;
-    ParameterizedInstance* _parameterizedInstance;
+  void init(ParameterizedInstance& inst);
+  
+  double _upperBound;
+  ClusterEditingInstance _instance;
+  ParameterizedInstance* _parameterizedInstance;
 };
+
+} // namespace ysk
 
 #endif /* INDUCEDCOSTSHEURISTIC_H */

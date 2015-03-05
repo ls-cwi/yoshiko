@@ -14,6 +14,7 @@
 
 #include "TableOutput.h"
 
+namespace ysk {
 
 class TableAppOutput : public TableOutput {
 public:
@@ -22,9 +23,13 @@ public:
                  std::string filename,
                  std::string suffix,
                  std::string label)
-      : TableOutput(inst, solutions, filename, suffix, label) {
-    }
-    void openStream(size_t solution);
+    : TableOutput(inst, solutions, filename, suffix, label)
+  {
+  }
+  
+  void openStream(size_t solution);
 };
+  
+} // namespace ysk
 
 #endif /* TABLEAPPOUTPUT_H */
