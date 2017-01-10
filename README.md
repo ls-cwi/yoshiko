@@ -75,8 +75,10 @@ The tool supports different line-oriented file formats. Each line is terminated 
 
 The **Jena** file format is as follows (see also the example in `data/fusarium.txt`) and can be used to input weighted or unweighted instances of the cluster editing problem.
 
-First line: number of nodes, say n
-Next n lines: user-defined node labels
+First line: number of nodes, say n.
+
+Next n lines: user-defined node labels.
+
 Next n-1 lines: upper triangular matrix specifying the node weights. That is, the `j`th entry of line `i` specifies the weight `w_i,i+j`. As conventional, we interpret positive values as deletion costs of existing edges and negative values as insertion costs of non-existing edges.
 
 The **SIF** file format is the file format used by Cytoscape and can be used to input an unweighted version of cluster editing, which is just given as an unweighted graph. For documentation, see http://wiki.cytoscape.org/Cytoscape_User_Manual/Network_Formats
