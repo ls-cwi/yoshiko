@@ -76,7 +76,8 @@ int main(int argc, char * const argv[]) {
   
 	// Add a string option with storage reference for file name
 	ap.refOption("f", "Name of file that contains input []", inputFilename, true);
-  ap.refOption("F", "input file format, 0 = Jena, 1 = Clever, 2 = SIF []", inputFileFormat, false);
+  //ap.refOption("F", "input file format, 0 = Jena, 1 = Clever, 2 = SIF []", inputFileFormat, false);
+  ap.refOption("F", "input file format, 0 = Jena, 1 = SIF [0]", inputFileFormat, false);
   ap.refOption("o", "Name of output file(s) []", outputFilename, false);
   ap.refOption("O", "output file format 0 = csv, 1 = table (line one: number of nodes, line two: number of clusters, column one: node name, column two: cluster ID), 2 = gml, 3 = xgmml (Cytoscape) 4 = Pajek [0], 5 = table (Cytoscape app)", outputFileFormat, false);
 	ap.refOption("v", "verbosity, 0 = silent, 5 = full [0]", verbosity, false);
@@ -134,10 +135,10 @@ int main(int argc, char * const argv[]) {
       instance.parseJenaFormat(is);
       break;
       
+    //case 1:
+      //instance.parseCleverFormat(is);
+      //break;
     case 1:
-      instance.parseCleverFormat(is);
-      break;
-    case 2:
       instance.parseSIFFormat(is);
       break;
   }
