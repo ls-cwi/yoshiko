@@ -19,13 +19,25 @@
 
 #include <lemon/bin_heap.h>
 
+namespace ysk {
+
 class ParameterizedInstance {
-  
-  
+public:
   typedef lemon::BinHeap<double, WorkingCopyGraph::NodeMap<int>, std::greater<double> > MaxHeap;
   
-public:
-  ParameterizedInstance(WorkingCopyInstance& inst, double parameter) : _instance(inst), _parameter(parameter), _lbValue(0.0), _lbDecrease(inst.getGraph(), 0.0), _conflictTriple(inst.getGraph()), _nodesLowerBound(inst.getGraph(), 0.0), _edgesLowerBound(inst.getGraph(), 0.0), _icfCrossRef(inst.getGraph()), _icf(inst.getGraph()), _icpCrossRef(inst.getGraph()), _icp(inst.getGraph()) {
+  ParameterizedInstance(WorkingCopyInstance& inst, double parameter)
+    : _instance(inst)
+    , _parameter(parameter)
+    , _lbValue(0.0)
+    , _lbDecrease(inst.getGraph(), 0.0)
+    , _conflictTriple(inst.getGraph())
+    , _nodesLowerBound(inst.getGraph(), 0.0)
+    , _edgesLowerBound(inst.getGraph(), 0.0)
+    , _icfCrossRef(inst.getGraph())
+    , _icf(inst.getGraph())
+    , _icpCrossRef(inst.getGraph())
+    , _icp(inst.getGraph())
+  {
     for(WorkingCopyGraph::NodeIt u(_instance.getGraph()); u != lemon::INVALID; ++u) {
       _icpCrossRef[u] = new WorkingCopyGraph::NodeMap<int>(_instance.getGraph(), -1);
       _icp[u] = new MaxHeap(*_icpCrossRef[u]);
@@ -35,7 +47,20 @@ public:
     }
   }
   
-  ParameterizedInstance(WorkingCopyInstance& inst, WorkingCopyGraph::NodeMap<WorkingCopyGraph::Node>& aref, WorkingCopyGraph::NodeMap<WorkingCopyGraph::Node>& bref, ParameterizedInstance& paramInst) : _instance(inst), _parameter(std::numeric_limits<double>::signaling_NaN()), _lbValue(0.0), _lbDecrease(inst.getGraph(), 0.0), _conflictTriple(inst.getGraph()), _nodesLowerBound(inst.getGraph(), 0.0), _edgesLowerBound(inst.getGraph(), 0.0), _icfCrossRef(inst.getGraph()), _icf(inst.getGraph()), _icpCrossRef(inst.getGraph()), _icp(inst.getGraph()) {
+  ParameterizedInstance(WorkingCopyInstance& inst,
+                        WorkingCopyGraph::NodeMap<WorkingCopyGraph::Node>& aref,
+                        WorkingCopyGraph::NodeMap<WorkingCopyGraph::Node>& bref,
+                        ParameterizedInstance& paramInst)
+    : _instance(inst)
+    , _parameter(std::numeric_limits<double>::signaling_NaN())
+    , _lbValue(0.0)
+    , _lbDecrease(inst.getGraph(), 0.0)
+    , _conflictTriple(inst.getGraph())
+    , _nodesLowerBound(inst.getGraph(), 0.0)
+    , _edgesLowerBound(inst.getGraph(), 0.0)
+    , _icfCrossRef(inst.getGraph()), _icf(inst.getGraph())
+    , _icpCrossRef(inst.getGraph()), _icp(inst.getGraph())
+  {
     for(WorkingCopyGraph::NodeIt u(_instance.getGraph()); u != lemon::INVALID; ++u) {
       _icpCrossRef[u] = new WorkingCopyGraph::NodeMap<int>(_instance.getGraph(), -1);
       _icp[u] = new MaxHeap(*_icpCrossRef[u]);
@@ -43,7 +68,6 @@ public:
       _icfCrossRef[u] = new WorkingCopyGraph::NodeMap<int>(_instance.getGraph(), -1);
       _icf[u] = new MaxHeap(*_icfCrossRef[u]);
     }
-    
     
     init(aref, bref, paramInst);
   }
@@ -63,25 +87,41 @@ public:
   WorkingCopyInstance& getWorkingCopyInstance();
   
   std::pair<WorkingCopyGraph::Edge, double> computeMax();
+  
 private:
-  void init(WorkingCopyGraph::NodeMap<WorkingCopyGraph::Node>& aref, WorkingCopyGraph::NodeMap<WorkingCopyGraph::Node>& bref, ParameterizedInstance& paramInst);
-  void computeInducedCosts(const WorkingCopyGraph::Edge& uv, double& icp, double& icf);
+  void init(WorkingCopyGraph::NodeMap<WorkingCopyGraph::Node>& aref,
+            WorkingCopyGraph::NodeMap<WorkingCopyGraph::Node>& bref,
+            ParameterizedInstance& paramInst);
+  void computeInducedCosts(const WorkingCopyGraph::Edge& uv,
+                           double& icp,
+                           double& icf);
   double getLBDecrease(const WorkingCopyGraph::Edge& uv);
   void updateLBDecrease(const WorkingCopyGraph::Edge& uv);
   void computeLowerBound();
-  void updateLowerBound(const WorkingCopyGraph::Edge& uv, double value);
-  void updateLowerBoundBeforeSetForbidden(const WorkingCopyGraph::Edge& uv, std::vector<WorkingCopyGraph::Node*>& cts);
-  void updateLowerBoundBeforeSetPermanent(const WorkingCopyGraph::Edge& uv, const WorkingCopyGraph::Node& proxy);
-  void computeLowerBound(const WorkingCopyGraph::Edge &uv, lemon::BinHeap<double, WorkingCopyGraph::EdgeMap<int>, std::greater<double> > &edgesOrderByWeight, WorkingCopyGraph::EdgeMap<double>& weight, WorkingCopyGraph::EdgeMap<bool>& candidate, std::vector<WorkingCopyGraph::Node*>& cts);
+  void updateLowerBound(const WorkingCopyGraph::Edge& uv,
+                        double value);
+  void updateLowerBoundBeforeSetForbidden(const WorkingCopyGraph::Edge& uv,
+                                          std::vector<WorkingCopyGraph::Node*>& cts);
+  void updateLowerBoundBeforeSetPermanent(const WorkingCopyGraph::Edge& uv,
+                                          const WorkingCopyGraph::Node& proxy);
+  void computeLowerBound(const WorkingCopyGraph::Edge &uv,
+                         lemon::BinHeap<double, WorkingCopyGraph::EdgeMap<int>,
+                         std::greater<double> > &edgesOrderByWeight,
+                         WorkingCopyGraph::EdgeMap<double>& weight,
+                         WorkingCopyGraph::EdgeMap<bool>& candidate,
+                         std::vector<WorkingCopyGraph::Node*>& cts);
   void beforeSetForbidden(const WorkingCopyGraph::Edge& uv);
-  void beforeSetPermanent(const WorkingCopyGraph::Edge& uv, const WorkingCopyGraph::Node& proxy);
-  void afterSetPermanent(const WorkingCopyGraph::Edge& uv, WorkingCopyGraph::Node& proxy);
-  void updateICP(const WorkingCopyGraph::Edge& uv, double value);
-  void updateICF(const WorkingCopyGraph::Edge& uv, double value);
+  void beforeSetPermanent(const WorkingCopyGraph::Edge& uv,
+                          const WorkingCopyGraph::Node& proxy);
+  void afterSetPermanent(const WorkingCopyGraph::Edge& uv,
+                         WorkingCopyGraph::Node& proxy);
+  void updateICP(const WorkingCopyGraph::Edge& uv,
+                 double value);
+  void updateICF(const WorkingCopyGraph::Edge& uv,
+                 double value);
   void removeICP(const WorkingCopyGraph::Edge& uv);
   void removeICF(const WorkingCopyGraph::Edge& uv);
   std::pair<WorkingCopyGraph::Node, WorkingCopyGraph::Node> getNodesOrderById(const WorkingCopyGraph::Edge& uv);
-  
   
   WorkingCopyInstance& _instance;
   double _parameter;
@@ -98,6 +138,7 @@ private:
   WorkingCopyGraph::NodeMap<WorkingCopyGraph::NodeMap<int>* > _icpCrossRef;
   WorkingCopyGraph::NodeMap<MaxHeap* > _icp;
 };
+  
+} // namespace ysk
 
 #endif /* PARAMETERIZEDINSTANCE_H */
-

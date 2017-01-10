@@ -10,6 +10,8 @@
 using namespace std;
 using namespace lemon;
 
+namespace ysk {
+
 WorkingCopyInstance::~WorkingCopyInstance() {
     
     for(WorkingCopyGraph::NodeIt v(*_graph); v != INVALID; ++v) {
@@ -273,4 +275,5 @@ ostream& operator <<(ostream& o, WorkingCopyInstance &inst) {
     
     return o;
 }
-
+  
+} // namespace ysk

@@ -21,6 +21,8 @@
 
 #include <vector>
 
+namespace ysk {
+
 ///
 class ClusterEditingSolutions {
 public:
@@ -32,22 +34,28 @@ public:
   
   void resize(long numberOfSolutions);
   
-  void setSolution(int k, const IloNumArray &x_vals, const ClusterEditingInstance &inst);
+  void setSolution(int k,
+                   const IloNumArray &x_vals,
+                   const ClusterEditingInstance &inst);
   
-  void setSolution(int k, const ClusterEditingInstance& inst);
+  void setSolution(int k,
+                   const ClusterEditingInstance& inst);
   
-  void setSolution(int k, const WorkingCopyInstance& inst);
+  void setSolution(int k,
+                   const WorkingCopyInstance& inst);
   
   size_t getNumberOfSolutions() const;
   
   double getTotalCost() const;
   
   void setTotalCost(double totalCost);
+  
 private:
   // the partitions (multiple because of possible multiple optimal solutions)
   std::vector<std::vector<std::vector<int> > > _solutions;
   double _totalCost;
 };
-
+  
+} // namespace ysk
 
 #endif /* CLUSTEREDITINGSOLUTION_H */

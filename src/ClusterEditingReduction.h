@@ -19,15 +19,28 @@
 #include "ClusterEditingInstance.h"
 #include "ClusterReductionInstance.h"
 
+namespace ysk {
 
 class ClusterEditingReduction {
 public:
-  ClusterEditingReduction(std::bitset<NUMBER_OF_REDUCTION_RULES> active, double multiplicativeFactor, bool conserveMultipleSolutions) : _totalCost(0.0), _active(active), _multiplicativeFactor(multiplicativeFactor), _conserveMultipleSolutions(conserveMultipleSolutions) {
+  ClusterEditingReduction(std::bitset<NUMBER_OF_REDUCTION_RULES> active,
+                          double multiplicativeFactor,
+                          bool conserveMultipleSolutions)
+    : _totalCost(0.0)
+    , _active(active)
+    , _multiplicativeFactor(multiplicativeFactor)
+    , _conserveMultipleSolutions(conserveMultipleSolutions)
+  {
   }
+  
   void perform(ClusterEditingInstance& orig);
+  
   virtual ~ClusterEditingReduction();
+  
   std::vector<ClusterReductionInstance*>& getInstances();
+  
   double getTotalCost() const;
+  
 private:
   std::vector<ClusterReductionInstance*> _instances;
   double _totalCost;
@@ -35,5 +48,7 @@ private:
   double _multiplicativeFactor;
   bool _conserveMultipleSolutions;
 };
+  
+} // namespace ysk
 
 #endif /* CLUSTEREDITINGREDUCTION_H */

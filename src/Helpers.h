@@ -10,11 +10,11 @@
 #ifndef HELPERS_H
 #define HELPERS_H
 
-
 #include <iostream>
 #include <fstream>
 #include <vector>
 
+namespace ysk {
 
 /* template <>
  struct std::tr1::hash<std::pair<int, int> > {
@@ -26,8 +26,11 @@
  };
  */
 
-void tokenize(const std::string& str, std::vector<std::string>& tokens, const std::string& delimiters);
+void tokenize(const std::string& str,
+              std::vector<std::string>& tokens,
+              const std::string& delimiters);
 
+} // namespace ysk
 
 #endif /* HELPERS_H */
 

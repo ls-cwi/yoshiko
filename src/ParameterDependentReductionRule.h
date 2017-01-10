@@ -20,17 +20,20 @@
 #include "InducedCostsHeuristic.h"
 #include "Globals.h"
 
+namespace ysk {
 
 class ParameterDependentReductionRule : public FPTReductionRule {
 public:
-
-    ParameterDependentReductionRule(WorkingCopyInstance& inst) : FPTReductionRule(inst, "Parameter Dependent Reduction Rule", true), _parameterizedInstance(_instance, -1) {
-    }
-
-    void apply();
-    
+  
+  ParameterDependentReductionRule(WorkingCopyInstance& inst) : FPTReductionRule(inst, "Parameter Dependent Reduction Rule", true), _parameterizedInstance(_instance, -1) {
+  }
+  
+  void apply();
+  
 private:
-    ParameterizedInstance _parameterizedInstance;
+  ParameterizedInstance _parameterizedInstance;
 };
+  
+} // namespace ysk
 
 #endif /* PARAMETERDEPENDENTREDUCTIONRULE_H */

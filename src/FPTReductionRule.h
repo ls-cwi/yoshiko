@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   FPTReductionRule.h
  * Author: emanuellaude
  *
@@ -12,28 +12,36 @@
 
 #include <string>
 
-
+namespace ysk {
+  
 class FPTReductionRule {
 public:
-
-    FPTReductionRule(WorkingCopyInstance& inst, std::string name, bool conserveMultipleSolutions) : _success(false), _instance(inst), _name(name), _conserveMultipleSolutions(conserveMultipleSolutions) {
-    }
-    
-    virtual ~FPTReductionRule();
-    
-    virtual void apply() = 0;
-    
-    bool isSuccess();
-    
-    std::string getName();
-private:
-    
+  FPTReductionRule(WorkingCopyInstance& inst,
+                   std::string name,
+                   bool conserveMultipleSolutions)
+    : _success(false)
+    , _instance(inst)
+    , _name(name)
+    , _conserveMultipleSolutions(conserveMultipleSolutions)
+  {
+  }
+  
+  virtual ~FPTReductionRule();
+  
+  virtual void apply() = 0;
+  
+  bool isSuccess();
+  
+  std::string getName();
+  
 protected:
-    bool _success;
-    WorkingCopyInstance& _instance;
-    std::string _name;
-    bool _conserveMultipleSolutions;
+  bool _success;
+  WorkingCopyInstance& _instance;
+  std::string _name;
+  bool _conserveMultipleSolutions;
 };
+  
+} // namespace ysk
 
 #endif	/* FPTREDUCTIONRULE_H */
 

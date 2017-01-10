@@ -11,6 +11,7 @@
 using namespace std;
 using namespace lemon;
 
+namespace ysk {
 
 /*************************************************************************
  * This callback procedure is called by Cplex during the computation
@@ -419,3 +420,5 @@ long Yoshiko::solve(const ClusterEditingInstance& inst, ClusterEditingSolutions&
     
     return numsol;
 }
+  
+} // namespace ysk

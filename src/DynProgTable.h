@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   DynProgTable.h
  * Author: emanuellaude
  *
@@ -11,19 +11,23 @@
 #include <iostream>
 #include <cstdlib>
 
-
+namespace ysk {
+  
 class DynProgTable {
-public:    
-    DynProgTable(int bound);
-    double getValue(int x);
-    void setValue(int x, double value);
-    void swap();
-    void print();
-    ~DynProgTable();
+public:
+  DynProgTable(int bound);
+  double getValue(int x);
+  void setValue(int x, double value);
+  void swap();
+  void print();
+  ~DynProgTable();
+  
 private:
-    double** _table;
-    int _length;
+  double** _table;
+  int _length;
 };
+  
+} // namespace ysk
 
 #endif	/* DYNPROGTABLE_H */
 
