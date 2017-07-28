@@ -25,7 +25,7 @@ ILOLAZYCONSTRAINTCALLBACK2(triangle_callback, const ClusterEditingInstance&, ins
     try {
         
         int no_added = 0, no_added_triplet_cuts = 0; // no cuts added yet in this iteration
-        bool fractional = false;
+        //bool fractional = false;
         
         IloNumArray x_vals(env);
         getValues(x_vals, x);
@@ -38,7 +38,7 @@ ILOLAZYCONSTRAINTCALLBACK2(triangle_callback, const ClusterEditingInstance&, ins
         for (FullGraph::EdgeIt e(g); e != INVALID; ++e) {
             if (x_vals[g.id(e)] < eps) x_vals[g.id(e)] = 0.0;
             if (x_vals[g.id(e)] > 1.0 - eps) x_vals[g.id(e)] = 1.0;
-            if (x_vals[g.id(e)] > eps && x_vals[g.id(e)] < 1.0 - eps) fractional = true;
+            //if (x_vals[g.id(e)] > eps && x_vals[g.id(e)] < 1.0 - eps) fractional = true;
         }
         
         unsigned long long no_checks = n * (n-1) * (n-2) / 6, no_checked = 0;
@@ -111,7 +111,7 @@ ILOUSERCUTCALLBACK2(partition_cut_callback, const ClusterEditingInstance&, inst,
     try {
         
         int no_added = 0; // no cuts added yet in this iteration
-        bool fractional = false;
+        //bool fractional = false;
         
         IloNumArray x_vals(env);
         getValues(x_vals, x);
@@ -123,7 +123,7 @@ ILOUSERCUTCALLBACK2(partition_cut_callback, const ClusterEditingInstance&, inst,
         for (FullGraph::EdgeIt e(g); e != INVALID; ++e) {
             if (x_vals[g.id(e)] < eps) x_vals[g.id(e)] = 0.0;
             if (x_vals[g.id(e)] > 1.0 - eps) x_vals[g.id(e)] = 1.0;
-            if (x_vals[g.id(e)] > eps && x_vals[g.id(e)] < 1.0 - eps) fractional = true;
+            //if (x_vals[g.id(e)] > eps && x_vals[g.id(e)] < 1.0 - eps) fractional = true;
         }
         
         // we do have fractional values:
