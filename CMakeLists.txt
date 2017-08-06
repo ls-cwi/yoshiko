@@ -67,12 +67,23 @@ set( Yoshiko_Src
   src/yoshiko_main.cpp
 )
 
+set (YoshikoLib_Src
+	src/LibraryInterface.cpp
+	${Yoshiko_Src}
+)
+
+set (YoshikoLib_Hdr
+	src/LibraryInterface.h
+	${Yoshiko_Hdr}
+)
+
 set( GitCommand1 "symbolic-ref HEAD 2> /dev/null | cut -b 12-" )
 execute_process( COMMAND git symbolic-ref HEAD  WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
                  COMMAND tail -c -7 COMMAND tr -d "\\n" OUTPUT_VARIABLE GitBranch )
 set( GitCommand2 "log --pretty=format:\\\"%h\\\" -1" )
 execute_process( COMMAND git log --pretty=format:%h WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
                  COMMAND head -n 1  COMMAND tr -d "\\n" OUTPUT_VARIABLE GitHashtag )
+                
 set( YOSHIKO_VERSION \"${GitBranch}-${GitHashtag}\" )
 
 set( LIBLEMON_ROOT "$ENV{HOME}/lemon" CACHE PATH "Additional search directory for lemon library" )
@@ -150,4 +161,6 @@ set( CommonLibs
 )
 
 add_executable( yoshiko ${Yoshiko_Src} ${Yoshiko_Hdr} ${CommonObjs} )
+add_library(yoshikoLibrary SHARED ${YoshikoLib_Src} ${YoshikoLib_Hdr} ${CommonObjs} )
+
 target_link_libraries( yoshiko ${CommonLibs} )
