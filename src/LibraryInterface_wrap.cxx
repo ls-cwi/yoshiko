@@ -228,18 +228,37 @@ static void SWIGUNUSED SWIG_JavaThrowException(JNIEnv *jenv, SWIG_JavaExceptionC
 #define SWIG_contract_assert(nullreturn, expr, msg) if (!(expr)) {SWIG_JavaThrowException(jenv, SWIG_JavaIllegalArgumentException, msg); return nullreturn; } else
 
 
+#include <string>
+
+
+#include "LibraryInterface.h"
+using namespace yskLib;
+
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-SWIGEXPORT jlong JNICALL Java_LibraryInterfaceJNI_getVersionString(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
+SWIGEXPORT jstring JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_YOSHIKO_1VERSION_1get(JNIEnv *jenv, jclass jcls) {
+  jstring jresult = 0 ;
+  char *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (char *)("ds/dev-79fb58f");
+  if (result) jresult = jenv->NewStringUTF((const char *)result);
+  return jresult;
+}
+
+
+SWIGEXPORT jstring JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_getVersionString(JNIEnv *jenv, jclass jcls) {
+  jstring jresult = 0 ;
   std::string result;
   
   (void)jenv;
   (void)jcls;
-  result = getVersionString();
-  *(std::string **)&jresult = new std::string((const std::string &)result); 
+  result = yskLib::getVersionString();
+  jresult = jenv->NewStringUTF((&result)->c_str()); 
   return jresult;
 }
 

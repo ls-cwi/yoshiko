@@ -11,9 +11,8 @@
 #include "config.h"
 #include <string>
 
-std::string getVersionString();
-
-
-
+namespace yskLib{
+	std::string getVersionString();
+}
 
 #endif /* SRC_LIBRARYINTERFACE_H_ */
