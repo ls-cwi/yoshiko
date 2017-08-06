@@ -69,6 +69,7 @@ set( Yoshiko_Src
 
 set (YoshikoLib_Src
 	src/LibraryInterface.cpp
+	src/LibraryInterface_wrap.cxx
 	${Yoshiko_Src}
 )
 
