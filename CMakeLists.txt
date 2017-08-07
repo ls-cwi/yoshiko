@@ -164,7 +164,7 @@ set( CommonLibs
 	emon
 )
 
-add_library(yoshikoLibrary STATIC ${YoshikoLib_Src} ${YoshikoLib_Hdr} )
+add_library(yoshikoLibrary SHARED ${YoshikoLib_Src} ${YoshikoLib_Hdr} )
 add_executable( yoshiko ${Yoshiko_Src} ${Yoshiko_Hdr})
 
 target_link_libraries( yoshiko ${CommonLibs} )
