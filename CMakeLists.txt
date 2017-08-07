@@ -90,6 +90,7 @@ set( YOSHIKO_VERSION \"${GitBranch}-${GitHashtag}\" )
 set( LIBLEMON_ROOT "$ENV{HOME}/lemon" CACHE PATH "Additional search directory for lemon library" )
 
 find_package(JNI)
+message("JNI Include Dirs found @: " ${JNI_INCLUDE_DIRS})
 
 if( NOT CPLEX_INC_DIR OR NOT CPLEX_LIB_DIR OR NOT CONCERT_INC_DIR OR NOT CONCERT_LIB_DIR )
 	set( CPLEX_AUTODETECTION_PREFIXES "$ENV{HOME}/Applications/IBM/ILOG; $ENV{HOME}/ILOG;/opt/ibm/ILOG;$ENV{HOME}/Applications/IBM/ILOG" CACHE STRING "CPLEX automatic lookup directories" )
@@ -138,11 +139,11 @@ if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build, options are: Debug Release Profile" FORCE)
 endif(NOT CMAKE_BUILD_TYPE)
 
-set(CMAKE_CXX_FLAGS_DEBUG "-Wall -Wextra -Wno-long-long -Wno-unused-parameter -Wno-unknown-pragmas -g -ggdb -O0 -DDEBUG -DVERBOSE")
-set(CMAKE_CXX_FLAGS_RELEASE "-Wall -Wextra -Wno-long-long -Wno-unused-parameter -Wno-unknown-pragmas -O3 -DNDEBUG")
-set(CMAKE_CXX_FLAGS_PROFILE "-Wall -Wextra -Wno-long-long -Wno-unused-parameter -Wno-unknown-pragmas -O3 -g -ggdb -DNDEBUG")
-set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-write-strings" )
-add_definitions( -DIL_STD )
+set(CMAKE_CXX_FLAGS_DEBUG "-Wall -Wextra -Wno-long-long -Wno-unused-parameter  -Wno-unknown-pragmas -g -ggdb -O0 -DDEBUG -DVERBOSE")
+set(CMAKE_CXX_FLAGS_RELEASE "-Wall -Wextra -Wno-long-long -Wno-unused-parameter  -Wno-unknown-pragmas -O3 -DNDEBUG")
+set(CMAKE_CXX_FLAGS_PROFILE "-Wall -Wextra -Wno-long-long -Wno-unused-parameter  -Wno-unknown-pragmas -O3 -g -ggdb -DNDEBUG")
+set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-write-strings -z noexecstack" )
+add_definitions( -DIL_STD ) #???
 configure_file( src/config.h.in ${PROJECT_SOURCE_DIR}/src/config.h )
 
 
@@ -152,7 +153,7 @@ if( ${CMAKE_SYSTEM_NAME} MATCHES "Darwin" )
 endif()
 
 include_directories( ${CPLEX_INC_DIR} ${CONCERT_INC_DIR} ${JNI_INCLUDE_DIRS} "${LIBLEMON_ROOT}/include" "src" "src/externlib" )
-link_directories( ${CPLEX_LIB_DIR} ${CONCERT_LIB_DIR} ${JNI_LIBARIES} "${LIBLEMON_ROOT}/lib" )
+link_directories( ${CPLEX_LIB_DIR} ${CONCERT_LIB_DIR}  "${LIBLEMON_ROOT}/lib" )
 
 set( CommonLibs
 	m
@@ -163,7 +164,9 @@ set( CommonLibs
 	emon
 )
 
-add_executable( yoshiko ${Yoshiko_Src} ${Yoshiko_Hdr} ${CommonObjs} )
-add_library(yoshikoLibrary SHARED ${YoshikoLib_Src} ${YoshikoLib_Hdr} ${CommonObjs} )
+add_library(yoshikoLibrary STATIC ${YoshikoLib_Src} ${YoshikoLib_Hdr} )
+add_executable( yoshiko ${Yoshiko_Src} ${Yoshiko_Hdr})
 
 target_link_libraries( yoshiko ${CommonLibs} )
+target_link_libraries( yoshikoLibrary ${CommonLibs})
+
