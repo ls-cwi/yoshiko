@@ -231,23 +231,80 @@ static void SWIGUNUSED SWIG_JavaThrowException(JNIEnv *jenv, SWIG_JavaExceptionC
 #include <string>
 
 
-#include "LibraryInterface.h"
-using namespace yskLib;
+	#include "LibraryInterface.h"
+	using namespace yskLib;
 
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-SWIGEXPORT jstring JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_YOSHIKO_1VERSION_1get(JNIEnv *jenv, jclass jcls) {
-  jstring jresult = 0 ;
-  char *result = 0 ;
+SWIGEXPORT jlong JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_new_1ClusterEditingInstance(JNIEnv *jenv, jclass jcls) {
+  jlong jresult = 0 ;
+  ysk::ClusterEditingInstance *result = 0 ;
   
   (void)jenv;
   (void)jcls;
-  result = (char *)("ds/dev-79fb58f");
-  if (result) jresult = jenv->NewStringUTF((const char *)result);
+  result = (ysk::ClusterEditingInstance *)new ysk::ClusterEditingInstance();
+  *(ysk::ClusterEditingInstance **)&jresult = result; 
   return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_ClusterEditingInstance_1initNode(JNIEnv *jenv, jclass jcls, jlong jarg1, jlong jarg2, jstring jarg3, jlong jarg4) {
+  ysk::ClusterEditingInstance *arg1 = (ysk::ClusterEditingInstance *) 0 ;
+  lemon::FullGraph::Node arg2 ;
+  std::string arg3 ;
+  std::vector< int > *arg4 = 0 ;
+  lemon::FullGraph::Node *argp2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(ysk::ClusterEditingInstance **)&jarg1; 
+  argp2 = *(lemon::FullGraph::Node **)&jarg2; 
+  if (!argp2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null lemon::FullGraph::Node");
+    return ;
+  }
+  arg2 = *argp2; 
+  if(!jarg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return ;
+  } 
+  const char *arg3_pstr = (const char *)jenv->GetStringUTFChars(jarg3, 0); 
+  if (!arg3_pstr) return ;
+  (&arg3)->assign(arg3_pstr);
+  jenv->ReleaseStringUTFChars(jarg3, arg3_pstr); 
+  arg4 = *(std::vector< int > **)&jarg4;
+  if (!arg4) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< int > & reference is null");
+    return ;
+  } 
+  (arg1)->initNode(arg2,arg3,*arg4);
+}
+
+
+SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_ClusterEditingInstance_1initEdge(JNIEnv *jenv, jclass jcls, jlong jarg1, jlong jarg2, jdouble jarg3, jboolean jarg4, jboolean jarg5) {
+  ysk::ClusterEditingInstance *arg1 = (ysk::ClusterEditingInstance *) 0 ;
+  lemon::FullGraph::Edge arg2 ;
+  double arg3 ;
+  bool arg4 ;
+  bool arg5 ;
+  lemon::FullGraph::Edge *argp2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(ysk::ClusterEditingInstance **)&jarg1; 
+  argp2 = *(lemon::FullGraph::Edge **)&jarg2; 
+  if (!argp2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null lemon::FullGraph::Edge");
+    return ;
+  }
+  arg2 = *argp2; 
+  arg3 = (double)jarg3; 
+  arg4 = jarg4 ? true : false; 
+  arg5 = jarg5 ? true : false; 
+  (arg1)->initEdge(arg2,arg3,arg4,arg5);
 }
 
 
@@ -259,6 +316,18 @@ SWIGEXPORT jstring JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJN
   (void)jcls;
   result = yskLib::getVersionString();
   jresult = jenv->NewStringUTF((&result)->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_createNewProblemInstance(JNIEnv *jenv, jclass jcls) {
+  jlong jresult = 0 ;
+  ysk::ClusterEditingInstance *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (ysk::ClusterEditingInstance *)yskLib::createNewProblemInstance();
+  *(ysk::ClusterEditingInstance **)&jresult = result; 
   return jresult;
 }
 

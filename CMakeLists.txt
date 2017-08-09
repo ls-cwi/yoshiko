@@ -90,7 +90,6 @@ set( YOSHIKO_VERSION \"${GitBranch}-${GitHashtag}\" )
 set( LIBLEMON_ROOT "$ENV{HOME}/lemon" CACHE PATH "Additional search directory for lemon library" )
 
 find_package(JNI)
-message("JNI Include Dirs found @: " ${JNI_INCLUDE_DIRS})
 
 if( NOT CPLEX_INC_DIR OR NOT CPLEX_LIB_DIR OR NOT CONCERT_INC_DIR OR NOT CONCERT_LIB_DIR )
 	set( CPLEX_AUTODETECTION_PREFIXES "$ENV{HOME}/Applications/IBM/ILOG; $ENV{HOME}/ILOG;/opt/ibm/ILOG;$ENV{HOME}/Applications/IBM/ILOG" CACHE STRING "CPLEX automatic lookup directories" )

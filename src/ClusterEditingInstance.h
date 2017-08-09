@@ -23,11 +23,21 @@
 
 namespace ysk {
 
+/**
+ * Compile reference for WCI
+ */
 class WorkingCopyInstance;
 
+/**
+ * Describes an instance of the double-weighted graph clustering problem. Note that this class
+ * should not be directly used to modify the graph, instead a working copy should be used.
+ */
 class ClusterEditingInstance {
 public:
   
+	/**
+	 * Default constructor, initializes an empty instance of the dwgc-problem.
+	 */
   ClusterEditingInstance()
     : _unweighted(true)
     , _dualWeighted(true)

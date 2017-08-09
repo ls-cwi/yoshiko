@@ -9,10 +9,21 @@
 #define SRC_LIBRARYINTERFACE_H_
 
 #include "config.h"
+#include "ClusterEditingInstance.h"
+
 #include <string>
 
+/**
+ * Namespace for external access
+ */
 namespace yskLib{
-	std::string getVersionString();
+		/**
+		 * Returns the current version, useful for version checking.
+		 * @return The current version as string (git hash)
+		 */
+		std::string getVersionString();
+
+		ysk::ClusterEditingInstance* createNewProblemInstance();
 }
 
 #endif /* SRC_LIBRARYINTERFACE_H_ */
