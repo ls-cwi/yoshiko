@@ -20,7 +20,7 @@
 #include <lemon/arg_parser.h>
 
 #include "ClusterEditingInstance.h"
-#include "ClusterEditingOutput.h"
+#include "output/ClusterEditingOutput.h"
 #include "ClusterEditingReduction.h"
 #include "ClusterReductionInstance.h"
 #include "ClusterEditingSolutions.h"
@@ -36,11 +36,12 @@ using namespace ysk;
  =========================================================================
  TODO
  =========================================================================
- * validate input data.
+ * validate input data. !!!
  * heuristik, set starting value
  * separation triangles
  * separation partition cuts
  * separation (mueller)
+ * modularize program and clean-up god classes
  * enumerating optimal solutions
  * check whether new code produces same sol as old code (in presence of partition constraints)
  * check partition constraints (--> paper!)

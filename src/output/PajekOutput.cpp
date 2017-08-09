@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Emanuel Laude. All rights reserved.
 //
 
-#include "PajekOutput.h"
+#include "../output/PajekOutput.h"
 
 using namespace std;
 

@@ -1,32 +1,33 @@
 //
-//  CSVOutput.h
+//  NullOutput.h
 //  weighted-cluster-editing
 //
 //  Created by Emanuel Laude on 21.03.13.
 //  Copyright (c) 2013 Emanuel Laude. All rights reserved.
 //
 
-#ifndef CSVOUTPUT_H
-#define CSVOUTPUT_H
+#ifndef NULLOUTPUT_H
+#define NULLOUTPUT_H
 
 #include <iostream>
 #include <string>
 
-#include "ClusterEditingOutput.h"
+#include "../output/ClusterEditingOutput.h"
 
 namespace ysk {
 
-class CSVOutput : public ClusterEditingOutput {
+class NullOutput : public ClusterEditingOutput {
 public:
-  CSVOutput(ClusterEditingInstance& inst,
-            ClusterEditingSolutions& solutions,
-            std::string filename,
-            std::string suffix,
-            std::string label)
+  NullOutput(ClusterEditingInstance& inst,
+             ClusterEditingSolutions& solutions,
+             std::string filename,
+             std::string suffix,
+             std::string label)
     : ClusterEditingOutput(inst, solutions, filename, suffix, label)
   {
   }
-  
+  void openStream(size_t solution);
+  void closeStream();
   void writeHeader(std::string label,
                    size_t solution,
                    size_t numberOfNodes,
@@ -50,4 +51,4 @@ public:
   
 } // namespace ysk
 
-#endif /* CSVOUTPUT_H */
+#endif /* NULLOUTPUT_H */

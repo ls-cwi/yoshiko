@@ -6,32 +6,32 @@ set( Yoshiko_Hdr
   src/AlmostCliqueRule.h
   src/CliqueRule.h
   src/ClusterEditingInstance.h
-  src/ClusterEditingOutput.h
+  src/output/ClusterEditingOutput.h
   src/ClusterEditingReduction.h
   src/ClusterEditingSolutions.h
   src/ClusterReductionInstance.h
   src/config.h
   src/config.h.in
   src/CriticalCliqueRule.h
-  src/CSVOutput.h
+  src/output/CSVOutput.h
   src/Delta.h
   src/DynProgTable.h
   src/FPTReductionRule.h
   src/Globals.h
-  src/GMLOutput.h
+  src/output/GMLOutput.h
   src/HeavyEdgeRule3in1.h
   src/Helpers.h
   src/InducedCostsHeuristic.h
   src/MergingRule.h
-  src/NullOutput.h
-  src/PajekOutput.h
+  src/output/NullOutput.h
+  src/output/PajekOutput.h
   src/ParameterDependentReductionRule.h
   src/ParameterizedInstance.h
   src/SimilarNeighboorhoodRule.h
-  src/TableOutput.h
-  src/TableAppOutput.h
+  src/output/TableOutput.h
+  src/output/TableAppOutput.h
   src/WorkingCopyInstance.h
-  src/XGMMLOutput.h
+  src/output/XGMMLOutput.h
   src/Yoshiko.h
 )
 
@@ -40,26 +40,26 @@ set( Yoshiko_Src
   src/ClusterReductionInstance.cpp
   src/HeavyEdgeRule3in1.cpp
   src/ParameterizedInstance.cpp
-  src/CSVOutput.cpp
+  src/output/CSVOutput.cpp
   src/CriticalCliqueRule.cpp
   src/Helpers.cpp
   src/SimilarNeighboorhoodRule.cpp
   src/CliqueRule.cpp
   src/Delta.cpp
   src/InducedCostsHeuristic.cpp
-  src/TableOutput.cpp
-  src/TableAppOutput.cpp
+  src/output/TableOutput.cpp
+  src/output/TableAppOutput.cpp
   src/ClusterEditingInstance.cpp
   src/DynProgTable.cpp
   src/MergingRule.cpp
   src/WorkingCopyInstance.cpp
-  src/ClusterEditingOutput.cpp
+  src/output/ClusterEditingOutput.cpp
   src/FPTReductionRule.cpp
-  src/NullOutput.cpp
-  src/XGMMLOutput.cpp
+  src/output/NullOutput.cpp
+  src/output/XGMMLOutput.cpp
   src/ClusterEditingReduction.cpp
-  src/GMLOutput.cpp
-  src/PajekOutput.cpp
+  src/output/GMLOutput.cpp
+  src/output/PajekOutput.cpp
   src/Yoshiko.cpp
   src/ClusterEditingSolutions.cpp
   src/Globals.cpp

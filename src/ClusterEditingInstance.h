@@ -36,7 +36,7 @@ class ClusterEditingInstance {
 public:
   
 	/**
-	 * Default constructor, initializes an empty instance of the dwgc-problem.
+	 * Default constructor, initializes an empty instance of the dwgc-problem. This instance is by default unweighted and adjusts its specification when edges, matching a more specific instance, are added.
 	 */
   ClusterEditingInstance()
     : _unweighted(true)
@@ -61,7 +61,13 @@ public:
   void initNode(lemon::FullGraph::Node node,
                 std::string name,
                 std::vector<int>& cluster);
-  
+  /**
+   * Adds an edge to the given instance with associated information relevant to the dwgc problem
+   * @param edge The edge as lemon::FullGraph::Edge
+   * @param weight The edge-weight
+   * @param permanent If true the edge is always part of an ideal solution
+   * @param forbidden If true the edge is never part of an ideal solution
+   */
   void initEdge(lemon::FullGraph::Edge edge,
                 double weight,
                 bool permanent,
@@ -116,6 +122,9 @@ private:
   lemon::FullGraph::EdgeMap<double> _weight;
   lemon::FullGraph::EdgeMap<bool> _permanent;
   lemon::FullGraph::EdgeMap<bool> _forbidden;
+  /**
+   * A NodeMap mapping each node to an integer that identifies the cluster to which the node will belong in the solution
+   */
   lemon::FullGraph::NodeMap<std::vector<int>* > _clusters;
   
   WorkingCopyInstance* _workingCopyInstance;

@@ -6,14 +6,15 @@
 //  Copyright (c) 2013 Emanuel Laude. All rights reserved.
 //
 
-#include "ClusterEditingOutput.h"
-#include "XGMMLOutput.h"
-#include "GMLOutput.h"
-#include "NullOutput.h"
-#include "TableOutput.h"
-#include "TableAppOutput.h"
-#include "CSVOutput.h"
-#include "PajekOutput.h"
+#include "../output/ClusterEditingOutput.h"
+
+#include "../output/CSVOutput.h"
+#include "../output/GMLOutput.h"
+#include "../output/NullOutput.h"
+#include "../output/PajekOutput.h"
+#include "../output/TableAppOutput.h"
+#include "../output/TableOutput.h"
+#include "../output/XGMMLOutput.h"
 
 using namespace std;
 using namespace lemon;

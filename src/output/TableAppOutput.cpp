@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Emanuel Laude. All rights reserved.
 //
 
-#include "TableAppOutput.h"
+#include "../output/TableAppOutput.h"
 
 using namespace std;
 
