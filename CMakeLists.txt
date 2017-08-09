@@ -3,68 +3,78 @@ cmake_minimum_required( VERSION 2.8 )
 project( Yoshiko )
 
 set( Yoshiko_Hdr
-  src/AlmostCliqueRule.h
-  src/CliqueRule.h
+
   src/ClusterEditingInstance.h
-  src/output/ClusterEditingOutput.h
   src/ClusterEditingReduction.h
   src/ClusterEditingSolutions.h
   src/ClusterReductionInstance.h
   src/config.h
   src/config.h.in
-  src/CriticalCliqueRule.h
-  src/output/CSVOutput.h
   src/Delta.h
   src/DynProgTable.h
-  src/FPTReductionRule.h
   src/Globals.h
-  src/output/GMLOutput.h
-  src/HeavyEdgeRule3in1.h
   src/Helpers.h
   src/InducedCostsHeuristic.h
-  src/MergingRule.h
+  src/ParameterizedInstance.h
+  src/WorkingCopyInstance.h
+  src/Yoshiko.h
+  
+  src/input/ClusterEditingInput.h
+  src/input/JENAInput.h
+   
+  src/output/ClusterEditingOutput.h
+  src/output/CSVOutput.h
+  src/output/GMLOutput.h
   src/output/NullOutput.h
   src/output/PajekOutput.h
-  src/ParameterDependentReductionRule.h
-  src/ParameterizedInstance.h
-  src/SimilarNeighboorhoodRule.h
   src/output/TableOutput.h
   src/output/TableAppOutput.h
-  src/WorkingCopyInstance.h
   src/output/XGMMLOutput.h
-  src/Yoshiko.h
+  
+  src/reductionRules/AlmostCliqueRule.h
+  src/reductionRules/CliqueRule.h
+  src/reductionRules/CriticalCliqueRule.h
+  src/reductionRules/FPTReductionRule.h
+  src/reductionRules/HeavyEdgeRule3in1.h
+  src/reductionRules/MergingRule.h
+  src/reductionRules/ParameterDependentReductionRule.h
+  src/reductionRules/SimilarNeighboorhoodRule.h
+
 )
 
 set( Yoshiko_Src
-  src/AlmostCliqueRule.cpp
   src/ClusterReductionInstance.cpp
-  src/HeavyEdgeRule3in1.cpp
   src/ParameterizedInstance.cpp
-  src/output/CSVOutput.cpp
-  src/CriticalCliqueRule.cpp
   src/Helpers.cpp
-  src/SimilarNeighboorhoodRule.cpp
-  src/CliqueRule.cpp
   src/Delta.cpp
   src/InducedCostsHeuristic.cpp
-  src/output/TableOutput.cpp
-  src/output/TableAppOutput.cpp
   src/ClusterEditingInstance.cpp
   src/DynProgTable.cpp
-  src/MergingRule.cpp
   src/WorkingCopyInstance.cpp
-  src/output/ClusterEditingOutput.cpp
-  src/FPTReductionRule.cpp
-  src/output/NullOutput.cpp
-  src/output/XGMMLOutput.cpp
   src/ClusterEditingReduction.cpp
-  src/output/GMLOutput.cpp
-  src/output/PajekOutput.cpp
   src/Yoshiko.cpp
   src/ClusterEditingSolutions.cpp
   src/Globals.cpp
-  src/ParameterDependentReductionRule.cpp
   src/yoshiko_main.cpp
+
+  src/output/ClusterEditingOutput.cpp
+  src/output/CSVOutput.cpp
+  src/output/GMLOutput.cpp
+  src/output/NullOutput.cpp
+  src/output/XGMMLOutput.cpp
+  src/output/PajekOutput.cpp
+  src/output/TableOutput.cpp
+  src/output/TableAppOutput.cpp
+  
+  src/reductionRules/AlmostCliqueRule.cpp
+  src/reductionRules/CliqueRule.cpp
+  src/reductionRules/CriticalCliqueRule.cpp
+  src/reductionRules/FPTReductionRule.cpp
+  src/reductionRules/HeavyEdgeRule3in1.cpp
+  src/reductionRules/MergingRule.cpp
+  src/reductionRules/ParameterDependentReductionRule.cpp
+  src/reductionRules/SimilarNeighboorhoodRule.cpp
+  
 )
 
 set (YoshikoLib_Src

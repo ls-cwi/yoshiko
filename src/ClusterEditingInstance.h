@@ -54,8 +54,15 @@ public:
   {
   }
   
+  /**
+   * Destructor
+   */
   virtual ~ClusterEditingInstance();
   
+  /**
+   * Creates a full graph with a given amount of nodes and initializes internal variables for working with this graph
+   * @param size The number of nodes the graph contains
+   */
   void init(int size);
   
   void initNode(lemon::FullGraph::Node node,
@@ -118,6 +125,9 @@ private:
   bool _initializedCostDeletion;
   
   lemon::FullGraph _orig;
+  /**
+   * Maps each node to a name (identifier)
+   */
   lemon::FullGraph::NodeMap<std::string> _nodeNames;
   lemon::FullGraph::EdgeMap<double> _weight;
   lemon::FullGraph::EdgeMap<bool> _permanent;

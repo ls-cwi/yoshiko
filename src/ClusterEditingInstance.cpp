@@ -21,13 +21,14 @@ ClusterEditingInstance::~ClusterEditingInstance() {
 }
 
 void ClusterEditingInstance::init(int size) {
-  _orig.resize(size);
+  _orig.resize(size); //Creates a full graph of the given size
+  //Initializes and creates a matching WorkingCopyInstance for the full graph
   _workingCopyInstance = new WorkingCopyInstance(this);
   _workingCopyInstance->init();
 }
 
 void ClusterEditingInstance::initNode(FullGraph::Node node, string name, vector<int>& cluster) {
-  _nodeNames[node] = name;
+  _nodeNames[node] = name; //Map node to its name
   _clusters[node] = new vector<int>;
   _clusters[node]->insert(_clusters[node]->end(), cluster.begin(), cluster.end());
   _workingCopyInstance->initNode(node, name);
@@ -79,18 +80,21 @@ void ClusterEditingInstance::initEdge(FullGraph::Edge edge, double weight, bool 
 }
 
 void ClusterEditingInstance::parseJenaFormat(std::istream &is) {
+	//TODO: Better exception handling, validating of input
+
   try {
     string line;
     
     getline(is, line); // first line contains number of nodes
     int n = atoi(line.c_str());
     
-    init(n);
+    init(n); //init "blank" full graph with n nodes
     
+    //iterates over all nodes of the newly created graph
     for (FullGraph::NodeIt v(_orig); v != INVALID; ++v) {
       getline(is, line);
       vector<int> cluster;
-      cluster.push_back(_orig.id(v));
+      cluster.push_back(_orig.id(v)); //Each node is initialized with its "own cluster"
       initNode(v, line, cluster);
     }
     

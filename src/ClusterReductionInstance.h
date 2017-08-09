@@ -13,14 +13,15 @@
 
 #include "ClusterEditingInstance.h"
 #include "Globals.h"
-#include "HeavyEdgeRule3in1.h"
-#include "CriticalCliqueRule.h"
 #include "WorkingCopyInstance.h"
-#include "AlmostCliqueRule.h"
-#include "SimilarNeighboorhoodRule.h"
-#include "MergingRule.h"
-#include "ParameterDependentReductionRule.h"
-#include "CliqueRule.h"
+
+#include "reductionRules/HeavyEdgeRule3in1.h"
+#include "reductionRules/CriticalCliqueRule.h"
+#include "reductionRules/AlmostCliqueRule.h"
+#include "reductionRules/SimilarNeighboorhoodRule.h"
+#include "reductionRules/MergingRule.h"
+#include "reductionRules/ParameterDependentReductionRule.h"
+#include "reductionRules/CliqueRule.h"
 
 #include <lemon/connectivity.h>
 

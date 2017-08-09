@@ -19,6 +19,8 @@
 #include <lemon/bin_heap.h>
 #include <lemon/arg_parser.h>
 
+#include <ilconcert/ilosys.h>
+
 #include "ClusterEditingInstance.h"
 #include "output/ClusterEditingOutput.h"
 #include "ClusterEditingReduction.h"
