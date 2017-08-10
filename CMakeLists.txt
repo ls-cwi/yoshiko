@@ -21,6 +21,7 @@ set( Yoshiko_Hdr
   
   src/input/ClusterEditingInput.h
   src/input/JENAInput.h
+  src/input/LibraryInput.h
    
   src/output/ClusterEditingOutput.h
   src/output/CSVOutput.h
@@ -58,6 +59,7 @@ set( Yoshiko_Src
   src/yoshiko_main.cpp
   
   src/input/JENAInput.cpp
+  src/input/LibraryInput.cpp
 
   src/output/ClusterEditingOutput.cpp
   src/output/CSVOutput.cpp

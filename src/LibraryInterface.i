@@ -4,8 +4,7 @@
 //Include a direct string-mapping for C++/Java
 %include "std_string.i"
 
-//Include basic wrapping for ClusterEditingInstance
-%include "ClusterEditingInstance.i"
+%include "LibraryInput.i"
 
 //Namespace definition
 %{

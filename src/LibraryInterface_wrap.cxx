@@ -231,6 +231,10 @@ static void SWIGUNUSED SWIG_JavaThrowException(JNIEnv *jenv, SWIG_JavaExceptionC
 #include <string>
 
 
+	#include "input/LibraryInput.h"
+	using namespace yskInput;
+
+
 	#include "LibraryInterface.h"
 	using namespace yskLib;
 
@@ -239,72 +243,193 @@ static void SWIGUNUSED SWIG_JavaThrowException(JNIEnv *jenv, SWIG_JavaExceptionC
 extern "C" {
 #endif
 
-SWIGEXPORT jlong JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_new_1ClusterEditingInstance(JNIEnv *jenv, jclass jcls) {
+SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_edge_1sourceID_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jint jarg2) {
+  yskInput::edge *arg1 = (yskInput::edge *) 0 ;
+  int arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(yskInput::edge **)&jarg1; 
+  arg2 = (int)jarg2; 
+  if (arg1) (arg1)->sourceID = arg2;
+}
+
+
+SWIGEXPORT jint JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_edge_1sourceID_1get(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+  jint jresult = 0 ;
+  yskInput::edge *arg1 = (yskInput::edge *) 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(yskInput::edge **)&jarg1; 
+  result = (int) ((arg1)->sourceID);
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_edge_1targetID_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jint jarg2) {
+  yskInput::edge *arg1 = (yskInput::edge *) 0 ;
+  int arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(yskInput::edge **)&jarg1; 
+  arg2 = (int)jarg2; 
+  if (arg1) (arg1)->targetID = arg2;
+}
+
+
+SWIGEXPORT jint JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_edge_1targetID_1get(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+  jint jresult = 0 ;
+  yskInput::edge *arg1 = (yskInput::edge *) 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(yskInput::edge **)&jarg1; 
+  result = (int) ((arg1)->targetID);
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_edge_1cost_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jdouble jarg2) {
+  yskInput::edge *arg1 = (yskInput::edge *) 0 ;
+  double arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(yskInput::edge **)&jarg1; 
+  arg2 = (double)jarg2; 
+  if (arg1) (arg1)->cost = arg2;
+}
+
+
+SWIGEXPORT jdouble JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_edge_1cost_1get(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+  jdouble jresult = 0 ;
+  yskInput::edge *arg1 = (yskInput::edge *) 0 ;
+  double result;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(yskInput::edge **)&jarg1; 
+  result = (double) ((arg1)->cost);
+  jresult = (jdouble)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_new_1edge(JNIEnv *jenv, jclass jcls) {
   jlong jresult = 0 ;
+  yskInput::edge *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (yskInput::edge *)new yskInput::edge();
+  *(yskInput::edge **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_delete_1edge(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+  yskInput::edge *arg1 = (yskInput::edge *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(yskInput::edge **)&jarg1; 
+  delete arg1;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_LibraryInput_1parseInput(JNIEnv *jenv, jclass jcls, jlong jarg1, jlong jarg2) {
+  jlong jresult = 0 ;
+  yskInput::LibraryInput *arg1 = (yskInput::LibraryInput *) 0 ;
+  std::istream *arg2 = 0 ;
   ysk::ClusterEditingInstance *result = 0 ;
   
   (void)jenv;
   (void)jcls;
-  result = (ysk::ClusterEditingInstance *)new ysk::ClusterEditingInstance();
+  arg1 = *(yskInput::LibraryInput **)&jarg1; 
+  arg2 = *(std::istream **)&jarg2;
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::istream & reference is null");
+    return 0;
+  } 
+  result = (ysk::ClusterEditingInstance *)(arg1)->parseInput(*arg2);
   *(ysk::ClusterEditingInstance **)&jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_ClusterEditingInstance_1initNode(JNIEnv *jenv, jclass jcls, jlong jarg1, jlong jarg2, jstring jarg3, jlong jarg4) {
-  ysk::ClusterEditingInstance *arg1 = (ysk::ClusterEditingInstance *) 0 ;
-  lemon::FullGraph::Node arg2 ;
-  std::string arg3 ;
-  std::vector< int > *arg4 = 0 ;
-  lemon::FullGraph::Node *argp2 ;
+SWIGEXPORT jboolean JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_LibraryInput_1validateInput(JNIEnv *jenv, jclass jcls, jlong jarg1, jlong jarg2) {
+  jboolean jresult = 0 ;
+  yskInput::LibraryInput *arg1 = (yskInput::LibraryInput *) 0 ;
+  std::istream *arg2 = 0 ;
+  bool result;
   
   (void)jenv;
   (void)jcls;
-  arg1 = *(ysk::ClusterEditingInstance **)&jarg1; 
-  argp2 = *(lemon::FullGraph::Node **)&jarg2; 
-  if (!argp2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null lemon::FullGraph::Node");
-    return ;
-  }
-  arg2 = *argp2; 
-  if(!jarg3) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
-    return ;
+  arg1 = *(yskInput::LibraryInput **)&jarg1; 
+  arg2 = *(std::istream **)&jarg2;
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::istream & reference is null");
+    return 0;
   } 
-  const char *arg3_pstr = (const char *)jenv->GetStringUTFChars(jarg3, 0); 
-  if (!arg3_pstr) return ;
-  (&arg3)->assign(arg3_pstr);
-  jenv->ReleaseStringUTFChars(jarg3, arg3_pstr); 
-  arg4 = *(std::vector< int > **)&jarg4;
-  if (!arg4) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::vector< int > & reference is null");
-    return ;
-  } 
-  (arg1)->initNode(arg2,arg3,*arg4);
+  result = (bool)(arg1)->validateInput(*arg2);
+  jresult = (jboolean)result; 
+  return jresult;
 }
 
 
-SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_ClusterEditingInstance_1initEdge(JNIEnv *jenv, jclass jcls, jlong jarg1, jlong jarg2, jdouble jarg3, jboolean jarg4, jboolean jarg5) {
-  ysk::ClusterEditingInstance *arg1 = (ysk::ClusterEditingInstance *) 0 ;
-  lemon::FullGraph::Edge arg2 ;
-  double arg3 ;
-  bool arg4 ;
-  bool arg5 ;
-  lemon::FullGraph::Edge *argp2 ;
+SWIGEXPORT jlong JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_new_1LibraryInput(JNIEnv *jenv, jclass jcls) {
+  jlong jresult = 0 ;
+  yskInput::LibraryInput *result = 0 ;
   
   (void)jenv;
   (void)jcls;
-  arg1 = *(ysk::ClusterEditingInstance **)&jarg1; 
-  argp2 = *(lemon::FullGraph::Edge **)&jarg2; 
-  if (!argp2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null lemon::FullGraph::Edge");
-    return ;
-  }
-  arg2 = *argp2; 
-  arg3 = (double)jarg3; 
-  arg4 = jarg4 ? true : false; 
-  arg5 = jarg5 ? true : false; 
-  (arg1)->initEdge(arg2,arg3,arg4,arg5);
+  result = (yskInput::LibraryInput *)new yskInput::LibraryInput();
+  *(yskInput::LibraryInput **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_LibraryInput_1setSize(JNIEnv *jenv, jclass jcls, jlong jarg1, jint jarg2) {
+  yskInput::LibraryInput *arg1 = (yskInput::LibraryInput *) 0 ;
+  int arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(yskInput::LibraryInput **)&jarg1; 
+  arg2 = (int)jarg2; 
+  (arg1)->setSize(arg2);
+}
+
+
+SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_LibraryInput_1addEdge(JNIEnv *jenv, jclass jcls, jlong jarg1, jint jarg2, jint jarg3, jdouble jarg4) {
+  yskInput::LibraryInput *arg1 = (yskInput::LibraryInput *) 0 ;
+  int arg2 ;
+  int arg3 ;
+  double arg4 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(yskInput::LibraryInput **)&jarg1; 
+  arg2 = (int)jarg2; 
+  arg3 = (int)jarg3; 
+  arg4 = (double)jarg4; 
+  (arg1)->addEdge(arg2,arg3,arg4);
+}
+
+
+SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_delete_1LibraryInput(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+  yskInput::LibraryInput *arg1 = (yskInput::LibraryInput *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(yskInput::LibraryInput **)&jarg1; 
+  delete arg1;
 }
 
 
