@@ -33,6 +33,7 @@ class WorkingCopyInstance;
  * should not be directly used to modify the graph, instead a working copy should be used.
  */
 class ClusterEditingInstance {
+
 public:
   
 	/**

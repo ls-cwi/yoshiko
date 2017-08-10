@@ -79,67 +79,7 @@ void ClusterEditingInstance::initEdge(FullGraph::Edge edge, double weight, bool 
   }
 }
 
-void ClusterEditingInstance::parseJenaFormat(std::istream &is) {
-	//TODO: Better exception handling, validating of input
 
-  try {
-    string line;
-    
-    getline(is, line); // first line contains number of nodes
-    int n = atoi(line.c_str());
-    
-    init(n); //init "blank" full graph with n nodes
-    
-    //iterates over all nodes of the newly created graph
-    for (FullGraph::NodeIt v(_orig); v != INVALID; ++v) {
-      getline(is, line);
-      vector<int> cluster;
-      cluster.push_back(_orig.id(v)); //Each node is initialized with its "own cluster"
-      initNode(v, line, cluster);
-    }
-    
-    int i = 0;
-    for (FullGraph::NodeIt v(_orig); i < n - 1; ++v, ++i) {
-      getline(is, line);
-      vector<string> tokens;
-      tokenize(line, tokens, " \t\"");
-      int j = 0;
-      FullGraph::NodeIt w(_orig, v);
-      ++w;
-      for (; w != INVALID; ++w) {
-        FullGraph::Edge e = _orig.edge(v, w);
-        
-        double weight = 0.0;
-        bool permanent = false;
-        bool forbidden = false;
-        
-        if (tokens[j] == "inf") {
-          permanent = true;
-          weight = std::numeric_limits<double>::infinity();
-        }
-        else if (tokens[j] == "-inf") {
-          forbidden = true;
-          weight = -std::numeric_limits<double>::infinity();
-        } else {
-          weight = atof(tokens[j].c_str());
-          if (weight >= 1e+20) {
-            permanent = true;
-            weight = std::numeric_limits<double>::infinity();
-          } else if (weight <= -1e+20) {
-            forbidden = true;
-            weight = -std::numeric_limits<double>::infinity();
-          }
-        }
-        initEdge(e, weight, permanent, forbidden);
-        ++j;
-      }
-    }
-  } catch (Exception &e) {
-    cerr << "caught exception while parsing the graph" << endl;
-    cerr << e.what() << endl;
-    exit(-1);
-  }
-}
 
 void ClusterEditingInstance::parseCleverFormat(std::istream &is) {
   try {

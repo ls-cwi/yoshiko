@@ -56,6 +56,8 @@ set( Yoshiko_Src
   src/ClusterEditingSolutions.cpp
   src/Globals.cpp
   src/yoshiko_main.cpp
+  
+  src/input/JENAInput.cpp
 
   src/output/ClusterEditingOutput.cpp
   src/output/CSVOutput.cpp

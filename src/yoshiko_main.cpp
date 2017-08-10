@@ -30,9 +30,12 @@
 #include "Yoshiko.h"
 #include "Globals.h"
 
+#include "input/JENAInput.h"
+
 using namespace std;
 using namespace lemon;
 using namespace ysk;
+using namespace yskInput;
 
 /*
  =========================================================================
@@ -70,7 +73,7 @@ int main(int argc, char * const argv[]) {
   
   string inputFilename, outputFilename;
   string graphLabel = "cluster_solution";
-  int inputFileFormat = 0;
+  int inputFileFormat = 0; //TODO: Convert to enums for better codestyle
   int outputFileFormat = 0;
   int noOptimalSolutions = 1;
   bool exportLP = false;
@@ -135,14 +138,15 @@ int main(int argc, char * const argv[]) {
   
   ClusterEditingInstance instance;
   
-  
+  //Determine which input format is to be parsed
   switch (inputFileFormat) {
-    case 0:
-      instance.parseJenaFormat(is);
-      break;
+  	  //JENA
+  	  case 0:
+  		  //instance = *JENAInput::parseInput(is);
+  		  break;
       
     //case 1:
-      //instance.parseCleverFormat(is);
+      //instance.parseCleverFormat(is); <<< ? Clever Format not used :(
       //break;
     case 1:
       instance.parseSIFFormat(is);
