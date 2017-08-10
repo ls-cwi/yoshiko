@@ -8,8 +8,7 @@
 #ifndef SRC_INPUT_JENAINPUT_H_
 #define SRC_INPUT_JENAINPUT_H_
 
-#include "ClusterEditingInput.h"
-
+#include "StreamInput.h"
 
 namespace yskInput{
 
@@ -32,8 +31,8 @@ namespace yskInput{
 	 *   1 0 (LINE 7) B -> C has weight 1, B -> D has weight 0
 	 *     1 (LINE 8) C -> D has weight 1
 	 */
-	class JENAInput : public ClusterEditingInput{
-		ysk::ClusterEditingInstance* parseInput(std::istream &is);
+	class JENAInput : public StreamInput{
+		void parseInput(std::istream &is);
 	};
 
 }

@@ -23,9 +23,15 @@ namespace ysk {
  size_t h = (x.first * 0x1f1f1f1f) ^ x.second;
  return h;
  }
- };
+ };                                            <<<<<< Still relevant or can be removed???
  */
 
+/**
+ * Tokenizes a given string into a vector of tokens
+ * @param str The string that is to be tokenized
+ * @param tokens The string vector that will hold the tokens after processing
+ * @param delimiters that are used for splitting (eg. whitespace)
+ */
 void tokenize(const std::string& str,
               std::vector<std::string>& tokens,
               const std::string& delimiters);

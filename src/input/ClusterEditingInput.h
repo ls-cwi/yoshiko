@@ -20,30 +20,36 @@
 namespace yskInput{
 
 /**
- * Virtual class that serves as an interface for the various input formats that can be provided to the yoshiko library.
- * Inheritance of this class should provide a mean of validating and parsing input in a given format.
+ * Class that serves as an interface for the various input formats that can be provided to the yoshiko library.
+ * Inheritance of this class should provide a mean of validating and providing input in a given format.
  */
 class ClusterEditingInput{
 	public:
-
 		/**
-		 * Parses the input stream treating it as the input format represented by the respective class implementing this method
-		 * @param is The input stream which is to be parsed
-		 * @return A ysk::ClusterEditingInstance object pointer referencing the parsed input
+		 * Returns the ClusterEditingInstance that is represented by this input (after processing/parsing)
+		 * @return The pointer referencing the ClusterEditingInstance
 		 */
-		virtual ysk::ClusterEditingInstance* parseInput(std::istream &is) = 0;
-
-		/**
-		 * Validates if the input satisfies the input format represented by the class implementing this method
-		 * @param is The input stream which is to be validated
-		 * @return True if valid, false otherwise
-		 */
-		virtual bool validateInput(std::istream &is) = 0;
+		ysk::ClusterEditingInstance* getProblemInstance();
 
 		/**
 		 * Destructor
 		 */
-		virtual ~ClusterEditingInput(){};
+		~ClusterEditingInput(){
+			delete _instance;
+		};
+
+	protected:
+		/**
+		 * Default constructor, creates an "empty" ClusterEditingInstance that is then modified accordingly
+		 */
+		ClusterEditingInput(){
+			_instance = new ysk::ClusterEditingInstance();
+		};
+
+		/**
+		 * The ClusterEditingInstance that is adjusted according to the input provided and can eventually be retrieved to apply the algorithm
+		 */
+		ysk::ClusterEditingInstance* _instance;
 };
 
 }

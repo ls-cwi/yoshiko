@@ -22,6 +22,7 @@ set( Yoshiko_Hdr
   src/input/ClusterEditingInput.h
   src/input/JENAInput.h
   src/input/LibraryInput.h
+  src/input/StreamInput.h
    
   src/output/ClusterEditingOutput.h
   src/output/CSVOutput.h
@@ -60,6 +61,7 @@ set( Yoshiko_Src
   
   src/input/JENAInput.cpp
   src/input/LibraryInput.cpp
+  src/input/ClusterEditingInput.cpp
 
   src/output/ClusterEditingOutput.cpp
   src/output/CSVOutput.cpp
@@ -155,7 +157,7 @@ endif(NOT CMAKE_BUILD_TYPE)
 set(CMAKE_CXX_FLAGS_DEBUG "-Wall -Wextra -Wno-long-long -Wno-unused-parameter  -Wno-unknown-pragmas -g -ggdb -O0 -DDEBUG -DVERBOSE")
 set(CMAKE_CXX_FLAGS_RELEASE "-Wall -Wextra -Wno-long-long -Wno-unused-parameter  -Wno-unknown-pragmas -O3 -DNDEBUG")
 set(CMAKE_CXX_FLAGS_PROFILE "-Wall -Wextra -Wno-long-long -Wno-unused-parameter  -Wno-unknown-pragmas -O3 -g -ggdb -DNDEBUG")
-set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-write-strings -z noexecstack" )
+set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-write-strings -z noexecstack -fno-strict-aliasing" )
 add_definitions( -DIL_STD ) #???
 configure_file( src/config.h.in ${PROJECT_SOURCE_DIR}/src/config.h )
 

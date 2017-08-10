@@ -14,13 +14,14 @@
 
 #include <lemon/time_measure.h>
 
+
 namespace ysk {
 
-extern int time_limit;
-extern lemon::Timer clk;
-extern int verbosity;
-extern int no_threads;
-extern double eps;
+	extern int time_limit;
+	extern lemon::Timer clk;
+	extern int verbosity;
+	extern int no_threads;
+	extern double eps;
 
 } // namespace ysk
   

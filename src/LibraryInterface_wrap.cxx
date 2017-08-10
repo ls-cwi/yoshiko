@@ -343,42 +343,16 @@ SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_d
 }
 
 
-SWIGEXPORT jlong JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_LibraryInput_1parseInput(JNIEnv *jenv, jclass jcls, jlong jarg1, jlong jarg2) {
+SWIGEXPORT jlong JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_LibraryInput_1parseInput(JNIEnv *jenv, jclass jcls, jlong jarg1) {
   jlong jresult = 0 ;
   yskInput::LibraryInput *arg1 = (yskInput::LibraryInput *) 0 ;
-  std::istream *arg2 = 0 ;
   ysk::ClusterEditingInstance *result = 0 ;
   
   (void)jenv;
   (void)jcls;
   arg1 = *(yskInput::LibraryInput **)&jarg1; 
-  arg2 = *(std::istream **)&jarg2;
-  if (!arg2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::istream & reference is null");
-    return 0;
-  } 
-  result = (ysk::ClusterEditingInstance *)(arg1)->parseInput(*arg2);
+  result = (ysk::ClusterEditingInstance *)(arg1)->parseInput();
   *(ysk::ClusterEditingInstance **)&jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT jboolean JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_LibraryInput_1validateInput(JNIEnv *jenv, jclass jcls, jlong jarg1, jlong jarg2) {
-  jboolean jresult = 0 ;
-  yskInput::LibraryInput *arg1 = (yskInput::LibraryInput *) 0 ;
-  std::istream *arg2 = 0 ;
-  bool result;
-  
-  (void)jenv;
-  (void)jcls;
-  arg1 = *(yskInput::LibraryInput **)&jarg1; 
-  arg2 = *(std::istream **)&jarg2;
-  if (!arg2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "std::istream & reference is null");
-    return 0;
-  } 
-  result = (bool)(arg1)->validateInput(*arg2);
-  jresult = (jboolean)result; 
   return jresult;
 }
 

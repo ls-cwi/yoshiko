@@ -13,10 +13,9 @@ using namespace ysk;
 
 namespace yskInput{
 		
-	ysk::ClusterEditingInstance* JENAInput::parseInput(std::istream &is){
+	void JENAInput::parseInput(std::istream &is){
+
 		//TODO: Better exception handling, validating of input
-		bool success;
-		ysk::ClusterEditingInstance* returnInstance = new ysk::ClusterEditingInstance();
 
 		try {
 			//STEP 1: PARSE NODE COUNT
@@ -25,18 +24,18 @@ namespace yskInput{
 			getline(is, line); // first line contains number of nodes
 			int n = atoi(line.c_str());
 
-			returnInstance->init(n); //init "blank" full graph with n nodes
+			_instance->init(n); //init "blank" full graph with n nodes
 
 			//STEP 2: PARSE NODE NAMES
 
 			//iterates over all nodes of the newly created graph
-			FullGraph fullGraph = returnInstance->getOrig();
+			FullGraph fullGraph = _instance ->getOrig();
 			
 			for (FullGraph::NodeIt v(fullGraph); v != INVALID; ++v) {
 				getline(is, line);
 				vector<int> cluster;
 				cluster.push_back(fullGraph.id(v)); //Each node is initialized with its "own cluster"
-				returnInstance->initNode(v, line, cluster);
+				_instance ->initNode(v, line, cluster);
 			}
 
 			//STEP 3: PARSE EDGES
@@ -80,24 +79,16 @@ namespace yskInput{
 							weight = -std::numeric_limits<double>::infinity();
 						}
 					}
-					returnInstance->initEdge(e, weight, permanent, forbidden);
+					_instance ->initEdge(e, weight, permanent, forbidden);
 					++j;
 				}//TARGET NODE LOOP END
 			}//SOURCE NODE LOOP END
-			success = true;
 		}
 		catch (Exception &e) {
 			//TODO: MORE INFO ABOUT WHAT WENT WRONG
 			cerr << "caught exception while parsing the graph" << endl;
 			cerr << e.what() << endl;
-			success = false;
 			exit(-1); //?
-		}
-		if (success){
-			return returnInstance;
-		}
-		else{
-			return NULL;
 		}
 	};
 }

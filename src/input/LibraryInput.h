@@ -25,9 +25,7 @@ namespace yskInput{
 
 		public:
 
-			//INHERITED FROM BASE CLASS
-			ysk::ClusterEditingInstance* parseInput(std::istream &is);
-			bool validateInput(std::istream &is);
+			ysk::ClusterEditingInstance* parseInput();
 
 			LibraryInput(){
 				_size = 0;
