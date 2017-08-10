@@ -19,7 +19,15 @@ namespace yskInput{
 	};
 	
 	bool LibraryInput::validateInput(std::istream &is){
-		//TODO
+		//CASE 1: There are edges defined with node ids beyond the current size of the instance
+		for (std::list<edge>::iterator it = _edges.begin();it!=_edges.end();it++){
+			if (it->sourceID >= _size || it->targetID >= _size){
+				cout << "Invalid input! One edge declaration contains a node that is outside the scope. Have you initialized the input size correctly?";
+				return false;
+			}
+		}
+		
+		//All good
 		return true;
 	}
 	
@@ -32,8 +40,10 @@ namespace yskInput{
 		_edges.push_back(tmp);
 	};
 	
-	void LibraryInput::setSize(int id){
-		
+	//SETTER / GETTER
+	
+	void LibraryInput::setSize(int size){
+		_size = size;
 	};
 	
 
