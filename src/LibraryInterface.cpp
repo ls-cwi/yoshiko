@@ -10,5 +10,10 @@ namespace yskLib{
 		return YOSHIKO_VERSION;
 	}
 
+	ysk::ClusterEditingSolutions* processLibraryInput(yskInput::LibraryInput libIn){
+		return performAlgorithm(libIn.parseInput());
+	}
+
+
 }
 

@@ -16,8 +16,9 @@ using namespace ysk;
 namespace yskInput{
 		
 	ysk::ClusterEditingInstance* LibraryInput::parseInput(){
-		cout << "TEST";
-		return new ClusterEditingInstance();
+		ClusterEditingInstance* cei = new ClusterEditingInstance();
+		//TODO:
+		return cei;
 	};
 	
 
@@ -25,7 +26,6 @@ namespace yskInput{
 		//Out of range edges
 		if (sourceID >= _size || targetID >= _size){
 			throw std::invalid_argument("Source or Target ID of the node are out of range (Did you initialize the input with the correct size?");
-			return;
 		}
 		edge tmp;
 		tmp.sourceID = sourceID;

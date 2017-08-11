@@ -17,6 +17,9 @@
 
 #include "Helpers.h"
 
+using namespace std;
+
+
 namespace yskInput{
 
 /**
@@ -34,7 +37,7 @@ class ClusterEditingInput{
 		/**
 		 * Destructor
 		 */
-		~ClusterEditingInput(){
+		virtual ~ClusterEditingInput(){
 			delete _instance;
 		};
 

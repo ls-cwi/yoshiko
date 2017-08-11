@@ -105,7 +105,7 @@ public:
   
   bool isDirty() const;
 
-  void parseCleverFormat(std::istream &is);
+  //void parseCleverFormat(std::istream &is);
 
   std::vector<int>* getCluster(lemon::FullGraph::Node u) const;
   

@@ -5,8 +5,8 @@
  *      Author: Philipp Spohr
  */
 
-#ifndef SRC_INPUT_JENAINPUT_H_
-#define SRC_INPUT_JENAINPUT_H_
+#ifndef SRC_INPUT_JENAINPUT_H
+#define SRC_INPUT_JENAINPUT_H
 
 #include "StreamInput.h"
 
@@ -40,4 +40,4 @@ namespace yskInput{
 }
 
 
-#endif /* SRC_INPUT_JENAINPUT_H_ */
+#endif /* SRC_INPUT_JENAINPUT_H */

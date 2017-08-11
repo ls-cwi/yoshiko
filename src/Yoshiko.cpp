@@ -232,7 +232,7 @@ long Yoshiko::solve(const ClusterEditingInstance& inst, ClusterEditingSolutions&
     IloModel M(env); // get model
     IloCplex cplex(env); // get cplex
     
-    // shut up cplex
+    // shut up cplex (for now maybe in the long run log somewhere or handle?)
     if (verbosity < 3) {
         cplex.setOut(env.getNullStream());
         cplex.setWarning(env.getNullStream());

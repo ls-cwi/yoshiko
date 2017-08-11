@@ -1,5 +1,5 @@
-#ifndef SRC_INPUT_SIFINPUT_H_
-#define SRC_INPUT_SIFINPUT_H_
+#ifndef SRC_INPUT_SIFINPUT_H
+#define SRC_INPUT_SIFINPUT_H
 
 #include "StreamInput.h"
 
@@ -14,4 +14,4 @@ namespace yskInput{
 
 }
 
-#endif /* SRC_INPUT_SIFINPUT_H_ */
+#endif /* SRC_INPUT_SIFINPUT_H */

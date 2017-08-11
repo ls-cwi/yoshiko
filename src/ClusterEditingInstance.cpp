@@ -79,61 +79,61 @@ void ClusterEditingInstance::initEdge(FullGraph::Edge edge, double weight, bool 
   }
 }
 
-
-
-void ClusterEditingInstance::parseCleverFormat(std::istream &is) {
-  try {
-    string line;
-    getline(is, line);
-    vector<string> tokens;
-    tokenize(line, tokens, " \t\"");
-    int n = (int) tokens.size() + 1;
-    init(n);
-    
-    for (FullGraph::NodeIt v(_orig); v != INVALID; ++v) {
-      vector<int> cluster;
-      cluster.push_back(_orig.id(v));
-      stringstream buffer;
-      buffer<<_orig.id(v);
-      initNode(v, buffer.str(), cluster);
-    }
-    
-    //jump back to beginning of stream
-    is.clear();
-    is.seekg(0, ios::beg);
-    
-    for (int i = 0; i < n - 1; ++i) {
-      getline(is, line);
-      vector<string> tokens;
-      tokenize(line, tokens, " \t\"");
-      for (int j = i + 1; j < n; ++j) {
-        FullGraph::Edge e = _orig.edge(_orig(i), _orig(j));
-        
-        double weight = 0.0;
-        bool permanent = false;
-        bool forbidden = false;
-        
-        if (tokens[j - i - 1] == "inf") {
-          permanent = true;
-          weight = std::numeric_limits<double>::infinity();
-        } else if (tokens[j - i - 1] == "-inf") {
-          forbidden = true;
-          weight = -std::numeric_limits<double>::infinity();
-        } else {
-          weight = atof(tokens[j - i - 1].c_str());
-        }
-        
-        initEdge(e, weight, permanent, forbidden);
-      }
-    }
-    
-  } catch (Exception &e) {
-    cerr << "caught exception while parsing the graph" << endl;
-    cerr << e.what() << endl;
-    exit(-1);
-  }
-}
-
+//
+//
+//void ClusterEditingInstance::parseCleverFormat(std::istream &is) {
+//  try {
+//    string line;
+//    getline(is, line);
+//    vector<string> tokens;
+//    tokenize(line, tokens, " \t\"");
+//    int n = (int) tokens.size() + 1;
+//    init(n);
+//
+//    for (FullGraph::NodeIt v(_orig); v != INVALID; ++v) {
+//      vector<int> cluster;
+//      cluster.push_back(_orig.id(v));
+//      stringstream buffer;
+//      buffer<<_orig.id(v);
+//      initNode(v, buffer.str(), cluster);
+//    }
+//
+//    //jump back to beginning of stream
+//    is.clear();
+//    is.seekg(0, ios::beg);
+//
+//    for (int i = 0; i < n - 1; ++i) {
+//      getline(is, line);
+//      vector<string> tokens;
+//      tokenize(line, tokens, " \t\"");
+//      for (int j = i + 1; j < n; ++j) {
+//        FullGraph::Edge e = _orig.edge(_orig(i), _orig(j));
+//
+//        double weight = 0.0;
+//        bool permanent = false;
+//        bool forbidden = false;
+//
+//        if (tokens[j - i - 1] == "inf") {
+//          permanent = true;
+//          weight = std::numeric_limits<double>::infinity();
+//        } else if (tokens[j - i - 1] == "-inf") {
+//          forbidden = true;
+//          weight = -std::numeric_limits<double>::infinity();
+//        } else {
+//          weight = atof(tokens[j - i - 1].c_str());
+//        }
+//
+//        initEdge(e, weight, permanent, forbidden);
+//      }
+//    }
+//
+//  } catch (Exception &e) {
+//    cerr << "caught exception while parsing the graph" << endl;
+//    cerr << e.what() << endl;
+//    exit(-1);
+//  }
+//}
+//
 
 
 double ClusterEditingInstance::computeCost() const {
@@ -211,16 +211,9 @@ const FullGraph& ClusterEditingInstance::getOrig() const {
   return _orig;
 }
 
-bool ClusterEditingInstance::isUnweighted() const {
-  return _unweighted;
-}
 
 bool ClusterEditingInstance::isDualWeighted() const {
   return _dualWeighted;
-}
-
-bool ClusterEditingInstance::isRealValued() const {
-  return _realValued;
 }
 
 ostream& operator <<(ostream& o, ClusterEditingInstance &inst) {

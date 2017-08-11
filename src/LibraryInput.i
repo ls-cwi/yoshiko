@@ -1,7 +1,6 @@
 %module LibraryInput
 
 %import "input/ClusterEditingInput.h"
-%import "CoreAlgorithm.h"
 
 //Namespace definition
 %{
@@ -9,5 +8,8 @@
 	using namespace yskInput;
 %}
 
+//Only expose what needs to be exposed
+%ignore edge;
+%ignore parseInput;
 
 %include "input/LibraryInput.h"

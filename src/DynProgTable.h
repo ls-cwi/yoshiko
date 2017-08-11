@@ -19,7 +19,7 @@ public:
   double getValue(int x);
   void setValue(int x, double value);
   void swap();
-  void print();
+  //void print();
   ~DynProgTable();
   
 private:

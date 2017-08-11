@@ -5,8 +5,8 @@
  *      Author: philipp
  */
 
-#ifndef SRC_INPUT_STREAMINPUT_H_
-#define SRC_INPUT_STREAMINPUT_H_
+#ifndef SRC_INPUT_STREAMINPUT_H
+#define SRC_INPUT_STREAMINPUT_H
 
 #include "ClusterEditingInput.h"
 
@@ -23,13 +23,9 @@ namespace yskInput{
 			 * @param is The input stream which is to be parsed
 			 */
 			virtual void parseInput(std::istream &is) = 0;
-
-	
-			virtual ~StreamInput(){};
-	
 	
 	};
 
 }
 
-#endif /* SRC_INPUT_STREAMINPUT_H_ */
+#endif /* SRC_INPUT_STREAMINPUT_H */

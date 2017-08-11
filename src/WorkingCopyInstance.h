@@ -30,6 +30,7 @@ class ClusterEditingInstance;
 
 class WorkingCopyInstance {
 public:
+//TODO: Clarify if all the CONST is needed
   WorkingCopyInstance(ClusterEditingInstance* inst)
     : _instance(inst)
     , _dirty(false)

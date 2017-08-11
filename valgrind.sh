@@ -27,6 +27,5 @@ cd ../Build
 cmake ../
 make
 
-echo "BUILDING JAVA WRAPPER"
-cd ../../YoshikoWrapper
-mvn clean install
+valgrind --leak-check=yes ./yoshiko -f ../../BSc-thesis-graph-based-clustering-app/DataSets/simple_sif_example.sif -F 1
+

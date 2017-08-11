@@ -152,6 +152,8 @@ namespace ysk {
 		size_t k = 0;
 		vector<vector<int> > p;
 		mergeSolutions(0, k, p, *ces, instances);
+
+
 		return ces;
 	}
 	

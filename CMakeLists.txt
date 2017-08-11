@@ -22,7 +22,6 @@ set( Yoshiko_Hdr
   
   src/input/ClusterEditingInput.h
   src/input/JENAInput.h
-  src/input/LibraryInput.h
   src/input/SIFInput.h
   src/input/StreamInput.h
    
@@ -64,7 +63,6 @@ set( Yoshiko_Src
   
   src/input/ClusterEditingInput.cpp
   src/input/JENAInput.cpp
-  src/input/LibraryInput.cpp
   src/input/SIFInput.cpp
 
   src/output/ClusterEditingOutput.cpp
@@ -88,12 +86,14 @@ set( Yoshiko_Src
 )
 
 set (YoshikoLib_Src
+	src/input/LibraryInput.cpp
 	src/LibraryInterface.cpp
 	src/LibraryInterface_wrap.cxx
 	${Yoshiko_Src}
 )
 
 set (YoshikoLib_Hdr
+	src/input/LibraryInput.h
 	src/LibraryInterface.h
 	${Yoshiko_Hdr}
 )

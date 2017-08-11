@@ -5,24 +5,16 @@
  * Created on 26. August 2012, 20:07
  */
 
-#include <cstdlib>
 #include <iostream>
 
-#include <lemon/full_graph.h>
 #include <lemon/lgf_writer.h>
 #include <lemon/adaptors.h>
-#include <lemon/list_graph.h>
 #include <lemon/bin_heap.h>
 #include <lemon/arg_parser.h>
 
-#include <ilconcert/ilosys.h>
-
 #include "ClusterEditingInstance.h"
-#include "ClusterEditingReduction.h"
 #include "ClusterReductionInstance.h"
 #include "ClusterEditingSolutions.h"
-#include "InducedCostsHeuristic.h"
-#include "Yoshiko.h"
 #include "Globals.h"
 #include "CoreAlgorithm.h"
 
@@ -154,7 +146,6 @@ int main(int argc, char * const argv[]) {
 
   input->parseInput(is);
   instance = input->getProblemInstance();
-  delete input;
   
   ClusterEditingSolutions* ces = performAlgorithm(
 		  	  instance,
@@ -166,8 +157,6 @@ int main(int argc, char * const argv[]) {
 			  separateTriangles
 		  );
 
-  //Problem instance is no longer needed when the output is generated (maybe it is later for referencing/ comparing?)
-  delete instance;
   //Output generation
   ClusterEditingOutput* output;
   output = ClusterEditingOutput::newInstance(
@@ -178,7 +167,12 @@ int main(int argc, char * const argv[]) {
 		  outputFileFormat
 		  );
   output->write();
+
+  //Final cleanup
+  delete ces;
   delete output;
+  delete input;
+
   
   //Termination
   return 0;

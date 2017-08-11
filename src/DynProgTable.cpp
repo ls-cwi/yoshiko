@@ -49,12 +49,12 @@ void DynProgTable::swap() {
   _table[1] = new double[_length];
 }
 
-void DynProgTable::print() {
-  int bound = (_length-1)/2;
-  for(int x = -bound; x <= bound; x++) {
-    cout << getValue(x)<<"\t";
-  }
-  cout <<endl;
-}
+//void DynProgTable::print() {
+//  int bound = (_length-1)/2;
+//  for(int x = -bound; x <= bound; x++) {
+//    cout << getValue(x)<<"\t";
+//  }
+//  cout <<endl;
+//}
 
 } // namespace ysk

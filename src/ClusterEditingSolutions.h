@@ -26,6 +26,12 @@ namespace ysk {
 ///
 class ClusterEditingSolutions {
 public:
+
+  ClusterEditingSolutions(){
+	  _totalCost = 0;
+
+  }
+
   size_t getNumberOfClusters(size_t i) const;
   
   std::vector<int>& getCluster(size_t i, size_t k);

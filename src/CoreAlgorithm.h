@@ -1,7 +1,6 @@
-#ifndef SRC_COREALGORITHM_H_
-#define SRC_COREALGORITHM_H_
+#ifndef SRC_COREALGORITHM_H
+#define SRC_COREALGORITHM_H
 
-#include <cstdlib>
 #include <iostream>
 #include <vector>
 #include <cmath>
@@ -48,4 +47,4 @@ namespace ysk {
 
 }
 
-#endif /* SRC_COREALGORITHM_H_ */
+#endif /* SRC_COREALGORITHM_H */
