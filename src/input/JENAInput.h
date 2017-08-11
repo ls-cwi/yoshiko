@@ -32,7 +32,9 @@ namespace yskInput{
 	 *     1 (LINE 8) C -> D has weight 1
 	 */
 	class JENAInput : public StreamInput{
+
 		void parseInput(std::istream &is);
+
 	};
 
 }

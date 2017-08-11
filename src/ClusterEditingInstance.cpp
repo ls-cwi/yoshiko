@@ -135,68 +135,6 @@ void ClusterEditingInstance::parseCleverFormat(std::istream &is) {
 }
 
 
-void ClusterEditingInstance::parseSIFFormat(std::istream &is) {
-  try {
-    map<string, int> nodeID;
-    map<int, string> nodeName;
-    string line; int n = 0;
-    while (getline(is, line)) {
-      vector<string> tokens;
-      // gunnar: there was a bug in reading in SIF files (DOS line break). I added '\r' so it should work now
-      tokenize(line, tokens, " \t\"\r");
-      if (nodeID.find(tokens[0]) == nodeID.end()) {
-        nodeID[tokens[0]] = n; nodeName[n++] = tokens[0];
-      }
-      
-      if (nodeID.find(tokens[2]) == nodeID.end()) {
-        nodeID[tokens[2]] = n; nodeName[n++] = tokens[2];
-        
-      }
-    }
-    //cout << "read " << n << " nodes" << endl;
-    
-    //cout << "initializing... " << flush;
-    init(n);
-    //cout << "done." << endl;
-    
-    //cout << "setting up clusters... " << flush;
-    for (FullGraph::NodeIt v(_orig); v != INVALID; ++v) {
-      vector<int> cluster;
-      cluster.push_back(_orig.id(v));
-      initNode(v, nodeName[_orig.id(v)], cluster);
-    }
-    //cout << "done." << endl;
-    
-    //cout << "initializing edges... " << flush;
-    // initialize edges to be absent
-    for (FullGraph::EdgeIt e(_orig); e != INVALID; ++e)
-      initEdge(e, -1.0, false, false);
-    //cout << "done." << endl;
-    
-    //jump back to beginning of stream
-    is.clear();
-    is.seekg(0, ios::beg);
-    
-    while (getline(is, line)) {
-      vector<string> tokens;
-      // gunnar: same here, added 'r'
-      tokenize(line, tokens, " \t\"\r");
-      if (tokens[0] == tokens[2]) cerr << "skipping self loop " << tokens[0] << " -- " << tokens[2] << endl;
-      else
-      {
-        FullGraph::Edge e = _orig.edge(_orig.nodeFromId(nodeID[tokens[0]]), _orig.nodeFromId(nodeID[tokens[2]]));
-        initEdge(e, 1.0, false, false);
-      }
-    }
-    
-    
-  } catch (Exception &e) {
-    cerr << "caught exception while parsing the graph" << endl;
-    cerr << e.what() << endl;
-    exit(-1);
-  }
-}
-
 
 double ClusterEditingInstance::computeCost() const {
   double k = 0;

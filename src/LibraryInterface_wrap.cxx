@@ -419,18 +419,6 @@ SWIGEXPORT jstring JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJN
 }
 
 
-SWIGEXPORT jlong JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_createNewProblemInstance(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  ysk::ClusterEditingInstance *result = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  result = (ysk::ClusterEditingInstance *)yskLib::createNewProblemInstance();
-  *(ysk::ClusterEditingInstance **)&jresult = result; 
-  return jresult;
-}
-
-
 #ifdef __cplusplus
 }
 #endif

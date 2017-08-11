@@ -104,13 +104,9 @@ public:
   bool isForbidden(const lemon::FullGraph::Edge& e) const;
   
   bool isDirty() const;
-  
-  void parseJenaFormat(std::istream &is);
-  
+
   void parseCleverFormat(std::istream &is);
-  
-  void parseSIFFormat(std::istream &is);
-  
+
   std::vector<int>* getCluster(lemon::FullGraph::Node u) const;
   
   friend std::ostream& operator <<(std::ostream &os, ClusterEditingInstance &inst);

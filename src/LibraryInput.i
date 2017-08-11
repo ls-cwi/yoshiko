@@ -1,6 +1,7 @@
 %module LibraryInput
 
 %import "input/ClusterEditingInput.h"
+%import "CoreAlgorithm.h"
 
 //Namespace definition
 %{

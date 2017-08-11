@@ -10,6 +10,7 @@ set( Yoshiko_Hdr
   src/ClusterReductionInstance.h
   src/config.h
   src/config.h.in
+  src/CoreAlgorithm.h
   src/Delta.h
   src/DynProgTable.h
   src/Globals.h
@@ -22,6 +23,7 @@ set( Yoshiko_Hdr
   src/input/ClusterEditingInput.h
   src/input/JENAInput.h
   src/input/LibraryInput.h
+  src/input/SIFInput.h
   src/input/StreamInput.h
    
   src/output/ClusterEditingOutput.h
@@ -46,6 +48,7 @@ set( Yoshiko_Hdr
 
 set( Yoshiko_Src
   src/ClusterReductionInstance.cpp
+  src/CoreAlgorithm.cpp
   src/ParameterizedInstance.cpp
   src/Helpers.cpp
   src/Delta.cpp
@@ -57,11 +60,12 @@ set( Yoshiko_Src
   src/Yoshiko.cpp
   src/ClusterEditingSolutions.cpp
   src/Globals.cpp
-  src/yoshiko_main.cpp
+  src/main.cpp
   
+  src/input/ClusterEditingInput.cpp
   src/input/JENAInput.cpp
   src/input/LibraryInput.cpp
-  src/input/ClusterEditingInput.cpp
+  src/input/SIFInput.cpp
 
   src/output/ClusterEditingOutput.cpp
   src/output/CSVOutput.cpp
