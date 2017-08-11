@@ -12,6 +12,8 @@ using namespace std;
 using namespace ysk;
 
 namespace yskInput{
+
+
 		
 	void JENAInput::parseInput(std::istream &is){
 

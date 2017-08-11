@@ -123,28 +123,29 @@ int main(int argc, char * const argv[]) {
 
   //Determine which input format is to be parsed and generate a ClusterEditingInstance accordingly
 
-  ClusterEditingInstance* instance;
+  ClusterEditingInstance* instance = new ClusterEditingInstance();
   StreamInput* input;
   
   switch (inputFileFormat) {
   	  //JENA
   	  case 0:
-  		  input = new JENAInput();
+  		  input = new JENAInput(instance);
   		  break;
   	  case 1:
-  		  input = new SIFInput();
+  		  input = new SIFInput(instance);
   		  break;
   	//case 2:
         //instance.parseCleverFormat(is); <<< ? Clever Format not used :(
         //break;
   	  default:
   		  //Should never be reached
-  		  input = new JENAInput();
+  		  input = new JENAInput(instance);
   		  cout << endl<<"Warning: Input Format not specified, assuming JENA"<<endl;
   		  break;
   }
 
   input->parseInput(is);
+  is.close(); //Close input stream
   instance = input->getProblemInstance();
   
   ClusterEditingSolutions* ces = performAlgorithm(
@@ -169,9 +170,10 @@ int main(int argc, char * const argv[]) {
   output->write();
 
   //Final cleanup
+  delete instance;
+  delete input;
   delete ces;
   delete output;
-  delete input;
 
   
   //Termination

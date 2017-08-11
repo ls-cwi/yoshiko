@@ -4,6 +4,7 @@ using namespace lemon;
 using namespace std;
 using namespace ysk;
 
+
 namespace yskInput{
 
 	void SIFInput::parseInput(std::istream &is){

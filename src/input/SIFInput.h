@@ -7,6 +7,9 @@ namespace yskInput{
 	
 
 	class SIFInput: public StreamInput {
+	public:
+
+		SIFInput(ysk::ClusterEditingInstance* inst) : StreamInput(inst){};
 
 		void parseInput(std::istream &is);
 

@@ -9,6 +9,8 @@
 #define SRC_INPUT_LIBRARYINPUT_H
 
 #include "ClusterEditingInput.h"
+#include "ClusterEditingInstance.h"
+
 
 namespace yskInput{
 
@@ -25,12 +27,13 @@ namespace yskInput{
 
 		public:
 
+			LibraryInput(ysk::ClusterEditingInstance* inst ) : ClusterEditingInput(inst){
+				_edges = std::list<edge>();
+				_size = 0;
+			}
+
 			ysk::ClusterEditingInstance* parseInput();
 
-			LibraryInput(){
-				_size = 0;
-				_edges = std::list<edge>();
-			};
 
 			/**
 			 * Sets |V| of the problem instance

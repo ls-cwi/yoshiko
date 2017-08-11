@@ -153,7 +153,6 @@ namespace ysk {
 		vector<vector<int> > p;
 		mergeSolutions(0, k, p, *ces, instances);
 
-
 		return ces;
 	}
 	

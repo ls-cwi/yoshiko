@@ -28,26 +28,19 @@ namespace yskInput{
  */
 class ClusterEditingInput{
 	public:
+
+		ClusterEditingInput(ysk::ClusterEditingInstance* inst){
+			_instance = inst;
+		}
+
 		/**
 		 * Returns the ClusterEditingInstance that is represented by this input (after processing/parsing)
 		 * @return The pointer referencing the ClusterEditingInstance
 		 */
 		ysk::ClusterEditingInstance* getProblemInstance();
 
-		/**
-		 * Destructor
-		 */
-		virtual ~ClusterEditingInput(){
-			delete _instance;
-		};
-
 	protected:
-		/**
-		 * Default constructor, creates an "empty" ClusterEditingInstance that is then modified accordingly
-		 */
-		ClusterEditingInput(){
-			_instance = new ysk::ClusterEditingInstance();
-		};
+
 
 		/**
 		 * The ClusterEditingInstance that is adjusted according to the input provided and can eventually be retrieved to apply the algorithm
