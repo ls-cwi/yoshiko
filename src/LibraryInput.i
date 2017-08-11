@@ -11,5 +11,6 @@
 //Only expose what needs to be exposed
 %ignore edge;
 %ignore parseInput;
+%ignore getProblemInstance;
 
 %include "input/LibraryInput.h"

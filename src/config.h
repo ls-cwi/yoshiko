@@ -6,6 +6,6 @@ DO NOT MODIFY!
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#define YOSHIKO_VERSION "ds/dev-1dd99fd"
+#define YOSHIKO_VERSION "ds/dev-7055677"
 
 #endif // CONFIG_H

@@ -27,12 +27,16 @@ namespace yskInput{
 
 		public:
 
-			LibraryInput(ysk::ClusterEditingInstance* inst ) : ClusterEditingInput(inst){
+			LibraryInput():ClusterEditingInput(new ysk::ClusterEditingInstance()){
 				_edges = std::list<edge>();
 				_size = 0;
 			}
 
-			ysk::ClusterEditingInstance* parseInput();
+			~LibraryInput(){
+				delete _instance;
+			}
+
+			void parseInput();
 
 
 			/**

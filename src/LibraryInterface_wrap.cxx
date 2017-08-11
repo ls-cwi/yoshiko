@@ -354,17 +354,25 @@ SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_d
 }
 
 
-SWIGEXPORT jlong JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_new_1LibraryInput(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+SWIGEXPORT jlong JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_new_1LibraryInput(JNIEnv *jenv, jclass jcls) {
   jlong jresult = 0 ;
-  ysk::ClusterEditingInstance *arg1 = (ysk::ClusterEditingInstance *) 0 ;
   yskInput::LibraryInput *result = 0 ;
   
   (void)jenv;
   (void)jcls;
-  arg1 = *(ysk::ClusterEditingInstance **)&jarg1; 
-  result = (yskInput::LibraryInput *)new yskInput::LibraryInput(arg1);
+  result = (yskInput::LibraryInput *)new yskInput::LibraryInput();
   *(yskInput::LibraryInput **)&jresult = result; 
   return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_delete_1LibraryInput(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+  yskInput::LibraryInput *arg1 = (yskInput::LibraryInput *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(yskInput::LibraryInput **)&jarg1; 
+  delete arg1;
 }
 
 
@@ -396,16 +404,6 @@ SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_L
 }
 
 
-SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_delete_1LibraryInput(JNIEnv *jenv, jclass jcls, jlong jarg1) {
-  yskInput::LibraryInput *arg1 = (yskInput::LibraryInput *) 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  arg1 = *(yskInput::LibraryInput **)&jarg1; 
-  delete arg1;
-}
-
-
 SWIGEXPORT jint JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_CPXSIZE_1BITS_1get(JNIEnv *jenv, jclass jcls) {
   jint jresult = 0 ;
   int result;
@@ -432,7 +430,7 @@ SWIGEXPORT jstring JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJN
 
 SWIGEXPORT jlong JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_processLibraryInput(JNIEnv *jenv, jclass jcls, jlong jarg1) {
   jlong jresult = 0 ;
-  SwigValueWrapper< yskInput::LibraryInput > arg1 ;
+  yskInput::LibraryInput arg1 ;
   yskInput::LibraryInput *argp1 ;
   ysk::ClusterEditingSolutions *result = 0 ;
   

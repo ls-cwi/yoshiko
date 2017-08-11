@@ -15,10 +15,9 @@ using namespace ysk;
 
 namespace yskInput{
 		
-	ysk::ClusterEditingInstance* LibraryInput::parseInput(){
-		ClusterEditingInstance* cei = new ClusterEditingInstance();
-		//TODO:
-		return cei;
+	void LibraryInput::parseInput(){
+		_instance->init(_size);
+		return;
 	};
 	
 

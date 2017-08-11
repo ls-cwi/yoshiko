@@ -11,9 +11,9 @@ namespace yskLib{
 	}
 
 	ysk::ClusterEditingSolutions* processLibraryInput(yskInput::LibraryInput libIn){
-		return performAlgorithm(libIn.parseInput());
+		libIn.parseInput();
+		return performAlgorithm(libIn.getProblemInstance());
 	}
-
 
 }
 
