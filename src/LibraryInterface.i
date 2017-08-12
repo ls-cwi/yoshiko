@@ -1,6 +1,12 @@
 //Module that allows basic library interaction
 %module LibraryInterface
 
+%javaconst(1);
+
+%typemap(out) long {
+    $result = HEIL($1);
+}
+
 //Include a direct string-mapping for C++/Java
 %include "std_string.i"
 

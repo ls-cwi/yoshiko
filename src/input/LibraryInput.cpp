@@ -24,7 +24,7 @@ namespace yskInput{
 		//NODE initialization
 
 		//In this representation the nodes don't have names and are simply referred to by index
-		int id = 0;
+		unsigned long id = 0;
 		for (FullGraph::NodeIt v(fullGraph); v != INVALID; ++v, id++) {
 			vector<int> cluster;
 			cluster.push_back(fullGraph.id(v)); //Each node is initialized with its "own cluster"
@@ -37,7 +37,7 @@ namespace yskInput{
 		//**
 		//THIS SHOULD BE REMOVED IN A LATER VERSION: INIT SHOULD NOT NEED TO BE CALLED ON UNINTERESTING EDGES, LEMON ALREADY DOES EVERYTHING WE NEED
 		//DUMMY INIT FOR ALL EDGES
-		int i=0;
+		unsigned long i=0;
 		for (FullGraph::NodeIt v(fullGraph); i < _size - 1; ++v, ++i) {
 			FullGraph::NodeIt w(fullGraph, v);
 			++w;
@@ -69,11 +69,11 @@ namespace yskInput{
 		return true;
 	};
 	
-	void LibraryInput::addEdge(int sourceID,int targetID,double cost){
+	void LibraryInput::addEdge(unsigned long sourceID,unsigned long targetID,double cost){
 		LibraryInput::addEdge(sourceID,targetID,cost,false,false);
 	}
 
-	void LibraryInput::addEdge(int sourceID,int targetID,double cost,bool permanent, bool forbidden){
+	void LibraryInput::addEdge(unsigned long sourceID,unsigned long targetID,double cost,bool permanent, bool forbidden){
 		//Out of range edges
 		if (sourceID >= _size || targetID >= _size){
 			throw std::invalid_argument("Source or Target ID of the node are out of range (Did you initialize the input with the correct size?");
@@ -94,7 +94,7 @@ namespace yskInput{
 	
 	//SETTER / GETTER
 	
-	void LibraryInput::setSize(int size){
+	void LibraryInput::setSize(unsigned long size){
 		_size = size;
 	};
 	

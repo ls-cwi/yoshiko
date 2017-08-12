@@ -254,7 +254,7 @@ static void SWIGUNUSED SWIG_JavaThrowException(JNIEnv *jenv, SWIG_JavaExceptionC
 extern "C" {
 #endif
 
-SWIGEXPORT jlong JNICALL Java_swig_LibraryInterfaceJNI_new_1ClusterEditingSolutions(JNIEnv *jenv, jclass jcls) {
+SWIGEXPORT jlong JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_new_1ClusterEditingSolutions(JNIEnv *jenv, jclass jcls) {
   jlong jresult = 0 ;
   ysk::ClusterEditingSolutions *result = 0 ;
   
@@ -266,7 +266,7 @@ SWIGEXPORT jlong JNICALL Java_swig_LibraryInterfaceJNI_new_1ClusterEditingSoluti
 }
 
 
-SWIGEXPORT jlong JNICALL Java_swig_LibraryInterfaceJNI_ClusterEditingSolutions_1getNumberOfClusters(JNIEnv *jenv, jclass jcls, jlong jarg1, jlong jarg2) {
+SWIGEXPORT jlong JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_ClusterEditingSolutions_1getNumberOfClusters(JNIEnv *jenv, jclass jcls, jlong jarg1, jlong jarg2) {
   jlong jresult = 0 ;
   ysk::ClusterEditingSolutions *arg1 = (ysk::ClusterEditingSolutions *) 0 ;
   size_t arg2 ;
@@ -282,7 +282,7 @@ SWIGEXPORT jlong JNICALL Java_swig_LibraryInterfaceJNI_ClusterEditingSolutions_1
 }
 
 
-SWIGEXPORT jlong JNICALL Java_swig_LibraryInterfaceJNI_ClusterEditingSolutions_1getCluster(JNIEnv *jenv, jclass jcls, jlong jarg1, jlong jarg2, jlong jarg3) {
+SWIGEXPORT jlong JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_ClusterEditingSolutions_1getCluster(JNIEnv *jenv, jclass jcls, jlong jarg1, jlong jarg2, jlong jarg3) {
   jlong jresult = 0 ;
   ysk::ClusterEditingSolutions *arg1 = (ysk::ClusterEditingSolutions *) 0 ;
   size_t arg2 ;
@@ -300,7 +300,7 @@ SWIGEXPORT jlong JNICALL Java_swig_LibraryInterfaceJNI_ClusterEditingSolutions_1
 }
 
 
-SWIGEXPORT jlong JNICALL Java_swig_LibraryInterfaceJNI_ClusterEditingSolutions_1getSolution(JNIEnv *jenv, jclass jcls, jlong jarg1, jlong jarg2) {
+SWIGEXPORT jlong JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_ClusterEditingSolutions_1getSolution(JNIEnv *jenv, jclass jcls, jlong jarg1, jlong jarg2) {
   jlong jresult = 0 ;
   ysk::ClusterEditingSolutions *arg1 = (ysk::ClusterEditingSolutions *) 0 ;
   size_t arg2 ;
@@ -316,7 +316,7 @@ SWIGEXPORT jlong JNICALL Java_swig_LibraryInterfaceJNI_ClusterEditingSolutions_1
 }
 
 
-SWIGEXPORT jlong JNICALL Java_swig_LibraryInterfaceJNI_ClusterEditingSolutions_1getNumberOfSolutions(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+SWIGEXPORT jlong JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_ClusterEditingSolutions_1getNumberOfSolutions(JNIEnv *jenv, jclass jcls, jlong jarg1) {
   jlong jresult = 0 ;
   ysk::ClusterEditingSolutions *arg1 = (ysk::ClusterEditingSolutions *) 0 ;
   size_t result;
@@ -330,7 +330,7 @@ SWIGEXPORT jlong JNICALL Java_swig_LibraryInterfaceJNI_ClusterEditingSolutions_1
 }
 
 
-SWIGEXPORT jdouble JNICALL Java_swig_LibraryInterfaceJNI_ClusterEditingSolutions_1getTotalCost(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+SWIGEXPORT jdouble JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_ClusterEditingSolutions_1getTotalCost(JNIEnv *jenv, jclass jcls, jlong jarg1) {
   jdouble jresult = 0 ;
   ysk::ClusterEditingSolutions *arg1 = (ysk::ClusterEditingSolutions *) 0 ;
   double result;
@@ -344,7 +344,7 @@ SWIGEXPORT jdouble JNICALL Java_swig_LibraryInterfaceJNI_ClusterEditingSolutions
 }
 
 
-SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_delete_1ClusterEditingSolutions(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_delete_1ClusterEditingSolutions(JNIEnv *jenv, jclass jcls, jlong jarg1) {
   ysk::ClusterEditingSolutions *arg1 = (ysk::ClusterEditingSolutions *) 0 ;
   
   (void)jenv;
@@ -354,7 +354,7 @@ SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_delete_1ClusterEditingSolu
 }
 
 
-SWIGEXPORT jlong JNICALL Java_swig_LibraryInterfaceJNI_new_1LibraryInput(JNIEnv *jenv, jclass jcls) {
+SWIGEXPORT jlong JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_new_1LibraryInput(JNIEnv *jenv, jclass jcls) {
   jlong jresult = 0 ;
   yskInput::LibraryInput *result = 0 ;
   
@@ -366,7 +366,7 @@ SWIGEXPORT jlong JNICALL Java_swig_LibraryInterfaceJNI_new_1LibraryInput(JNIEnv 
 }
 
 
-SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_delete_1LibraryInput(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_delete_1LibraryInput(JNIEnv *jenv, jclass jcls, jlong jarg1) {
   yskInput::LibraryInput *arg1 = (yskInput::LibraryInput *) 0 ;
   
   (void)jenv;
@@ -376,38 +376,38 @@ SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_delete_1LibraryInput(JNIEn
 }
 
 
-SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_LibraryInput_1setSize(JNIEnv *jenv, jclass jcls, jlong jarg1, jint jarg2) {
+SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_LibraryInput_1setSize(JNIEnv *jenv, jclass jcls, jlong jarg1, jlong jarg2) {
   yskInput::LibraryInput *arg1 = (yskInput::LibraryInput *) 0 ;
-  int arg2 ;
+  unsigned long arg2 ;
   
   (void)jenv;
   (void)jcls;
   arg1 = *(yskInput::LibraryInput **)&jarg1; 
-  arg2 = (int)jarg2; 
+  arg2 = (unsigned long)jarg2; 
   (arg1)->setSize(arg2);
 }
 
 
-SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_LibraryInput_1addEdge_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jint jarg2, jint jarg3, jdouble jarg4) {
+SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_LibraryInput_1addEdge_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jlong jarg2, jlong jarg3, jdouble jarg4) {
   yskInput::LibraryInput *arg1 = (yskInput::LibraryInput *) 0 ;
-  int arg2 ;
-  int arg3 ;
+  unsigned long arg2 ;
+  unsigned long arg3 ;
   double arg4 ;
   
   (void)jenv;
   (void)jcls;
   arg1 = *(yskInput::LibraryInput **)&jarg1; 
-  arg2 = (int)jarg2; 
-  arg3 = (int)jarg3; 
+  arg2 = (unsigned long)jarg2; 
+  arg3 = (unsigned long)jarg3; 
   arg4 = (double)jarg4; 
   (arg1)->addEdge(arg2,arg3,arg4);
 }
 
 
-SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_LibraryInput_1addEdge_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jint jarg2, jint jarg3, jdouble jarg4, jboolean jarg5, jboolean jarg6) {
+SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_LibraryInput_1addEdge_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jlong jarg2, jlong jarg3, jdouble jarg4, jboolean jarg5, jboolean jarg6) {
   yskInput::LibraryInput *arg1 = (yskInput::LibraryInput *) 0 ;
-  int arg2 ;
-  int arg3 ;
+  unsigned long arg2 ;
+  unsigned long arg3 ;
   double arg4 ;
   bool arg5 ;
   bool arg6 ;
@@ -415,8 +415,8 @@ SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_LibraryInput_1addEdge_1_1S
   (void)jenv;
   (void)jcls;
   arg1 = *(yskInput::LibraryInput **)&jarg1; 
-  arg2 = (int)jarg2; 
-  arg3 = (int)jarg3; 
+  arg2 = (unsigned long)jarg2; 
+  arg3 = (unsigned long)jarg3; 
   arg4 = (double)jarg4; 
   arg5 = jarg5 ? true : false; 
   arg6 = jarg6 ? true : false; 
@@ -424,7 +424,7 @@ SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_LibraryInput_1addEdge_1_1S
 }
 
 
-SWIGEXPORT jstring JNICALL Java_swig_LibraryInterfaceJNI_getVersionString(JNIEnv *jenv, jclass jcls) {
+SWIGEXPORT jstring JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_getVersionString(JNIEnv *jenv, jclass jcls) {
   jstring jresult = 0 ;
   std::string result;
   
@@ -436,7 +436,7 @@ SWIGEXPORT jstring JNICALL Java_swig_LibraryInterfaceJNI_getVersionString(JNIEnv
 }
 
 
-SWIGEXPORT jlong JNICALL Java_swig_LibraryInterfaceJNI_processLibraryInput(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+SWIGEXPORT jlong JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_processLibraryInput(JNIEnv *jenv, jclass jcls, jlong jarg1) {
   jlong jresult = 0 ;
   yskInput::LibraryInput *arg1 = (yskInput::LibraryInput *) 0 ;
   ysk::ClusterEditingSolutions *result = 0 ;

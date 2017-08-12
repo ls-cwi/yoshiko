@@ -1,5 +1,7 @@
 %module ClusterEditingSolutions
 
+%immutable;
+
 %import "Helpers.h"
 %import "ClusterEditingInstance.h"
 %import "WorkingCopyInstance.h"

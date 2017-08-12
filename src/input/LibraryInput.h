@@ -19,8 +19,8 @@ namespace yskInput{
 	 * Simple helper struct that contains relevant information about edges in the most rudimentary fashion.
 	 */
 	struct edge{
-		int sourceID;
-		int targetID;
+		unsigned long sourceID;
+		unsigned long targetID;
 		double cost;
 		ysk::EdgeType edgeType;
 	};
@@ -57,7 +57,7 @@ namespace yskInput{
 			 * Sets |V| of the problem instance
 			 * @param id The required size of the problem
 			 */
-			void setSize(int id);
+			void setSize(unsigned long id);
 
 			/**
 			 * Adds an non-permanent non-forbidden edge between the given node ids (or updates the cost).
@@ -66,7 +66,7 @@ namespace yskInput{
 			 * @param targetID The id of the target node
 			 * @param cost The new cost that is to be assigned
 			 */
-			void addEdge(int sourceID,int targetID,double cost);
+			void addEdge(unsigned long sourceID,unsigned long targetID,double cost);
 
 			/**
 			 * Adds an edge between the given node ids (or updates the cost).
@@ -77,14 +77,14 @@ namespace yskInput{
 			 * @param permanent Marks the edge as permanent (takes precedence over forbidden!)
 			 * @param forbidden Marks the edge as forbidden (no effect if edge is marked as permanent!)
 			 */
-			void addEdge(int sourceID,int targetID,double cost,bool permanent, bool forbidden);
+			void addEdge(unsigned long sourceID,unsigned long targetID,double cost,bool permanent, bool forbidden);
 
 
 		private:
 			/**
 			 * |V| of the problem instance
 			 */
-			int _size;
+			unsigned long _size;
 			/**
 			 * A simple list holding edges
 			 */

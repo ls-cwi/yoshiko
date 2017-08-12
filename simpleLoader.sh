@@ -27,6 +27,7 @@ cd ../Build
 cmake ../
 make
 
+
 echo "Compile Simple Loader"
 cd ../../SimpleLoader/src
 javac Main.java

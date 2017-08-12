@@ -188,4 +188,3 @@ add_executable( yoshiko ${Yoshiko_Src} ${Yoshiko_Hdr})
 
 target_link_libraries( yoshiko ${CommonLibs} )
 target_link_libraries( yoshikoLibrary ${CommonLibs})
-
