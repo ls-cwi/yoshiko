@@ -13,4 +13,6 @@
 	using namespace yskLib;
 %}
 
+%ignore CPXSIZE_BITS;
+
 %include "LibraryInterface.h"

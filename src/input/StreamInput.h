@@ -25,8 +25,10 @@ namespace yskInput{
 			/**
 			 * Parses the input stream treating it as the input format represented by the respective class implementing this method
 			 * @param is The input stream which is to be parsed
+			 * @return True if the parsing was successful / False otherwise
 			 */
-			virtual void parseInput(std::istream &is) = 0;
+			virtual bool parseInput(std::istream &is) = 0;
+
 
 	};
 

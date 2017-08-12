@@ -48,16 +48,16 @@ void WorkingCopyInstance::initNode(FullGraph::Node node, string name) {
     (*_clusters)[node]->insert((*_clusters)[node]->end(), _graph->id(node));
 }
 
-void WorkingCopyInstance::initEdge(FullGraph::Edge edge, double weight, bool permanent, bool forbidden) {
+void WorkingCopyInstance::initEdge(FullGraph::Edge edge, double weight, EdgeType edgeType) {
     (*_edges)[edge] = true;
     (*_weight)[edge] = weight;
     
-    if(forbidden) {
+    if(edgeType == FORBIDDEN) {
         (*_forbidden)[edge] = true;
         (*_weight)[edge] = -std::numeric_limits<double>::infinity();
     }
     
-    if(permanent) {
+    if(edgeType == PERMANENT) {
         (*_permanent)[edge]=true;
         (*_weight)[edge]=std::numeric_limits<double>::infinity();
     }
@@ -182,7 +182,7 @@ WorkingCopyGraph::Edge WorkingCopyInstance::edge(const WorkingCopyGraph::Node& u
     }
     WorkingCopyGraph::Edge uv = _instance->getOrig().edge(u, v);
     if (!(*_nodes)[u] || !(*_nodes)[v] || !(*_edges)[uv]) {
-        cerr << "Fatal error: trying to acces invisible edge "<<_instance->getOrig().id(u)<<" -- "<<_instance->getOrig().id(v) << endl;
+        cerr << "Fatal error: trying to access invisible edge "<<_instance->getOrig().id(u)<<" -- "<<_instance->getOrig().id(v) << endl;
         cerr.flush();
         
         exit(-1);
@@ -211,6 +211,16 @@ string WorkingCopyInstance::getEdgeName(const WorkingCopyGraph::Edge &uv) const 
 	stringstream st;
 	st << (*_nodeNames)[_graph->u(uv)] << " -- " << (*_nodeNames)[_graph->v(uv)];
 	return st.str();
+}
+
+EdgeType WorkingCopyInstance::getEdgeType (const WorkingCopyGraph::Edge& e) const {
+	if ((*_permanent)[e]){
+		return PERMANENT;
+	}
+	else if ((*_forbidden)[e]){
+		return FORBIDDEN;
+	}
+	return UNDECIDED;
 }
 
 bool WorkingCopyInstance::isPermanent(const WorkingCopyGraph::Edge &e) const {

@@ -10,7 +10,7 @@ cd ../../../../../../../../yoshiko/src
 
 #loop over swig-interfaces and process them
 #for i in *.i; do
-#	swig -c++ -java -noproxy -package de.hhu.ba.yoshikoWrapper.swig -outdir ../../YoshikoWrapper/src/main/java/de/hhu/ba/yoshikoWrapper/swig $i
+#	swig -c++ -java -noproxy -outdir ../../YoshikoWrapper/src/main/java/de/hhu/ba/yoshikoWrapper/swig $i
 #	break
 #done
 

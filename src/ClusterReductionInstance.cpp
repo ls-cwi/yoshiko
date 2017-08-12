@@ -150,7 +150,7 @@ void ClusterReductionInstance::computeChildInstances(vector<ClusterReductionInst
         
         WorkingCopyGraph::Edge uv = _instance->getWorkingCopyInstance().edge(u, v);
         FullGraph::Edge xy = childInstances[i]->_instance->getOrig().edge(x, y);
-        childInstances[i]->_instance->initEdge(xy, _instance->getWorkingCopyInstance().getWeight(uv), _instance->getWorkingCopyInstance().isPermanent(uv), _instance->getWorkingCopyInstance().isForbidden(uv));
+        childInstances[i]->_instance->initEdge(xy, _instance->getWorkingCopyInstance().getWeight(uv), _instance->getWorkingCopyInstance().getEdgeType(uv));
         childInstances[i]->_instance->getWorkingCopyInstance().edge(x, y);
         ++y;
       }

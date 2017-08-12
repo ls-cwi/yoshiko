@@ -15,9 +15,7 @@ namespace yskInput{
 
 
 		
-	void JENAInput::parseInput(std::istream &is){
-
-		//TODO: Better exception handling, validating of input
+	bool JENAInput::parseInput(std::istream &is){
 
 		try {
 			//STEP 1: PARSE NODE COUNT
@@ -57,31 +55,30 @@ namespace yskInput{
 					FullGraph::Edge e = fullGraph.edge(v, w);
 					//Default values
 					double weight = 0.0;
-					bool permanent = false;
-					bool forbidden = false;
+					EdgeType edgeType = UNDECIDED;
 
 					//Process permanent edges (by conventions those ar marked as infinite in the JENA file format)
 					if (tokens[j] == "inf") {
-						permanent = true;
+						edgeType = PERMANENT;
 						weight = std::numeric_limits<double>::infinity();
 					}
 					else if (tokens[j] == "-inf") { //Forbidden edges
-						forbidden = true;
+						edgeType = FORBIDDEN;
 						weight = -std::numeric_limits<double>::infinity();
 					}
 					else { //Weighted edges
 						weight = atof(tokens[j].c_str());
 						//Out of bounds values are assumed to be infinity
 						if (weight >= 1e+20) {
-							permanent = true;
+							edgeType = PERMANENT;
 							weight = std::numeric_limits<double>::infinity();
 						}
 						else if (weight <= -1e+20) {
-							forbidden = true;
+							edgeType = FORBIDDEN;
 							weight = -std::numeric_limits<double>::infinity();
 						}
 					}
-					_instance ->initEdge(e, weight, permanent, forbidden);
+					_instance ->initEdge(e, weight, edgeType);
 					++j;
 				}//TARGET NODE LOOP END
 			}//SOURCE NODE LOOP END
@@ -90,7 +87,8 @@ namespace yskInput{
 			//TODO: MORE INFO ABOUT WHAT WENT WRONG
 			cerr << "caught exception while parsing the graph" << endl;
 			cerr << e.what() << endl;
-			exit(-1); //?
+			return false;
 		}
+		return true;
 	};
 }

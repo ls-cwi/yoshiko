@@ -144,7 +144,10 @@ int main(int argc, char * const argv[]) {
   		  break;
   }
 
-  input->parseInput(is);
+  if (!input->parseInput(is)){
+	  cout << endl << "Parsing failed! Terminating ...";
+	  return 1;
+  }
   is.close(); //Close input stream
   instance = input->getProblemInstance();
   

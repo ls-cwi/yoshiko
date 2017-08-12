@@ -37,7 +37,7 @@ namespace yskInput{
 
 		JENAInput(ysk::ClusterEditingInstance* inst) : StreamInput(inst){};
 
-		void parseInput(std::istream &is);
+		bool parseInput(std::istream &is);
 
 	};
 

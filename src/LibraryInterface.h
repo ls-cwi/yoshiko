@@ -28,7 +28,7 @@ namespace yskLib{
 		 */
 		std::string getVersionString();
 
-		ysk::ClusterEditingSolutions* processLibraryInput(yskInput::LibraryInput libIn);
+		ysk::ClusterEditingSolutions* processLibraryInput(yskInput::LibraryInput* libIn);
 }
 
 #endif /* SRC_LIBRARYINTERFACE_H */

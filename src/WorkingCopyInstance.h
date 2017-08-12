@@ -30,7 +30,6 @@ class ClusterEditingInstance;
 
 class WorkingCopyInstance {
 public:
-//TODO: Clarify if all the CONST is needed
   WorkingCopyInstance(ClusterEditingInstance* inst)
     : _instance(inst)
     , _dirty(false)
@@ -43,7 +42,7 @@ public:
   
   void initNode(lemon::FullGraph::Node node, std::string name);
   
-  void initEdge(lemon::FullGraph::Edge edge, double weight, bool permanent, bool forbidden);
+  void initEdge(lemon::FullGraph::Edge edge, double weight, EdgeType edgeType);
   
   const WorkingCopyGraph& getGraph() const;
   
@@ -76,6 +75,8 @@ public:
   
   bool isForbidden(const WorkingCopyGraph::Edge& e) const;
   
+  EdgeType getEdgeType (const WorkingCopyGraph::Edge& e) const;
+
   const WorkingCopyGraph::EdgeMap<bool>& getPermanent() const;
   
   const WorkingCopyGraph::EdgeMap<bool>& getForbidden() const;

@@ -19,9 +19,15 @@ namespace ysk {
 
 	extern int time_limit;
 	extern lemon::Timer clk;
-	extern int verbosity;
+	extern int verbosity; //<<< TODO: CONVERT TO ENUM
 	extern int no_threads;
 	extern double eps;
+
+	enum EdgeType{
+				UNDECIDED = 0,
+				PERMANENT = 1,
+				FORBIDDEN = 2
+	};
 
 } // namespace ysk
   

@@ -20,6 +20,7 @@
 
 #include "WorkingCopyInstance.h"
 #include "Helpers.h"
+#include "Globals.h"
 
 namespace ysk {
 
@@ -73,13 +74,11 @@ public:
    * Adds an edge to the given instance with associated information relevant to the dwgc problem
    * @param edge The edge as lemon::FullGraph::Edge
    * @param weight The edge-weight
-   * @param permanent If true the edge is always part of an ideal solution
-   * @param forbidden If true the edge is never part of an ideal solution
+   * @param edgeType FORBIDDEN/PERMANENT markers for the edge
    */
   void initEdge(lemon::FullGraph::Edge edge,
                 double weight,
-                bool permanent,
-                bool forbidden);
+                EdgeType edgeType);
   
   WorkingCopyInstance& getWorkingCopyInstance();
   

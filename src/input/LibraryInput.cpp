@@ -7,21 +7,57 @@
 
 #include "LibraryInput.h"
 
-#include <stdexcept>
-
 using namespace lemon;
 using namespace std;
 using namespace ysk;
 
 namespace yskInput{
 		
-	void LibraryInput::parseInput(){
+	bool LibraryInput::parseInput(){
+
+
+		//We are now adjusting the ClusterEditingInstance accordingly to the previously assigned size and edges
 		_instance->init(_size);
-		return;
+
+		FullGraph fullGraph = _instance ->getOrig(); //Created in the init function
+
+		//NODE initialization
+
+		//In this representation the nodes don't have names and are simply referred to by index
+		int id = 0;
+		for (FullGraph::NodeIt v(fullGraph); v != INVALID; ++v, id++) {
+			vector<int> cluster;
+			cluster.push_back(fullGraph.id(v)); //Each node is initialized with its "own cluster"
+			_instance ->initNode(v, ""+id, cluster); //We simply name each node with its index
+		}
+
+		//Edge parsing
+
+		//Loop over edges
+		for (std::vector<edge>::iterator it = _edges.begin(); it != _edges.end(); ++it){
+
+			edge currentEdge = *it;
+
+			cout << "DEBUG: Parsing EDGE: " << currentEdge.sourceID << "--" << currentEdge.targetID << ":";
+
+			FullGraph::Edge e = fullGraph.edge(
+						fullGraph.nodeFromId(currentEdge.sourceID),
+						fullGraph.nodeFromId(currentEdge.targetID)
+					);
+			_instance ->initEdge(e, currentEdge.cost, currentEdge.edgeType);
+
+			cout << "SUCCESS!" << "\n";
+
+
+		}
+		return true;
 	};
 	
-
 	void LibraryInput::addEdge(int sourceID,int targetID,double cost){
+		LibraryInput::addEdge(sourceID,targetID,cost,false,false);
+	}
+
+	void LibraryInput::addEdge(int sourceID,int targetID,double cost,bool permanent, bool forbidden){
 		//Out of range edges
 		if (sourceID >= _size || targetID >= _size){
 			throw std::invalid_argument("Source or Target ID of the node are out of range (Did you initialize the input with the correct size?");
@@ -30,6 +66,13 @@ namespace yskInput{
 		tmp.sourceID = sourceID;
 		tmp.targetID = targetID;
 		tmp.cost = cost;
+		tmp.edgeType = UNDECIDED;
+		if (permanent){
+			tmp.edgeType = PERMANENT;
+		}
+		else if (forbidden){
+			tmp.edgeType = FORBIDDEN;
+		}
 		_edges.push_back(tmp);
 	};
 	

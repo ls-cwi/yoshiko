@@ -34,6 +34,11 @@ class ClusterEditingInput{
 		}
 
 		/**
+		 * Virtual destructor / No need to do anything here as the _instance is just a pointer and gets deleted elsewhere
+		 */
+		virtual ~ClusterEditingInput(){};
+
+		/**
 		 * Returns the ClusterEditingInstance that is represented by this input (after processing/parsing)
 		 * @return The pointer referencing the ClusterEditingInstance
 		 */
