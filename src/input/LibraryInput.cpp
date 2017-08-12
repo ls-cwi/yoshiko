@@ -33,6 +33,22 @@ namespace yskInput{
 
 		//Edge parsing
 
+
+		//**
+		//THIS SHOULD BE REMOVED IN A LATER VERSION: INIT SHOULD NOT NEED TO BE CALLED ON UNINTERESTING EDGES, LEMON ALREADY DOES EVERYTHING WE NEED
+		//DUMMY INIT FOR ALL EDGES
+		int i=0;
+		for (FullGraph::NodeIt v(fullGraph); i < _size - 1; ++v, ++i) {
+			FullGraph::NodeIt w(fullGraph, v);
+			++w;
+			for (; w != INVALID; ++w) {
+				FullGraph::Edge e = fullGraph.edge(v, w);
+				_instance ->initEdge(e, 0.0, UNDECIDED);  //TODO: Maybe call this on _instance initialization if really needed?
+			}
+		}
+
+		//**
+
 		//Loop over edges
 		for (std::vector<edge>::iterator it = _edges.begin(); it != _edges.end(); ++it){
 

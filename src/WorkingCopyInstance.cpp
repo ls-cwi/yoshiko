@@ -181,7 +181,10 @@ WorkingCopyGraph::Edge WorkingCopyInstance::edge(const WorkingCopyGraph::Node& u
         exit(-1);
     }
     WorkingCopyGraph::Edge uv = _instance->getOrig().edge(u, v);
-    if (!(*_nodes)[u] || !(*_nodes)[v] || !(*_edges)[uv]) {
+    if (!(*_nodes)[u] || //Source node reference
+    	!(*_nodes)[v] || //Target node reference
+		!(*_edges)[uv])  //Edge reference
+    {
         cerr << "Fatal error: trying to access invisible edge "<<_instance->getOrig().id(u)<<" -- "<<_instance->getOrig().id(v) << endl;
         cerr.flush();
         
