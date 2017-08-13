@@ -237,6 +237,20 @@ static void SWIGUNUSED SWIG_JavaThrowException(JNIEnv *jenv, SWIG_JavaExceptionC
 #include <vector>
 #include <stdexcept>
 
+SWIGINTERN std::vector< int >::const_reference std_vector_Sl_int_Sg__get(std::vector< int > *self,int i){
+                int size = int(self->size());
+                if (i>=0 && i<size)
+                    return (*self)[i];
+                else
+                    throw std::out_of_range("vector index out of range");
+            }
+SWIGINTERN void std_vector_Sl_int_Sg__set(std::vector< int > *self,int i,std::vector< int >::value_type const &val){
+                int size = int(self->size());
+                if (i>=0 && i<size)
+                    (*self)[i] = val;
+                else
+                    throw std::out_of_range("vector index out of range");
+            }
 
 	#include "ClusterEditingSolutions.h"
 	using namespace ysk;
@@ -254,7 +268,167 @@ static void SWIGUNUSED SWIG_JavaThrowException(JNIEnv *jenv, SWIG_JavaExceptionC
 extern "C" {
 #endif
 
-SWIGEXPORT jlong JNICALL Java_swig_LibraryInterfaceJNI_new_1ClusterEditingSolutions(JNIEnv *jenv, jclass jcls) {
+SWIGEXPORT jlong JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_new_1IntVector_1_1SWIG_10(JNIEnv *jenv, jclass jcls) {
+  jlong jresult = 0 ;
+  std::vector< int > *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (std::vector< int > *)new std::vector< int >();
+  *(std::vector< int > **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_new_1IntVector_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+  jlong jresult = 0 ;
+  std::vector< int >::size_type arg1 ;
+  std::vector< int > *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = (std::vector< int >::size_type)jarg1; 
+  result = (std::vector< int > *)new std::vector< int >(arg1);
+  *(std::vector< int > **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_IntVector_1size(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+  jlong jresult = 0 ;
+  std::vector< int > *arg1 = (std::vector< int > *) 0 ;
+  std::vector< int >::size_type result;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(std::vector< int > **)&jarg1; 
+  result = ((std::vector< int > const *)arg1)->size();
+  jresult = (jlong)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_IntVector_1capacity(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+  jlong jresult = 0 ;
+  std::vector< int > *arg1 = (std::vector< int > *) 0 ;
+  std::vector< int >::size_type result;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(std::vector< int > **)&jarg1; 
+  result = ((std::vector< int > const *)arg1)->capacity();
+  jresult = (jlong)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_IntVector_1reserve(JNIEnv *jenv, jclass jcls, jlong jarg1, jlong jarg2) {
+  std::vector< int > *arg1 = (std::vector< int > *) 0 ;
+  std::vector< int >::size_type arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(std::vector< int > **)&jarg1; 
+  arg2 = (std::vector< int >::size_type)jarg2; 
+  (arg1)->reserve(arg2);
+}
+
+
+SWIGEXPORT jboolean JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_IntVector_1isEmpty(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+  jboolean jresult = 0 ;
+  std::vector< int > *arg1 = (std::vector< int > *) 0 ;
+  bool result;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(std::vector< int > **)&jarg1; 
+  result = (bool)((std::vector< int > const *)arg1)->empty();
+  jresult = (jboolean)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_IntVector_1clear(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+  std::vector< int > *arg1 = (std::vector< int > *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(std::vector< int > **)&jarg1; 
+  (arg1)->clear();
+}
+
+
+SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_IntVector_1add(JNIEnv *jenv, jclass jcls, jlong jarg1, jint jarg2) {
+  std::vector< int > *arg1 = (std::vector< int > *) 0 ;
+  std::vector< int >::value_type *arg2 = 0 ;
+  std::vector< int >::value_type temp2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(std::vector< int > **)&jarg1; 
+  temp2 = (std::vector< int >::value_type)jarg2; 
+  arg2 = &temp2; 
+  (arg1)->push_back((std::vector< int >::value_type const &)*arg2);
+}
+
+
+SWIGEXPORT jint JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_IntVector_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jint jarg2) {
+  jint jresult = 0 ;
+  std::vector< int > *arg1 = (std::vector< int > *) 0 ;
+  int arg2 ;
+  std::vector< int >::value_type *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(std::vector< int > **)&jarg1; 
+  arg2 = (int)jarg2; 
+  try {
+    result = (std::vector< int >::value_type *) &std_vector_Sl_int_Sg__get(arg1,arg2);
+  }
+  catch(std::out_of_range &_e) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaIndexOutOfBoundsException, (&_e)->what());
+    return 0;
+  }
+  
+  jresult = (jint)*result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_IntVector_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jint jarg2, jint jarg3) {
+  std::vector< int > *arg1 = (std::vector< int > *) 0 ;
+  int arg2 ;
+  std::vector< int >::value_type *arg3 = 0 ;
+  std::vector< int >::value_type temp3 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(std::vector< int > **)&jarg1; 
+  arg2 = (int)jarg2; 
+  temp3 = (std::vector< int >::value_type)jarg3; 
+  arg3 = &temp3; 
+  try {
+    std_vector_Sl_int_Sg__set(arg1,arg2,(int const &)*arg3);
+  }
+  catch(std::out_of_range &_e) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaIndexOutOfBoundsException, (&_e)->what());
+    return ;
+  }
+  
+}
+
+
+SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_delete_1IntVector(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+  std::vector< int > *arg1 = (std::vector< int > *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(std::vector< int > **)&jarg1; 
+  delete arg1;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_new_1ClusterEditingSolutions(JNIEnv *jenv, jclass jcls) {
   jlong jresult = 0 ;
   ysk::ClusterEditingSolutions *result = 0 ;
   
@@ -266,7 +440,7 @@ SWIGEXPORT jlong JNICALL Java_swig_LibraryInterfaceJNI_new_1ClusterEditingSoluti
 }
 
 
-SWIGEXPORT jlong JNICALL Java_swig_LibraryInterfaceJNI_ClusterEditingSolutions_1getNumberOfClusters(JNIEnv *jenv, jclass jcls, jlong jarg1, jlong jarg2) {
+SWIGEXPORT jlong JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_ClusterEditingSolutions_1getNumberOfClusters(JNIEnv *jenv, jclass jcls, jlong jarg1, jlong jarg2) {
   jlong jresult = 0 ;
   ysk::ClusterEditingSolutions *arg1 = (ysk::ClusterEditingSolutions *) 0 ;
   size_t arg2 ;
@@ -282,7 +456,7 @@ SWIGEXPORT jlong JNICALL Java_swig_LibraryInterfaceJNI_ClusterEditingSolutions_1
 }
 
 
-SWIGEXPORT jlong JNICALL Java_swig_LibraryInterfaceJNI_ClusterEditingSolutions_1getCluster(JNIEnv *jenv, jclass jcls, jlong jarg1, jlong jarg2, jlong jarg3) {
+SWIGEXPORT jlong JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_ClusterEditingSolutions_1getCluster(JNIEnv *jenv, jclass jcls, jlong jarg1, jlong jarg2, jlong jarg3) {
   jlong jresult = 0 ;
   ysk::ClusterEditingSolutions *arg1 = (ysk::ClusterEditingSolutions *) 0 ;
   size_t arg2 ;
@@ -300,7 +474,7 @@ SWIGEXPORT jlong JNICALL Java_swig_LibraryInterfaceJNI_ClusterEditingSolutions_1
 }
 
 
-SWIGEXPORT jlong JNICALL Java_swig_LibraryInterfaceJNI_ClusterEditingSolutions_1getSolution(JNIEnv *jenv, jclass jcls, jlong jarg1, jlong jarg2) {
+SWIGEXPORT jlong JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_ClusterEditingSolutions_1getSolution(JNIEnv *jenv, jclass jcls, jlong jarg1, jlong jarg2) {
   jlong jresult = 0 ;
   ysk::ClusterEditingSolutions *arg1 = (ysk::ClusterEditingSolutions *) 0 ;
   size_t arg2 ;
@@ -316,7 +490,7 @@ SWIGEXPORT jlong JNICALL Java_swig_LibraryInterfaceJNI_ClusterEditingSolutions_1
 }
 
 
-SWIGEXPORT jlong JNICALL Java_swig_LibraryInterfaceJNI_ClusterEditingSolutions_1getNumberOfSolutions(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+SWIGEXPORT jlong JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_ClusterEditingSolutions_1getNumberOfSolutions(JNIEnv *jenv, jclass jcls, jlong jarg1) {
   jlong jresult = 0 ;
   ysk::ClusterEditingSolutions *arg1 = (ysk::ClusterEditingSolutions *) 0 ;
   size_t result;
@@ -330,7 +504,7 @@ SWIGEXPORT jlong JNICALL Java_swig_LibraryInterfaceJNI_ClusterEditingSolutions_1
 }
 
 
-SWIGEXPORT jdouble JNICALL Java_swig_LibraryInterfaceJNI_ClusterEditingSolutions_1getTotalCost(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+SWIGEXPORT jdouble JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_ClusterEditingSolutions_1getTotalCost(JNIEnv *jenv, jclass jcls, jlong jarg1) {
   jdouble jresult = 0 ;
   ysk::ClusterEditingSolutions *arg1 = (ysk::ClusterEditingSolutions *) 0 ;
   double result;
@@ -344,7 +518,7 @@ SWIGEXPORT jdouble JNICALL Java_swig_LibraryInterfaceJNI_ClusterEditingSolutions
 }
 
 
-SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_delete_1ClusterEditingSolutions(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_delete_1ClusterEditingSolutions(JNIEnv *jenv, jclass jcls, jlong jarg1) {
   ysk::ClusterEditingSolutions *arg1 = (ysk::ClusterEditingSolutions *) 0 ;
   
   (void)jenv;
@@ -354,7 +528,7 @@ SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_delete_1ClusterEditingSolu
 }
 
 
-SWIGEXPORT jlong JNICALL Java_swig_LibraryInterfaceJNI_new_1LibraryInput(JNIEnv *jenv, jclass jcls) {
+SWIGEXPORT jlong JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_new_1LibraryInput(JNIEnv *jenv, jclass jcls) {
   jlong jresult = 0 ;
   yskInput::LibraryInput *result = 0 ;
   
@@ -366,7 +540,7 @@ SWIGEXPORT jlong JNICALL Java_swig_LibraryInterfaceJNI_new_1LibraryInput(JNIEnv 
 }
 
 
-SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_delete_1LibraryInput(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_delete_1LibraryInput(JNIEnv *jenv, jclass jcls, jlong jarg1) {
   yskInput::LibraryInput *arg1 = (yskInput::LibraryInput *) 0 ;
   
   (void)jenv;
@@ -376,7 +550,7 @@ SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_delete_1LibraryInput(JNIEn
 }
 
 
-SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_LibraryInput_1setSize(JNIEnv *jenv, jclass jcls, jlong jarg1, jlong jarg2) {
+SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_LibraryInput_1setSize(JNIEnv *jenv, jclass jcls, jlong jarg1, jlong jarg2) {
   yskInput::LibraryInput *arg1 = (yskInput::LibraryInput *) 0 ;
   unsigned long arg2 ;
   
@@ -388,7 +562,7 @@ SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_LibraryInput_1setSize(JNIE
 }
 
 
-SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_LibraryInput_1addEdge_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jlong jarg2, jlong jarg3, jdouble jarg4) {
+SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_LibraryInput_1addEdge_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jlong jarg2, jlong jarg3, jdouble jarg4) {
   yskInput::LibraryInput *arg1 = (yskInput::LibraryInput *) 0 ;
   unsigned long arg2 ;
   unsigned long arg3 ;
@@ -404,7 +578,7 @@ SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_LibraryInput_1addEdge_1_1S
 }
 
 
-SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_LibraryInput_1addEdge_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jlong jarg2, jlong jarg3, jdouble jarg4, jboolean jarg5, jboolean jarg6) {
+SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_LibraryInput_1addEdge_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jlong jarg2, jlong jarg3, jdouble jarg4, jboolean jarg5, jboolean jarg6) {
   yskInput::LibraryInput *arg1 = (yskInput::LibraryInput *) 0 ;
   unsigned long arg2 ;
   unsigned long arg3 ;
@@ -424,7 +598,7 @@ SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_LibraryInput_1addEdge_1_1S
 }
 
 
-SWIGEXPORT jstring JNICALL Java_swig_LibraryInterfaceJNI_getVersionString(JNIEnv *jenv, jclass jcls) {
+SWIGEXPORT jstring JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_getVersionString(JNIEnv *jenv, jclass jcls) {
   jstring jresult = 0 ;
   std::string result;
   
@@ -436,7 +610,7 @@ SWIGEXPORT jstring JNICALL Java_swig_LibraryInterfaceJNI_getVersionString(JNIEnv
 }
 
 
-SWIGEXPORT jlong JNICALL Java_swig_LibraryInterfaceJNI_processLibraryInput(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+SWIGEXPORT jlong JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_processLibraryInput(JNIEnv *jenv, jclass jcls, jlong jarg1) {
   jlong jresult = 0 ;
   yskInput::LibraryInput *arg1 = (yskInput::LibraryInput *) 0 ;
   ysk::ClusterEditingSolutions *result = 0 ;

@@ -9,6 +9,10 @@
 
 %include "std_vector.i"
 
+namespace std{
+%template(IntVector) vector<int>;
+}
+
 //Namespace definition
 %{
 	#include "ClusterEditingSolutions.h"

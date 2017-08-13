@@ -43,7 +43,7 @@ namespace yskInput{
 			++w;
 			for (; w != INVALID; ++w) {
 				FullGraph::Edge e = fullGraph.edge(v, w);
-				_instance ->initEdge(e, 0.0, UNDECIDED);  //TODO: Maybe call this on _instance initialization if really needed?
+				_instance ->initEdge(e, -1.0, UNDECIDED);  //TODO: Maybe call this on _instance initialization if really needed?
 			}
 		}
 
