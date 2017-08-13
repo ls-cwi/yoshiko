@@ -15,5 +15,9 @@ namespace yskLib{
 		return performAlgorithm(libIn->getProblemInstance());
 	}
 
+	void setTimeLimit(int limit){
+		time_limit = limit;
+	}
+
 }
 

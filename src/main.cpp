@@ -75,7 +75,7 @@ int main(int argc, char * const argv[]) {
   ap.refOption("O", "output file format 0 = csv, 1 = table (line one: number of nodes, line two: number of clusters, column one: node name, column two: cluster ID), 2 = gml, 3 = xgmml (Cytoscape) 4 = Pajek [0], 5 = table (Cytoscape app)", outputFileFormat, false);
   ap.refOption("v", "verbosity, 0 = silent, 5 = full [0]", verbosity, false);
   ap.refOption("H", "utilize heuristic instead of ILP, [false]", useHeuristic, false);
-  ap.refOption("T", "CPU time limit (s), -1 = no limit [-1]", time_limit, false);
+  ap.refOption("T", "CPU time limit (s) for the ILP component, -1 = no limit [-1]", time_limit, false);
   ap.refOption("threads", "number of threads [max]", no_threads, false);
   ap.refOption("e", "export LP [false]", exportLP, false);
   ap.refOption("st", "separate triangles [false]", separateTriangles, false);
