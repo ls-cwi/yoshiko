@@ -41,7 +41,8 @@ public:
 	 * Default constructor, initializes an empty instance of the dwgc-problem. This instance is by default unweighted and adjusts its specification when edges, matching a more specific instance, are added.
 	 */
   ClusterEditingInstance()
-    : _unweighted(true)
+    :  _isInitialized(false)
+	,  _unweighted(true)
     , _dualWeighted(true)
     , _realValued(false)
     , _costInsertion(0.0)
@@ -111,6 +112,13 @@ public:
   friend std::ostream& operator <<(std::ostream &os, ClusterEditingInstance &inst);
   
 private:
+
+  /**
+  * Describes whether the instance has already been initialized.
+  * This is essential because before initialization _orig and _workingCopyInstance will not be initialized and calling their destructors will result in unpredictable behaviour.
+  */
+  bool _isInitialized;
+
   bool _unweighted;
   bool _dualWeighted;
   bool _realValued;

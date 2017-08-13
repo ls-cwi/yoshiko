@@ -70,6 +70,9 @@ namespace yskInput{
 	};
 	
 	void LibraryInput::addEdge(unsigned long sourceID,unsigned long targetID,double cost){
+
+		cout << "DEBUG: ADDED EDGE " <<  sourceID << "--" << targetID << "(" << cost << ")" << "\n";
+
 		LibraryInput::addEdge(sourceID,targetID,cost,false,false);
 	}
 

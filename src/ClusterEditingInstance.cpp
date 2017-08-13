@@ -14,10 +14,12 @@ using namespace lemon;
 namespace ysk {
 
 ClusterEditingInstance::~ClusterEditingInstance() {
-  for(FullGraph::NodeIt u(_orig); u != INVALID; ++u) {
-    delete _clusters[u];
-  }
-  delete _workingCopyInstance;
+	if (_isInitialized){
+		  for(FullGraph::NodeIt u(_orig); u != INVALID; ++u) {
+			delete _clusters[u];
+		  }
+		  delete _workingCopyInstance;
+	}
 }
 
 void ClusterEditingInstance::init(int size) {
@@ -25,6 +27,7 @@ void ClusterEditingInstance::init(int size) {
   //Initializes and creates a matching WorkingCopyInstance for the full graph
   _workingCopyInstance = new WorkingCopyInstance(this);
   _workingCopyInstance->init();
+  _isInitialized = true;
 }
 
 void ClusterEditingInstance::initNode(FullGraph::Node node, string name, vector<int>& cluster) {
