@@ -40,6 +40,7 @@ namespace yskInput{
 			LibraryInput():ClusterEditingInput(new ysk::ClusterEditingInstance()){
 				_edges = std::vector<edge>();
 				_size = 0;
+				_defaultInsertionCost = -1;
 			}
 
 			~LibraryInput(){
@@ -51,13 +52,6 @@ namespace yskInput{
 			 * @return True if successful, False otherwise
 			 */
 			bool parseInput();
-
-
-			/**
-			 * Sets |V| of the problem instance
-			 * @param id The required size of the problem
-			 */
-			void setSize(unsigned long id);
 
 			/**
 			 * Adds an non-permanent non-forbidden edge between the given node ids (or updates the cost).
@@ -79,12 +73,23 @@ namespace yskInput{
 			 */
 			void addEdge(unsigned long sourceID,unsigned long targetID,double cost,bool permanent, bool forbidden);
 
+			//SETTER / GETTER METHODS
+
+			/**
+			 * Sets |V| of the problem instance
+			 * @param id The required size of the problem
+			 */
+			void setSize(unsigned long id);
+
+			void setDefaultInsertionCost(double cost);
 
 		private:
 			/**
 			 * |V| of the problem instance
 			 */
 			unsigned long _size;
+
+			double _defaultInsertionCost;
 			/**
 			 * A simple list holding edges
 			 */

@@ -39,13 +39,14 @@ using namespace yskInput;
  * separation triangles
  * separation partition cuts
  * separation (mueller)
- * modularize program and clean-up god classes
- * enumerating optimal solutions
- * check whether new code produces same sol as old code (in presence of partition constraints)
+ * enumerating optimal solutions (isnt this already implemented?)
+ *
+ * check whether new code produces same sol as old code (in presence of partition constraints) (Which old code, yosh 1.0?)
  * check partition constraints (--> paper!)
- * svn link with Xcode
- * document... how?
- * layout graphs...?
+ *
+ * svn link with Xcode (still needed?)
+ * document... how? -> doxygen
+ * layout graphs...? -> use cytoscape
  * Setup unified logging system and streamline all cout//exception calls, apply verbosity globally
  * put in NINA
  * edge index. make faster by directly computing index from i and j. think about (common) solution for directed and undirected graphs
@@ -57,7 +58,7 @@ int main(int argc, char * const argv[]) {
   ArgParser ap(argc, argv);
   string inputFilename, outputFilename;
   string graphLabel = "cluster_solution";
-  int inputFileFormat = 0; //TODO: Convert to enums for better codestyle
+  int inputFileFormat = 0; //TODO: Convert to enums for better codestyle?
   int outputFileFormat = 0;
   int nrOptimalSolutions = 1;
   bool exportLP = false;

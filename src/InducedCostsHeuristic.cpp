@@ -14,6 +14,9 @@ using namespace lemon;
 namespace ysk {
 
 void InducedCostsHeuristic::init(ParameterizedInstance& inst) {
+
+	//Pretty much simply copies the old instance
+
   //Adjust a working copy with the same size
   _instance.init(countNodes(inst.getWorkingCopyInstance().getGraph()));
   
@@ -62,7 +65,7 @@ void InducedCostsHeuristic::start() {
         cout <<"."<<flush;
     }
     
-    
+    //Return the edge with the highest cost associated
     std::pair<WorkingCopyGraph::Edge, double> p = _parameterizedInstance->computeMax();
     
     

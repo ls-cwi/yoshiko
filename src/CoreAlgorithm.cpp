@@ -15,7 +15,7 @@ namespace ysk {
 	ClusterEditingSolutions* performAlgorithm(
 			ClusterEditingInstance* instance,
 			int nrOptimalSolutions,
-			std::string rulesBitMask,
+			std::string rulesBitMask, //< Maybe use enums or separate variables internally in the long run? -> More flexibility // maintainability
 			double multiplicativeFactor,
 			bool useHeuristic,
 			bool separatePartitionCuts,

@@ -35,7 +35,6 @@ namespace yskInput{
 
 
 		//**
-		//THIS SHOULD BE REMOVED IN A LATER VERSION: INIT SHOULD NOT NEED TO BE CALLED ON UNINTERESTING EDGES, LEMON ALREADY DOES EVERYTHING WE NEED
 		//DUMMY INIT FOR ALL EDGES
 		unsigned long i=0;
 		for (FullGraph::NodeIt v(fullGraph); i < _size - 1; ++v, ++i) {
@@ -43,7 +42,7 @@ namespace yskInput{
 			++w;
 			for (; w != INVALID; ++w) {
 				FullGraph::Edge e = fullGraph.edge(v, w);
-				_instance ->initEdge(e, -1.0, UNDECIDED);  //TODO: Maybe call this on _instance initialization if really needed?
+				_instance ->initEdge(e, _defaultInsertionCost, UNDECIDED);
 			}
 		}
 
@@ -96,7 +95,11 @@ namespace yskInput{
 	};
 	
 	//SETTER / GETTER
-	
+
+	void LibraryInput::setDefaultInsertionCost(double cost){
+		_defaultInsertionCost = cost;
+	}
+
 	void LibraryInput::setSize(unsigned long size){
 		_size = size;
 	};

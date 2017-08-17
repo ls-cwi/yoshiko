@@ -410,6 +410,7 @@ long Yoshiko::solve(const ClusterEditingInstance& inst, ClusterEditingSolutions&
             cout  << numsol << " optimal solutions." << endl;
     }
     
+    cout << "Total Cost: " << z << endl;
     s.setTotalCost(z);
     s.resize(numsol);
     for (int k = 0; k < numsol; ++k) {

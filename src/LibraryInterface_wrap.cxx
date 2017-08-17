@@ -550,18 +550,6 @@ SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_d
 }
 
 
-SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_LibraryInput_1setSize(JNIEnv *jenv, jclass jcls, jlong jarg1, jlong jarg2) {
-  yskInput::LibraryInput *arg1 = (yskInput::LibraryInput *) 0 ;
-  unsigned long arg2 ;
-  
-  (void)jenv;
-  (void)jcls;
-  arg1 = *(yskInput::LibraryInput **)&jarg1; 
-  arg2 = (unsigned long)jarg2; 
-  (arg1)->setSize(arg2);
-}
-
-
 SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_LibraryInput_1addEdge_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jlong jarg2, jlong jarg3, jdouble jarg4) {
   yskInput::LibraryInput *arg1 = (yskInput::LibraryInput *) 0 ;
   unsigned long arg2 ;
@@ -595,6 +583,30 @@ SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_L
   arg5 = jarg5 ? true : false; 
   arg6 = jarg6 ? true : false; 
   (arg1)->addEdge(arg2,arg3,arg4,arg5,arg6);
+}
+
+
+SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_LibraryInput_1setSize(JNIEnv *jenv, jclass jcls, jlong jarg1, jlong jarg2) {
+  yskInput::LibraryInput *arg1 = (yskInput::LibraryInput *) 0 ;
+  unsigned long arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(yskInput::LibraryInput **)&jarg1; 
+  arg2 = (unsigned long)jarg2; 
+  (arg1)->setSize(arg2);
+}
+
+
+SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_LibraryInput_1setDefaultInsertionCost(JNIEnv *jenv, jclass jcls, jlong jarg1, jdouble jarg2) {
+  yskInput::LibraryInput *arg1 = (yskInput::LibraryInput *) 0 ;
+  double arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(yskInput::LibraryInput **)&jarg1; 
+  arg2 = (double)jarg2; 
+  (arg1)->setDefaultInsertionCost(arg2);
 }
 
 
