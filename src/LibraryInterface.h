@@ -30,7 +30,15 @@ namespace yskLib{
 		 */
 		std::string getVersionString();
 
-		ysk::ClusterEditingSolutions* processLibraryInput(yskInput::LibraryInput* libIn);
+		ysk::ClusterEditingSolutions* processLibraryInput(
+				yskInput::LibraryInput* libIn,
+				int nrOptimalSolutions,
+				std::string rulesBitMask,
+				double multiplicativeFactor,
+				bool useHeuristic,
+				bool separatePartitionCuts,
+				bool separateTriangles
+				);
 
 		/**
 		 * Sets the global time limit for the ILP part of the software

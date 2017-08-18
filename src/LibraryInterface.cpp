@@ -10,9 +10,18 @@ namespace yskLib{
 		return YOSHIKO_VERSION;
 	}
 
-	ysk::ClusterEditingSolutions* processLibraryInput(yskInput::LibraryInput* libIn){
+	ysk::ClusterEditingSolutions* processLibraryInput(
+			yskInput::LibraryInput* libIn,
+			int nrOptimalSolutions,
+			std::string rulesBitMask,
+			double multiplicativeFactor,
+			bool useHeuristic,
+			bool separatePartitionCuts,
+			bool separateTriangles
+
+	){
 		libIn->parseInput();
-		return performAlgorithm(libIn->getProblemInstance());
+		return performAlgorithm(libIn->getProblemInstance(),nrOptimalSolutions,rulesBitMask,multiplicativeFactor,useHeuristic,separatePartitionCuts,separateTriangles);
 	}
 
 	void setTimeLimit(int limit){

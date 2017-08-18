@@ -622,15 +622,34 @@ SWIGEXPORT jstring JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJN
 }
 
 
-SWIGEXPORT jlong JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_processLibraryInput(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+SWIGEXPORT jlong JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_processLibraryInput(JNIEnv *jenv, jclass jcls, jlong jarg1, jint jarg2, jstring jarg3, jdouble jarg4, jboolean jarg5, jboolean jarg6, jboolean jarg7) {
   jlong jresult = 0 ;
   yskInput::LibraryInput *arg1 = (yskInput::LibraryInput *) 0 ;
+  int arg2 ;
+  std::string arg3 ;
+  double arg4 ;
+  bool arg5 ;
+  bool arg6 ;
+  bool arg7 ;
   ysk::ClusterEditingSolutions *result = 0 ;
   
   (void)jenv;
   (void)jcls;
   arg1 = *(yskInput::LibraryInput **)&jarg1; 
-  result = (ysk::ClusterEditingSolutions *)yskLib::processLibraryInput(arg1);
+  arg2 = (int)jarg2; 
+  if(!jarg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  } 
+  const char *arg3_pstr = (const char *)jenv->GetStringUTFChars(jarg3, 0); 
+  if (!arg3_pstr) return 0;
+  (&arg3)->assign(arg3_pstr);
+  jenv->ReleaseStringUTFChars(jarg3, arg3_pstr); 
+  arg4 = (double)jarg4; 
+  arg5 = jarg5 ? true : false; 
+  arg6 = jarg6 ? true : false; 
+  arg7 = jarg7 ? true : false; 
+  result = (ysk::ClusterEditingSolutions *)yskLib::processLibraryInput(arg1,arg2,arg3,arg4,arg5,arg6,arg7);
   *(ysk::ClusterEditingSolutions **)&jresult = result; 
   return jresult;
 }

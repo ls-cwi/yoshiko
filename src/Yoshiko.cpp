@@ -207,7 +207,8 @@ ILOUSERCUTCALLBACK2(partition_cut_callback, const ClusterEditingInstance&, inst,
 
 
 long Yoshiko::solve(const ClusterEditingInstance& inst, ClusterEditingSolutions& s) {
-    if(inst.isDirty()) {
+	cout << "Solving ...";
+	if(inst.isDirty()) {
         cerr << "Fatal error: ClusterEditingInstance is dirty."<<endl;
         exit(-1);
     }
@@ -247,7 +248,7 @@ long Yoshiko::solve(const ClusterEditingInstance& inst, ClusterEditingSolutions&
     // set some parameters
     //cplex.setParam(IloCplex::EpInt, 0.0); // zero tolerance (default: 1E-5)
     
-    // OBACHT. we do cutting planes. i think then preproc hast to be switched off..
+    // OBACHT. we do cutting planes. i think then preproc has to be switched off..
     // perhaps not really (seems to yield same results. but: preproc bringt nichts, kostet nur zeit)
     //if (o.HasOpt("preprocessing") && o.GetBOpt("preprocessing"));
     //else cplex.setParam(IloCplex::PreInd, 0); //
@@ -377,6 +378,8 @@ long Yoshiko::solve(const ClusterEditingInstance& inst, ClusterEditingSolutions&
     
     double z = cplex.getObjValue();
     
+    cout << "Cost: " << z;
+
     if (verbosity > 1) {
         cout << "CPLEX status code " << cplex.getStatus() << endl;
         cout << "upper bound: " << z << endl;
