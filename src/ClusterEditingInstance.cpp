@@ -15,10 +15,10 @@ namespace ysk {
 
 ClusterEditingInstance::~ClusterEditingInstance() {
 	if (_isInitialized){
-		  for(FullGraph::NodeIt u(_orig); u != INVALID; ++u) {
-			delete _clusters[u];
-		  }
-		  delete _workingCopyInstance;
+		for (vector<vector<int>*>::iterator it = _vectorCleanList.begin(); it != _vectorCleanList.end(); ++it){
+			delete *it;
+		}
+		delete _workingCopyInstance;
 	}
 }
 
@@ -33,6 +33,7 @@ void ClusterEditingInstance::init(int size) {
 void ClusterEditingInstance::initNode(FullGraph::Node node, string name, vector<int>& cluster) {
   _nodeNames[node] = name; //Map node to its name
   _clusters[node] = new vector<int>;
+  _vectorCleanList.push_back(_clusters[node]);
   _clusters[node]->insert(_clusters[node]->end(), cluster.begin(), cluster.end());
   _workingCopyInstance->initNode(node, name);
 }

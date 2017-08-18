@@ -54,6 +54,7 @@ public:
     , _permanent(_orig)
     , _forbidden(_orig)
     , _clusters(_orig)
+	, _vectorCleanList(std::vector<std::vector<int>*>())
   {
   }
   
@@ -119,6 +120,7 @@ private:
   */
   bool _isInitialized;
 
+
   bool _unweighted;
   bool _dualWeighted;
   bool _realValued;
@@ -142,6 +144,9 @@ private:
   lemon::FullGraph::NodeMap<std::vector<int>* > _clusters;
   
   WorkingCopyInstance* _workingCopyInstance;
+
+  std::vector<std::vector<int>*> _vectorCleanList;
+
 };
 
 } // namespace ysk

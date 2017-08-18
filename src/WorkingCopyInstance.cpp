@@ -14,9 +14,9 @@ namespace ysk {
 
 WorkingCopyInstance::~WorkingCopyInstance() {
     
-    for(WorkingCopyGraph::NodeIt v(*_graph); v != INVALID; ++v) {
-        delete (*_clusters)[v];
-    }
+	for (vector<vector<int>*>::iterator it = _vectorCleanList.begin(); it != _vectorCleanList.end(); ++it){
+		delete *it;
+	}
 
     delete _nodeNames;
     delete _weight;
@@ -45,6 +45,7 @@ void WorkingCopyInstance::initNode(FullGraph::Node node, string name) {
     (*_nodes)[node] = true;
     (*_nodeNames)[node] = name;
     (*_clusters)[node] = new vector<int>;
+    _vectorCleanList.push_back((*_clusters)[node]);
     (*_clusters)[node]->insert((*_clusters)[node]->end(), _graph->id(node));
 }
 
@@ -115,7 +116,6 @@ WorkingCopyGraph::Node WorkingCopyInstance::merge(const vector<WorkingCopyGraph:
         
         
         (*_clusters)[proxy]->insert((*_clusters)[proxy]->end(), (*_clusters)[*u]->begin(), (*_clusters)[*u]->end());
-        delete (*_clusters)[*u];
         _instance->getCluster(proxy)->insert(_instance->getCluster(proxy)->end(), _instance->getCluster(*u)->begin(), _instance->getCluster(*u)->end());
         
         buffer << "/" << (*_nodeNames)[*u];

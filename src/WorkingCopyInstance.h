@@ -33,6 +33,7 @@ public:
   WorkingCopyInstance(ClusterEditingInstance* inst)
     : _instance(inst)
     , _dirty(false)
+	, _vectorCleanList(std::vector<std::vector<int>*>())
   {
   }
   
@@ -88,6 +89,7 @@ private:
   ClusterEditingInstance* _instance;
   
   bool _dirty;
+  std::vector<std::vector<int>*> _vectorCleanList;
   
   WorkingCopyGraph* _graph;
   lemon::FullGraph::NodeMap<bool>* _nodes;
