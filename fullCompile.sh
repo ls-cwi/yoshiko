@@ -30,3 +30,10 @@ make
 echo "BUILDING JAVA WRAPPER"
 cd ../../YoshikoWrapper
 mvn clean install
+
+#Delete all Yoshiko file from cyto repo and install new one for convenience
+cd ~/CytoscapeConfiguration/3/apps/installed
+rm yoshikoWrapper-0.0.2.jar
+cp ~/workspace/cs/BachelorThesis/YoshikoWrapper/target/yoshikoWrapper-0.0.2.jar ~/CytoscapeConfiguration/3/apps/installed
+
+

@@ -43,6 +43,9 @@ void CriticalCliqueRule::apply() {
       _criticalClique[w]->push_back(v);
       _neighborhood[w] = neighborhoodV;
     }
+    else{
+    	delete neighborhoodV;
+    }
   }
   
   mergeCriticalCliques();
