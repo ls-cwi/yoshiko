@@ -15,9 +15,9 @@ namespace yskLib{
 			int nrOptimalSolutions,
 			std::string rulesBitMask,
 			double multiplicativeFactor,
-			bool useHeuristic,
 			bool separatePartitionCuts,
-			bool separateTriangles
+			bool separateTriangles,
+			bool useHeuristic
 
 	){
 		libIn->parseInput();
@@ -26,6 +26,12 @@ namespace yskLib{
 
 	void setTimeLimit(int limit){
 		time_limit = limit;
+	}
+
+	void setVerbosity(int limit){
+		if (limit >= 0 && limit < 4){
+			verbosity = limit;
+		}
 	}
 
 }

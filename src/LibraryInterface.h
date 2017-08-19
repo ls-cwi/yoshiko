@@ -35,9 +35,9 @@ namespace yskLib{
 				int nrOptimalSolutions,
 				std::string rulesBitMask,
 				double multiplicativeFactor,
-				bool useHeuristic,
 				bool separatePartitionCuts,
-				bool separateTriangles
+				bool separateTriangles,
+				bool useHeuristic
 				);
 
 		/**
@@ -45,6 +45,11 @@ namespace yskLib{
 		 * @param limit The timeout threshold in seconds
 		 */
 		void setTimeLimit(int limit);
+		/**
+		 * Sets the verbosity
+		 * @param level The level, corresponding to a verbosity level, will be ignored if invalid
+		 */
+		void setVerbosity(int level);
 }
 
 #endif /* SRC_LIBRARYINTERFACE_H */

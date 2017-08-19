@@ -518,6 +518,20 @@ SWIGEXPORT jdouble JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJN
 }
 
 
+SWIGEXPORT jboolean JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_ClusterEditingSolutions_1isTimedOut(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+  jboolean jresult = 0 ;
+  ysk::ClusterEditingSolutions *arg1 = (ysk::ClusterEditingSolutions *) 0 ;
+  bool result;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(ysk::ClusterEditingSolutions **)&jarg1; 
+  result = (bool)(arg1)->isTimedOut();
+  jresult = (jboolean)result; 
+  return jresult;
+}
+
+
 SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_delete_1ClusterEditingSolutions(JNIEnv *jenv, jclass jcls, jlong jarg1) {
   ysk::ClusterEditingSolutions *arg1 = (ysk::ClusterEditingSolutions *) 0 ;
   
@@ -662,6 +676,16 @@ SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_s
   (void)jcls;
   arg1 = (int)jarg1; 
   yskLib::setTimeLimit(arg1);
+}
+
+
+SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_setVerbosity(JNIEnv *jenv, jclass jcls, jint jarg1) {
+  int arg1 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = (int)jarg1; 
+  yskLib::setVerbosity(arg1);
 }
 
 

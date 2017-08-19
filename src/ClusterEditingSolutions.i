@@ -23,5 +23,6 @@ namespace std{
 %ignore resize;
 %ignore setSolution;
 %ignore setTotalCost;
+%ignore setTimedOut;
   
 %include "ClusterEditingSolutions.h"

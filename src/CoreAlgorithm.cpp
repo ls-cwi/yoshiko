@@ -82,6 +82,8 @@ namespace ysk {
 			cout << "-------------------------" << endl;
 		}
 	
+		bool timedOut = false;
+
 		int j = 0;
 	
 		long totalNumberOfSolutions = 1;
@@ -128,6 +130,8 @@ namespace ysk {
 			totalNumberOfSolutions = totalNumberOfSolutions * numberOfSolutions;
 	
 			totalCost += s.getTotalCost();
+
+			timedOut = s.isTimedOut();
 	
 			//expand solutions: replace merged nodes by cluster
 			vector<vector<vector<int> > > partitions;
@@ -157,6 +161,8 @@ namespace ysk {
 		vector<vector<int> > p;
 		mergeSolutions(0, k, p, *ces, instances);
 
+		//Restore timeout flag
+		ces->setTimedOut(timedOut);
 		return ces;
 	}
 	

@@ -90,4 +90,14 @@ void ClusterEditingSolutions::setSolution(int k, const IloNumArray &x_vals, cons
     cout << "done." << endl;
 }
 
+void ClusterEditingSolutions::setTimedOut(bool timedOut){
+	if (verbosity == 3)
+		cout << "DEBUG: TIME OUT FLAG SET!" << endl;
+	_timedOut = timedOut;
+}
+
+bool ClusterEditingSolutions::isTimedOut(){
+	return _timedOut;
+}
+
 } // namespace ysk

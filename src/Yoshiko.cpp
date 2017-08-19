@@ -46,7 +46,7 @@ ILOLAZYCONSTRAINTCALLBACK2(triangle_callback, const ClusterEditingInstance&, ins
         
         for (FullGraph::NodeIt i(g); i != INVALID; ++i) {
             if (time_limit != -1) {
-                if (clk.systemTime() > time_limit)
+                if (clk.systemTime() > time_limit) //TOOD: Coherent use of time_limit in ALL of yoshiko
                     throw("time limit exceeded in yoshiko triangle callback");
                 
                 cout << clk << endl;
@@ -362,11 +362,14 @@ long Yoshiko::solve(const ClusterEditingInstance& inst, ClusterEditingSolutions&
     }
     
     bool optimal = cplex.solve();
-    if (verbosity > 1) {
-        cout << "done (" << cplex.getStatus() << ")." << endl;
+    
+    //Mark the solution as "timed-out"
+    if (cplex.getCplexStatus() == IloCplex::AbortTimeLim){
+    	cout << "TIMEDOUT" << endl;
+    	s.setTimedOut(true);
     }
-    
-    
+
+    //For some reason the solver terminated without providing an optimal solution
     if (!optimal) {
         cout << endl << endl << endl;
         cout << cplex.getStatus() << endl;
@@ -410,7 +413,10 @@ long Yoshiko::solve(const ClusterEditingInstance& inst, ClusterEditingSolutions&
             cout  << numsol << " optimal solutions." << endl;
     }
     
-    cout << "Total Cost: " << z << endl;
+    if(verbosity >1){
+        cout << "Total Cost: " << z << endl;
+    }
+
     s.setTotalCost(z);
     s.resize(numsol);
     for (int k = 0; k < numsol; ++k) {
