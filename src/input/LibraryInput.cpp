@@ -53,7 +53,7 @@ namespace yskInput{
 
 			edge currentEdge = *it;
 
-			cout << "DEBUG: Parsing EDGE: " << currentEdge.sourceID << "--" << currentEdge.targetID << ":";
+			//cout << "DEBUG: Parsing EDGE: " << currentEdge.sourceID << "--" << currentEdge.targetID << ":";
 
 			FullGraph::Edge e = fullGraph.edge(
 						fullGraph.nodeFromId(currentEdge.sourceID),
@@ -61,7 +61,7 @@ namespace yskInput{
 					);
 			_instance ->initEdge(e, currentEdge.cost, currentEdge.edgeType);
 
-			cout << "SUCCESS!" << "\n";
+			//cout << "SUCCESS!" << "\n";
 
 
 		}
@@ -70,7 +70,7 @@ namespace yskInput{
 	
 	void LibraryInput::addEdge(unsigned long sourceID,unsigned long targetID,double cost){
 
-		cout << "DEBUG: ADDED EDGE " <<  sourceID << "--" << targetID << "(" << cost << ")" << "\n";
+		//cout << "DEBUG: ADDED EDGE " <<  sourceID << "--" << targetID << "(" << cost << ")" << "\n";
 
 		LibraryInput::addEdge(sourceID,targetID,cost,false,false);
 	}

@@ -207,7 +207,6 @@ ILOUSERCUTCALLBACK2(partition_cut_callback, const ClusterEditingInstance&, inst,
 
 
 long Yoshiko::solve(const ClusterEditingInstance& inst, ClusterEditingSolutions& s) {
-	cout << "Solving ...";
 	if(inst.isDirty()) {
         cerr << "Fatal error: ClusterEditingInstance is dirty."<<endl;
         exit(-1);
@@ -378,8 +377,6 @@ long Yoshiko::solve(const ClusterEditingInstance& inst, ClusterEditingSolutions&
     
     double z = cplex.getObjValue();
     
-    cout << "Cost: " << z;
-
     if (verbosity > 1) {
         cout << "CPLEX status code " << cplex.getStatus() << endl;
         cout << "upper bound: " << z << endl;

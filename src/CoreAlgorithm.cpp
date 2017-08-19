@@ -56,8 +56,11 @@ namespace ysk {
 	
 		bitset<NUMBER_OF_REDUCTION_RULES> rules(rulesBitMask);
 	
-		ClusterEditingReduction cer(rules, multiplicativeFactor,
-				conserveMultipleSolutions);
+		ClusterEditingReduction cer(
+				rules,
+				multiplicativeFactor,
+				conserveMultipleSolutions
+				);
 		cer.perform(*instance);
 	
 		vector<ClusterReductionInstance*>& reduced = cer.getInstances();
@@ -100,7 +103,8 @@ namespace ysk {
 			if (!useHeuristic) {
 				//ILP
 				try {
-					Yoshiko yoshiko(separateTriangles, separatePartitionCuts,
+					Yoshiko yoshiko(separateTriangles,
+							separatePartitionCuts,
 							nrOptimalSolutions);
 					numberOfSolutions = yoshiko.solve(i, s);
 				} catch (IloException &e) {
