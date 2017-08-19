@@ -11,6 +11,12 @@ using namespace std;
 
 namespace ysk {
 
+DynProgTable::DynProgTable (const DynProgTable &copy){
+	_table = copy._table;
+	_length = copy._length;
+}
+
+
 DynProgTable::DynProgTable(int bound) : _length(2*bound+1) {
   _table = new double*[2];
   _table[0] = new double[_length];

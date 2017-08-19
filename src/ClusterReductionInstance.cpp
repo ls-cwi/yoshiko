@@ -33,7 +33,7 @@ int ClusterReductionInstance::applyReductionRules() {
       exit(-1);
     }
     //skip rule if rule is turned off and rule is not merging rule
-    if(!_active.test(_currentRule) && (_currentRule != 1 || (_currentRule == 1 && _instance->isDualWeighted())))
+    if(!_active.test(_currentRule) && (_currentRule != 1 || (_instance->isDualWeighted())))
       continue;
     
     FPTReductionRule* rule;

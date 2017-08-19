@@ -400,7 +400,7 @@ long Yoshiko::solve(const ClusterEditingInstance& inst, ClusterEditingSolutions&
         
         if (verbosity > 1)
             cout << "solving ILP (finding more optimal solutions)..." << flush;
-        optimal = cplex.populate();
+        cplex.populate();
         
         if (verbosity > 1)
             cout << "done." << endl;

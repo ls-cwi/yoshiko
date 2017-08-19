@@ -17,9 +17,10 @@ namespace ysk {
 
 class Delta {
 public:
-  Delta()
-  {
-  }
+  Delta():
+	  _deltaU (0.0),
+	  _deltaV (0.0)
+{}
   
   void setDeltaU(WorkingCopyGraph::Node u, double deltaU);
   void setDeltaV(WorkingCopyGraph::Node v, double deltaV);
