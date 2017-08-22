@@ -31,7 +31,7 @@ void ClusterEditingSolutions::resize(long numberOfSolutions) {
 }
 
 double ClusterEditingSolutions::getTotalCost() const {
-  return _totalCost;
+  return this->_totalCost;
 }
 
 void ClusterEditingSolutions::setTotalCost(double totalCost) {
@@ -91,8 +91,6 @@ void ClusterEditingSolutions::setSolution(int k, const IloNumArray &x_vals, cons
 }
 
 void ClusterEditingSolutions::setTimedOut(bool timedOut){
-	if (verbosity == 3)
-		cout << "DEBUG: TIME OUT FLAG SET!" << endl;
 	_timedOut = timedOut;
 }
 

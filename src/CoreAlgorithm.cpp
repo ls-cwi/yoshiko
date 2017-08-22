@@ -163,6 +163,8 @@ namespace ysk {
 
 		//Restore timeout flag
 		ces->setTimedOut(timedOut);
+		//Restore total cost
+		ces->setTotalCost(totalCost);
 		return ces;
 	}
 	
