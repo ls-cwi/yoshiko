@@ -31,7 +31,7 @@ void ClusterEditingSolutions::resize(long numberOfSolutions) {
 }
 
 double ClusterEditingSolutions::getTotalCost() const {
-  return _totalCost;
+  return this->_totalCost;
 }
 
 void ClusterEditingSolutions::setTotalCost(double totalCost) {
@@ -88,6 +88,14 @@ void ClusterEditingSolutions::setSolution(int k, const IloNumArray &x_vals, cons
   
   if (verbosity > 1)
     cout << "done." << endl;
+}
+
+void ClusterEditingSolutions::setTimedOut(bool timedOut){
+	_timedOut = timedOut;
+}
+
+bool ClusterEditingSolutions::isTimedOut(){
+	return _timedOut;
 }
 
 } // namespace ysk

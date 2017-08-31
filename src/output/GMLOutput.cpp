@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Emanuel Laude. All rights reserved.
 //
 
-#include "GMLOutput.h"
+#include "../output/GMLOutput.h"
 
 using namespace std;
 

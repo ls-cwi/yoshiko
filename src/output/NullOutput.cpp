@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Emanuel Laude. All rights reserved.
 //
 
-#include "NullOutput.h"
+#include "../output/NullOutput.h"
 
 using namespace std;
 

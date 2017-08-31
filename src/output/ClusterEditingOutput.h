@@ -34,6 +34,15 @@ public:
   {
   }
   
+  /**
+   * Factory method that generates a fitting instance of a given subclass
+   * @param inst
+   * @param solutions
+   * @param filename
+   * @param label
+   * @param format
+   * @return
+   */
   static ClusterEditingOutput* newInstance(ClusterEditingInstance& inst,
                                            ClusterEditingSolutions& solutions,
                                            std::string filename,

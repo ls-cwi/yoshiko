@@ -121,9 +121,11 @@ std::pair<WorkingCopyGraph::Edge, double> ParameterizedInstance::computeMax() {
   WorkingCopyGraph::Node u = INVALID;
   WorkingCopyGraph::Node v = INVALID;
   
+  //Loop over all nodes
   for(WorkingCopyGraph::NodeIt w(_instance.getGraph()); w != INVALID; ++w) {
+	  //Eventually we want to maximize so -inf is the initial value
     double icp = -numeric_limits<double>::infinity();
-    if(_icp[w]->size() >= 1) {
+    if(_icp[w]->size() >= 1) { //There are already values on the heap
       icp = (*_icp[w])[_icp[w]->top()] +_lbValue;
     }
     
@@ -144,6 +146,7 @@ std::pair<WorkingCopyGraph::Edge, double> ParameterizedInstance::computeMax() {
     }
   }
   
+  //Create the pair as a return value
   std::pair<WorkingCopyGraph::Edge, double> p;
   if(u != INVALID && v != INVALID) {
     p.first = _instance.edge(u, v);
@@ -449,7 +452,7 @@ void ParameterizedInstance::beforeSetForbidden(const WorkingCopyGraph::Edge& uv)
       continue;
     }
     
-    //Therer was a conflict triple uvw that was destroyed through setForbidden(uv) and the arise of at least one and at most 3 new cts abc was triggered.
+    //There was a conflict triple uvw that was destroyed through setForbidden(uv) and the arise of at least one and at most 3 new cts abc was triggered.
     //update all lbDecrease, icp and icf values that are affected. Set contains at most 4 nodes: {a, b, c, w} =>
     //Runtime: O(log n)
     for(set<WorkingCopyGraph::Node>::iterator a = update.begin(); a != update.end(); ++a) {

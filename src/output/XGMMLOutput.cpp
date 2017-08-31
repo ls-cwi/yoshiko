@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Emanuel Laude. All rights reserved.
 //
 
-#include "XGMMLOutput.h"
+#include "../output/XGMMLOutput.h"
 
 using namespace std;
 

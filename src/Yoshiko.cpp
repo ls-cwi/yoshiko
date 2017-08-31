@@ -46,7 +46,7 @@ ILOLAZYCONSTRAINTCALLBACK2(triangle_callback, const ClusterEditingInstance&, ins
         
         for (FullGraph::NodeIt i(g); i != INVALID; ++i) {
             if (time_limit != -1) {
-                if (clk.systemTime() > time_limit)
+                if (clk.systemTime() > time_limit) //TOOD: Coherent use of time_limit in ALL of yoshiko
                     throw("time limit exceeded in yoshiko triangle callback");
                 
                 cout << clk << endl;
@@ -207,7 +207,7 @@ ILOUSERCUTCALLBACK2(partition_cut_callback, const ClusterEditingInstance&, inst,
 
 
 long Yoshiko::solve(const ClusterEditingInstance& inst, ClusterEditingSolutions& s) {
-    if(inst.isDirty()) {
+	if(inst.isDirty()) {
         cerr << "Fatal error: ClusterEditingInstance is dirty."<<endl;
         exit(-1);
     }
@@ -232,7 +232,7 @@ long Yoshiko::solve(const ClusterEditingInstance& inst, ClusterEditingSolutions&
     IloModel M(env); // get model
     IloCplex cplex(env); // get cplex
     
-    // shut up cplex
+    // shut up cplex (for now maybe in the long run log somewhere or handle?)
     if (verbosity < 3) {
         cplex.setOut(env.getNullStream());
         cplex.setWarning(env.getNullStream());
@@ -247,7 +247,7 @@ long Yoshiko::solve(const ClusterEditingInstance& inst, ClusterEditingSolutions&
     // set some parameters
     //cplex.setParam(IloCplex::EpInt, 0.0); // zero tolerance (default: 1E-5)
     
-    // OBACHT. we do cutting planes. i think then preproc hast to be switched off..
+    // OBACHT. we do cutting planes. i think then preproc has to be switched off..
     // perhaps not really (seems to yield same results. but: preproc bringt nichts, kostet nur zeit)
     //if (o.HasOpt("preprocessing") && o.GetBOpt("preprocessing"));
     //else cplex.setParam(IloCplex::PreInd, 0); //
@@ -362,11 +362,14 @@ long Yoshiko::solve(const ClusterEditingInstance& inst, ClusterEditingSolutions&
     }
     
     bool optimal = cplex.solve();
-    if (verbosity > 1) {
-        cout << "done (" << cplex.getStatus() << ")." << endl;
+    
+    //Mark the solution as "timed-out"
+    if (cplex.getCplexStatus() == IloCplex::AbortTimeLim){
+    	cout << "TIMEDOUT" << endl;
+    	s.setTimedOut(true);
     }
-    
-    
+
+    //For some reason the solver terminated without providing an optimal solution
     if (!optimal) {
         cout << endl << endl << endl;
         cout << cplex.getStatus() << endl;
@@ -397,7 +400,7 @@ long Yoshiko::solve(const ClusterEditingInstance& inst, ClusterEditingSolutions&
         
         if (verbosity > 1)
             cout << "solving ILP (finding more optimal solutions)..." << flush;
-        optimal = cplex.populate();
+        cplex.populate();
         
         if (verbosity > 1)
             cout << "done." << endl;
@@ -410,6 +413,10 @@ long Yoshiko::solve(const ClusterEditingInstance& inst, ClusterEditingSolutions&
             cout  << numsol << " optimal solutions." << endl;
     }
     
+    if(verbosity >1){
+        cout << "Total Cost: " << z << endl;
+    }
+
     s.setTotalCost(z);
     s.resize(numsol);
     for (int k = 0; k < numsol; ++k) {

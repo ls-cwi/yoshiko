@@ -12,6 +12,8 @@ using namespace lemon;
 
 namespace ysk {
 
+//TODO: MERGING LEAKS MEMORY
+
 void CriticalCliqueRule::apply() {
   
   for (WorkingCopyGraph::NodeIt v(_instance.getGraph()); v != INVALID; ++v) {
@@ -40,6 +42,9 @@ void CriticalCliqueRule::apply() {
       _criticalClique[w] = new vector<WorkingCopyGraph::Node>();
       _criticalClique[w]->push_back(v);
       _neighborhood[w] = neighborhoodV;
+    }
+    else{
+    	delete neighborhoodV;
     }
   }
   

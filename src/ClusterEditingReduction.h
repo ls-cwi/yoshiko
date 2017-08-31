@@ -45,6 +45,9 @@ private:
   std::vector<ClusterReductionInstance*> _instances;
   double _totalCost;
   std::bitset<NUMBER_OF_REDUCTION_RULES> _active;
+  /**
+   *
+   */
   double _multiplicativeFactor;
   bool _conserveMultipleSolutions;
 };

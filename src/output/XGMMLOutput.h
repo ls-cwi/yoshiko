@@ -11,7 +11,8 @@
 
 #include <iostream>
 #include <string>
-#include "ClusterEditingOutput.h"
+
+#include "../output/ClusterEditingOutput.h"
 
 namespace ysk {
   

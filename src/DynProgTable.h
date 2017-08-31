@@ -14,17 +14,19 @@
 namespace ysk {
   
 class DynProgTable {
-public:
-  DynProgTable(int bound);
-  double getValue(int x);
-  void setValue(int x, double value);
-  void swap();
-  void print();
-  ~DynProgTable();
-  
-private:
-  double** _table;
-  int _length;
+
+	public:
+		DynProgTable (const DynProgTable &copy);
+		DynProgTable(int bound);
+		double getValue(int x);
+		void setValue(int x, double value);
+		void swap();
+		//void print();
+		~DynProgTable();
+
+	private:
+		double** _table;
+		int _length;
 };
   
 } // namespace ysk

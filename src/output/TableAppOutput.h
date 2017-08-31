@@ -12,7 +12,7 @@
 #include <iostream>
 #include <string>
 
-#include "TableOutput.h"
+#include "../output/TableOutput.h"
 
 namespace ysk {
 

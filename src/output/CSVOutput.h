@@ -1,28 +1,28 @@
 //
-//  TableOutput.h
+//  CSVOutput.h
 //  weighted-cluster-editing
 //
 //  Created by Emanuel Laude on 21.03.13.
 //  Copyright (c) 2013 Emanuel Laude. All rights reserved.
 //
 
-#ifndef TABLEOUTPUT_H
-#define TABLEOUTPUT_H
+#ifndef CSVOUTPUT_H
+#define CSVOUTPUT_H
 
 #include <iostream>
 #include <string>
 
-#include "ClusterEditingOutput.h"
+#include "../output/ClusterEditingOutput.h"
 
 namespace ysk {
 
-class TableOutput : public ClusterEditingOutput {
+class CSVOutput : public ClusterEditingOutput {
 public:
-  TableOutput(ClusterEditingInstance& inst,
-              ClusterEditingSolutions& solutions,
-              std::string filename,
-              std::string suffix,
-              std::string label)
+  CSVOutput(ClusterEditingInstance& inst,
+            ClusterEditingSolutions& solutions,
+            std::string filename,
+            std::string suffix,
+            std::string label)
     : ClusterEditingOutput(inst, solutions, filename, suffix, label)
   {
   }
@@ -31,30 +31,23 @@ public:
                    size_t solution,
                    size_t numberOfNodes,
                    size_t numberOfClusters);
-  
   void writeBeginNodes(size_t numberOfNodes);
-  
   void writeEndNodes();
-  
-  void writeNode(int nodeId, std::string name, size_t cluster);
-  
+  void writeNode(int nodeId,
+                 std::string name,
+                 size_t cluster);
   void writeBeginEdges();
-  
   void writeEdge(int sourceId,
                  int targetId,
                  std::string name,
                  double weight,
                  bool modified);
-  
   void writeEndEdges();
-  
   void writeBeginCluster(size_t cluster);
-  
   void writeEndCluster();
-  
   void writeFooter();
 };
   
 } // namespace ysk
 
-#endif /* TABLEOUTPUT_H */
+#endif /* CSVOUTPUT_H */
