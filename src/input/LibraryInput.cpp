@@ -104,6 +104,4 @@ namespace yskInput{
 		_size = size;
 	};
 	
-
-
 }

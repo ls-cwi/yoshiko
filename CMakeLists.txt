@@ -94,6 +94,7 @@ set (YoshikoLib_Src
 
 set (YoshikoLib_Hdr
 	src/input/LibraryInput.h
+	src/JavaInformer.h
 	src/LibraryInterface.h
 	${Yoshiko_Hdr}
 )

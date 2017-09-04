@@ -5,7 +5,6 @@ using namespace ysk;
 
 namespace yskLib{
 
-
 	std::string getVersionString(){
 		return YOSHIKO_VERSION;
 	}
@@ -21,7 +20,15 @@ namespace yskLib{
 
 	){
 		libIn->parseInput();
-		return performAlgorithm(libIn->getProblemInstance(),nrOptimalSolutions,rulesBitMask,multiplicativeFactor,useHeuristic,separatePartitionCuts,separateTriangles);
+		return performAlgorithm(
+			libIn->getProblemInstance(),
+			nrOptimalSolutions,
+			rulesBitMask,
+			multiplicativeFactor,
+			useHeuristic,
+			separatePartitionCuts,
+			separateTriangles
+		);
 	}
 
 	void setTimeLimit(int limit){
