@@ -60,13 +60,11 @@ int main(int argc, char * const argv[]) {
   string graphLabel = "cluster_solution";
   int inputFileFormat = 0; //TODO: Convert to enums for better codestyle?
   int outputFileFormat = 0;
-  int nrOptimalSolutions = 1;
   bool exportLP = false;
-  bool separateTriangles = false;
-  bool separatePartitionCuts = false;
-  bool useHeuristic = false;
-  string rulesBitMask = "111111";
-  double multiplicativeFactor = 1;
+
+  YParameterSet parameter;
+
+
   
   // Add a string option with storage reference for file name
   ap.refOption("f", "Name of file that contains input []", inputFilename, true);
@@ -75,16 +73,16 @@ int main(int argc, char * const argv[]) {
   ap.refOption("o", "Name of output file(s) []", outputFilename, false);
   ap.refOption("O", "output file format 0 = csv, 1 = table (line one: number of nodes, line two: number of clusters, column one: node name, column two: cluster ID), 2 = gml, 3 = xgmml (Cytoscape) 4 = Pajek [0], 5 = table (Cytoscape app)", outputFileFormat, false);
   ap.refOption("v", "verbosity, 0 = silent, 5 = full [0]", verbosity, false);
-  ap.refOption("H", "utilize heuristic instead of ILP, [false]", useHeuristic, false);
+  ap.refOption("H", "utilize heuristic instead of ILP, [false]", parameter.useHeuristic, false);
   ap.refOption("T", "CPU time limit (s) for the ILP component, -1 = no limit [-1]", time_limit, false);
   ap.refOption("threads", "number of threads [max]", no_threads, false);
   ap.refOption("e", "export LP [false]", exportLP, false);
-  ap.refOption("st", "separate triangles [false]", separateTriangles, false);
-  ap.refOption("sp", "separate partition cuts [false]", separatePartitionCuts, false);
-  ap.refOption("n", "number of optimal solutions [1]", nrOptimalSolutions, false);
-  ap.refOption("m", "multiplicative factor for real valued edge weights in SimilarNeighborhoodRule (the higher the better the reduction results and the slower the performance) [1]", multiplicativeFactor, false);
+  ap.refOption("st", "separate triangles [false]", parameter.separateTriangles, false);
+  ap.refOption("sp", "separate partition cuts [false]", parameter.separatePartitionCuts, false);
+  ap.refOption("n", "number of optimal solutions [1]", parameter.nrOptimalSolutions, false);
+  ap.refOption("m", "multiplicative factor for real valued edge weights in SimilarNeighborhoodRule (the higher the better the reduction results and the slower the performance) [1]", parameter.multiplicativeFactor, false);
   ap.refOption("g", "graph label []", graphLabel, false);
-  ap.refOption("r", "explicitly turn on/off reduction rules, bit string (right to left): bit 0 = CliqueRule, bit 1 = CriticalCliqueRule, bit 2 = AlmostCliqueRule, bit 3 = HeavyEdgeRule3in1, bit 4 = ParameterDependentReductionRule, bit 5 = SimilarNeighborhoodRule [111111]", rulesBitMask, false);
+  ap.refOption("r", "explicitly turn on/off reduction rules, bit string (right to left): bit 0 = CliqueRule, bit 1 = CriticalCliqueRule, bit 2 = AlmostCliqueRule, bit 3 = HeavyEdgeRule3in1, bit 4 = ParameterDependentReductionRule, bit 5 = SimilarNeighborhoodRule [111111]", parameter.rulesBitMask, false);
   
   // Perform the parsing process
   // (in case of any error it terminates the program) -> tb improved
@@ -101,16 +99,16 @@ int main(int argc, char * const argv[]) {
     std::cout << "      -o: " << outputFilename << std::endl;
     std::cout << "      -O: " << outputFileFormat << std::endl;
     std::cout << "      -v: " << verbosity << std::endl;
-    std::cout << "      -H: " << useHeuristic << std::endl;
+    std::cout << "      -H: " << parameter.useHeuristic << std::endl;
     std::cout << "      -T: " << time_limit << std::endl;
     std::cout << "-threads: " << no_threads << std::endl;
     std::cout << "      -e: " << exportLP << std::endl;
-    std::cout << "      -st: " << separateTriangles << std::endl;
-    std::cout << "      -sp: " << separatePartitionCuts << std::endl;
-    std::cout << "      -n: " << nrOptimalSolutions << std::endl;
-    std::cout << "      -m: " << multiplicativeFactor << std::endl;
+    std::cout << "      -st: " << parameter.separateTriangles << std::endl;
+    std::cout << "      -sp: " << parameter.separatePartitionCuts << std::endl;
+    std::cout << "      -n: " << parameter.nrOptimalSolutions << std::endl;
+    std::cout << "      -m: " << parameter.multiplicativeFactor << std::endl;
     std::cout << "      -g: " << graphLabel << std::endl;
-    std::cout << "      -r: " << rulesBitMask << std::endl;
+    std::cout << "      -r: " << parameter.rulesBitMask << std::endl;
   }
   
   
@@ -152,15 +150,14 @@ int main(int argc, char * const argv[]) {
   is.close(); //Close input stream
   instance = input->getProblemInstance();
   
-  ClusterEditingSolutions* ces = performAlgorithm(
-		  	  instance,
-			  nrOptimalSolutions,
-			  rulesBitMask,
-			  multiplicativeFactor,
-			  useHeuristic,
-			  separatePartitionCuts,
-			  separateTriangles
-		  );
+
+
+  CoreAlgorithm* core = new CoreAlgorithm(
+		  instance,
+		  parameter
+  );
+
+  ClusterEditingSolutions* ces = core->run();
 
   //Output generation
   ClusterEditingOutput* output;
@@ -174,6 +171,7 @@ int main(int argc, char * const argv[]) {
   output->write();
 
   //Final cleanup
+  delete core;
   delete instance;
   delete input;
   delete ces;

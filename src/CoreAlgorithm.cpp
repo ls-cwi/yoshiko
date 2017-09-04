@@ -11,57 +11,62 @@ using namespace std;
 using namespace lemon;
 
 namespace ysk {
-	
-	ClusterEditingSolutions* performAlgorithm(
-			ClusterEditingInstance* instance,
-			int nrOptimalSolutions,
-			std::string rulesBitMask, //< Maybe use enums or separate variables internally in the long run? -> More flexibility // maintainability
-			double multiplicativeFactor,
-			bool useHeuristic,
-			bool separatePartitionCuts,
-			bool separateTriangles)
+
+	void CoreAlgorithm::registerCplexInformer(yskLib::CplexInformer informer){
+		_informer = informer;
+		_useInformer = true;
+	}
+
+	void CoreAlgorithm::cancel(){
+		//There is really not a whole lot to do but if we have the ILP running we need to cancel it and retrieve incomplete solutions
+		if (_solverInitialized){
+			_solver.terminate();
+		}
+	}
+
+	ClusterEditingSolutions* CoreAlgorithm::run()
 	{
 		if (verbosity >= 5)
-			cout << instance << endl;
+			cout << _instance << endl;
 	
 		// warn user about permanent and forbidden edges
-		const WorkingCopyGraph g = instance->getWorkingCopyInstance().getGraph();
+		const WorkingCopyGraph g = _instance->getWorkingCopyInstance().getGraph();
 		if (verbosity > 1) {
 			cout << endl
 					<< "Interpreting the following edges as forbidden/permanent: "
 					<< endl;
 			for (WorkingCopyGraph::EdgeIt e(g); e != INVALID; ++e) {
-				if (instance->getWorkingCopyInstance().isForbidden(e))
-					cout << instance->getEdgeName(e) << "\tforbidden" << endl;
+				if (_instance->getWorkingCopyInstance().isForbidden(e))
+					cout << _instance->getEdgeName(e) << "\tforbidden" << endl;
 	
-				if (instance->getWorkingCopyInstance().isPermanent(e))
-					cout << instance->getEdgeName(e) << "\tpermanent" << endl;
+				if (_instance->getWorkingCopyInstance().isPermanent(e))
+					cout << _instance->getEdgeName(e) << "\tpermanent" << endl;
 			}
 		}
 	
 		bool conserveMultipleSolutions = false;
 	
-		if (nrOptimalSolutions > 1) {
+		if (_parameter.nrOptimalSolutions > 1) {
 			conserveMultipleSolutions = true;
 		}
 	
 		if (verbosity > 1) {
 			cout << endl << "applying FPT reduction rules..." << endl;
 			cout << "number of nodes:\t"
-					<< countNodes(instance->getWorkingCopyInstance().getGraph())
+					<< countNodes(_instance->getWorkingCopyInstance().getGraph())
 					<< endl;
 		}
 	
 		double totalCost = 0.0;
 	
-		bitset<NUMBER_OF_REDUCTION_RULES> rules(rulesBitMask);
+		bitset<NUMBER_OF_REDUCTION_RULES> rules(_parameter.rulesBitMask);
 	
 		ClusterEditingReduction cer(
 				rules,
-				multiplicativeFactor,
+				_parameter.multiplicativeFactor,
 				conserveMultipleSolutions
 				);
-		cer.perform(*instance);
+		cer.perform(*_instance);
 	
 		vector<ClusterReductionInstance*>& reduced = cer.getInstances();
 	
@@ -99,19 +104,31 @@ namespace ysk {
 			ClusterEditingInstance& i = *(*it)->getInstance();
 	
 			ClusterEditingSolutions s;
+
 			long numberOfSolutions = 1;
 	
 			//Solve the remaining and reduced instance either with the heuristic or the ILP
-			if (!useHeuristic) {
+			if (!_parameter.useHeuristic) {
 				//ILP
+
+				_solver = ILPSolver(
+						_parameter.separateTriangles,
+						_parameter.separatePartitionCuts,
+						_parameter.nrOptimalSolutions
+				);
+
+				if (_useInformer){
+					_solver.registerInformer(_informer);
+				}
+
+				_solverInitialized = true;
+
 				try {
-					Yoshiko yoshiko(separateTriangles,
-							separatePartitionCuts,
-							nrOptimalSolutions);
-					numberOfSolutions = yoshiko.solve(i, s);
+					numberOfSolutions = _solver.solve(i, s);
 				} catch (IloException &e) {
 					cout << "CPLEX error: " << e.getMessage() << endl;
 				}
+				_solver.terminate();
 	
 			} else {
 				//HEURISTIC
@@ -154,18 +171,18 @@ namespace ysk {
 		if (verbosity > 0)
 			cout << totalCost << endl;
 	
-		ClusterEditingSolutions* ces = new ClusterEditingSolutions();
-		ces->resize(totalNumberOfSolutions);
+
+		_result->resize(totalNumberOfSolutions);
 	
 		size_t k = 0;
 		vector<vector<int> > p;
-		mergeSolutions(0, k, p, *ces, instances);
+		mergeSolutions(0, k, p, *_result, instances);
 
 		//Restore timeout flag
-		ces->setTimedOut(timedOut);
+		_result->setTimedOut(timedOut);
 		//Restore total cost
-		ces->setTotalCost(totalCost);
-		return ces;
+		_result->setTotalCost(totalCost);
+		return _result;
 	}
 	
 	void expandSolutions(ClusterEditingInstance& cei,
@@ -186,7 +203,7 @@ namespace ysk {
 			partitions.push_back(partition);
 		}
 	}
-	
+
 	void mergeSolutions(size_t i, size_t& k, vector<vector<int> >& partition,
 			ClusterEditingSolutions& solutions,
 			vector<vector<vector<vector<int> > > >& instances) {
@@ -200,7 +217,7 @@ namespace ysk {
 			vector<vector<int> > p;
 			p.insert(p.end(), partition.begin(), partition.end());
 			p.insert(p.end(), instances[i][j].begin(), instances[i][j].end());
-	
+
 			mergeSolutions(i + 1, k, p, solutions, instances);
 		}
 	}

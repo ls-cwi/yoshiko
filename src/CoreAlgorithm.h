@@ -9,30 +9,47 @@
 
 #include "ClusterEditingSolutions.h"
 #include "ClusterEditingReduction.h"
-#include "Yoshiko.h"
+#include "CplexInformer.h"
+#include "ILPSolver.h"
+#include "YParameterSet.h"
 
 namespace ysk {
 
-	/**TODO: Complete documentation
-	 * Performs the Yoshiko-Algorithm on a given instance with the parameters specified
-	 * For an in-depth description of the parameters and the algorithm itself see -> [INSERT LINK TO PAPER HERE?]
-	 * @param instance The ClusterEditingInstance that is to be processed
-	 * @param nrOptimalSolutions The maximum number of optimal solutions (if multiple ones exist) that are to be calculated
-	 * @param rulesBitMask A bit mask that can turn on/off reduction rules TODO: More in-depth explanation
-	 * @param multiplicativeFactor
-	 * @param useHeuristic
-	 * @param separatePartitionCuts
-	 * @param separateTriangles
-	 * @return
-	 */
-	ClusterEditingSolutions* performAlgorithm(
-			ClusterEditingInstance* instance,
-			int nrOptimalSolutions = 1,
-			std::string rulesBitMask = "111111",
-			double multiplicativeFactor = 1,
-			bool useHeuristic = false,
-			bool separatePartitionCuts = false,
-			bool separateTriangles = false);
+	class CoreAlgorithm{
+
+		public:
+
+		CoreAlgorithm(
+				ClusterEditingInstance* instance,
+				YParameterSet parameter
+		)
+		:_instance(instance)
+		,_result(new ClusterEditingSolutions)
+		,_parameter(parameter)
+		,_useInformer(false)
+		,_solverInitialized(false)
+		{};
+
+		ClusterEditingSolutions* run();
+
+		void cancel();
+
+		void registerCplexInformer(yskLib::CplexInformer informer);
+
+
+		private:
+			ClusterEditingInstance* _instance;
+			ClusterEditingSolutions* _result;
+
+			YParameterSet _parameter;
+
+			yskLib::CplexInformer _informer;
+			ILPSolver _solver;
+
+			bool _useInformer;
+			bool _solverInitialized;
+
+	};
 
 	//replace reduced cluster by single nodes
 	void expandSolutions(ClusterEditingInstance& cei,
@@ -43,7 +60,6 @@ namespace ysk {
 			std::vector<std::vector<int> >& partition,
 			ClusterEditingSolutions& solutions,
 			std::vector<std::vector<std::vector<std::vector<int> > > >& instances);
-
 
 }
 

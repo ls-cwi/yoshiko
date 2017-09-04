@@ -15,10 +15,11 @@ set( Yoshiko_Hdr
   src/DynProgTable.h
   src/Globals.h
   src/Helpers.h
+  src/ILPSolver.h
   src/InducedCostsHeuristic.h
+  src/CplexInformer.h
   src/ParameterizedInstance.h
   src/WorkingCopyInstance.h
-  src/Yoshiko.h
   
   src/input/ClusterEditingInput.h
   src/input/JENAInput.h
@@ -51,12 +52,12 @@ set( Yoshiko_Src
   src/ParameterizedInstance.cpp
   src/Helpers.cpp
   src/Delta.cpp
+  src/ILPSolver.cpp
   src/InducedCostsHeuristic.cpp
   src/ClusterEditingInstance.cpp
   src/DynProgTable.cpp
   src/WorkingCopyInstance.cpp
   src/ClusterEditingReduction.cpp
-  src/Yoshiko.cpp
   src/ClusterEditingSolutions.cpp
   src/Globals.cpp
   src/main.cpp
@@ -94,7 +95,6 @@ set (YoshikoLib_Src
 
 set (YoshikoLib_Hdr
 	src/input/LibraryInput.h
-	src/JavaInformer.h
 	src/LibraryInterface.h
 	${Yoshiko_Hdr}
 )

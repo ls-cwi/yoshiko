@@ -30,16 +30,6 @@ namespace yskLib{
 		 */
 		std::string getVersionString();
 
-		ysk::ClusterEditingSolutions* processLibraryInput(
-				yskInput::LibraryInput* libIn,
-				int nrOptimalSolutions,
-				std::string rulesBitMask,
-				double multiplicativeFactor,
-				bool separatePartitionCuts,
-				bool separateTriangles,
-				bool useHeuristic
-				);
-
 		/**
 		 * Sets the global time limit for the ILP part of the software
 		 * @param limit The timeout threshold in seconds
@@ -50,6 +40,16 @@ namespace yskLib{
 		 * @param level The level, corresponding to a verbosity level, will be ignored if invalid
 		 */
 		void setVerbosity(int level);
+
+		ysk::CoreAlgorithm* getRun(
+				yskInput::LibraryInput* input,
+				int nrOptimalSolutions,
+				std::string rulesBitMask,
+				double multiplicativeFactor,
+				bool useHeuristic,
+				bool separatePartitionCuts,
+				bool separateTriangles
+		);
 }
 
 #endif /* SRC_LIBRARYINTERFACE_H */

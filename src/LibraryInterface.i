@@ -13,7 +13,7 @@
 
 %include "ClusterEditingSolutions.i"
 %include "LibraryInput.i"
-%include "JavaInformer.i"
+%include "CplexInformer.i"
 
 %{	
 	#include "LibraryInterface.h"
@@ -21,5 +21,7 @@
 %}
 
 %ignore CPXSIZE_BITS;
+
+%include "CoreAlgorithm.i"
 
 %include "LibraryInterface.h"

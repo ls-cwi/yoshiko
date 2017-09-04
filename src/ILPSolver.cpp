@@ -1,12 +1,12 @@
 //
-//  Yoshiko.cpp
+//  ILPSolver.cpp
 //  yoshiko
 //
 //  Created by Gunnar Klau on 15-06-12.
 //  Copyright (c) 2012 Centrum Wiskunde & Informatica (CWI). All rights reserved.
 //
 
-#include "Yoshiko.h"
+#include "ILPSolver.h"
 
 using namespace std;
 using namespace lemon;
@@ -204,9 +204,22 @@ ILOUSERCUTCALLBACK2(partition_cut_callback, const ClusterEditingInstance&, inst,
     }
 }
 
+void ILPSolver::registerInformer(yskLib::CplexInformer informer){
+	_useInformer = true;
+	_informer = informer;
+}
 
 
-long Yoshiko::solve(const ClusterEditingInstance& inst, ClusterEditingSolutions& s) {
+void ILPSolver::terminate(){
+	if (verbosity > 2){
+		cout << "Terminating CPLEX Environment" << endl;
+	}
+	if (_cplexInitialized){
+		_aborter.abort();
+	}
+}
+
+long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolutions& s) {
 	if(inst.isDirty()) {
         cerr << "Fatal error: ClusterEditingInstance is dirty."<<endl;
         exit(-1);
@@ -228,44 +241,30 @@ long Yoshiko::solve(const ClusterEditingInstance& inst, ClusterEditingSolutions&
     }
     
     // first build ILOG model...
-    IloEnv env; // get ILOG environment
-    IloModel M(env); // get model
-    IloCplex cplex(env); // get cplex
-    
+    IloEnv cplexEnv; // get ILOG environment
+    IloModel M(cplexEnv); // get model
+    IloCplex cplex(cplexEnv); // get cplex
+
+    _aborter = IloCplex::Aborter(cplexEnv); //generate Aborter object and link to cplex
+    cplex.use(_aborter);
+    _cplexInitialized = true; //flag for external objects to check if a cplex instance is initialized (and can thus be stopped)
+
     // shut up cplex (for now maybe in the long run log somewhere or handle?)
     if (verbosity < 3) {
-        cplex.setOut(env.getNullStream());
-        cplex.setWarning(env.getNullStream());
-        cplex.setError(env.getNullStream());
+    	cplex.setOut(cplexEnv.getNullStream());
+    	cplex.setWarning(cplexEnv.getNullStream());
+    	cplex.setError(cplexEnv.getNullStream());
     }
     
     if (no_threads != -1)
-        cplex.setParam(IloCplex::Threads, no_threads);
-    
-    //cplex.setParam(IloCplex::MIPDisplay, 5);
-    
-    // set some parameters
-    //cplex.setParam(IloCplex::EpInt, 0.0); // zero tolerance (default: 1E-5)
-    
-    // OBACHT. we do cutting planes. i think then preproc has to be switched off..
-    // perhaps not really (seems to yield same results. but: preproc bringt nichts, kostet nur zeit)
-    //if (o.HasOpt("preprocessing") && o.GetBOpt("preprocessing"));
-    //else cplex.setParam(IloCplex::PreInd, 0); //
-    //    cplex.setParam(IloCplex::PreLinear, 0); //
-    //cplex.setParam(IloCplex::PreDual, 0); //
+    	cplex.setParam(IloCplex::Threads, no_threads);
     
     // set CPU time limit
     cplex.setParam(IloCplex::ClockType, 1);
     if (time_limit != -1)
-        cplex.setParam(IloCplex::TiLim, time_limit);
+    	cplex.setParam(IloCplex::TiLim, time_limit);
     
-    //cplex.setParam(IloCplex::RootAlg, CPX_ALG_DUAL);
-    
-    // cplex.setParam(IloCplex::DataCheck, 1);
-    
-    //cplex.setParam(IloCplex::PreLinear, 0); // only linear preproc
-    //cplex.setParam(IloCplex::Reduce, 1); // only primal reductions
-    
+
     
     // set all generic cuts off
     
@@ -287,18 +286,18 @@ long Yoshiko::solve(const ClusterEditingInstance& inst, ClusterEditingSolutions&
     
     // generate variables:
     
-    IloBoolVarArray x(env, g.edgeNum());
+    IloBoolVarArray x(cplexEnv, g.edgeNum());
     for (FullGraph::EdgeIt e(g); e != INVALID; ++e) {
         std::stringstream var_name;
         var_name << "x_" << g.id(g.u(e)) << "_" << g.id(g.v(e));
-        x[g.id(e)] = IloBoolVar(env, var_name.str().c_str());
+        x[g.id(e)] = IloBoolVar(cplexEnv, var_name.str().c_str());
         M.add(x[g.id(e)]);
         //cout << g.id(g.source(a)) << " --> " << g.id(g.target(a)) << "\t" << g.id(a) << " " << g.edge_no(g.id(g.source(a)), g.id(g.target(a))) << endl;
     }
     
     
     // build objective function
-    IloExpr obj_expr(env);
+    IloExpr obj_expr(cplexEnv);
     for (FullGraph::EdgeIt e(g); e != INVALID; ++e)
         if (!inst.isForbidden(e) && !inst.isPermanent(e)) {
             obj_expr -= inst.getWeight(e) * x[g.id(e)];
@@ -306,7 +305,7 @@ long Yoshiko::solve(const ClusterEditingInstance& inst, ClusterEditingSolutions&
                 obj_expr += inst.getWeight(e);
         }
     
-    M.add(IloObjective(env, obj_expr, IloObjective::Minimize));
+    M.add(IloObjective(cplexEnv, obj_expr, IloObjective::Minimize));
     
     // add inequalities for forbidden/permanent edges:
     for (FullGraph::EdgeIt e(g); e != INVALID; ++e) {
@@ -318,11 +317,13 @@ long Yoshiko::solve(const ClusterEditingInstance& inst, ClusterEditingSolutions&
     }
     
     
-    //
-    if (_sep_triangles) cplex.use(triangle_callback(env, inst, x)); // use triangle callback --> lazy constraints!
+    //CALLBACKS
+
+    if (_sep_triangles) cplex.use(triangle_callback(cplexEnv, inst, x)); // use triangle callback --> lazy constraints!
     
-    if (_sep_partition_cuts) cplex.use(partition_cut_callback(env, inst, x)); // use partition callback --> user cuts!
+    if (_sep_partition_cuts) cplex.use(partition_cut_callback(cplexEnv, inst, x)); // use partition callback --> user cuts!
     
+    //if we're using an informer to report to any outside source we will register it here
     
     if (!_sep_triangles) {
         if (verbosity > 1) {
@@ -385,17 +386,12 @@ long Yoshiko::solve(const ClusterEditingInstance& inst, ClusterEditingSolutions&
         cout << "upper bound: " << z << endl;
         cout << "lower bound: " << cplex.getBestObjValue() << endl;
         cout << "gap (%):     " << cplex.getMIPRelativeGap()*100 << endl;
-        //clk.Stop();
-        //cout << "CPU time (s): " << clk.Usr() << " + " << clk.Sys() << " = " << clk.Usr() + clk.Sys() << endl;
-        /* cout << "no triplet cuts:     " << no_added_triplet_cuts << endl;
-         cout << "no 2-partition cuts: " << no_added_partition_cuts << endl;
-         */
     }
     
     if (_num_opt_sol > 1) {
-        cplex.setParam(IloCplex::SolnPoolGap, 0.0); //
-        cplex.setParam(IloCplex::SolnPoolIntensity, 4); // "all" (sub)optimal solutions
-        cplex.setParam(IloCplex::PopulateLim, _num_opt_sol);
+    	cplex.setParam(IloCplex::SolnPoolGap, 0.0); //
+    	cplex.setParam(IloCplex::SolnPoolIntensity, 4); // "all" (sub)optimal solutions
+    	cplex.setParam(IloCplex::PopulateLim, _num_opt_sol);
         
         
         if (verbosity > 1)
@@ -420,7 +416,7 @@ long Yoshiko::solve(const ClusterEditingInstance& inst, ClusterEditingSolutions&
     s.setTotalCost(z);
     s.resize(numsol);
     for (int k = 0; k < numsol; ++k) {
-        IloNumArray x_vals(env);
+        IloNumArray x_vals(cplexEnv);
         cplex.getValues(x_vals, x, k);
         s.setSolution(k, x_vals, inst);
     }

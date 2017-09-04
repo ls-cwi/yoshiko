@@ -90,6 +90,8 @@ void ClusterEditingSolutions::setSolution(int k, const IloNumArray &x_vals, cons
     cout << "done." << endl;
 }
 
+
+
 void ClusterEditingSolutions::setTimedOut(bool timedOut){
 	_timedOut = timedOut;
 }

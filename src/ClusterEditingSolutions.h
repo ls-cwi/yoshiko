@@ -58,6 +58,8 @@ public:
   double getTotalCost() const;
 
   void setTotalCost(double totalCost);
+
+
   void setTimedOut(bool timedOut);
   bool isTimedOut();
   

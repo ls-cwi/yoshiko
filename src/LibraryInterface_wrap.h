@@ -11,13 +11,13 @@
 #ifndef SWIG_LibraryInterface_WRAP_H_
 #define SWIG_LibraryInterface_WRAP_H_
 
-class SwigDirector_JavaInformer : public yskLib::JavaInformer, public Swig::Director {
+class SwigDirector_CplexInformer : public yskLib::CplexInformer, public Swig::Director {
 
 public:
     void swig_connect_director(JNIEnv *jenv, jobject jself, jclass jcls, bool swig_mem_own, bool weak_global);
-    SwigDirector_JavaInformer(JNIEnv *jenv);
-    virtual void callback();
-    virtual ~SwigDirector_JavaInformer();
+    SwigDirector_CplexInformer(JNIEnv *jenv);
+    virtual void callback(double gap);
+    virtual ~SwigDirector_CplexInformer();
 public:
     bool swig_overrides(int n) {
       return (n < 1 ? swig_override[n] : false);
