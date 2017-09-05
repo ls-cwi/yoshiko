@@ -666,6 +666,9 @@ namespace Swig {
 #include <string>
 
 
+	#include "SolutionFlags.h"
+
+
 #include <stdexcept>
 
 
