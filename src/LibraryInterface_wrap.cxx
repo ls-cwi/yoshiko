@@ -659,7 +659,7 @@ namespace Swig {
 namespace Swig {
   namespace {
     jclass jclass_LibraryInterfaceJNI = NULL;
-    jmethodID director_method_ids[1];
+    jmethodID director_method_ids[2];
   }
 }
 
@@ -742,6 +742,33 @@ void SwigDirector_CplexInformer::callback(double gap) {
   if (swigjobj) jenv->DeleteLocalRef(swigjobj);
 }
 
+bool SwigDirector_CplexInformer::continueOnTimeout() {
+  bool c_result = SwigValueInit< bool >() ;
+  jboolean jresult = 0 ;
+  JNIEnvWrapper swigjnienv(this) ;
+  JNIEnv * jenv = swigjnienv.getJNIEnv() ;
+  jobject swigjobj = (jobject) NULL ;
+  
+  if (!swig_override[1]) {
+    return yskLib::CplexInformer::continueOnTimeout();
+  }
+  swigjobj = swig_get_self(jenv);
+  if (swigjobj && jenv->IsSameObject(swigjobj, NULL) == JNI_FALSE) {
+    jresult = (jboolean) jenv->CallStaticBooleanMethod(Swig::jclass_LibraryInterfaceJNI, Swig::director_method_ids[1], swigjobj);
+    jthrowable swigerror = jenv->ExceptionOccurred();
+    if (swigerror) {
+      jenv->ExceptionClear();
+      throw Swig::DirectorException(jenv, swigerror);
+    }
+    
+    c_result = jresult ? true : false; 
+  } else {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null upcall object in yskLib::CplexInformer::continueOnTimeout ");
+  }
+  if (swigjobj) jenv->DeleteLocalRef(swigjobj);
+  return c_result;
+}
+
 SwigDirector_CplexInformer::~SwigDirector_CplexInformer() {
   swig_disconnect_director_self("swigDirectorDisconnect");
 }
@@ -755,6 +782,9 @@ void SwigDirector_CplexInformer::swig_connect_director(JNIEnv *jenv, jobject jse
   } methods[] = {
     {
       "callback", "(D)V", NULL 
+    },
+    {
+      "continueOnTimeout", "()Z", NULL 
     }
   };
   
@@ -767,7 +797,7 @@ void SwigDirector_CplexInformer::swig_connect_director(JNIEnv *jenv, jobject jse
       baseclass = (jclass) jenv->NewGlobalRef(baseclass);
     }
     bool derived = (jenv->IsSameObject(baseclass, jcls) ? false : true);
-    for (int i = 0; i < 1; ++i) {
+    for (int i = 0; i < 2; ++i) {
       if (!methods[i].base_methid) {
         methods[i].base_methid = jenv->GetMethodID(baseclass, methods[i].mname, methods[i].mdesc);
         if (!methods[i].base_methid) return;
@@ -787,6 +817,168 @@ void SwigDirector_CplexInformer::swig_connect_director(JNIEnv *jenv, jobject jse
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+SWIGEXPORT jlong JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_new_1SolutionFlags(JNIEnv *jenv, jclass jcls) {
+  jlong jresult = 0 ;
+  ysk::SolutionFlags *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (ysk::SolutionFlags *)new ysk::SolutionFlags();
+  *(ysk::SolutionFlags **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_SolutionFlags_1totalCost_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jdouble jarg2) {
+  ysk::SolutionFlags *arg1 = (ysk::SolutionFlags *) 0 ;
+  double arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(ysk::SolutionFlags **)&jarg1; 
+  arg2 = (double)jarg2; 
+  if (arg1) (arg1)->totalCost = arg2;
+}
+
+
+SWIGEXPORT jdouble JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_SolutionFlags_1totalCost_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jdouble jresult = 0 ;
+  ysk::SolutionFlags *arg1 = (ysk::SolutionFlags *) 0 ;
+  double result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(ysk::SolutionFlags **)&jarg1; 
+  result = (double) ((arg1)->totalCost);
+  jresult = (jdouble)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_SolutionFlags_1timedOut_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jboolean jarg2) {
+  ysk::SolutionFlags *arg1 = (ysk::SolutionFlags *) 0 ;
+  bool arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(ysk::SolutionFlags **)&jarg1; 
+  arg2 = jarg2 ? true : false; 
+  if (arg1) (arg1)->timedOut = arg2;
+}
+
+
+SWIGEXPORT jboolean JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_SolutionFlags_1timedOut_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jboolean jresult = 0 ;
+  ysk::SolutionFlags *arg1 = (ysk::SolutionFlags *) 0 ;
+  bool result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(ysk::SolutionFlags **)&jarg1; 
+  result = (bool) ((arg1)->timedOut);
+  jresult = (jboolean)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_SolutionFlags_1ilpGenerated_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jboolean jarg2) {
+  ysk::SolutionFlags *arg1 = (ysk::SolutionFlags *) 0 ;
+  bool arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(ysk::SolutionFlags **)&jarg1; 
+  arg2 = jarg2 ? true : false; 
+  if (arg1) (arg1)->ilpGenerated = arg2;
+}
+
+
+SWIGEXPORT jboolean JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_SolutionFlags_1ilpGenerated_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jboolean jresult = 0 ;
+  ysk::SolutionFlags *arg1 = (ysk::SolutionFlags *) 0 ;
+  bool result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(ysk::SolutionFlags **)&jarg1; 
+  result = (bool) ((arg1)->ilpGenerated);
+  jresult = (jboolean)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_SolutionFlags_1optimal_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jboolean jarg2) {
+  ysk::SolutionFlags *arg1 = (ysk::SolutionFlags *) 0 ;
+  bool arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(ysk::SolutionFlags **)&jarg1; 
+  arg2 = jarg2 ? true : false; 
+  if (arg1) (arg1)->optimal = arg2;
+}
+
+
+SWIGEXPORT jboolean JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_SolutionFlags_1optimal_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jboolean jresult = 0 ;
+  ysk::SolutionFlags *arg1 = (ysk::SolutionFlags *) 0 ;
+  bool result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(ysk::SolutionFlags **)&jarg1; 
+  result = (bool) ((arg1)->optimal);
+  jresult = (jboolean)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_SolutionFlags_1gapSize_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jdouble jarg2) {
+  ysk::SolutionFlags *arg1 = (ysk::SolutionFlags *) 0 ;
+  double arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(ysk::SolutionFlags **)&jarg1; 
+  arg2 = (double)jarg2; 
+  if (arg1) (arg1)->gapSize = arg2;
+}
+
+
+SWIGEXPORT jdouble JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_SolutionFlags_1gapSize_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jdouble jresult = 0 ;
+  ysk::SolutionFlags *arg1 = (ysk::SolutionFlags *) 0 ;
+  double result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(ysk::SolutionFlags **)&jarg1; 
+  result = (double) ((arg1)->gapSize);
+  jresult = (jdouble)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_delete_1SolutionFlags(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+  ysk::SolutionFlags *arg1 = (ysk::SolutionFlags *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(ysk::SolutionFlags **)&jarg1; 
+  delete arg1;
+}
+
 
 SWIGEXPORT jlong JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_new_1IntVector_1_1SWIG_10(JNIEnv *jenv, jclass jcls) {
   jlong jresult = 0 ;
@@ -956,18 +1148,6 @@ SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_d
 }
 
 
-SWIGEXPORT jlong JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_new_1ClusterEditingSolutions(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  ysk::ClusterEditingSolutions *result = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  result = (ysk::ClusterEditingSolutions *)new ysk::ClusterEditingSolutions();
-  *(ysk::ClusterEditingSolutions **)&jresult = result; 
-  return jresult;
-}
-
-
 SWIGEXPORT jlong JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_ClusterEditingSolutions_1getNumberOfClusters(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
   jlong jresult = 0 ;
   ysk::ClusterEditingSolutions *arg1 = (ysk::ClusterEditingSolutions *) 0 ;
@@ -1036,32 +1216,49 @@ SWIGEXPORT jlong JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_
 }
 
 
-SWIGEXPORT jdouble JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_ClusterEditingSolutions_1getTotalCost(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jdouble jresult = 0 ;
+SWIGEXPORT jlong JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_ClusterEditingSolutions_1getFlags(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
   ysk::ClusterEditingSolutions *arg1 = (ysk::ClusterEditingSolutions *) 0 ;
-  double result;
+  ysk::SolutionFlags result;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(ysk::ClusterEditingSolutions **)&jarg1; 
-  result = (double)((ysk::ClusterEditingSolutions const *)arg1)->getTotalCost();
-  jresult = (jdouble)result; 
+  result = (arg1)->getFlags();
+  *(ysk::SolutionFlags **)&jresult = new ysk::SolutionFlags((const ysk::SolutionFlags &)result); 
   return jresult;
 }
 
 
-SWIGEXPORT jboolean JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_ClusterEditingSolutions_1isTimedOut(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jboolean jresult = 0 ;
+SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_ClusterEditingSolutions_1setFlags(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
   ysk::ClusterEditingSolutions *arg1 = (ysk::ClusterEditingSolutions *) 0 ;
-  bool result;
+  ysk::SolutionFlags arg2 ;
+  ysk::SolutionFlags *argp2 ;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
+  (void)jarg2_;
   arg1 = *(ysk::ClusterEditingSolutions **)&jarg1; 
-  result = (bool)(arg1)->isTimedOut();
-  jresult = (jboolean)result; 
+  argp2 = *(ysk::SolutionFlags **)&jarg2; 
+  if (!argp2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null ysk::SolutionFlags");
+    return ;
+  }
+  arg2 = *argp2; 
+  (arg1)->setFlags(arg2);
+}
+
+
+SWIGEXPORT jlong JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_new_1ClusterEditingSolutions(JNIEnv *jenv, jclass jcls) {
+  jlong jresult = 0 ;
+  ysk::ClusterEditingSolutions *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (ysk::ClusterEditingSolutions *)new ysk::ClusterEditingSolutions();
+  *(ysk::ClusterEditingSolutions **)&jresult = result; 
   return jresult;
 }
 
@@ -1188,6 +1385,36 @@ SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_C
 }
 
 
+SWIGEXPORT jboolean JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_CplexInformer_1continueOnTimeout(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jboolean jresult = 0 ;
+  yskLib::CplexInformer *arg1 = (yskLib::CplexInformer *) 0 ;
+  bool result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(yskLib::CplexInformer **)&jarg1; 
+  result = (bool)(arg1)->continueOnTimeout();
+  jresult = (jboolean)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jboolean JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_CplexInformer_1continueOnTimeoutSwigExplicitCplexInformer(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jboolean jresult = 0 ;
+  yskLib::CplexInformer *arg1 = (yskLib::CplexInformer *) 0 ;
+  bool result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(yskLib::CplexInformer **)&jarg1; 
+  result = (bool)(arg1)->yskLib::CplexInformer::continueOnTimeout();
+  jresult = (jboolean)result; 
+  return jresult;
+}
+
+
 SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_delete_1CplexInformer(JNIEnv *jenv, jclass jcls, jlong jarg1) {
   yskLib::CplexInformer *arg1 = (yskLib::CplexInformer *) 0 ;
   
@@ -1258,20 +1485,14 @@ SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_C
 
 SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_CoreAlgorithm_1registerCplexInformer(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
   ysk::CoreAlgorithm *arg1 = (ysk::CoreAlgorithm *) 0 ;
-  yskLib::CplexInformer arg2 ;
-  yskLib::CplexInformer *argp2 ;
+  yskLib::CplexInformer *arg2 = (yskLib::CplexInformer *) 0 ;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   (void)jarg2_;
   arg1 = *(ysk::CoreAlgorithm **)&jarg1; 
-  argp2 = *(yskLib::CplexInformer **)&jarg2; 
-  if (!argp2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null yskLib::CplexInformer");
-    return ;
-  }
-  arg2 = *argp2; 
+  arg2 = *(yskLib::CplexInformer **)&jarg2; 
   (arg1)->registerCplexInformer(arg2);
 }
 
@@ -1358,9 +1579,12 @@ SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_s
   static struct {
     const char *method;
     const char *signature;
-  } methods[1] = {
+  } methods[2] = {
     {
       "SwigDirector_CplexInformer_callback", "(Lde/hhu/ba/yoshikoWrapper/swig/CplexInformer;D)V" 
+    },
+    {
+      "SwigDirector_CplexInformer_continueOnTimeout", "(Lde/hhu/ba/yoshikoWrapper/swig/CplexInformer;)Z" 
     }
   };
   Swig::jclass_LibraryInterfaceJNI = (jclass) jenv->NewGlobalRef(jcls);

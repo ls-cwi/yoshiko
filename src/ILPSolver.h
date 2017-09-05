@@ -51,7 +51,7 @@ public:
 
   void terminate();
 
-  void registerInformer(yskLib::CplexInformer informer);
+  void registerInformer(yskLib::CplexInformer* informer);
   
 private:
   bool _sep_triangles;
@@ -61,7 +61,7 @@ private:
   IloCplex::Aborter _aborter;
   bool _cplexInitialized;
 
-  yskLib::CplexInformer _informer;
+  yskLib::CplexInformer* _informer;
   bool _useInformer;
 };
   

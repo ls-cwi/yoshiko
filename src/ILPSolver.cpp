@@ -204,7 +204,8 @@ ILOUSERCUTCALLBACK2(partition_cut_callback, const ClusterEditingInstance&, inst,
     }
 }
 
-void ILPSolver::registerInformer(yskLib::CplexInformer informer){
+void ILPSolver::registerInformer(yskLib::CplexInformer* informer){
+	if (verbosity > 2) cout << "Registered CplexInformer @ ILPSolver" << endl;
 	_useInformer = true;
 	_informer = informer;
 }
@@ -236,7 +237,6 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
         }
         s.resize(1);
         s.setSolution(0, inst);
-        s.setTotalCost(0);
         return 1;
     }
     
@@ -362,25 +362,52 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
         cout << "solving ILP (computing one optimal solution)... " << flush;
     }
     
-    bool optimal = cplex.solve();
+    //Start Solver, returns true if the solution is feasible (not optimal!)
+    bool feasible = cplex.solve();
     
-    //Mark the solution as "timed-out"
+    //Time-out handling
     if (cplex.getCplexStatus() == IloCplex::AbortTimeLim){
-    	cout << "TIMEDOUT" << endl;
-    	s.setTimedOut(true);
+    	bool resume = false;
+    	//If we use the informer we have the possibility of asking the listener to resume the solver
+    	if (_useInformer){
+    		if (verbosity > 1) cout << "Requesting further instructions ..." << endl;
+    		if (_informer->continueOnTimeout()){
+    			resume = true;
+    			cplex.setParam(IloCplex::TiLim, -1);
+    			feasible = cplex.solve();
+    		}
+    	}
+    	if (!resume){
+        	cout << "[CPLEX TIME OUT]" << endl;
+        	s.getFlags().setTimedOut(true);
+    	}
+
+    }
+    //Flag as optimal
+    else if (cplex.getCplexStatus() == IloCplex::Optimal){
+    	s.getFlags().setOptimal(true);
     }
 
     //For some reason the solver terminated without providing an optimal solution
-    if (!optimal) {
+    if (!feasible) {
         cout << endl << endl << endl;
         cout << cplex.getStatus() << endl;
         cout << endl << endl << endl;
         cerr << "yoshiko: Optimization problems. CPLEX status code " << cplex.getStatus() << endl;
-        exit(-1);
     }
     
+    //Assign cost to the solution
     double z = cplex.getObjValue();
-    
+    s.getFlags().setTotalCost(z);
+    if(verbosity >1){
+        cout << "Total Cost: " << z << endl;
+    }
+
+    //Assign gap to the solution
+    s.getFlags().setGap(cplex.getMIPRelativeGap());
+
+
+    //Some output
     if (verbosity > 1) {
         cout << "CPLEX status code " << cplex.getStatus() << endl;
         cout << "upper bound: " << z << endl;
@@ -388,39 +415,34 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
         cout << "gap (%):     " << cplex.getMIPRelativeGap()*100 << endl;
     }
     
+
+    //Fetch additional solution
+    long numsol = 1;
     if (_num_opt_sol > 1) {
     	cplex.setParam(IloCplex::SolnPoolGap, 0.0); //
     	cplex.setParam(IloCplex::SolnPoolIntensity, 4); // "all" (sub)optimal solutions
     	cplex.setParam(IloCplex::PopulateLim, _num_opt_sol);
-        
-        
+
+
         if (verbosity > 1)
             cout << "solving ILP (finding more optimal solutions)..." << flush;
         cplex.populate();
-        
+
         if (verbosity > 1)
             cout << "done." << endl;
-    }
-    
-    long numsol = 1;
-    if (_num_opt_sol > 1) {
+
         numsol = cplex.getSolnPoolNsolns();
         if (verbosity > 1)
             cout  << numsol << " optimal solutions." << endl;
-    }
-    
-    if(verbosity >1){
-        cout << "Total Cost: " << z << endl;
+
+        s.resize(numsol);
+        for (int k = 0; k < numsol; ++k) {
+            IloNumArray x_vals(cplexEnv);
+            cplex.getValues(x_vals, x, k);
+            s.setSolution(k, x_vals, inst);
+        }
     }
 
-    s.setTotalCost(z);
-    s.resize(numsol);
-    for (int k = 0; k < numsol; ++k) {
-        IloNumArray x_vals(cplexEnv);
-        cplex.getValues(x_vals, x, k);
-        s.setSolution(k, x_vals, inst);
-    }
-    
     return numsol;
 }
   

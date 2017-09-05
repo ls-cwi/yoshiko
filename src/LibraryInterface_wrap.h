@@ -17,13 +17,14 @@ public:
     void swig_connect_director(JNIEnv *jenv, jobject jself, jclass jcls, bool swig_mem_own, bool weak_global);
     SwigDirector_CplexInformer(JNIEnv *jenv);
     virtual void callback(double gap);
+    virtual bool continueOnTimeout();
     virtual ~SwigDirector_CplexInformer();
 public:
     bool swig_overrides(int n) {
-      return (n < 1 ? swig_override[n] : false);
+      return (n < 2 ? swig_override[n] : false);
     }
 protected:
-    Swig::BoolArray<1> swig_override;
+    Swig::BoolArray<2> swig_override;
 };
 
 

@@ -22,7 +22,5 @@ namespace std{
 //HIDE some functions
 %ignore resize;
 %ignore setSolution;
-%ignore setTotalCost;
-%ignore setTimedOut;
   
 %include "ClusterEditingSolutions.h"

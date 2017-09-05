@@ -34,7 +34,7 @@ namespace ysk {
 
 		void cancel();
 
-		void registerCplexInformer(yskLib::CplexInformer informer);
+		void registerCplexInformer(yskLib::CplexInformer* informer);
 
 
 		private:
@@ -43,7 +43,7 @@ namespace ysk {
 
 			YParameterSet _parameter;
 
-			yskLib::CplexInformer _informer;
+			yskLib::CplexInformer* _informer;
 			ILPSolver _solver;
 
 			bool _useInformer;

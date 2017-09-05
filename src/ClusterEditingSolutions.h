@@ -9,10 +9,11 @@
 #ifndef CLUSTEREDITINGSOLUTION_H
 #define CLUSTEREDITINGSOLUTION_H
 
-#include "Helpers.h"
 #include "ClusterEditingInstance.h"
-#include "WorkingCopyInstance.h"
 #include "Globals.h"
+#include "Helpers.h"
+#include "SolutionFlags.h"
+#include "WorkingCopyInstance.h"
 
 #include <ilconcert/iloalg.h>
 
@@ -26,11 +27,6 @@ namespace ysk {
 ///
 class ClusterEditingSolutions {
 public:
-
-  ClusterEditingSolutions(){
-	  _totalCost = 0;
-	  _timedOut = false;
-  }
 
   size_t getNumberOfClusters(size_t i) const;
   
@@ -55,22 +51,13 @@ public:
   
   size_t getNumberOfSolutions() const;
   
-  double getTotalCost() const;
+  ysk::SolutionFlags getFlags();
+  void setFlags(SolutionFlags f);
 
-  void setTotalCost(double totalCost);
-
-
-  void setTimedOut(bool timedOut);
-  bool isTimedOut();
-  
 private:
   // the partitions (multiple because of possible multiple optimal solutions)
   std::vector<std::vector<std::vector<int> > > _solutions;
-  double _totalCost;
-  /**
-   * internal variable that should be set if this set of solutions was acquired through a timed-out algorithm run
-   */
-  bool _timedOut;
+  SolutionFlags _flags;
 };
   
 } // namespace ysk

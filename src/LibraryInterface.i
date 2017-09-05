@@ -11,6 +11,7 @@
 //Include a direct string-mapping for C++/Java
 %include "std_string.i"
 
+%include "SolutionFlags.i"
 %include "ClusterEditingSolutions.i"
 %include "LibraryInput.i"
 %include "CplexInformer.i"

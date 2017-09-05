@@ -12,6 +12,10 @@ namespace yskLib{
 	class CplexInformer {
 		public:
 			virtual void callback(double gap){};
+			virtual bool continueOnTimeout(){
+				std::cout << "[WARNING:] Falling back to default implementation of CplexInformer!" << std::endl;
+				return false;
+			};
 			virtual ~CplexInformer(){};
 	};
 }
