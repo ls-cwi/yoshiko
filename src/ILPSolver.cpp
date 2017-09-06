@@ -17,6 +17,15 @@ namespace ysk {
  * This callback procedure is called by Cplex during the computation
  * of the ILP.
  *************************************************************************/
+ILOMIPCALLBACK2(gap_callback,IloCplex, cplex,yskLib::CplexInformer*, informer) {
+	double gap = cplex.getMIPRelativeGap();
+    informer->updateGap(gap);
+}
+
+/*************************************************************************
+ * This callback procedure is called by Cplex during the computation
+ * of the ILP.
+ *************************************************************************/
 ILOLAZYCONSTRAINTCALLBACK2(triangle_callback, const ClusterEditingInstance&, inst,  const IloBoolVarArray&, x) {
     
     IloEnv env = getEnv();
@@ -249,7 +258,7 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
     cplex.use(_aborter);
     _cplexInitialized = true; //flag for external objects to check if a cplex instance is initialized (and can thus be stopped)
 
-    // shut up cplex (for now maybe in the long run log somewhere or handle?)
+    // shut up cplex
     if (verbosity < 3) {
     	cplex.setOut(cplexEnv.getNullStream());
     	cplex.setWarning(cplexEnv.getNullStream());
@@ -322,10 +331,9 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
     //CALLBACKS
 
     if (_sep_triangles) cplex.use(triangle_callback(cplexEnv, inst, x)); // use triangle callback --> lazy constraints!
-    
     if (_sep_partition_cuts) cplex.use(partition_cut_callback(cplexEnv, inst, x)); // use partition callback --> user cuts!
-    
     //if we're using an informer to report to any outside source we will register it here
+    if (_useInformer) cplex.use(gap_callback(cplexEnv,cplex,_informer));
     
     if (!_sep_triangles) {
         if (verbosity > 1) {

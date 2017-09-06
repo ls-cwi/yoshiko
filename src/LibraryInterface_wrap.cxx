@@ -719,14 +719,14 @@ SWIGINTERN void std_vector_Sl_int_Sg__set(std::vector< int > *self,int i,std::ve
 SwigDirector_CplexInformer::SwigDirector_CplexInformer(JNIEnv *jenv) : yskLib::CplexInformer(), Swig::Director(jenv) {
 }
 
-void SwigDirector_CplexInformer::callback(double gap) {
+void SwigDirector_CplexInformer::updateGap(double gap) {
   JNIEnvWrapper swigjnienv(this) ;
   JNIEnv * jenv = swigjnienv.getJNIEnv() ;
   jobject swigjobj = (jobject) NULL ;
   jdouble jgap  ;
   
   if (!swig_override[0]) {
-    yskLib::CplexInformer::callback(gap);
+    yskLib::CplexInformer::updateGap(gap);
     return;
   }
   swigjobj = swig_get_self(jenv);
@@ -740,7 +740,7 @@ void SwigDirector_CplexInformer::callback(double gap) {
     }
     
   } else {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null upcall object in yskLib::CplexInformer::callback ");
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null upcall object in yskLib::CplexInformer::updateGap ");
   }
   if (swigjobj) jenv->DeleteLocalRef(swigjobj);
 }
@@ -784,7 +784,7 @@ void SwigDirector_CplexInformer::swig_connect_director(JNIEnv *jenv, jobject jse
     jmethodID base_methid;
   } methods[] = {
     {
-      "callback", "(D)V", NULL 
+      "updateGap", "(D)V", NULL 
     },
     {
       "continueOnTimeout", "()Z", NULL 
@@ -1362,7 +1362,7 @@ SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_L
 }
 
 
-SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_CplexInformer_1callback(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jdouble jarg2) {
+SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_CplexInformer_1updateGap(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jdouble jarg2) {
   yskLib::CplexInformer *arg1 = (yskLib::CplexInformer *) 0 ;
   double arg2 ;
   
@@ -1371,11 +1371,11 @@ SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_C
   (void)jarg1_;
   arg1 = *(yskLib::CplexInformer **)&jarg1; 
   arg2 = (double)jarg2; 
-  (arg1)->callback(arg2);
+  (arg1)->updateGap(arg2);
 }
 
 
-SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_CplexInformer_1callbackSwigExplicitCplexInformer(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jdouble jarg2) {
+SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_CplexInformer_1updateGapSwigExplicitCplexInformer(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jdouble jarg2) {
   yskLib::CplexInformer *arg1 = (yskLib::CplexInformer *) 0 ;
   double arg2 ;
   
@@ -1384,7 +1384,7 @@ SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_C
   (void)jarg1_;
   arg1 = *(yskLib::CplexInformer **)&jarg1; 
   arg2 = (double)jarg2; 
-  (arg1)->yskLib::CplexInformer::callback(arg2);
+  (arg1)->yskLib::CplexInformer::updateGap(arg2);
 }
 
 
@@ -1532,6 +1532,16 @@ SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_s
 }
 
 
+SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_setThreadLimit(JNIEnv *jenv, jclass jcls, jint jarg1) {
+  int arg1 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = (int)jarg1; 
+  yskLib::setThreadLimit(arg1);
+}
+
+
 SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_setVerbosity(JNIEnv *jenv, jclass jcls, jint jarg1) {
   int arg1 ;
   
@@ -1584,7 +1594,7 @@ SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_s
     const char *signature;
   } methods[2] = {
     {
-      "SwigDirector_CplexInformer_callback", "(Lde/hhu/ba/yoshikoWrapper/swig/CplexInformer;D)V" 
+      "SwigDirector_CplexInformer_updateGap", "(Lde/hhu/ba/yoshikoWrapper/swig/CplexInformer;D)V" 
     },
     {
       "SwigDirector_CplexInformer_continueOnTimeout", "(Lde/hhu/ba/yoshikoWrapper/swig/CplexInformer;)Z" 

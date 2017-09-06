@@ -35,6 +35,13 @@ namespace yskLib{
 		 * @param limit The timeout threshold in seconds
 		 */
 		void setTimeLimit(int limit);
+
+		/**
+		 * Sets the global thread limit for the ILP part of the software
+		 * @param limit The number of threads that can be used
+		 */
+		void setThreadLimit(int limit);
+
 		/**
 		 * Sets the verbosity
 		 * @param level The level, corresponding to a verbosity level, will be ignored if invalid

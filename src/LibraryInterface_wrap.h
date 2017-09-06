@@ -16,7 +16,7 @@ class SwigDirector_CplexInformer : public yskLib::CplexInformer, public Swig::Di
 public:
     void swig_connect_director(JNIEnv *jenv, jobject jself, jclass jcls, bool swig_mem_own, bool weak_global);
     SwigDirector_CplexInformer(JNIEnv *jenv);
-    virtual void callback(double gap);
+    virtual void updateGap(double gap);
     virtual bool continueOnTimeout();
     virtual ~SwigDirector_CplexInformer();
 public:

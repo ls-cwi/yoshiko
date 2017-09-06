@@ -12,6 +12,10 @@ namespace yskLib{
 		time_limit = limit;
 	}
 
+	void setThreadLimit(int limit){
+		no_threads = limit;
+	}
+
 	void setVerbosity(int limit){
 		if (limit >= 0 && limit < 4){
 			verbosity = limit;
