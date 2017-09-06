@@ -47,7 +47,8 @@ public:
 
   
   long solve(const ClusterEditingInstance& i,
-             ClusterEditingSolutions& s);
+             ClusterEditingSolutions& s,
+			 SolutionFlags& flags);
 
   void terminate();
 

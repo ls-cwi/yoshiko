@@ -33,7 +33,13 @@ public:
   
   virtual ~InducedCostsHeuristic();
   double getUpperBound();
-  void getSolution(ClusterEditingSolutions& solution);
+  /**
+   * Applies the heuristic and saves the result as a CES in the given instance.
+   * Note that this requires a previous initialization of this class via ParametrizedInstance
+   * @param solution The solution as CES that is to be used as a target
+   * @return The cost of applying the heuristic as double
+   */
+  double getSolution(ClusterEditingSolutions& solution);
   void start();
   
 private:

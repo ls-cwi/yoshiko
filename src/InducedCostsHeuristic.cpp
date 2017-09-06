@@ -101,10 +101,10 @@ double InducedCostsHeuristic::getUpperBound() {
   return _upperBound;
 }
 
-void InducedCostsHeuristic::getSolution(ClusterEditingSolutions &solution) {
+double InducedCostsHeuristic::getSolution(ClusterEditingSolutions &solution) {
   solution.resize(1);
   solution.setSolution(0, _instance.getWorkingCopyInstance());
-  solution.getFlags().setTotalCost(_upperBound);
+  return _upperBound;
 }
 
 InducedCostsHeuristic::~InducedCostsHeuristic() {

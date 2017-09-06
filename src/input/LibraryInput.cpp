@@ -28,22 +28,15 @@ namespace yskInput{
 		for (FullGraph::NodeIt v(fullGraph); v != INVALID; ++v, id++) {
 			vector<int> cluster;
 			cluster.push_back(fullGraph.id(v)); //Each node is initialized with its "own cluster"
-			_instance ->initNode(v, ""+id, cluster); //We simply name each node with its index
+			_instance ->initNode(v,"LNODE "+id, cluster); //We simply name each node with its index
 		}
 
 		//Edge parsing
 
-
 		//**
 		//DUMMY INIT FOR ALL EDGES
-		unsigned long i=0;
-		for (FullGraph::NodeIt v(fullGraph); i < _size - 1; ++v, ++i) {
-			FullGraph::NodeIt w(fullGraph, v);
-			++w;
-			for (; w != INVALID; ++w) {
-				FullGraph::Edge e = fullGraph.edge(v, w);
-				_instance ->initEdge(e, _defaultInsertionCost, UNDECIDED);
-			}
+		for (FullGraph::EdgeIt v(fullGraph); v!= INVALID; ++v) {
+			_instance ->initEdge(v, _defaultInsertionCost, UNDECIDED);
 		}
 
 		//**
@@ -55,6 +48,11 @@ namespace yskInput{
 
 			//cout << "DEBUG: Parsing EDGE: " << currentEdge.sourceID << "--" << currentEdge.targetID << ":";
 
+			//LOOPS ARE NOT RELEVANT FOR CLUSTERING IN OUR MODEL
+			if (currentEdge.sourceID == currentEdge.targetID){
+				continue;
+			}
+
 			FullGraph::Edge e = fullGraph.edge(
 						fullGraph.nodeFromId(currentEdge.sourceID),
 						fullGraph.nodeFromId(currentEdge.targetID)
@@ -65,6 +63,8 @@ namespace yskInput{
 
 
 		}
+
+		if (verbosity > 2) cout << "Success! LibraryInput parsed!" << endl;
 		return true;
 	};
 	
