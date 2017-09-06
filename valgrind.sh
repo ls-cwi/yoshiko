@@ -27,5 +27,5 @@ cd ../Build
 cmake ../
 make
 
-valgrind --leak-check=yes ./yoshiko  -f ../../BSc-thesis-graph-based-clustering-app/DataSets/simple_sif_example.sif -F 1
+valgrind --leak-check=yes ./yoshiko  -f ../../BSc-thesis-graph-based-clustering-app/DataSets/fusarium.txt -F 0 -v 3
 

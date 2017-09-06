@@ -17,9 +17,11 @@ namespace ysk {
  * This callback procedure is called by Cplex during the computation
  * of the ILP.
  *************************************************************************/
-ILOMIPCALLBACK2(gap_callback,IloCplex, cplex,yskLib::CplexInformer*, informer) {
+ILOMIPINFOCALLBACK2(gap_callback,IloCplex, cplex,yskLib::CplexInformer*, informer) {
+	if (verbosity >= 3) cout << "Informing listener about new gap value ..." << endl;
 	double gap = cplex.getMIPRelativeGap();
     informer->updateGap(gap);
+    return;
 }
 
 /*************************************************************************
@@ -264,6 +266,10 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
     	cplex.setWarning(cplexEnv.getNullStream());
     	cplex.setError(cplexEnv.getNullStream());
     }
+    else{
+    	cplex.setParam(IloCplex::MIPDisplay,5);
+    	cplex.setOut(cout);
+    }
     
     if (no_threads != -1)
     	cplex.setParam(IloCplex::Threads, no_threads);
@@ -382,8 +388,9 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
     	if (_useInformer){
     		if (verbosity > 1) cout << "Requesting further instructions ..." << endl;
     		if (_informer->continueOnTimeout()){
+    			if (verbosity > 2) cout << "Continuing at users request!" << endl;
     			resume = true;
-    			cplex.setParam(IloCplex::TiLim, -1);
+    			cplex.setParam(IloCplex::TiLim, IloCplex::IntParam_MAX);
     			feasible = cplex.solve();
     		}
     	}
@@ -393,10 +400,6 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
     	}
 
     }
-    //Flag as optimal
-    else if (cplex.getCplexStatus() == IloCplex::Optimal){
-    	s.getFlags().setOptimal(true);
-    }
 
     //For some reason the solver terminated without providing an optimal solution
     if (!feasible) {
@@ -404,6 +407,9 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
         cout << cplex.getStatus() << endl;
         cout << endl << endl << endl;
         cerr << "yoshiko: Optimization problems. CPLEX status code " << cplex.getStatus() << endl;
+    }
+    else if (cplex.getCplexStatus() == IloCplex::Optimal){
+    	s.getFlags().setOptimal(true);
     }
     
     //Assign cost to the solution

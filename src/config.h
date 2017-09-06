@@ -6,6 +6,6 @@ DO NOT MODIFY!
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#define YOSHIKO_VERSION "master-cb32aca"
+#define YOSHIKO_VERSION "master-40fbd3a"
 
 #endif // CONFIG_H

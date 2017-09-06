@@ -34,7 +34,7 @@ using namespace yskInput;
  =========================================================================
  TODO
  =========================================================================
- * validate input data. !!!
+ * validate input data. !!! -> Now part of the separate input classes
  * heuristik, set starting value
  * separation triangles
  * separation partition cuts
@@ -45,8 +45,8 @@ using namespace yskInput;
  * check partition constraints (--> paper!)
  *
  * svn link with Xcode (still needed?)
- * document... how? -> doxygen
- * layout graphs...? -> use cytoscape
+ * document... how? -> doxygen. on it!
+ * layout graphs...? -> use cytoscape pretty much done
  * Setup unified logging system and streamline all cout//exception calls, apply verbosity globally
  * put in NINA
  * edge index. make faster by directly computing index from i and j. think about (common) solution for directed and undirected graphs
