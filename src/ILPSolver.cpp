@@ -17,9 +17,9 @@ namespace ysk {
  * This callback procedure is called by Cplex during the computation
  * of the ILP.
  *************************************************************************/
-ILOMIPINFOCALLBACK2(gap_callback,IloCplex, cplex,yskLib::CplexInformer*, informer) {
-	if (verbosity >= 3) cout << "Informing listener about new gap value ..." << endl;
-	double gap = cplex.getMIPRelativeGap();
+ILOMIPINFOCALLBACK1(gap_callback,yskLib::CplexInformer*, informer) {
+	double gap = getMIPRelativeGap();
+	if (verbosity >= 3) cout << "Informing listener about new gap value: " << gap << endl;
     informer->updateGap(gap);
     return;
 }
@@ -339,7 +339,7 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
     if (_sep_triangles) cplex.use(triangle_callback(cplexEnv, inst, x)); // use triangle callback --> lazy constraints!
     if (_sep_partition_cuts) cplex.use(partition_cut_callback(cplexEnv, inst, x)); // use partition callback --> user cuts!
     //if we're using an informer to report to any outside source we will register it here
-    if (_useInformer) cplex.use(gap_callback(cplexEnv,cplex,_informer));
+    if (_useInformer) cplex.use(gap_callback(cplexEnv,_informer));
     
     if (!_sep_triangles) {
         if (verbosity > 1) {
@@ -415,7 +415,7 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
     
     //Assign cost to the solution
     double z = cplex.getObjValue();
-    flags.totalCost += z;
+    flags.totalCost = z;
     if(verbosity >1){
         cout << "Total Cost: " << z << endl;
     }
