@@ -27,7 +27,7 @@ namespace ysk {
 		,_result(new ClusterEditingSolutions)
 		,_parameter(parameter)
 		,_useInformer(false)
-		,_solverInitialized(false)
+		,_solverActive(false)
 		{};
 
 		ClusterEditingSolutions* run();
@@ -47,7 +47,7 @@ namespace ysk {
 			ILPSolver _solver;
 
 			bool _useInformer;
-			bool _solverInitialized;
+			bool _solverActive;
 
 	};
 

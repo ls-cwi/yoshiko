@@ -265,9 +265,11 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
     	cplex.setParam(IloCplex::TiLim, time_limit);
     
 
+    //Limit Memory usage as this runs in a GUI and we should still be able to use the GUI
+    cplex.setParam(IloCplex::NodeFileInd,2);
+
     
     // set all generic cuts off
-    
     cplex.setParam(IloCplex::Cliques, -1);
     cplex.setParam(IloCplex::Covers, -1);
     cplex.setParam(IloCplex::DisjCuts, -1);
@@ -442,6 +444,9 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
             s.setSolution(k, x_vals, inst);
         }
     }
+
+    //CLEANUP!
+    cplexEnv.end();
 
     return numsol;
 }
