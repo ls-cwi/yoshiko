@@ -28,6 +28,7 @@ namespace ysk {
 		,_parameter(parameter)
 		,_useInformer(false)
 		,_solverActive(false)
+		,_isTerminated(false)
 		{};
 
 		ClusterEditingSolutions* run();
@@ -48,6 +49,10 @@ namespace ysk {
 
 			bool _useInformer;
 			bool _solverActive;
+			/**
+			 * Describes if the run has been cancelled from outside. This prevents calling of more reduction rules or instance solving.
+			 */
+			bool _isTerminated;
 
 	};
 

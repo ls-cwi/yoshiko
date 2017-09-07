@@ -34,18 +34,16 @@ namespace ysk {
 					cout << _instance->getEdgeName(e) << "\tpermanent" << endl;
 			}
 		}
-	
-		bool conserveMultipleSolutions = false;
-	
-		if (_parameter.nrOptimalSolutions > 1) {
-			conserveMultipleSolutions = true;
-		}
-	
+
 		if (verbosity > 1) {
 			cout << endl << "applying FPT reduction rules..." << endl;
 			cout << "number of nodes:\t"
 					<< countNodes(_instance->getWorkingCopyInstance().getGraph())
 					<< endl;
+		}
+
+		if (_isTerminated){
+			return 0;
 		}
 	
 		//Initialize the flags for the solution
@@ -58,7 +56,7 @@ namespace ysk {
 		ClusterEditingReduction cer(
 				rules,
 				_parameter.multiplicativeFactor,
-				conserveMultipleSolutions
+				_parameter.nrOptimalSolutions > 1 ? true : false
 				);
 		cer.perform(*_instance);
 	
@@ -80,7 +78,20 @@ namespace ysk {
 			cout << endl << "solving (reduced) instances..." << endl;
 			cout << "-------------------------" << endl;
 		}
-	
+
+
+		// If an outside call wants the run to terminate before solving instances
+		// we have no guarantee of having something worth retrieving
+		// TODO: In the long run CER should realize when it has already generated an optimal solution
+		// (That would also get rid of the work around in the solver for instances of size 1 !
+		if (_isTerminated){
+			//Delete reduced instances
+			for (vector<ClusterReductionInstance*>::iterator it = reduced.begin();
+					it != reduced.end(); it++) {
+				delete (*it)->getInstance();
+			}
+			return 0;
+		}
 
 		int j = 0;
 	
@@ -88,8 +99,10 @@ namespace ysk {
 	
 		vector<vector<vector<vector<int> > > > instances;
 	
+		//Iterate over the remaining reduced instances
 		for (vector<ClusterReductionInstance*>::iterator it = reduced.begin();
 				it != reduced.end(); it++, j++) {
+
 			if (verbosity > 1) {
 				cout << "solving instance 'no " << j << "'..." << endl;
 			}
@@ -183,6 +196,7 @@ namespace ysk {
 		if (_solverActive){
 			_solver.terminate();
 		}
+		_isTerminated = true;
 	}
 
 	void expandSolutions(ClusterEditingInstance& cei,
