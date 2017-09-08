@@ -1658,17 +1658,6 @@ SWIGEXPORT jlong JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_
 }
 
 
-SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_CoreAlgorithm_1cancel(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  ysk::CoreAlgorithm *arg1 = (ysk::CoreAlgorithm *) 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(ysk::CoreAlgorithm **)&jarg1; 
-  (arg1)->cancel();
-}
-
-
 SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_CoreAlgorithm_1registerCplexInformer(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
   ysk::CoreAlgorithm *arg1 = (ysk::CoreAlgorithm *) 0 ;
   yskLib::CplexInformer *arg2 = (yskLib::CplexInformer *) 0 ;
@@ -1680,6 +1669,17 @@ SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_C
   arg1 = *(ysk::CoreAlgorithm **)&jarg1; 
   arg2 = *(yskLib::CplexInformer **)&jarg2; 
   (arg1)->registerCplexInformer(arg2);
+}
+
+
+SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_CoreAlgorithm_1cancel(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  ysk::CoreAlgorithm *arg1 = (ysk::CoreAlgorithm *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(ysk::CoreAlgorithm **)&jarg1; 
+  (arg1)->cancel();
 }
 
 

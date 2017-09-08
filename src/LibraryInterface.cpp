@@ -22,7 +22,6 @@ namespace yskLib{
 		}
 	}
 
-
 	ysk::CoreAlgorithm* getRun(
 			yskInput::LibraryInput* input,
 			int nrOptimalSolutions,

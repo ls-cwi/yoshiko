@@ -20,12 +20,12 @@ set( Yoshiko_Hdr
   src/CplexInformer.h
   src/ParameterizedInstance.h
   src/WorkingCopyInstance.h
-  
+
   src/input/ClusterEditingInput.h
   src/input/JENAInput.h
   src/input/SIFInput.h
   src/input/StreamInput.h
-   
+
   src/output/ClusterEditingOutput.h
   src/output/CSVOutput.h
   src/output/GMLOutput.h
@@ -34,7 +34,7 @@ set( Yoshiko_Hdr
   src/output/TableOutput.h
   src/output/TableAppOutput.h
   src/output/XGMMLOutput.h
-  
+
   src/reductionRules/AlmostCliqueRule.h
   src/reductionRules/CliqueRule.h
   src/reductionRules/CriticalCliqueRule.h
@@ -47,21 +47,22 @@ set( Yoshiko_Hdr
 )
 
 set( Yoshiko_Src
-  src/ClusterReductionInstance.cpp
-  src/CoreAlgorithm.cpp
-  src/ParameterizedInstance.cpp
-  src/Helpers.cpp
-  src/Delta.cpp
-  src/ILPSolver.cpp
-  src/InducedCostsHeuristic.cpp
   src/ClusterEditingInstance.cpp
-  src/DynProgTable.cpp
-  src/WorkingCopyInstance.cpp
   src/ClusterEditingReduction.cpp
   src/ClusterEditingSolutions.cpp
+  src/ClusterReductionInstance.cpp
+  src/CoreAlgorithm.cpp
+  src/Delta.cpp
+  src/DynProgTable.cpp
   src/Globals.cpp
+  src/Helpers.cpp
+  src/ILPSolver.cpp
+  src/InducedCostsHeuristic.cpp
+  src/ParameterizedInstance.cpp
+  src/WorkingCopyInstance.cpp
+
   src/main.cpp
-  
+
   src/input/ClusterEditingInput.cpp
   src/input/JENAInput.cpp
   src/input/SIFInput.cpp
@@ -74,7 +75,7 @@ set( Yoshiko_Src
   src/output/PajekOutput.cpp
   src/output/TableOutput.cpp
   src/output/TableAppOutput.cpp
-  
+
   src/reductionRules/AlmostCliqueRule.cpp
   src/reductionRules/CliqueRule.cpp
   src/reductionRules/CriticalCliqueRule.cpp
@@ -83,7 +84,7 @@ set( Yoshiko_Src
   src/reductionRules/MergingRule.cpp
   src/reductionRules/ParameterDependentReductionRule.cpp
   src/reductionRules/SimilarNeighboorhoodRule.cpp
-  
+
 )
 
 set (YoshikoLib_Src
@@ -105,7 +106,7 @@ execute_process( COMMAND git symbolic-ref HEAD  WORKING_DIRECTORY ${PROJECT_SOUR
 set( GitCommand2 "log --pretty=format:\\\"%h\\\" -1" )
 execute_process( COMMAND git log --pretty=format:%h WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
                  COMMAND head -n 1  COMMAND tr -d "\\n" OUTPUT_VARIABLE GitHashtag )
-                
+
 set( YOSHIKO_VERSION \"${GitBranch}-${GitHashtag}\" )
 
 set( LIBLEMON_ROOT "$ENV{HOME}/lemon" CACHE PATH "Additional search directory for lemon library" )
@@ -162,7 +163,7 @@ endif(NOT CMAKE_BUILD_TYPE)
 set(CMAKE_CXX_FLAGS_DEBUG "-Wall -Wextra -Wno-long-long -Wno-unused-parameter  -Wno-unknown-pragmas -g -ggdb -O0 -DDEBUG -DVERBOSE")
 set(CMAKE_CXX_FLAGS_RELEASE "-Wall -Wextra -Wno-long-long -Wno-unused-parameter  -Wno-unknown-pragmas -O3 -DNDEBUG")
 set(CMAKE_CXX_FLAGS_PROFILE "-Wall -Wextra -Wno-long-long -Wno-unused-parameter  -Wno-unknown-pragmas -O3 -g -ggdb -DNDEBUG")
-set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-write-strings -z noexecstack -fno-strict-aliasing" )
+set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-write-strings -z noexecstack -fno-strict-aliasing -std=c++0x" )
 add_definitions( -DIL_STD ) #???
 configure_file( src/config.h.in ${PROJECT_SOURCE_DIR}/src/config.h )
 

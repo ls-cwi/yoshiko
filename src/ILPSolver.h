@@ -28,44 +28,36 @@ namespace ysk {
 
 class ILPSolver {
 public:
-	ILPSolver()
-	: _sep_triangles(false)
-	, _sep_partition_cuts(false)
-	, _num_opt_sol(1)
+
+	// constructor
+	ILPSolver(bool st, bool sp, int num_opt_sol)
+	: _sep_triangles(st)
+	, _sep_partition_cuts(sp)
+	, _num_opt_sol(num_opt_sol)
 	,_cplexInitialized(false)
-	,_useInformer(false)
+	,_informer(nullptr)
 	{};
 
-  // constructor
-	ILPSolver(bool st, bool sp, int num_opt_sol)
-    : _sep_triangles(st)
-    , _sep_partition_cuts(sp)
-    , _num_opt_sol(num_opt_sol)
-	,_cplexInitialized(false)
-	,_useInformer(false)
-    {};
 
-  
-  long solve(const ClusterEditingInstance& i,
-             ClusterEditingSolutions& s,
-			 SolutionFlags& flags);
+	long solve(const ClusterEditingInstance& i,
+			ClusterEditingSolutions& s,
+			SolutionFlags& flags);
 
-  void terminate();
+	void terminate();
 
-  void registerInformer(yskLib::CplexInformer* informer);
-  
+	void registerInformer(yskLib::CplexInformer* informer);
+
 private:
-  bool _sep_triangles;
-  bool _sep_partition_cuts;
-  int _num_opt_sol;
+	bool _sep_triangles;
+	bool _sep_partition_cuts;
+	int _num_opt_sol;
 
-  IloCplex::Aborter _aborter;
-  bool _cplexInitialized;
+	IloCplex::Aborter _aborter;
+	bool _cplexInitialized;
 
-  yskLib::CplexInformer* _informer;
-  bool _useInformer;
+	yskLib::CplexInformer* _informer;
 };
-  
+
 } // namespace ysk
 
 #endif /* ILPSOLVER_H */

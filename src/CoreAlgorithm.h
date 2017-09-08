@@ -26,17 +26,15 @@ namespace ysk {
 		:_instance(instance)
 		,_result(new ClusterEditingSolutions)
 		,_parameter(parameter)
-		,_useInformer(false)
-		,_solverActive(false)
-		,_isTerminated(false)
+		,_informer(nullptr)
+		,_solver(nullptr)
 		{};
 
 		ClusterEditingSolutions* run();
 
-		void cancel();
-
 		void registerCplexInformer(yskLib::CplexInformer* informer);
 
+		void cancel();
 
 		private:
 			ClusterEditingInstance* _instance;
@@ -45,14 +43,8 @@ namespace ysk {
 			YParameterSet _parameter;
 
 			yskLib::CplexInformer* _informer;
-			ILPSolver _solver;
 
-			bool _useInformer;
-			bool _solverActive;
-			/**
-			 * Describes if the run has been cancelled from outside. This prevents calling of more reduction rules or instance solving.
-			 */
-			bool _isTerminated;
+			ILPSolver* _solver;
 
 	};
 

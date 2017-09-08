@@ -28,6 +28,8 @@ namespace ysk {
 	extern int no_threads;
 	extern double eps;
 
+	extern bool isTerminated;
+
 	enum EdgeType{
 		UNDECIDED = 0,
 		PERMANENT = 1,
@@ -36,6 +38,6 @@ namespace ysk {
 
 
 } // namespace ysk
-  
+
 #endif /* GLOBALS_H */
 

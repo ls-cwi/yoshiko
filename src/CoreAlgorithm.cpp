@@ -15,11 +15,13 @@ namespace ysk {
 	ClusterEditingSolutions* CoreAlgorithm::run()
 	{
 
+		isTerminated = false;
+
 		//TODO: Add more 'breakpoints' where the task checks if it is already cancelled
 
 		if (verbosity >= 5)
 			cout << _instance << endl;
-	
+
 		// warn user about permanent and forbidden edges
 		const WorkingCopyGraph g = _instance->getWorkingCopyInstance().getGraph();
 		if (verbosity > 1) {
@@ -29,7 +31,7 @@ namespace ysk {
 			for (WorkingCopyGraph::EdgeIt e(g); e != INVALID; ++e) {
 				if (_instance->getWorkingCopyInstance().isForbidden(e))
 					cout << _instance->getEdgeName(e) << "\tforbidden" << endl;
-	
+
 				if (_instance->getWorkingCopyInstance().isPermanent(e))
 					cout << _instance->getEdgeName(e) << "\tpermanent" << endl;
 			}
@@ -42,37 +44,37 @@ namespace ysk {
 					<< endl;
 		}
 
-		if (_isTerminated){
+		if (isTerminated){
 			return 0;
 		}
-	
+
 		//Initialize the flags for the solution
 		SolutionFlags flags;
 
 
 		//Apply reduction rules
 		bitset<NUMBER_OF_REDUCTION_RULES> rules(_parameter.rulesBitMask);
-	
+
 		ClusterEditingReduction cer(
 				rules,
 				_parameter.multiplicativeFactor,
 				_parameter.nrOptimalSolutions > 1 ? true : false
 				);
 		cer.perform(*_instance);
-	
+
 		vector<ClusterReductionInstance*>& reduced = cer.getInstances();
-	
+
 		if (verbosity > 1) {
 			cout << "=========================" << endl;
 			cout << "FPT reduction rules applied exhaustively." << endl;
 			cout << "time:\t" << clk << endl;
 		}
 		flags.totalCost += cer.getTotalCost();
-	
+
 		if (verbosity > 1) {
 			cout << "total cost:\t" << cer.getTotalCost() << endl;
 			cout << "number of instances:\t" << reduced.size() << endl;
-	
+
 			cout << endl << "==================================" << endl
 					<< "==================================" << endl;
 			cout << endl << "solving (reduced) instances..." << endl;
@@ -84,7 +86,7 @@ namespace ysk {
 		// we have no guarantee of having something worth retrieving
 		// TODO: In the long run CER should realize when it has already generated an optimal solution
 		// (That would also get rid of the work around in the solver for instances of size 1 !
-		if (_isTerminated){
+		if (isTerminated){
 			//Delete reduced instances
 			for (vector<ClusterReductionInstance*>::iterator it = reduced.begin();
 					it != reduced.end(); it++) {
@@ -94,11 +96,11 @@ namespace ysk {
 		}
 
 		int j = 0;
-	
+
 		long totalNumberOfSolutions = 1;
-	
+
 		vector<vector<vector<vector<int> > > > instances;
-	
+
 		//Iterate over the remaining reduced instances
 		for (vector<ClusterReductionInstance*>::iterator it = reduced.begin();
 				it != reduced.end(); it++, j++) {
@@ -106,36 +108,35 @@ namespace ysk {
 			if (verbosity > 1) {
 				cout << "solving instance 'no " << j << "'..." << endl;
 			}
-	
+
 			ClusterEditingInstance& i = *(*it)->getInstance();
-	
+
 			ClusterEditingSolutions s;
 
 			long numberOfSolutions = 1;
-	
+
 			//Solve the remaining and reduced instance either with the heuristic or the ILP
 			if (!_parameter.useHeuristic) {
 
 				//ILP
-				_solver = ILPSolver(
+				_solver = new ILPSolver (
 						_parameter.separateTriangles,
 						_parameter.separatePartitionCuts,
 						_parameter.nrOptimalSolutions
 				);
 
-				if (_useInformer){
-					_solver.registerInformer(_informer);
+				if (_informer != nullptr){
+					_solver->registerInformer(_informer);
 				}
 
-				_solverActive = true;
 				try {
-					numberOfSolutions = _solver.solve(i, s, flags);
+					numberOfSolutions = _solver->solve(i, s, flags);
 				} catch (IloException &e) {
 					cout << "CPLEX error: " << e.getMessage() << endl;
 				}
-				_solver.terminate();
-				_solverActive = false;
-	
+				_solver->terminate();
+				delete _solver;
+
 			} else {
 				if (verbosity > 1){
 					cout << "Starting heuristic!" << endl;
@@ -149,10 +150,10 @@ namespace ysk {
 				h.start();
 				flags.totalCost += h.getSolution(s);
 			}
-	
+
 			if (verbosity > 1)
 				cout << "time:\t" << clk << endl;
-	
+
 			totalNumberOfSolutions = totalNumberOfSolutions * numberOfSolutions;
 
 			//expand solutions: replace merged nodes by cluster
@@ -160,11 +161,11 @@ namespace ysk {
 			expandSolutions(i, s, partitions);
 
 			instances.push_back(partitions);
-	
+
 			if (verbosity > 1)
 				cout << endl << "==================================" << endl
 						<< endl;
-	
+
 			delete (*it)->getInstance();
 		}
 		if (verbosity > 1) {
@@ -175,10 +176,10 @@ namespace ysk {
 		}
 		if (verbosity > 0)
 			cout << flags.totalCost << endl;
-	
+
 
 		_result->resize(totalNumberOfSolutions);
-	
+
 		size_t k = 0;
 		vector<vector<int> > p;
 		mergeSolutions(0, k, p, *_result, instances);
@@ -187,19 +188,18 @@ namespace ysk {
 		_result->setFlags(flags);
 		return _result;
 	}
-	
+
+	void CoreAlgorithm::cancel(){
+		isTerminated = true;
+
+		if (_solver != nullptr){
+			_solver->terminate();
+		}
+	}
+
 	void CoreAlgorithm::registerCplexInformer(yskLib::CplexInformer* informer){
 		if (verbosity > 2) cout << "Registering CplexInformer @ CoreAlgorithm" << endl;
 		_informer = informer;
-		_useInformer = true;
-	}
-
-	void CoreAlgorithm::cancel(){
-		//There is really not a whole lot to do but if we have the ILP running we need to cancel it and retrieve incomplete solutions
-		if (_solverActive){
-			_solver.terminate();
-		}
-		_isTerminated = true;
 	}
 
 	void expandSolutions(ClusterEditingInstance& cei,

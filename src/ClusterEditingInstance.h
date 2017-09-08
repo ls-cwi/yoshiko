@@ -12,6 +12,7 @@
 #include <lemon/lgf_writer.h>
 #include <lemon/full_graph.h>
 
+#include <cstddef>
 #include <vector>
 #include <cmath>
 #include <string>
@@ -36,7 +37,7 @@ class WorkingCopyInstance;
 class ClusterEditingInstance {
 
 public:
-  
+
 	/**
 	 * Default constructor, initializes an empty instance of the dwgc-problem. This instance is by default unweighted and adjusts its specification when edges, matching a more specific instance, are added.
 	 */
@@ -54,21 +55,22 @@ public:
     , _permanent(_orig)
     , _forbidden(_orig)
     , _clusters(_orig)
+	, _workingCopyInstance(nullptr)
 	, _vectorCleanList(std::vector<std::vector<int>*>())
   {
   }
-  
+
   /**
    * Destructor
    */
   virtual ~ClusterEditingInstance();
-  
+
   /**
    * Creates a full graph with a given amount of nodes and initializes internal variables for working with this graph
    * @param size The number of nodes the graph contains
    */
   void init(int size);
-  
+
   void initNode(lemon::FullGraph::Node node,
                 std::string name,
                 std::vector<int>& cluster);
@@ -81,37 +83,37 @@ public:
   void initEdge(lemon::FullGraph::Edge edge,
                 double weight,
                 EdgeType edgeType);
-  
+
   WorkingCopyInstance& getWorkingCopyInstance();
-  
+
   const lemon::FullGraph& getOrig() const;
-  
+
   double computeCost() const;
-  
+
   double getWeight(const lemon::FullGraph::Edge& e) const;
-  
+
   bool isUnweighted() const;
-  
+
   bool isDualWeighted() const;
-  
+
   bool isRealValued() const;
-  
+
   std::string getEdgeName(const lemon::FullGraph::Edge e) const;
-  
+
   std::string getNodeName(const lemon::FullGraph::Node node) const;
-  
+
   bool isPermanent(const lemon::FullGraph::Edge& e) const;
-  
+
   bool isForbidden(const lemon::FullGraph::Edge& e) const;
-  
+
   bool isDirty() const;
 
   //void parseCleverFormat(std::istream &is);
 
   std::vector<int>* getCluster(lemon::FullGraph::Node u) const;
-  
+
   friend std::ostream& operator <<(std::ostream &os, ClusterEditingInstance &inst);
-  
+
 private:
 
   /**
@@ -124,12 +126,12 @@ private:
   bool _unweighted;
   bool _dualWeighted;
   bool _realValued;
-  
+
   double _costInsertion;
   double _costDeletion;
   bool _initializedCostInsertion;
   bool _initializedCostDeletion;
-  
+
   lemon::FullGraph _orig;
   /**
    * Maps each node to a name (identifier)
@@ -142,7 +144,7 @@ private:
    * A NodeMap mapping each node to an integer that identifies the cluster to which the node will belong in the solution
    */
   lemon::FullGraph::NodeMap<std::vector<int>* > _clusters;
-  
+
   WorkingCopyInstance* _workingCopyInstance;
 
   std::vector<std::vector<int>*> _vectorCleanList;
@@ -150,5 +152,5 @@ private:
 };
 
 } // namespace ysk
-  
+
 #endif	/* CLUSTEREDITINGINSTANCE_H */
