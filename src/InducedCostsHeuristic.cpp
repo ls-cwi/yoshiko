@@ -83,8 +83,11 @@ void InducedCostsHeuristic::start() {
   
   for(WorkingCopyGraph::EdgeIt e(_parameterizedInstance->getWorkingCopyInstance().getGraph()); e != INVALID; ++e) {
     if(_parameterizedInstance->getWorkingCopyInstance().getWeight(e) != -numeric_limits<double>::infinity()) {
-      cerr << "Fatal error: InducedCostsHeuristic: Heuristic was not applied exhaustively. This cannot happen."<<endl;
-      exit(-1);
+    	//Example where this CAN happen:
+    	//Take a Triangle A B C, where AB and BC are permanent edges and AC is forbidden
+
+      //cerr << "Fatal error: InducedCostsHeuristic: Heuristic was not applied exhaustively. This cannot happen."<<endl;
+      //exit(-1);
     }
   }
   

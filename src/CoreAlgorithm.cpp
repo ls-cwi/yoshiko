@@ -137,6 +137,9 @@ namespace ysk {
 				_solverActive = false;
 	
 			} else {
+				if (verbosity > 1){
+					cout << "Starting heuristic!" << endl;
+				}
 				//HEURISTIC
 				ParameterizedInstance parameterizedInstance(
 						i.getWorkingCopyInstance(),
