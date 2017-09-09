@@ -659,7 +659,7 @@ namespace Swig {
 namespace Swig {
   namespace {
     jclass jclass_LibraryInterfaceJNI = NULL;
-    jmethodID director_method_ids[2];
+    jmethodID director_method_ids[3];
   }
 }
 
@@ -733,20 +733,20 @@ SWIGINTERN void std_vector_Sl_double_Sg__set(std::vector< double > *self,int i,s
 SwigDirector_CplexInformer::SwigDirector_CplexInformer(JNIEnv *jenv) : yskLib::CplexInformer(), Swig::Director(jenv) {
 }
 
-void SwigDirector_CplexInformer::updateGap(double gap) {
+void SwigDirector_CplexInformer::updateStatus(yskLib::YoshikoState state) {
   JNIEnvWrapper swigjnienv(this) ;
   JNIEnv * jenv = swigjnienv.getJNIEnv() ;
   jobject swigjobj = (jobject) NULL ;
-  jdouble jgap  ;
+  jint jstate  ;
   
   if (!swig_override[0]) {
-    yskLib::CplexInformer::updateGap(gap);
+    yskLib::CplexInformer::updateStatus(state);
     return;
   }
   swigjobj = swig_get_self(jenv);
   if (swigjobj && jenv->IsSameObject(swigjobj, NULL) == JNI_FALSE) {
-    jgap = (jdouble) gap;
-    jenv->CallStaticVoidMethod(Swig::jclass_LibraryInterfaceJNI, Swig::director_method_ids[0], swigjobj, jgap);
+    jstate = (jint) state;
+    jenv->CallStaticVoidMethod(Swig::jclass_LibraryInterfaceJNI, Swig::director_method_ids[0], swigjobj, jstate);
     jthrowable swigerror = jenv->ExceptionOccurred();
     if (swigerror) {
       jenv->ExceptionClear();
@@ -754,7 +754,35 @@ void SwigDirector_CplexInformer::updateGap(double gap) {
     }
     
   } else {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null upcall object in yskLib::CplexInformer::updateGap ");
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null upcall object in yskLib::CplexInformer::updateStatus ");
+  }
+  if (swigjobj) jenv->DeleteLocalRef(swigjobj);
+}
+
+void SwigDirector_CplexInformer::updateStatus(yskLib::YoshikoState state, double value) {
+  JNIEnvWrapper swigjnienv(this) ;
+  JNIEnv * jenv = swigjnienv.getJNIEnv() ;
+  jobject swigjobj = (jobject) NULL ;
+  jint jstate  ;
+  jdouble jvalue  ;
+  
+  if (!swig_override[1]) {
+    yskLib::CplexInformer::updateStatus(state,value);
+    return;
+  }
+  swigjobj = swig_get_self(jenv);
+  if (swigjobj && jenv->IsSameObject(swigjobj, NULL) == JNI_FALSE) {
+    jstate = (jint) state;
+    jvalue = (jdouble) value;
+    jenv->CallStaticVoidMethod(Swig::jclass_LibraryInterfaceJNI, Swig::director_method_ids[1], swigjobj, jstate, jvalue);
+    jthrowable swigerror = jenv->ExceptionOccurred();
+    if (swigerror) {
+      jenv->ExceptionClear();
+      throw Swig::DirectorException(jenv, swigerror);
+    }
+    
+  } else {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null upcall object in yskLib::CplexInformer::updateStatus ");
   }
   if (swigjobj) jenv->DeleteLocalRef(swigjobj);
 }
@@ -766,12 +794,12 @@ bool SwigDirector_CplexInformer::continueOnTimeout() {
   JNIEnv * jenv = swigjnienv.getJNIEnv() ;
   jobject swigjobj = (jobject) NULL ;
   
-  if (!swig_override[1]) {
+  if (!swig_override[2]) {
     return yskLib::CplexInformer::continueOnTimeout();
   }
   swigjobj = swig_get_self(jenv);
   if (swigjobj && jenv->IsSameObject(swigjobj, NULL) == JNI_FALSE) {
-    jresult = (jboolean) jenv->CallStaticBooleanMethod(Swig::jclass_LibraryInterfaceJNI, Swig::director_method_ids[1], swigjobj);
+    jresult = (jboolean) jenv->CallStaticBooleanMethod(Swig::jclass_LibraryInterfaceJNI, Swig::director_method_ids[2], swigjobj);
     jthrowable swigerror = jenv->ExceptionOccurred();
     if (swigerror) {
       jenv->ExceptionClear();
@@ -798,7 +826,10 @@ void SwigDirector_CplexInformer::swig_connect_director(JNIEnv *jenv, jobject jse
     jmethodID base_methid;
   } methods[] = {
     {
-      "updateGap", "(D)V", NULL 
+      "updateStatus", "(Lde/hhu/ba/yoshikoWrapper/swig/YoshikoState;)V", NULL 
+    },
+    {
+      "updateStatus", "(Lde/hhu/ba/yoshikoWrapper/swig/YoshikoState;D)V", NULL 
     },
     {
       "continueOnTimeout", "()Z", NULL 
@@ -814,7 +845,7 @@ void SwigDirector_CplexInformer::swig_connect_director(JNIEnv *jenv, jobject jse
       baseclass = (jclass) jenv->NewGlobalRef(baseclass);
     }
     bool derived = (jenv->IsSameObject(baseclass, jcls) ? false : true);
-    for (int i = 0; i < 2; ++i) {
+    for (int i = 0; i < 3; ++i) {
       if (!methods[i].base_methid) {
         methods[i].base_methid = jenv->GetMethodID(baseclass, methods[i].mname, methods[i].mdesc);
         if (!methods[i].base_methid) return;
@@ -1545,29 +1576,59 @@ SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_L
 }
 
 
-SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_CplexInformer_1updateGap(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jdouble jarg2) {
+SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_CplexInformer_1updateStatus_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
   yskLib::CplexInformer *arg1 = (yskLib::CplexInformer *) 0 ;
-  double arg2 ;
+  yskLib::YoshikoState arg2 ;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(yskLib::CplexInformer **)&jarg1; 
-  arg2 = (double)jarg2; 
-  (arg1)->updateGap(arg2);
+  arg2 = (yskLib::YoshikoState)jarg2; 
+  (arg1)->updateStatus(arg2);
 }
 
 
-SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_CplexInformer_1updateGapSwigExplicitCplexInformer(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jdouble jarg2) {
+SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_CplexInformer_1updateStatusSwigExplicitCplexInformer_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
   yskLib::CplexInformer *arg1 = (yskLib::CplexInformer *) 0 ;
-  double arg2 ;
+  yskLib::YoshikoState arg2 ;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(yskLib::CplexInformer **)&jarg1; 
-  arg2 = (double)jarg2; 
-  (arg1)->yskLib::CplexInformer::updateGap(arg2);
+  arg2 = (yskLib::YoshikoState)jarg2; 
+  (arg1)->yskLib::CplexInformer::updateStatus(arg2);
+}
+
+
+SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_CplexInformer_1updateStatus_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jdouble jarg3) {
+  yskLib::CplexInformer *arg1 = (yskLib::CplexInformer *) 0 ;
+  yskLib::YoshikoState arg2 ;
+  double arg3 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(yskLib::CplexInformer **)&jarg1; 
+  arg2 = (yskLib::YoshikoState)jarg2; 
+  arg3 = (double)jarg3; 
+  (arg1)->updateStatus(arg2,arg3);
+}
+
+
+SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_CplexInformer_1updateStatusSwigExplicitCplexInformer_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jdouble jarg3) {
+  yskLib::CplexInformer *arg1 = (yskLib::CplexInformer *) 0 ;
+  yskLib::YoshikoState arg2 ;
+  double arg3 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(yskLib::CplexInformer **)&jarg1; 
+  arg2 = (yskLib::YoshikoState)jarg2; 
+  arg3 = (double)jarg3; 
+  (arg1)->yskLib::CplexInformer::updateStatus(arg2,arg3);
 }
 
 
@@ -1775,9 +1836,12 @@ SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_s
   static struct {
     const char *method;
     const char *signature;
-  } methods[2] = {
+  } methods[3] = {
     {
-      "SwigDirector_CplexInformer_updateGap", "(Lde/hhu/ba/yoshikoWrapper/swig/CplexInformer;D)V" 
+      "SwigDirector_CplexInformer_updateStatus__SWIG_0", "(Lde/hhu/ba/yoshikoWrapper/swig/CplexInformer;I)V" 
+    },
+    {
+      "SwigDirector_CplexInformer_updateStatus__SWIG_1", "(Lde/hhu/ba/yoshikoWrapper/swig/CplexInformer;ID)V" 
     },
     {
       "SwigDirector_CplexInformer_continueOnTimeout", "(Lde/hhu/ba/yoshikoWrapper/swig/CplexInformer;)Z" 

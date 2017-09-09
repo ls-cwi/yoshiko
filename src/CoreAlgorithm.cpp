@@ -52,14 +52,19 @@ namespace ysk {
 		SolutionFlags flags;
 
 
-		//Apply reduction rules
-		bitset<NUMBER_OF_REDUCTION_RULES> rules(_parameter.rulesBitMask);
+		//Apply reduction rules//
 
+		bitset<NUMBER_OF_REDUCTION_RULES> rules(_parameter.rulesBitMask);
+		//Generate new CER instance
 		ClusterEditingReduction cer(
 				rules,
 				_parameter.multiplicativeFactor,
 				_parameter.nrOptimalSolutions > 1 ? true : false
 				);
+		//If an informer is used register it with the CER to receive info
+		if (_informer != nullptr){
+			cer.registerInformer(_informer);
+		}
 		cer.perform(*_instance);
 
 		vector<ClusterReductionInstance*>& reduced = cer.getInstances();

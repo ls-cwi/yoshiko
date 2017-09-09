@@ -9,6 +9,7 @@
 #include "ILPSolver.h"
 
 using namespace std;
+using namespace yskLib;
 using namespace lemon;
 
 namespace ysk {
@@ -20,7 +21,7 @@ namespace ysk {
 ILOMIPINFOCALLBACK1(gap_callback,yskLib::CplexInformer*, informer) {
 	double gap = getMIPRelativeGap();
 	if (verbosity >= 3) cout << "Informing listener about new gap value: " << gap << endl;
-    informer->updateGap(gap);
+    informer->updateStatus(SOLVING_ILP,gap);
     return;
 }
 
@@ -338,7 +339,10 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
     if (_sep_triangles) cplex.use(triangle_callback(cplexEnv, inst, x)); // use triangle callback --> lazy constraints!
     if (_sep_partition_cuts) cplex.use(partition_cut_callback(cplexEnv, inst, x)); // use partition callback --> user cuts!
     //if we're using an informer to report to any outside source we will register it here
-    if (_informer != nullptr) cplex.use(gap_callback(cplexEnv,_informer));
+    if (_informer != nullptr){
+    	cplex.use(gap_callback(cplexEnv,_informer));
+    	//TODO: Maybe use even more callbacks to provide more info
+    }
 
     if (!_sep_triangles) {
         if (verbosity > 1) {

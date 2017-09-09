@@ -42,7 +42,7 @@ set( Yoshiko_Hdr
   src/reductionRules/HeavyEdgeRule3in1.h
   src/reductionRules/MergingRule.h
   src/reductionRules/ParameterDependentReductionRule.h
-  src/reductionRules/SimilarNeighboorhoodRule.h
+  src/reductionRules/SimilarNeighborhoodRule.h
 
 )
 
@@ -83,7 +83,7 @@ set( Yoshiko_Src
   src/reductionRules/HeavyEdgeRule3in1.cpp
   src/reductionRules/MergingRule.cpp
   src/reductionRules/ParameterDependentReductionRule.cpp
-  src/reductionRules/SimilarNeighboorhoodRule.cpp
+  src/reductionRules/SimilarNeighborhoodRule.cpp
 
 )
 

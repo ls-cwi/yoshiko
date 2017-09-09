@@ -18,27 +18,23 @@ ClusterEditingReduction::~ClusterEditingReduction() {
   }
 }
 
-vector<ClusterReductionInstance*>& ClusterEditingReduction::getInstances() {
-  return _instances;
-}
-
 void ClusterEditingReduction::perform(ClusterEditingInstance& orig) {
   vector<ClusterReductionInstance*> instances;
   ClusterReductionInstance i(&orig, _active, _multiplicativeFactor, _conserveMultipleSolutions);
   i.computeChildInstances(instances);
-  
+
   while(instances.size() != 0) {
     vector<ClusterReductionInstance*> tmp;
-    
+
     for(vector<ClusterReductionInstance*>::iterator it = instances.begin(); it != instances.end(); it++) {
-      int i = (*it)->applyReductionRules();
-      
+      int i = (*it)->applyReductionRules(_informer);
+
       if(i != -1) {
         double cost = (*it)->getInstance()->computeCost();
         _totalCost += cost;
         if(verbosity > 1)
           cout << "cost:\t"<<cost<<endl;
-        
+
         vector<ClusterReductionInstance*> childInstances;
         (*it)->computeChildInstances(childInstances);
         tmp.insert(tmp.end(), childInstances.begin(), childInstances.end());
@@ -50,6 +46,16 @@ void ClusterEditingReduction::perform(ClusterEditingInstance& orig) {
     }
     instances = tmp;
   }
+}
+
+//SETTER / GETTER
+
+void ClusterEditingReduction::registerInformer(yskLib::CplexInformer* informer){
+	_informer = informer;
+}
+
+vector<ClusterReductionInstance*>& ClusterEditingReduction::getInstances() {
+  return _instances;
 }
 
 double ClusterEditingReduction::getTotalCost() const {

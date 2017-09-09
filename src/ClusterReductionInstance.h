@@ -12,13 +12,14 @@
 #define NUMBER_OF_REDUCTION_RULES 6
 
 #include "ClusterEditingInstance.h"
+#include "CplexInformer.h"
 #include "Globals.h"
 #include "WorkingCopyInstance.h"
 
 #include "reductionRules/HeavyEdgeRule3in1.h"
 #include "reductionRules/CriticalCliqueRule.h"
 #include "reductionRules/AlmostCliqueRule.h"
-#include "reductionRules/SimilarNeighboorhoodRule.h"
+#include "reductionRules/SimilarNeighborhoodRule.h"
 #include "reductionRules/MergingRule.h"
 #include "reductionRules/ParameterDependentReductionRule.h"
 #include "reductionRules/CliqueRule.h"
@@ -44,15 +45,15 @@ public:
     , _conserveMultipleSolutions(conserveMultipleSolutions)
   {
   }
-  
-  int applyReductionRules();
-  
+
+  int applyReductionRules(yskLib::CplexInformer* informer);
+
   ClusterEditingInstance* getInstance();
-  
+
   int computeConnectedComponents(WorkingCopyGraph::NodeMap<int>& connectedComps);
-  
+
   void computeChildInstances(std::vector<ClusterReductionInstance*>& childInstances);
-  
+
 private:
   int _lastSuccessRule;
   int _currentRule;
@@ -63,5 +64,5 @@ private:
 };
 
 } // namespace ysk
-  
+
 #endif /* CLUSTERREDUCTIONINSTANCE_H */

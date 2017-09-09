@@ -16,15 +16,16 @@ class SwigDirector_CplexInformer : public yskLib::CplexInformer, public Swig::Di
 public:
     void swig_connect_director(JNIEnv *jenv, jobject jself, jclass jcls, bool swig_mem_own, bool weak_global);
     SwigDirector_CplexInformer(JNIEnv *jenv);
-    virtual void updateGap(double gap);
+    virtual void updateStatus(yskLib::YoshikoState state);
+    virtual void updateStatus(yskLib::YoshikoState state, double value);
     virtual bool continueOnTimeout();
     virtual ~SwigDirector_CplexInformer();
 public:
     bool swig_overrides(int n) {
-      return (n < 2 ? swig_override[n] : false);
+      return (n < 3 ? swig_override[n] : false);
     }
 protected:
-    Swig::BoolArray<2> swig_override;
+    Swig::BoolArray<3> swig_override;
 };
 
 

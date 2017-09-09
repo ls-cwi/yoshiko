@@ -10,10 +10,11 @@
 
 using namespace std;
 using namespace lemon;
+using namespace yskLib;
 
 namespace ysk {
 
-int ClusterReductionInstance::applyReductionRules() {
+int ClusterReductionInstance::applyReductionRules(CplexInformer* informer) {
   if(_currentRule < 0 || _currentRule > NUMBER_OF_REDUCTION_RULES-1) {
     return -1;
   }
@@ -42,20 +43,27 @@ int ClusterReductionInstance::applyReductionRules() {
     FPTReductionRule* rule;
     if(_currentRule == 0) {
       rule = new CliqueRule(_instance->getWorkingCopyInstance());
+      informer->updateStatus(REDUCTION_CR);
     } else if(_currentRule == 1) {
       if(_instance->isDualWeighted()) {
         rule = new CriticalCliqueRule(_instance->getWorkingCopyInstance());
+        informer->updateStatus(REDUCTION_CC);
       } else {
         rule = new MergingRule(_instance->getWorkingCopyInstance());
+        informer->updateStatus(REDUCTION_MR);
       }
     } else if(_currentRule == 2) {
       rule = new AlmostCliqueRule(_instance->getWorkingCopyInstance(), _conserveMultipleSolutions);
+      informer->updateStatus(REDUCTION_AC);
     } else if(_currentRule == 3) {
       rule = new HeavyEdgeRule3in1(_instance->getWorkingCopyInstance(), _conserveMultipleSolutions);
+      informer->updateStatus(REDUCTION_HE);
     } else if(_currentRule == 4) {
       rule = new ParameterDependentReductionRule(_instance->getWorkingCopyInstance());
+      informer->updateStatus(REDUCTION_PD);
     } else if(_currentRule == 5) {
       rule = new SimilarNeighborhoodRule(_instance->getWorkingCopyInstance(), _multiplicativeFactor, _conserveMultipleSolutions);
+      informer->updateStatus(REDUCTION_SN);
     } else {
       return -1;
     }
