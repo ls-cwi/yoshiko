@@ -12,9 +12,15 @@ using namespace lemon;
 
 namespace ysk {
 
+	/**
+	 * Generates a set of solutions from its internal parameters (instance and parameter set)
+	 * @return The solution set as CES*
+	 */
 	ClusterEditingSolutions* CoreAlgorithm::run()
 	{
 
+		//At the beginning of a run we set the global termination flag to false ->
+		//If we use this software as a lib it might have been set to true in a previous run
 		isTerminated = false;
 
 		//TODO: Add more 'breakpoints' where the task checks if it is already cancelled

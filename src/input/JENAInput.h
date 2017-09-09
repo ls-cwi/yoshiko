@@ -1,8 +1,6 @@
 /*
  * JENAInput.h
- *
- *  Created on: Aug 9, 2017
- *      Author: Philipp Spohr
+ *      Author: Emanuel Laude, Philipp Spohr
  */
 
 #ifndef SRC_INPUT_JENAINPUT_H
@@ -14,6 +12,8 @@ namespace yskInput{
 
 	/**
 	 * This class describes the JENA input format and handles parsing of it.
+	 * This is equivalent to the TransClustSimMatrixDataSetFormat
+	 *
 	 * Description:
 	 * The first line contains an integer describing how many nodes the graph has
 	 * The following |nodes| lines contain the ids (node names)

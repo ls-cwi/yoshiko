@@ -5,6 +5,9 @@
 
 namespace ysk {
 
+	/**
+	 * Simple struct containing flags that describe what occurred during a run
+	 */
 	struct SolutionFlags{
 
 		SolutionFlags()
