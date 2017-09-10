@@ -34,6 +34,7 @@ CPLEX is a commercial product owned by IBM. For academic purposes it can be obta
   http://www-03.ibm.com/ibm/university/academic/pub/page/membership
 
 Next, yoshiko can be compiled:
+Note: If you want to compile it as a stand-alone executable, use: cmake -DBUILD_AS_EXEC=ON
 
     mkdir build
     cd build

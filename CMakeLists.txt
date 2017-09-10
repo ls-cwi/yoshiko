@@ -2,6 +2,10 @@ cmake_minimum_required( VERSION 2.8 )
 
 project( Yoshiko )
 
+OPTION(BUILD_AS_EXEC "Build as command line tool instead of library" OFF)
+
+set (Yoshiko_Version "2.1")
+
 set( Yoshiko_Hdr
 
   src/ClusterEditingInstance.h
@@ -184,9 +188,13 @@ set( CommonLibs
 	pthread
 	emon
 )
+if (BUILD_AS_EXEC)
+	add_executable( yoshiko ${Yoshiko_Src} ${Yoshiko_Hdr})
+else()
+	add_library(yoshiko SHARED ${YoshikoLib_Src} ${YoshikoLib_Hdr} )
+endif()
 
-add_library(yoshikoLibrary SHARED ${YoshikoLib_Src} ${YoshikoLib_Hdr} )
-add_executable( yoshiko ${Yoshiko_Src} ${Yoshiko_Hdr})
+set_target_properties(yoshiko PROPERTIES OUTPUT_NAME "yoshiko.${Yoshiko_Version}")
 
 target_link_libraries( yoshiko ${CommonLibs} )
-target_link_libraries( yoshikoLibrary ${CommonLibs})
+target_link_libraries( yoshiko ${CommonLibs})
