@@ -21,6 +21,13 @@ First, LEMON 1.3 needs to be installed:
 
 Note: It is required to have LEMON as a shared library. If you obtained lemon prior to this installation and get errors during the compilation process consider recompiling it yourself as a shared library.
 
+    wget http://lemon.cs.elte.hu/pub/sources/lemon-1.3.tar.gz
+    tar xvzf lemon-1.3.tar.gz
+    cd lemon-1.3
+    cmake -DCMAKE_INSTALL_PREFIX=~/lemon -DBUILD_SHARED_LIBS=TRUE
+    make install
+
+
 Note: On Mac OS 10.9, comment out the following two lines and add the code below at line 162 in `CMakeLists.txt` before `make install`
 
     #ADD_SUBDIRECTORY(demo)
@@ -30,11 +37,6 @@ Note: On Mac OS 10.9, comment out the following two lines and add the code below
       set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libstdc++ " )
     endif()
 
-    wget http://lemon.cs.elte.hu/pub/sources/lemon-1.3.tar.gz
-    tar xvzf lemon-1.3.tar.gz
-    cd lemon-1.3
-    cmake -DCMAKE_INSTALL_PREFIX=~/lemon -DBUILD_SHARED_LIBS=TRUE
-    make install
 
 You can remove the LEMON sources now, i.e., `rm -rf lemon-1.3`.
 
