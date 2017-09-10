@@ -27,17 +27,6 @@ Note: It is required to have LEMON as a shared library. If you obtained lemon pr
     cmake -DCMAKE_INSTALL_PREFIX=~/lemon -DBUILD_SHARED_LIBS=TRUE
     make install
 
-
-Note: On Mac OS 10.9, comment out the following two lines and add the code below at line 162 in `CMakeLists.txt` before `make install`
-
-    #ADD_SUBDIRECTORY(demo)
-    #ADD_SUBDIRECTORY(tools)
-
-    if( ${CMAKE_SYSTEM_NAME} MATCHES "Darwin" )
-      set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libstdc++ " )
-    endif()
-
-
 You can remove the LEMON sources now, i.e., `rm -rf lemon-1.3`.
 
 CPLEX is a commercial product owned by IBM. For academic purposes it can be obtained at no charge via IBM's Academic Initiative programme:
