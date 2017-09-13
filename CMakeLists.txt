@@ -177,9 +177,6 @@ configure_file( src/config.h.in ${PROJECT_SOURCE_DIR}/src/config.h )
 if( ${CMAKE_SYSTEM_NAME} MATCHES "Darwin" )
   set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libstdc++ " )
   set( CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY "libstdc++" )
-else()
-	# Keine schöne Lösung
-  set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wl,-z,noexecstack")
 endif()
 
 include_directories( ${CPLEX_INC_DIR} ${CONCERT_INC_DIR} ${JNI_INCLUDE_DIRS} "${LIBLEMON_ROOT}/include" "src" "src/externlib" )
@@ -196,7 +193,7 @@ set( CommonLibs
 if (BUILD_AS_EXEC)
 	add_executable( yoshiko ${Yoshiko_Src} ${Yoshiko_Hdr})
 else()
-	add_library(yoshiko SHARED ${YoshikoLib_Src} ${YoshikoLib_Hdr} )
+	add_library(yoshiko STATIC ${YoshikoLib_Src} ${YoshikoLib_Hdr} )
 endif()
 
 set_target_properties(yoshiko PROPERTIES OUTPUT_NAME "yoshiko.${Yoshiko_Version}")
