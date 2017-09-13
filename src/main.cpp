@@ -58,14 +58,15 @@ int main(int argc, char * const argv[]) {
   ArgParser ap(argc, argv);
   string inputFilename, outputFilename;
   string graphLabel = "cluster_solution";
-  int inputFileFormat = 0; //TODO: Convert to enums for better codestyle?
+  int inputFileFormat = 0;
   int outputFileFormat = 0;
   bool exportLP = false;
+  double threshold = 0.5;
 
   YParameterSet parameter;
 
 
-  
+
   // Add a string option with storage reference for file name
   ap.refOption("f", "Name of file that contains input []", inputFilename, true);
   //ap.refOption("F", "input file format, 0 = Jena, 1 = Clever, 2 = SIF []", inputFileFormat, false);
@@ -75,6 +76,7 @@ int main(int argc, char * const argv[]) {
   ap.refOption("v", "verbosity, 0 = silent, 5 = full [0]", verbosity, false);
   ap.refOption("H", "utilize heuristic instead of ILP, [false]", parameter.useHeuristic, false);
   ap.refOption("T", "CPU time limit (s) for the ILP component, -1 = no limit [-1]", time_limit, false);
+  ap.refOption("t", "Threshold for RowSim format, Should be in range 0 <= t <= 1 [0.5]",threshold,false);
   ap.refOption("threads", "number of threads [max]", no_threads, false);
   ap.refOption("e", "export LP [false]", exportLP, false);
   ap.refOption("st", "separate triangles [false]", parameter.separateTriangles, false);
@@ -83,17 +85,17 @@ int main(int argc, char * const argv[]) {
   ap.refOption("m", "multiplicative factor for real valued edge weights in SimilarNeighborhoodRule (the higher the better the reduction results and the slower the performance) [1]", parameter.multiplicativeFactor, false);
   ap.refOption("g", "graph label []", graphLabel, false);
   ap.refOption("r", "explicitly turn on/off reduction rules, bit string (right to left): bit 0 = CliqueRule, bit 1 = CriticalCliqueRule, bit 2 = AlmostCliqueRule, bit 3 = HeavyEdgeRule3in1, bit 4 = ParameterDependentReductionRule, bit 5 = SimilarNeighborhoodRule [111111]", parameter.rulesBitMask, false);
-  
+
   // Perform the parsing process
   // (in case of any error it terminates the program) -> tb improved
   ap.parse();
-  
-  
+
+
   // Check each option if it has been given and print its value
   if (verbosity > 2) {
-    
+
     std::cout << "Parameters of '" << ap.commandName() << "':\n";
-    
+
     std::cout << "      -f: " << inputFilename << std::endl;
     std::cout << "      -F: " << inputFileFormat << std::endl;
     std::cout << "      -o: " << outputFilename << std::endl;
@@ -101,6 +103,10 @@ int main(int argc, char * const argv[]) {
     std::cout << "      -v: " << verbosity << std::endl;
     std::cout << "      -H: " << parameter.useHeuristic << std::endl;
     std::cout << "      -T: " << time_limit << std::endl;
+    std::cout << "      -t  " << threshold << std::endl;
+    if (ap.given("t") && inputFileFormat != 2){
+    	std::cout << "Threshold parameter is ignored! Only relevant for SimRow format." << endl;
+    }
     std::cout << "-threads: " << no_threads << std::endl;
     std::cout << "      -e: " << exportLP << std::endl;
     std::cout << "      -st: " << parameter.separateTriangles << std::endl;
@@ -110,21 +116,21 @@ int main(int argc, char * const argv[]) {
     std::cout << "      -g: " << graphLabel << std::endl;
     std::cout << "      -r: " << parameter.rulesBitMask << std::endl;
   }
-  
-  
-  
+
+
+
   ifstream is(inputFilename.c_str());
   if (!is.is_open()) {
     cerr << "file '" << inputFilename << "' not found!" << endl;
     exit(-1);
   }
-  
+
 
   //Determine which input format is to be parsed and generate a ClusterEditingInstance accordingly
 
   ClusterEditingInstance* instance = new ClusterEditingInstance();
   StreamInput* input;
-  
+
   switch (inputFileFormat) {
   	  //JENA
   	  case 0:
@@ -149,7 +155,7 @@ int main(int argc, char * const argv[]) {
   }
   is.close(); //Close input stream
   instance = input->getProblemInstance();
-  
+
 
 
   CoreAlgorithm* core = new CoreAlgorithm(
@@ -177,7 +183,7 @@ int main(int argc, char * const argv[]) {
   delete ces;
   delete output;
 
-  
+
   //Termination
   return 0;
 }

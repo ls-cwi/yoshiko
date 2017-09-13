@@ -27,6 +27,7 @@ set( Yoshiko_Hdr
 
   src/input/ClusterEditingInput.h
   src/input/JENAInput.h
+  src/input/RowSimInput.h
   src/input/SIFInput.h
   src/input/StreamInput.h
 
@@ -69,6 +70,7 @@ set( Yoshiko_Src
 
   src/input/ClusterEditingInput.cpp
   src/input/JENAInput.cpp
+  src/input/RowSimInput.cpp
   src/input/SIFInput.cpp
 
   src/output/ClusterEditingOutput.cpp
@@ -167,7 +169,7 @@ endif(NOT CMAKE_BUILD_TYPE)
 set(CMAKE_CXX_FLAGS_DEBUG "-Wall -Wextra -Wno-long-long -Wno-unused-parameter  -Wno-unknown-pragmas -g -ggdb -O0 -DDEBUG -DVERBOSE")
 set(CMAKE_CXX_FLAGS_RELEASE "-Wall -Wextra -Wno-long-long -Wno-unused-parameter  -Wno-unknown-pragmas -O3 -DNDEBUG")
 set(CMAKE_CXX_FLAGS_PROFILE "-Wall -Wextra -Wno-long-long -Wno-unused-parameter  -Wno-unknown-pragmas -O3 -g -ggdb -DNDEBUG")
-set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-write-strings -Wl,-z,noexecstack -fno-strict-aliasing -std=c++0x" )
+set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-write-strings -fno-strict-aliasing -std=c++0x" )
 add_definitions( -DIL_STD ) #???
 configure_file( src/config.h.in ${PROJECT_SOURCE_DIR}/src/config.h )
 
@@ -175,6 +177,9 @@ configure_file( src/config.h.in ${PROJECT_SOURCE_DIR}/src/config.h )
 if( ${CMAKE_SYSTEM_NAME} MATCHES "Darwin" )
   set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libstdc++ " )
   set( CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY "libstdc++" )
+else()
+	# Keine schöne Lösung
+  set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wl,-z,noexecstack")
 endif()
 
 include_directories( ${CPLEX_INC_DIR} ${CONCERT_INC_DIR} ${JNI_INCLUDE_DIRS} "${LIBLEMON_ROOT}/include" "src" "src/externlib" )

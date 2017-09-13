@@ -13,7 +13,7 @@
 
 
 namespace yskInput{
-	
+
 	/**
 	 * Virtual class that serves as a template for any input format that is provided as an actual input stream (usually by means of an input file)
 	 */
@@ -28,6 +28,12 @@ namespace yskInput{
 			 * @return True if the parsing was successful / False otherwise
 			 */
 			virtual bool parseInput(std::istream &is) = 0;
+
+			enum Format{
+				JENA = 0,
+				SIF = 1,
+				SIMROW = 2
+			};
 
 
 	};
