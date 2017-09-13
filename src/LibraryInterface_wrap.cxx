@@ -990,31 +990,86 @@ SWIGEXPORT jboolean JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJ
 }
 
 
-SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_SolutionFlags_1instances_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_SolutionFlags_1reducedInstances_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
   ysk::SolutionFlags *arg1 = (ysk::SolutionFlags *) 0 ;
-  std::vector< double > *arg2 = (std::vector< double > *) 0 ;
+  int arg2 ;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
-  (void)jarg2_;
   arg1 = *(ysk::SolutionFlags **)&jarg1; 
-  arg2 = *(std::vector< double > **)&jarg2; 
-  if (arg1) (arg1)->instances = *arg2;
+  arg2 = (int)jarg2; 
+  if (arg1) (arg1)->reducedInstances = arg2;
 }
 
 
-SWIGEXPORT jlong JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_SolutionFlags_1instances_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jlong jresult = 0 ;
+SWIGEXPORT jint JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_SolutionFlags_1reducedInstances_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jint jresult = 0 ;
   ysk::SolutionFlags *arg1 = (ysk::SolutionFlags *) 0 ;
-  std::vector< double > *result = 0 ;
+  int result;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(ysk::SolutionFlags **)&jarg1; 
-  result = (std::vector< double > *)& ((arg1)->instances);
-  *(std::vector< double > **)&jresult = result; 
+  result = (int) ((arg1)->reducedInstances);
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_SolutionFlags_1solvedInstances_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+  ysk::SolutionFlags *arg1 = (ysk::SolutionFlags *) 0 ;
+  int arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(ysk::SolutionFlags **)&jarg1; 
+  arg2 = (int)jarg2; 
+  if (arg1) (arg1)->solvedInstances = arg2;
+}
+
+
+SWIGEXPORT jint JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_SolutionFlags_1solvedInstances_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jint jresult = 0 ;
+  ysk::SolutionFlags *arg1 = (ysk::SolutionFlags *) 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(ysk::SolutionFlags **)&jarg1; 
+  result = (int) ((arg1)->solvedInstances);
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_SolutionFlags_1lastGap_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jdouble jarg2) {
+  ysk::SolutionFlags *arg1 = (ysk::SolutionFlags *) 0 ;
+  double arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(ysk::SolutionFlags **)&jarg1; 
+  arg2 = (double)jarg2; 
+  if (arg1) (arg1)->lastGap = arg2;
+}
+
+
+SWIGEXPORT jdouble JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_SolutionFlags_1lastGap_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jdouble jresult = 0 ;
+  ysk::SolutionFlags *arg1 = (ysk::SolutionFlags *) 0 ;
+  double result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(ysk::SolutionFlags **)&jarg1; 
+  result = (double) ((arg1)->lastGap);
+  jresult = (jdouble)result; 
   return jresult;
 }
 

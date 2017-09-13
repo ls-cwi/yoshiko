@@ -112,6 +112,8 @@ public:
 
   std::vector<int>* getCluster(lemon::FullGraph::Node u) const;
 
+  int getSize() const;
+
   friend std::ostream& operator <<(std::ostream &os, ClusterEditingInstance &inst);
 
 private:

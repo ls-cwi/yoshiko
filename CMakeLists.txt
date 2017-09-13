@@ -4,7 +4,7 @@ project( Yoshiko )
 
 OPTION(BUILD_AS_EXEC "Build as command line tool instead of library" OFF)
 
-set (Yoshiko_Version "2.1")
+set (Yoshiko_Version "2.1.1")
 
 set( Yoshiko_Hdr
 

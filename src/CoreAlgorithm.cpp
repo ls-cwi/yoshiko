@@ -73,14 +73,19 @@ namespace ysk {
 		}
 		cer.perform(*_instance);
 
-		vector<ClusterReductionInstance*>& reduced = cer.getInstances();
-
 		if (verbosity > 1) {
 			cout << "=========================" << endl;
 			cout << "FPT reduction rules applied exhaustively." << endl;
 			cout << "time:\t" << clk << endl;
 		}
+
 		flags.totalCost += cer.getTotalCost();
+
+		vector<ClusterReductionInstance*>& reduced = cer.getInstances();
+		flags.reducedInstances = reduced.size();
+
+		//Sort CRI by size ascending to guarantee that the small instances are solved first
+		std::sort(reduced.begin(),reduced.end());
 
 		if (verbosity > 1) {
 			cout << "total cost:\t" << cer.getTotalCost() << endl;
@@ -92,6 +97,13 @@ namespace ysk {
 			cout << "-------------------------" << endl;
 		}
 
+		if (verbosity > 3){
+			for (vector<ClusterReductionInstance*>::iterator it = reduced.begin();
+					it != reduced.end(); it++) {
+				cout << "[INSTANCE]" << (*it)->getInstance()->getSize() <<endl;
+
+			}
+		}
 
 		// If an outside call wants the run to terminate before solving instances
 		// we have no guarantee of having something worth retrieving
@@ -111,6 +123,7 @@ namespace ysk {
 		long totalNumberOfSolutions = 1;
 
 		vector<vector<vector<vector<int> > > > instances;
+
 
 		//Iterate over the remaining reduced instances
 		for (vector<ClusterReductionInstance*>::iterator it = reduced.begin();

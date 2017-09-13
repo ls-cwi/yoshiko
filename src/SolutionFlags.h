@@ -14,14 +14,19 @@ namespace ysk {
 		:totalCost(0.0)
 		,timedOut(false)
 		,ilpGenerated(false)
-		,optimal(false)
+		,optimal(true)
+		,reducedInstances(0)
+		,solvedInstances(0)
+		,lastGap(1.0)
 		{};
 
 		double totalCost;
 		bool timedOut;
 		bool ilpGenerated;
 		bool optimal;
-		std::vector<double> instances;
+		int reducedInstances;
+		int solvedInstances;
+		double lastGap;
 	};
 
 } // namespace ysk
