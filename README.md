@@ -28,6 +28,7 @@ Note: It is required to have LEMON as a shared library. If you obtained lemon pr
     make install
 
 You can remove the LEMON sources now, i.e., `rm -rf lemon-1.3`.
+Make sure you move the created library file with ending (for instance .dll on windows, .dylib on mac, .so on linux) to the shared library folder of your system.
 
 CPLEX is a commercial product owned by IBM. For academic purposes it can be obtained at no charge via IBM's Academic Initiative programme:
 
