@@ -23,9 +23,9 @@ namespace yskInput {
 			while (getline(is, line)) {
 				vector<string> tokens;
 				tokenize(line, tokens, " \t\"\r");
-				double similarity = stod(tokens[2]);
+				double similarity = atof(tokens[2].c_str());
 				if (similarity < 0.0){
-					cerr << "Found invalid similarity value of: " << std::to_string(similarity) <<", terminating parsing process!" <<endl;
+					cerr << "Found invalid similarity value of: " << tokens[2] <<", terminating parsing process!" <<endl;
 					return false;
 				}
 				if (similarity > max){
@@ -85,9 +85,9 @@ namespace yskInput {
 				if (tokens[0] == tokens[1]) cerr << "skipping self loop " << tokens[0] << " -- " << tokens[1] << endl;
 				else
 				{
-					double similarity = stod(tokens[2]);
+					double similarity = atof(tokens[2].c_str());
 					if (similarity < 0.0 || similarity > 1.0){
-						cerr << "Invalid similarity score of: "+std::to_string(similarity) << "terminating!" << endl;
+						cerr << "Invalid similarity score of: "+tokens[2] << "terminating!" << endl;
 						return false;
 					}
 					double edgeWeight = (similarity/max) - _threshold;
