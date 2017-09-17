@@ -22,7 +22,7 @@ void TableOutput::writeBeginNodes(size_t numberOfNodes) {
     //
 }
 
-void TableOutput::writeNode(int nodeId, string name, size_t cluster) {
+void TableOutput::writeNode(int nodeId, string name, size_t cluster, bool isLast) {
     _os <<name<<"\t"<<cluster<<endl;
 }
 
@@ -46,7 +46,7 @@ void TableOutput::writeBeginCluster(size_t cluster) {
     //
 }
 
-void TableOutput::writeEndCluster() {
+void TableOutput::writeEndCluster(bool isLast) {
     //
 }
 

@@ -22,7 +22,7 @@ namespace yskInput {
  */
 class RowSimInput: public yskInput::StreamInput {
 public:
-	RowSimInput(ysk::ClusterEditingInstance* inst, double threshold);
+	RowSimInput(ysk::ClusterEditingInstance* inst, double threshold) : StreamInput(inst),_threshold(threshold){};
 	bool parseInput(std::istream &is);
 
 private:

@@ -22,6 +22,7 @@
 
 #include "input/JENAInput.h"
 #include "input/SIFInput.h"
+#include "input/RowSimInput.h"
 #include "input/StreamInput.h"
 
 
@@ -65,14 +66,12 @@ int main(int argc, char * const argv[]) {
 
   YParameterSet parameter;
 
-
-
   // Add a string option with storage reference for file name
   ap.refOption("f", "Name of file that contains input []", inputFilename, true);
   //ap.refOption("F", "input file format, 0 = Jena, 1 = Clever, 2 = SIF []", inputFileFormat, false);
-  ap.refOption("F", "input file format, 0 = Jena, 1 = SIF [0]", inputFileFormat, false);
+  ap.refOption("F", "input file format, 0 = Jena, 1 = SIF [0], 2 = RowSim", inputFileFormat, false);
   ap.refOption("o", "Name of output file(s) []", outputFilename, false);
-  ap.refOption("O", "output file format 0 = csv, 1 = table (line one: number of nodes, line two: number of clusters, column one: node name, column two: cluster ID), 2 = gml, 3 = xgmml (Cytoscape) 4 = Pajek [0], 5 = table (Cytoscape app)", outputFileFormat, false);
+  ap.refOption("O", "output file format 0 = csv, 1 = table (line one: number of nodes, line two: number of clusters, column one: node name, column two: cluster ID), 2 = gml, 3 = xgmml (Cytoscape) 4 = Pajek [0], 5 = table (Cytoscape app), 6 = TransClust format", outputFileFormat, false);
   ap.refOption("v", "verbosity, 0 = silent, 5 = full [0]", verbosity, false);
   ap.refOption("H", "utilize heuristic instead of ILP, [false]", parameter.useHeuristic, false);
   ap.refOption("T", "CPU time limit (s) for the ILP component, -1 = no limit [-1]", time_limit, false);
@@ -89,7 +88,6 @@ int main(int argc, char * const argv[]) {
   // Perform the parsing process
   // (in case of any error it terminates the program) -> tb improved
   ap.parse();
-
 
   // Check each option if it has been given and print its value
   if (verbosity > 2) {
@@ -117,9 +115,8 @@ int main(int argc, char * const argv[]) {
     std::cout << "      -r: " << parameter.rulesBitMask << std::endl;
   }
 
-
-
   ifstream is(inputFilename.c_str());
+
   if (!is.is_open()) {
     cerr << "file '" << inputFilename << "' not found!" << endl;
     exit(-1);
@@ -131,29 +128,33 @@ int main(int argc, char * const argv[]) {
   ClusterEditingInstance* instance = new ClusterEditingInstance();
   StreamInput* input;
 
+
   switch (inputFileFormat) {
   	  //JENA
   	  case 0:
   		  input = new JENAInput(instance);
   		  break;
+      //SIF
   	  case 1:
   		  input = new SIFInput(instance);
   		  break;
-  	//case 2:
-        //instance.parseCleverFormat(is); <<< ? Clever Format not used :(
-        //break;
+  	  //ROW SIM
+  	  case 2:
+  		  input = new RowSimInput(instance,threshold);
+  		  break;
   	  default:
   		  //Should never be reached
-  		  input = new JENAInput(instance);
   		  cout << endl<<"Warning: Input Format not specified, assuming JENA"<<endl;
+  		  input = new JENAInput(instance);
   		  break;
   }
 
   if (!input->parseInput(is)){
-	  cout << endl << "Parsing failed! Terminating ...";
+	  std::cout << endl << "Parsing failed! Terminating ...";
 	  return 1;
   }
   is.close(); //Close input stream
+
   instance = input->getProblemInstance();
 
 
@@ -174,7 +175,10 @@ int main(int argc, char * const argv[]) {
 		  graphLabel,
 		  outputFileFormat
 		  );
-  output->write();
+
+  if (output != nullptr){
+	  output->write();
+  }
 
   //Final cleanup
   delete core;
