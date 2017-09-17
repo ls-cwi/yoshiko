@@ -1,24 +1,25 @@
-//
-//  XGMMLOutput.h
-//  weighted-cluster-editing
-//
-//  Created by Emanuel Laude on 20.03.13.
-//  Copyright (c) 2013 Emanuel Laude. All rights reserved.
-//
+/*
+ * TransClustOutput.h
+ *
+ *  Created on: Sep 17, 2017
+ *      Author: philipp
+ */
 
-#ifndef XGMMLOUTPUT_H
-#define XGMMLOUTPUT_H
+#ifndef SRC_OUTPUT_TRANSCLUSTOUTPUT_H_
+#define SRC_OUTPUT_TRANSCLUSTOUTPUT_H_
 
 #include <iostream>
 #include <string>
 
-#include "../output/ClusterEditingOutput.h"
+
+#include "ClusterEditingOutput.h"
+
 
 namespace ysk {
 
-class XGMMLOutput : public ClusterEditingOutput {
+class TransClustOutput : public ClusterEditingOutput {
 public:
-  XGMMLOutput(ClusterEditingInstance& inst,
+  TransClustOutput(ClusterEditingInstance& inst,
               ClusterEditingSolutions& solutions,
               std::string filename,
               std::string suffix,
@@ -27,6 +28,7 @@ public:
   {
   }
 
+
   void writeHeader(std::string label,
                    size_t solution,
                    size_t numberOfNodes,
@@ -34,12 +36,9 @@ public:
 
   void writeBeginNodes(size_t numberOfNodes);
 
-  void writeNode(int nodeId,
-                 std::string name,
-                 size_t cluster,
-				 bool isLast);
-
   void writeEndNodes();
+
+  void writeNode(int nodeId, std::string name, size_t cluster, bool isLast);
 
   void writeBeginEdges();
 
@@ -56,8 +55,9 @@ public:
   void writeEndCluster(bool isLast);
 
   void writeFooter();
+
 };
 
-} // namespace ysk
+} /* namespace ysk */
 
-#endif /* XGMMLOUTPUT_H */
+#endif /* SRC_OUTPUT_TRANSCLUSTOUTPUT_H_ */

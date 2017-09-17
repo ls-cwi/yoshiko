@@ -11,7 +11,7 @@
 using namespace std;
 
 namespace ysk {
-  
+
 void XGMMLOutput::writeHeader(string label, size_t solution, size_t numberOfNodes, size_t numberOfClusters) {
     _os<<"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"<<endl;
     _os<<"<graph label=\""<<label<< "_"<<solution<<"\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\""<<endl;
@@ -23,7 +23,7 @@ void XGMMLOutput::writeBeginNodes(size_t numberOfNodes) {
     //
 }
 
-void XGMMLOutput::writeNode(int nodeId, string name, size_t cluster) {
+void XGMMLOutput::writeNode(int nodeId, string name, size_t cluster, bool isLast) {
     _os<<"\t<node label=\""<<name<<"\" id=\""<<nodeId<<"\">"<<endl;
     _os<<"\t\t<att type=\"string\" name=\"canonicalName\" value=\""<<name<<"\" />"<<endl;
     _os<<"\t\t<att type=\"integer\" name=\"cluster\" value=\""<<cluster<<"\" />"<<endl;
@@ -46,7 +46,7 @@ void XGMMLOutput::writeEdge(int sourceId, int targetId, string name, double weig
         //inserted
         _os<<"\t\t<att name=\"modified\" type=\"boolean\" value=\"true\" />"<<endl;
         _os<<"\t\t<graphics width=\"1\" fill=\"#00f000\" />"<<endl;
-        
+
     } else if(weight > 0 && modified) {
         //deleted
         _os<<"\t\t<att name=\"modified\" type=\"boolean\" value=\"true\" />"<<endl;
@@ -58,7 +58,7 @@ void XGMMLOutput::writeEdge(int sourceId, int targetId, string name, double weig
     } else {
         //
     }
-    
+
     _os<<"\t</edge>"<<endl;
 }
 
@@ -70,7 +70,7 @@ void XGMMLOutput::writeBeginCluster(size_t cluster) {
     //
 }
 
-void XGMMLOutput::writeEndCluster() {
+void XGMMLOutput::writeEndCluster(bool isLast) {
     //
 }
 

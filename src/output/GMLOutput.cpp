@@ -27,7 +27,7 @@ void GMLOutput::writeBeginNodes(size_t numberOfNodes) {
   //
 }
 
-void GMLOutput::writeNode(int nodeId, string name, size_t cluster) {
+void GMLOutput::writeNode(int nodeId, string name, size_t cluster, bool isLast) {
   _os<<"\tnode ["<<endl;
   _os<<"\t\tid "<<nodeId<<endl;
   _os<<"\t\tlabel \""<<name<<"\""<<endl;
@@ -53,13 +53,13 @@ void GMLOutput::writeEdge(int sourceId,
   _os<<"\t\ttarget "<<targetId<<endl;
   _os<<"\t\tlabel \""<<name<<"\""<<endl;
   _os<<"\t\tweight \""<<weight<<"\""<<endl;
-  
+
   if(modified) {
     _os<<"\t\tmodified "<<1<<endl;
   } else {
     _os<<"\t\tmodified "<<0<<endl;
   }
-  
+
   _os<<"\t]"<<endl;
 }
 
@@ -71,12 +71,12 @@ void GMLOutput::writeBeginCluster(size_t cluster) {
   //
 }
 
-void GMLOutput::writeEndCluster() {
+void GMLOutput::writeEndCluster(bool isLast) {
   //
 }
 
 void GMLOutput::writeFooter() {
   _os<<"]"<<endl;
 }
-  
+
 } // namespace ysk

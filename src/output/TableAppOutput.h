@@ -12,7 +12,7 @@
 #include <iostream>
 #include <string>
 
-#include "../output/TableOutput.h"
+#include "TableOutput.h"
 
 namespace ysk {
 
@@ -26,10 +26,10 @@ public:
     : TableOutput(inst, solutions, filename, suffix, label)
   {
   }
-  
+
   void openStream(size_t solution);
 };
-  
+
 } // namespace ysk
 
 #endif /* TABLEAPPOUTPUT_H */

@@ -20,7 +20,7 @@ void CSVOutput::writeBeginNodes(size_t numberOfNodes) {
   //
 }
 
-void CSVOutput::writeNode(int nodeId, string name, size_t cluster) {
+void CSVOutput::writeNode(int nodeId, string name, size_t cluster, bool isLast) {
   _os <<name<<"\t";
 }
 
@@ -44,7 +44,7 @@ void CSVOutput::writeBeginCluster(size_t cluster) {
   //
 }
 
-void CSVOutput::writeEndCluster() {
+void CSVOutput::writeEndCluster(bool isLast) {
   _os<<endl;
 }
 
