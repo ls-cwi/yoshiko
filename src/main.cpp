@@ -66,8 +66,6 @@ int main(int argc, char * const argv[]) {
 
   YParameterSet parameter;
 
-
-
   // Add a string option with storage reference for file name
   ap.refOption("f", "Name of file that contains input []", inputFilename, true);
   //ap.refOption("F", "input file format, 0 = Jena, 1 = Clever, 2 = SIF []", inputFileFormat, false);
@@ -90,7 +88,6 @@ int main(int argc, char * const argv[]) {
   // Perform the parsing process
   // (in case of any error it terminates the program) -> tb improved
   ap.parse();
-
 
   // Check each option if it has been given and print its value
   if (verbosity > 2) {
@@ -118,9 +115,8 @@ int main(int argc, char * const argv[]) {
     std::cout << "      -r: " << parameter.rulesBitMask << std::endl;
   }
 
-
-
   ifstream is(inputFilename.c_str());
+
   if (!is.is_open()) {
     cerr << "file '" << inputFilename << "' not found!" << endl;
     exit(-1);
@@ -132,29 +128,33 @@ int main(int argc, char * const argv[]) {
   ClusterEditingInstance* instance = new ClusterEditingInstance();
   StreamInput* input;
 
+
   switch (inputFileFormat) {
   	  //JENA
   	  case 0:
   		  input = new JENAInput(instance);
   		  break;
+      //SIF
   	  case 1:
   		  input = new SIFInput(instance);
   		  break;
+  	  //ROW SIM
   	  case 2:
   		  input = new RowSimInput(instance,threshold);
   		  break;
   	  default:
   		  //Should never be reached
-  		  input = new JENAInput(instance);
   		  cout << endl<<"Warning: Input Format not specified, assuming JENA"<<endl;
+  		  input = new JENAInput(instance);
   		  break;
   }
 
   if (!input->parseInput(is)){
-	  cout << endl << "Parsing failed! Terminating ...";
+	  std::cout << endl << "Parsing failed! Terminating ...";
 	  return 1;
   }
   is.close(); //Close input stream
+
   instance = input->getProblemInstance();
 
 

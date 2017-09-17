@@ -39,7 +39,6 @@ void ClusterEditingInstance::initNode(FullGraph::Node node, string name, vector<
 }
 
 void ClusterEditingInstance::initEdge(FullGraph::Edge edge, double weight, EdgeType edgeType) {
-	//TODO: Shouldn't weight be optional here?
   if(abs(weight) != 1)
     _unweighted = false;
   //Check if the edge has a real value (default is int)

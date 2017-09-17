@@ -7,15 +7,13 @@ using namespace ysk;
 
 namespace yskInput {
 
-	RowSimInput::RowSimInput(ysk::ClusterEditingInstance* inst, double threshold):StreamInput(inst){
-		_threshold = threshold;
-	}
-
 	//without shame stolen and modified from SIFInput.cpp
 	bool RowSimInput::parseInput(std::istream &is){
+		if (verbosity > 4){
+			cout << "Parsing RowSim input ..." << endl << std::flush;
+		}
 		try {
 			string line;
-
 
 			//Fetch maximum to normalize
 			double max = -DBL_MAX;
@@ -33,6 +31,9 @@ namespace yskInput {
 				}
 			}
 
+			if (verbosity > 3){
+				cout << "Maximum in RowSimInput: " << max << endl;
+			}
 			//jump back to beginning of stream
 			is.clear();
 			is.seekg(0, ios::beg);
@@ -51,29 +52,22 @@ namespace yskInput {
 
 				if (nodeID.find(tokens[1]) == nodeID.end()) {
 					nodeID[tokens[1]] = n; nodeName[n++] = tokens[1];
-
 				}
 			}
-			//cout << "read " << n << " nodes" << endl;
 
-			//cout << "initializing... " << flush;
 			_instance->init(n);
-			//cout << "done." << endl;
+
 			FullGraph fullGraph = _instance ->getOrig();
 
-			//cout << "setting up clusters... " << flush;
 			for (FullGraph::NodeIt v(fullGraph); v != INVALID; ++v) {
 				vector<int> cluster;
 				cluster.push_back(fullGraph.id(v));
 				_instance->initNode(v, nodeName[fullGraph.id(v)], cluster);
 			}
-			//cout << "done." << endl;
 
-			//cout << "initializing edges... " << flush;
 			// initialize edges to be absent
 			for (FullGraph::EdgeIt e(fullGraph); e != INVALID; ++e)
 				_instance->initEdge(e, 0, UNDECIDED);
-			//cout << "done." << endl;
 
 			//jump back to beginning of stream
 			is.clear();
@@ -86,12 +80,9 @@ namespace yskInput {
 				else
 				{
 					double similarity = atof(tokens[2].c_str());
-					if (similarity < 0.0 || similarity > 1.0){
-						cerr << "Invalid similarity score of: "+tokens[2] << "terminating!" << endl;
-						return false;
-					}
 					double edgeWeight = (similarity/max) - _threshold;
-					FullGraph::Edge e = fullGraph.edge(fullGraph.nodeFromId(nodeID[tokens[0]]), fullGraph.nodeFromId(nodeID[tokens[2]]));
+					FullGraph::Edge e = fullGraph.edge(fullGraph.nodeFromId(nodeID[tokens[0]]), fullGraph.nodeFromId(nodeID[tokens[1]]));
+					//cout << "Generating edge from " << nodeID[tokens[0]] << " to " << nodeID[tokens[1]] << " with weight: " << edgeWeight << endl;
 					_instance->initEdge(e, edgeWeight, UNDECIDED);
 				}
 			}
