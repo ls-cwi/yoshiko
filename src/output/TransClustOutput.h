@@ -17,6 +17,10 @@
 
 namespace ysk {
 
+/**
+ * The output format used by TransClust. This is primarily used for comparison in the ClustEval framework.
+ * TODO: Note: The threshold parameter is not implemented in the output file (as irrelevant for ClustEval) and defaults to 0.5
+ */
 class TransClustOutput : public ClusterEditingOutput {
 public:
   TransClustOutput(ClusterEditingInstance& inst,

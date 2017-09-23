@@ -78,6 +78,7 @@ set (YoshikoApp_Src
   src/output/ClusterEditingOutput.cpp
   src/output/CSVOutput.cpp
   src/output/GMLOutput.cpp
+  src/output/MCLOutput.cpp
   src/output/XGMMLOutput.cpp
   src/output/PajekOutput.cpp
   src/output/TableOutput.cpp
@@ -97,6 +98,7 @@ set (YoshikoApp_Hdr
   src/output/ClusterEditingOutput.h
   src/output/CSVOutput.h
   src/output/GMLOutput.h
+  src/output/MCLOutput.h
   src/output/PajekOutput.h
   src/output/TableOutput.h
   src/output/TableAppOutput.h

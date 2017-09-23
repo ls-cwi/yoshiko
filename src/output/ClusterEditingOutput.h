@@ -17,6 +17,8 @@
 #include "ClusterEditingSolutions.h"
 #include "WorkingCopyInstance.h"
 
+
+
 namespace ysk {
 
 class ClusterEditingOutput {
@@ -60,6 +62,13 @@ public:
 
   virtual void writeBeginNodes(size_t numberOfNodes) = 0;
 
+  /**
+   * Writes a node contained in a cluster to the output stream
+   * @param nodeId The id of the node (internal reference)
+   * @param name The name of the node as provided by the input
+   * @param cluster The cluster this node is contained in
+   * @param isLast true if this is the last node in the cluster
+   */
   virtual void writeNode(int nodeId,
                          std::string name,
                          size_t cluster,
