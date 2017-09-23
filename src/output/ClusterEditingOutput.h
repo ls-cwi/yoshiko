@@ -32,7 +32,7 @@ public:
     , _instance(inst)
     , _solutions(solutions)
     , _filename(filename)
-    , _suffix(suffix)
+    , _suffix(suffix) //TODO: Maybe it is wiser to let the user determine the suffix ?
   {
   }
 

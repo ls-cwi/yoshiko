@@ -23,6 +23,8 @@ namespace ysk {
 	 */
 	extern int time_limit;
 
+	extern double threshold;
+
 	extern lemon::Timer clk;
 	extern int verbosity;
 	extern int no_threads;
