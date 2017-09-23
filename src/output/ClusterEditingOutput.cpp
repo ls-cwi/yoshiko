@@ -39,7 +39,7 @@ ClusterEditingOutput* ClusterEditingOutput::newInstance(ClusterEditingInstance &
       case 5:
         return new TableAppOutput(inst, solutions, filename, ".txt", label);
       case 6:
-    	return new MCLOutput(inst,solutions,filename,".txt",label);
+    	return new TransClustOutput(inst,solutions,filename,"",label);
       default:
         return nullptr;
     }
@@ -55,6 +55,7 @@ void ClusterEditingOutput::write() {
     cout <<"solutions:"<<endl;
     cout<<"-------------------------"<<endl;
   }
+
   for(size_t i = 0; i < _solutions.getNumberOfSolutions(); i++) {
     openStream(i);
 
@@ -182,7 +183,12 @@ void ClusterEditingOutput::write() {
 
 void ClusterEditingOutput::openStream(size_t solution) {
   stringstream str;
-  str<<_filename<<"_"<<solution<<_suffix;
+  str<<_filename;
+  //If we have more than one solution we add the solution number as suffix
+  if (_solutions.getNumberOfSolutions() > 1){
+	 str<<"_"<<solution;
+  }
+  str<< _suffix;
   _os.open (str.str().c_str());
 
   if(!_os.is_open()) {

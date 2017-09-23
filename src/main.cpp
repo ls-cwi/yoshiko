@@ -62,7 +62,6 @@ int main(int argc, char * const argv[]) {
   int inputFileFormat = 0;
   int outputFileFormat = 0;
   bool exportLP = false;
-  double threshold = 0.5;
 
   YParameterSet parameter;
 
@@ -71,7 +70,7 @@ int main(int argc, char * const argv[]) {
   //ap.refOption("F", "input file format, 0 = Jena, 1 = Clever, 2 = SIF []", inputFileFormat, false);
   ap.refOption("F", "input file format, 0 = Jena, 1 = SIF [0], 2 = RowSim", inputFileFormat, false);
   ap.refOption("o", "Name of output file(s) []", outputFilename, false);
-  ap.refOption("O", "output file format 0 = csv, 1 = table (line one: number of nodes, line two: number of clusters, column one: node name, column two: cluster ID), 2 = gml, 3 = xgmml (Cytoscape) 4 = Pajek [0], 5 = table (Cytoscape app), 6 = MCLRunResultFormat", outputFileFormat, false);
+  ap.refOption("O", "output file format 0 = csv, 1 = table (line one: number of nodes, line two: number of clusters, column one: node name, column two: cluster ID), 2 = gml, 3 = xgmml (Cytoscape) 4 = Pajek [0], 5 = table (Cytoscape app), 6 = TransClust Format", outputFileFormat, false);
   ap.refOption("v", "verbosity, 0 = silent, 5 = full [0]", verbosity, false);
   ap.refOption("H", "utilize heuristic instead of ILP, [false]", parameter.useHeuristic, false);
   ap.refOption("T", "CPU time limit (s) for the ILP component, -1 = no limit [-1]", time_limit, false);
