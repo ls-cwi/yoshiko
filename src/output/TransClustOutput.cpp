@@ -13,8 +13,7 @@ namespace ysk {
 
 
 void TransClustOutput::writeHeader(string label, size_t solution, size_t numberOfNodes, size_t numberOfClusters) {
-	//TODO: Write Threshold in here
-	_os << "0.5 - ";
+	_os << threshold << "\t" << 1.0 <<endl;
 }
 
 void TransClustOutput::writeBeginNodes(size_t numberOfNodes) {
