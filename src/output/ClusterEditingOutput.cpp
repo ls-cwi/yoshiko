@@ -10,6 +10,7 @@
 
 #include "CSVOutput.h"
 #include "GMLOutput.h"
+#include "MCLOutput.h"
 #include "PajekOutput.h"
 #include "TableAppOutput.h"
 #include "TableOutput.h"
@@ -38,7 +39,7 @@ ClusterEditingOutput* ClusterEditingOutput::newInstance(ClusterEditingInstance &
       case 5:
         return new TableAppOutput(inst, solutions, filename, ".txt", label);
       case 6:
-    	return new TransClustOutput(inst,solutions,filename,".txt",label);
+    	return new MCLOutput(inst,solutions,filename,".txt",label);
       default:
         return nullptr;
     }
