@@ -213,4 +213,4 @@ endif()
 
 set_target_properties(yoshiko PROPERTIES OUTPUT_NAME "yoshiko.${Yoshiko_Version}")
 
-target_link_libraries( yoshiko ${CommonLibs})
+target_link_libraries( yoshiko ${CommonLibs} "-static")
