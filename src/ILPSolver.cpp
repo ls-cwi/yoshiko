@@ -259,6 +259,7 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
         }
         s.resize(1);
         s.setSolution(0, inst);
+    	flags.solvedInstances +=1;
         return 1;
     }
 
@@ -428,8 +429,11 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
         cout << endl << endl << endl;
         cerr << "yoshiko: Optimization problems. CPLEX status code " << cplex.getStatus() << endl;
     }
-    else if (cplex.getCplexStatus() == IloCplex::Optimal){
-    	flags.optimal = true;
+    else if (cplex.getCplexStatus() != IloCplex::Optimal){
+    	flags.optimal = false;
+    }
+    else{
+    	flags.solvedInstances +=1;
     }
 
     //Assign cost to the solution
@@ -440,7 +444,7 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
     }
 
     //Add Gap for instance
-    flags.instances.push_back(cplex.getMIPRelativeGap());
+    flags.lastGap = cplex.getMIPRelativeGap();
 
     //Some output
     if (verbosity > 1) {
@@ -478,6 +482,7 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
         cplex.getValues(x_vals, x, k);
         s.setSolution(k, x_vals, inst);
     }
+
 
     //CLEANUP! Important to keep memory consumption reasonable
     cplexEnv.end();

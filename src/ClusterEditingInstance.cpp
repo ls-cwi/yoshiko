@@ -39,22 +39,21 @@ void ClusterEditingInstance::initNode(FullGraph::Node node, string name, vector<
 }
 
 void ClusterEditingInstance::initEdge(FullGraph::Edge edge, double weight, EdgeType edgeType) {
-	//TODO: Shouldn't weight be optional here?
   if(abs(weight) != 1)
     _unweighted = false;
   //Check if the edge has a real value (default is int)
   if(floor(weight) != weight) {
     _realValued = true;
   }
-  
-  
+
+
   if(weight <= 0) {
     if(_initializedCostInsertion) {
       if(_costInsertion != weight) {
         _dualWeighted = false;
       }
     }
-    
+
     _costInsertion = weight;
     _initializedCostInsertion = true;
   } else {
@@ -63,20 +62,20 @@ void ClusterEditingInstance::initEdge(FullGraph::Edge edge, double weight, EdgeT
         _dualWeighted = false;
       }
     }
-    
+
     _costDeletion = weight;
     _initializedCostDeletion = true;
   }
-  
+
   _weight[edge] = weight;
   _workingCopyInstance->initEdge(edge, weight, edgeType);
-  
+
   //Set infinite weight to forbidden/permanent edges
   if(edgeType == FORBIDDEN) {
     _forbidden[edge] = true;
     _weight[edge] = -std::numeric_limits<double>::infinity();
   }
-  
+
   else if(edgeType == PERMANENT) { //forbidden and permanent are mutually exclusive
     _permanent[edge]=true;
     _weight[edge]=std::numeric_limits<double>::infinity();
@@ -98,7 +97,7 @@ double ClusterEditingInstance::computeCost() const {
         }
       }
     }
-    
+
     //external
     WorkingCopyGraph::NodeIt v(_workingCopyInstance->getGraph(), u);
     ++v;
@@ -109,7 +108,7 @@ double ClusterEditingInstance::computeCost() const {
         for(std::vector<int>::size_type j = 0; j < clusters[v]->size(); j++) {
           FullGraph::Node y = _orig.nodeFromId((*clusters[v])[j]);
           double weightOrig = _weight[_orig.edge(x, y)];
-          
+
           if((weightOrig <= 0 && weightWorkingCopyInstance > 0) || (weightOrig > 0 && weightWorkingCopyInstance <= 0)) {
             k += abs(weightOrig);
           }
@@ -118,7 +117,10 @@ double ClusterEditingInstance::computeCost() const {
     }
   }
   return k;
+
 }
+
+//_________________SETTER & GETTER ___________________________//
 
 vector<int>* ClusterEditingInstance::getCluster(FullGraph::Node u) const {
   return _clusters[u];
@@ -154,6 +156,10 @@ bool ClusterEditingInstance::isDirty() const {
   return _workingCopyInstance->isDirty();
 }
 
+int ClusterEditingInstance::getSize() const{
+	return _orig.maxNodeId()+1;
+}
+
 const FullGraph& ClusterEditingInstance::getOrig() const {
   return _orig;
 }
@@ -167,5 +173,5 @@ ostream& operator <<(ostream& o, ClusterEditingInstance &inst) {
   o << inst.getWorkingCopyInstance();
   return o;
 }
-  
+
 } // namespace ysk

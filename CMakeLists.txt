@@ -4,7 +4,7 @@ project( Yoshiko )
 
 OPTION(BUILD_AS_EXEC "Build as command line tool instead of library" OFF)
 
-set (Yoshiko_Version "2.1")
+set (Yoshiko_Version "2.1.1")
 
 set( Yoshiko_Hdr
 
@@ -26,19 +26,6 @@ set( Yoshiko_Hdr
   src/WorkingCopyInstance.h
 
   src/input/ClusterEditingInput.h
-  src/input/JENAInput.h
-  src/input/RowSimInput.h
-  src/input/SIFInput.h
-  src/input/StreamInput.h
-
-  src/output/ClusterEditingOutput.h
-  src/output/CSVOutput.h
-  src/output/GMLOutput.h
-  src/output/NullOutput.h
-  src/output/PajekOutput.h
-  src/output/TableOutput.h
-  src/output/TableAppOutput.h
-  src/output/XGMMLOutput.h
 
   src/reductionRules/AlmostCliqueRule.h
   src/reductionRules/CliqueRule.h
@@ -66,21 +53,7 @@ set( Yoshiko_Src
   src/ParameterizedInstance.cpp
   src/WorkingCopyInstance.cpp
 
-  src/main.cpp
-
   src/input/ClusterEditingInput.cpp
-  src/input/JENAInput.cpp
-  src/input/RowSimInput.cpp
-  src/input/SIFInput.cpp
-
-  src/output/ClusterEditingOutput.cpp
-  src/output/CSVOutput.cpp
-  src/output/GMLOutput.cpp
-  src/output/NullOutput.cpp
-  src/output/XGMMLOutput.cpp
-  src/output/PajekOutput.cpp
-  src/output/TableOutput.cpp
-  src/output/TableAppOutput.cpp
 
   src/reductionRules/AlmostCliqueRule.cpp
   src/reductionRules/CliqueRule.cpp
@@ -91,6 +64,48 @@ set( Yoshiko_Src
   src/reductionRules/ParameterDependentReductionRule.cpp
   src/reductionRules/SimilarNeighborhoodRule.cpp
 
+)
+
+
+set (YoshikoApp_Src
+
+  src/main.cpp
+
+  src/input/JENAInput.cpp
+  src/input/RowSimInput.cpp
+  src/input/SIFInput.cpp
+
+  src/output/ClusterEditingOutput.cpp
+  src/output/CSVOutput.cpp
+  src/output/GMLOutput.cpp
+  src/output/MCLOutput.cpp
+  src/output/XGMMLOutput.cpp
+  src/output/PajekOutput.cpp
+  src/output/TableOutput.cpp
+  src/output/TableAppOutput.cpp
+  src/output/TransClustOutput.cpp
+
+  ${Yoshiko_Src}
+)
+
+set (YoshikoApp_Hdr
+
+  src/input/JENAInput.h
+  src/input/RowSimInput.h
+  src/input/SIFInput.h
+  src/input/StreamInput.h
+
+  src/output/ClusterEditingOutput.h
+  src/output/CSVOutput.h
+  src/output/GMLOutput.h
+  src/output/MCLOutput.h
+  src/output/PajekOutput.h
+  src/output/TableOutput.h
+  src/output/TableAppOutput.h
+  src/output/TransClustOutput.h
+  src/output/XGMMLOutput.h
+
+  ${Yoshiko_Hdr}
 )
 
 set (YoshikoLib_Src
@@ -191,7 +206,7 @@ set( CommonLibs
 	emon
 )
 if (BUILD_AS_EXEC)
-	add_executable( yoshiko ${Yoshiko_Src} ${Yoshiko_Hdr})
+	add_executable( yoshiko ${YoshikoApp_Src} ${YoshikoApp_Hdr})
 else()
 	add_library(yoshiko STATIC ${YoshikoLib_Src} ${YoshikoLib_Hdr} )
 endif()

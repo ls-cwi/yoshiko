@@ -1,13 +1,12 @@
-//
-//  NullOutput.h
-//  weighted-cluster-editing
-//
-//  Created by Emanuel Laude on 21.03.13.
-//  Copyright (c) 2013 Emanuel Laude. All rights reserved.
-//
+/*
+ * MCLOutput.h
+ *
+ *  Created on: Sep 23, 2017
+ *      Author: philipp
+ */
 
-#ifndef NULLOUTPUT_H
-#define NULLOUTPUT_H
+#ifndef SRC_OUTPUT_MCLOUTPUT_H_
+#define SRC_OUTPUT_MCLOUTPUT_H_
 
 #include <iostream>
 #include <string>
@@ -16,18 +15,16 @@
 
 namespace ysk {
 
-class NullOutput : public ClusterEditingOutput {
+class MCLOutput : public ClusterEditingOutput {
 public:
-  NullOutput(ClusterEditingInstance& inst,
-             ClusterEditingSolutions& solutions,
-             std::string filename,
-             std::string suffix,
-             std::string label)
+  MCLOutput(ClusterEditingInstance& inst,
+            ClusterEditingSolutions& solutions,
+            std::string filename,
+            std::string suffix,
+            std::string label)
     : ClusterEditingOutput(inst, solutions, filename, suffix, label)
   {
   }
-  void openStream(size_t solution);
-  void closeStream();
   void writeHeader(std::string label,
                    size_t solution,
                    size_t numberOfNodes,
@@ -36,7 +33,8 @@ public:
   void writeEndNodes();
   void writeNode(int nodeId,
                  std::string name,
-                 size_t cluster);
+                 size_t cluster,
+				 bool isLast);
   void writeBeginEdges();
   void writeEdge(int sourceId,
                  int targetId,
@@ -45,10 +43,10 @@ public:
                  bool modified);
   void writeEndEdges();
   void writeBeginCluster(size_t cluster);
-  void writeEndCluster();
+  void writeEndCluster(bool isLast);
   void writeFooter();
 };
-  
+
 } // namespace ysk
 
-#endif /* NULLOUTPUT_H */
+#endif /* SRC_OUTPUT_MCLOUTPUT_H_ */
