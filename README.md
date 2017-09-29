@@ -19,16 +19,13 @@ Get yoshiko from github:
 
 First, LEMON 1.3 needs to be installed:
 
-Note: It is required to have LEMON as a shared library. If you obtained lemon prior to this installation and get errors during the compilation process consider recompiling it yourself as a shared library.
-
     wget http://lemon.cs.elte.hu/pub/sources/lemon-1.3.tar.gz
     tar xvzf lemon-1.3.tar.gz
     cd lemon-1.3
-    cmake -DCMAKE_INSTALL_PREFIX=~/lemon -DBUILD_SHARED_LIBS=TRUE
+    cmake -DCMAKE_INSTALL_PREFIX=~/lemon
     make install
 
 You can remove the LEMON sources now, i.e., `rm -rf lemon-1.3`.
-Make sure you move the created library file with ending (for instance .dll on windows, .dylib on mac, .so on linux) to the shared library folder of your system.
 
 CPLEX is a commercial product owned by IBM. For academic purposes it can be obtained at no charge via IBM's Academic Initiative programme:
 

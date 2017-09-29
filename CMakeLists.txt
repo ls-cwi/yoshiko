@@ -3,6 +3,7 @@ cmake_minimum_required( VERSION 2.8 )
 project( Yoshiko )
 
 OPTION(BUILD_AS_EXEC "Build as command line tool instead of library" OFF)
+OPTION(BUILD_STATIC "Link libraries static" OFF)
 
 set (Yoshiko_Version "2.1.1")
 
@@ -192,9 +193,6 @@ configure_file( src/config.h.in ${PROJECT_SOURCE_DIR}/src/config.h )
 if( ${CMAKE_SYSTEM_NAME} MATCHES "Darwin" )
   set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libstdc++ " )
   set( CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY "libstdc++" )
-else()
-	# Keine schöne Lösung
-  set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wl,-z,noexecstack")
 endif()
 
 include_directories( ${CPLEX_INC_DIR} ${CONCERT_INC_DIR} ${JNI_INCLUDE_DIRS} "${LIBLEMON_ROOT}/include" "src" "src/externlib" )
@@ -211,9 +209,17 @@ set( CommonLibs
 if (BUILD_AS_EXEC)
 	add_executable( yoshiko ${YoshikoApp_Src} ${YoshikoApp_Hdr})
 else()
-	add_library(yoshiko SHARED ${YoshikoLib_Src} ${YoshikoLib_Hdr} )
+	if (BUILD_STATIC)
+		add_library(yoshiko STATIC ${YoshikoLib_Src} ${YoshikoLib_Hdr} )
+	else()
+		add_library(yoshiko SHARED ${YoshikoLib_Src} ${YoshikoLib_Hdr} )
+	endif()
 endif()
 
 set_target_properties(yoshiko PROPERTIES OUTPUT_NAME "yoshiko.${Yoshiko_Version}")
 
-target_link_libraries( yoshiko ${CommonLibs})
+if (BUILD_STATIC)
+	target_link_libraries( yoshiko ${CommonLibs} "-static")
+else()
+	target_link_libraries( yoshiko ${CommonLibs})
+endif()
