@@ -3,6 +3,7 @@ cmake_minimum_required( VERSION 2.8 )
 project( Yoshiko )
 
 OPTION(BUILD_AS_EXEC "Build as command line tool instead of library" OFF)
+OPTION(BUILD_STATIC "Link libraries static" OFF)
 
 set (Yoshiko_Version "2.1.1")
 
@@ -208,9 +209,17 @@ set( CommonLibs
 if (BUILD_AS_EXEC)
 	add_executable( yoshiko ${YoshikoApp_Src} ${YoshikoApp_Hdr})
 else()
-	add_library(yoshiko STATIC ${YoshikoLib_Src} ${YoshikoLib_Hdr} )
+	if (BUILD_STATIC)
+		add_library(yoshiko STATIC ${YoshikoLib_Src} ${YoshikoLib_Hdr} )
+	else()
+		add_library(yoshiko SHARED ${YoshikoLib_Src} ${YoshikoLib_Hdr} )
+	endif()
 endif()
 
 set_target_properties(yoshiko PROPERTIES OUTPUT_NAME "yoshiko.${Yoshiko_Version}")
 
-target_link_libraries( yoshiko ${CommonLibs} "-static")
+if (BUILD_STATIC)
+	target_link_libraries( yoshiko ${CommonLibs} "-static")
+else()
+	target_link_libraries( yoshiko ${CommonLibs})
+endif()
