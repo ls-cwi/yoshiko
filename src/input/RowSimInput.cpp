@@ -15,29 +15,6 @@ namespace yskInput {
 		try {
 			string line;
 
-			//Fetch maximum to normalize
-			double max = -DBL_MAX;
-
-			while (getline(is, line)) {
-				vector<string> tokens;
-				tokenize(line, tokens, " \t\"\r");
-				double similarity = atof(tokens[2].c_str());
-				if (similarity < 0.0){
-					cerr << "Found invalid similarity value of: " << tokens[2] <<", terminating parsing process!" <<endl;
-					return false;
-				}
-				if (similarity > max){
-					max = similarity;
-				}
-			}
-
-			if (verbosity > 3){
-				cout << "Maximum in RowSimInput: " << max << endl;
-			}
-			//jump back to beginning of stream
-			is.clear();
-			is.seekg(0, ios::beg);
-
 			//Fetch nodes
 
 			map<string, int> nodeID;
@@ -80,7 +57,7 @@ namespace yskInput {
 				else
 				{
 					double similarity = atof(tokens[2].c_str());
-					double edgeWeight = (similarity/max) - _threshold;
+					double edgeWeight = similarity-_threshold;
 					FullGraph::Edge e = fullGraph.edge(fullGraph.nodeFromId(nodeID[tokens[0]]), fullGraph.nodeFromId(nodeID[tokens[1]]));
 					//cout << "Generating edge from " << nodeID[tokens[0]] << " to " << nodeID[tokens[1]] << " with weight: " << edgeWeight << endl;
 					_instance->initEdge(e, edgeWeight, UNDECIDED);
