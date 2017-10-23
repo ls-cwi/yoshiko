@@ -55,6 +55,10 @@ using namespace yskInput;
 
 
 int main(int argc, char * const argv[]) {
+
+  //Register time at the beginning of the execution
+  clock_t startTime = clock();
+
   // Initialize the argument parser
   ArgParser ap(argc, argv);
   string inputFilename, outputFilename;
@@ -186,6 +190,7 @@ int main(int argc, char * const argv[]) {
   delete ces;
   delete output;
 
+  if (verbosity > 2) cout << "Total runtime: " << double( clock() - startTime ) / (double)CLOCKS_PER_SEC<< " seconds." << endl;
 
   //Termination
   return 0;

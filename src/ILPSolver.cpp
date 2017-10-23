@@ -293,7 +293,7 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
 
 
     //Limit Memory usage as this runs in a GUI and we should still be able to use the GUI
-    cplex.setParam(IloCplex::NodeFileInd,2);
+    //cplex.setParam(IloCplex::NodeFileInd,2);
 
 
     // set all generic cuts off
