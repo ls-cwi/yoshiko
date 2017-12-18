@@ -16,13 +16,14 @@ set( Yoshiko_Hdr
   src/config.h
   src/config.h.in
   src/CoreAlgorithm.h
+  src/CplexInformer.h
   src/Delta.h
   src/DynProgTable.h
   src/Globals.h
   src/Helpers.h
   src/ILPSolver.h
   src/InducedCostsHeuristic.h
-  src/CplexInformer.h
+  src/KClustifier.h
   src/ParameterizedInstance.h
   src/WorkingCopyInstance.h
 
@@ -51,6 +52,7 @@ set( Yoshiko_Src
   src/Helpers.cpp
   src/ILPSolver.cpp
   src/InducedCostsHeuristic.cpp
+  src/KClustifier.cpp
   src/ParameterizedInstance.cpp
   src/WorkingCopyInstance.cpp
 
@@ -193,6 +195,8 @@ configure_file( src/config.h.in ${PROJECT_SOURCE_DIR}/src/config.h )
 if( ${CMAKE_SYSTEM_NAME} MATCHES "Darwin" )
   set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libstdc++ " )
   set( CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY "libstdc++" )
+else()
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -z noexecstack")
 endif()
 
 include_directories( ${CPLEX_INC_DIR} ${CONCERT_INC_DIR} ${JNI_INCLUDE_DIRS} "${LIBLEMON_ROOT}/include" "src" "src/externlib" )
@@ -206,7 +210,9 @@ set( CommonLibs
 	pthread
 	emon
 )
+
 if (BUILD_AS_EXEC)
+	message("Building Executable")
 	add_executable( yoshiko ${YoshikoApp_Src} ${YoshikoApp_Hdr})
 else()
 	if (BUILD_STATIC)

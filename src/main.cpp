@@ -15,8 +15,9 @@
 #include "ClusterEditingInstance.h"
 #include "ClusterReductionInstance.h"
 #include "ClusterEditingSolutions.h"
-#include "Globals.h"
 #include "CoreAlgorithm.h"
+#include "KClustifier.h"
+#include "Globals.h"
 
 #include "output/ClusterEditingOutput.h"
 
@@ -51,6 +52,12 @@ using namespace yskInput;
  * Setup unified logging system and streamline all cout//exception calls, apply verbosity globally
  * put in NINA
  * edge index. make faster by directly computing index from i and j. think about (common) solution for directed and undirected graphs
+ *
+ * K Cluster Approaches
+ * Strictly ILP (Add additional constraints)
+ * Add k Cluster Centers with M +e Cost (Sum of edge weights)
+ * Specify/Choose clusters
+ * Merge/Cut clusters
  */
 
 
@@ -66,13 +73,14 @@ int main(int argc, char * const argv[]) {
   int inputFileFormat = 0;
   int outputFileFormat = 0;
   bool exportLP = false;
+  int targetClusterCount = -1;
 
   YParameterSet parameter;
 
   // Add a string option with storage reference for file name
   ap.refOption("f", "Name of file that contains input []", inputFilename, true);
   //ap.refOption("F", "input file format, 0 = Jena, 1 = Clever, 2 = SIF []", inputFileFormat, false);
-  ap.refOption("F", "input file format, 0 = Jena, 1 = SIF [0], 2 = RowSim", inputFileFormat, false);
+  ap.refOption("F", "input file format, 0 = Jena, 1 = SIF, 2 = RowSim [0]", inputFileFormat, false);
   ap.refOption("o", "Name of output file(s) []", outputFilename, false);
   ap.refOption("O", "output file format 0 = csv, 1 = table (line one: number of nodes, line two: number of clusters, column one: node name, column two: cluster ID), 2 = gml, 3 = xgmml (Cytoscape) 4 = Pajek [0], 5 = table (Cytoscape app), 6 = TransClust Format", outputFileFormat, false);
   ap.refOption("v", "verbosity, 0 = silent, 5 = full [0]", verbosity, false);
@@ -87,6 +95,7 @@ int main(int argc, char * const argv[]) {
   ap.refOption("m", "multiplicative factor for real valued edge weights in SimilarNeighborhoodRule (the higher the better the reduction results and the slower the performance) [1]", parameter.multiplicativeFactor, false);
   ap.refOption("g", "graph label []", graphLabel, false);
   ap.refOption("r", "explicitly turn on/off reduction rules, bit string (right to left): bit 0 = CliqueRule, bit 1 = CriticalCliqueRule, bit 2 = AlmostCliqueRule, bit 3 = HeavyEdgeRule3in1, bit 4 = ParameterDependentReductionRule, bit 5 = SimilarNeighborhoodRule [111111]", parameter.rulesBitMask, false);
+  ap.refOption("k", "define the number of desired clusters, -1 determines this value automatically [-1]",targetClusterCount,false);
 
   // Perform the parsing process
   // (in case of any error it terminates the program) -> tb improved
@@ -168,6 +177,16 @@ int main(int argc, char * const argv[]) {
   );
 
   ClusterEditingSolutions* ces = core->run();
+
+  //K-Cluster postprocessing if desired
+  if (targetClusterCount != -1){
+	  	//Generate a new k-clustifier instance
+	  	KClustifier clustifier(instance,ces);
+	  	//Iterate over all clusters and k-clustify them
+		for(size_t solutionID = 0; solutionID < ces->getNumberOfSolutions();solutionID++) {
+			  clustifier.kClustify(targetClusterCount, solutionID);
+		}
+  }
 
   //Output generation
   ClusterEditingOutput* output;
