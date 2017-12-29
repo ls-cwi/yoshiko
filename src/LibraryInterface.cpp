@@ -29,7 +29,8 @@ namespace yskLib{
 			double multiplicativeFactor,
 			bool useHeuristic,
 			bool separatePartitionCuts,
-			bool separateTriangles
+			bool separateTriangles,
+			int targetClusterCount
 	){
 
 		YParameterSet set;
@@ -39,6 +40,7 @@ namespace yskLib{
 		set.useHeuristic = useHeuristic;
 		set.separatePartitionCuts = separatePartitionCuts;
 		set.separateTriangles = separateTriangles;
+		set.targetClusterCount = targetClusterCount;
 
 		input->parseInput();
 

@@ -55,7 +55,8 @@ namespace yskLib{
 				double multiplicativeFactor,
 				bool useHeuristic,
 				bool separatePartitionCuts,
-				bool separateTriangles
+				bool separateTriangles,
+				int targetClusterCount
 		);
 }
 

@@ -210,6 +210,17 @@ namespace ysk {
 
 		//Restore timeout flag
 		_result->setFlags(flags);
+
+	  //K-Cluster postprocessing if desired
+	  if (_parameter.targetClusterCount != -1){
+			//Generate a new k-clustifier instance
+			KClustifier clustifier(_instance,_result);
+			//Iterate over all clusters and k-clustify them
+			for(size_t solutionID = 0; solutionID < _result->getNumberOfSolutions();solutionID++) {
+				  clustifier.kClustify(_parameter.targetClusterCount, solutionID);
+			}
+	  }
+
 		return _result;
 	}
 

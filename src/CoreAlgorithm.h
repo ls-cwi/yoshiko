@@ -10,6 +10,7 @@
 #include "ClusterEditingSolutions.h"
 #include "ClusterEditingReduction.h"
 #include "CplexInformer.h"
+#include "KClustifier.h"
 #include "ILPSolver.h"
 #include "YParameterSet.h"
 

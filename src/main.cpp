@@ -16,7 +16,6 @@
 #include "ClusterReductionInstance.h"
 #include "ClusterEditingSolutions.h"
 #include "CoreAlgorithm.h"
-#include "KClustifier.h"
 #include "Globals.h"
 
 #include "output/ClusterEditingOutput.h"
@@ -73,7 +72,6 @@ int main(int argc, char * const argv[]) {
   int inputFileFormat = 0;
   int outputFileFormat = 0;
   bool exportLP = false;
-  int targetClusterCount = -1;
 
   YParameterSet parameter;
 
@@ -95,7 +93,7 @@ int main(int argc, char * const argv[]) {
   ap.refOption("m", "multiplicative factor for real valued edge weights in SimilarNeighborhoodRule (the higher the better the reduction results and the slower the performance) [1]", parameter.multiplicativeFactor, false);
   ap.refOption("g", "graph label []", graphLabel, false);
   ap.refOption("r", "explicitly turn on/off reduction rules, bit string (right to left): bit 0 = CliqueRule, bit 1 = CriticalCliqueRule, bit 2 = AlmostCliqueRule, bit 3 = HeavyEdgeRule3in1, bit 4 = ParameterDependentReductionRule, bit 5 = SimilarNeighborhoodRule [111111]", parameter.rulesBitMask, false);
-  ap.refOption("k", "define the number of desired clusters, -1 determines this value automatically [-1]",targetClusterCount,false);
+  ap.refOption("k", "define the number of desired clusters, -1 determines this value automatically [-1]",parameter.targetClusterCount,false);
 
   // Perform the parsing process
   // (in case of any error it terminates the program) -> tb improved
@@ -125,6 +123,7 @@ int main(int argc, char * const argv[]) {
     std::cout << "      -m: " << parameter.multiplicativeFactor << std::endl;
     std::cout << "      -g: " << graphLabel << std::endl;
     std::cout << "      -r: " << parameter.rulesBitMask << std::endl;
+    std::cout << "      -k: " << parameter.targetClusterCount << std::endl;
   }
 
   ifstream is(inputFilename.c_str());
@@ -169,24 +168,12 @@ int main(int argc, char * const argv[]) {
 
   instance = input->getProblemInstance();
 
-
-
   CoreAlgorithm* core = new CoreAlgorithm(
 		  instance,
 		  parameter
   );
 
   ClusterEditingSolutions* ces = core->run();
-
-  //K-Cluster postprocessing if desired
-  if (targetClusterCount != -1){
-	  	//Generate a new k-clustifier instance
-	  	KClustifier clustifier(instance,ces);
-	  	//Iterate over all clusters and k-clustify them
-		for(size_t solutionID = 0; solutionID < ces->getNumberOfSolutions();solutionID++) {
-			  clustifier.kClustify(targetClusterCount, solutionID);
-		}
-  }
 
   //Output generation
   ClusterEditingOutput* output;

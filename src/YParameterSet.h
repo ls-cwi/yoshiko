@@ -19,7 +19,8 @@ struct YParameterSet {
 	,multiplicativeFactor(1)
 	,useHeuristic(false),
 	separatePartitionCuts(false),
-	separateTriangles(false)
+	separateTriangles(false),
+	targetClusterCount(-1)
 	{};
 
 	int nrOptimalSolutions;
@@ -28,6 +29,7 @@ struct YParameterSet {
 	bool useHeuristic;
 	bool separatePartitionCuts;
 	bool separateTriangles;
+	int targetClusterCount;
 };
 
 } /* namespace ysk */
