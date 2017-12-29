@@ -1,10 +1,7 @@
-//
 //  InducedCostsHeuristic.h
-//  lemon-first-steps
 //
 //  Created by Emanuel Laude on 26.10.12.
 //  Copyright (c) 2012 Emanuel Laude. All rights reserved.
-//
 
 #ifndef INDUCEDCOSTSHEURISTIC_H
 #define INDUCEDCOSTSHEURISTIC_H
@@ -30,7 +27,7 @@ public:
   {
     init(inst);
   }
-  
+
   virtual ~InducedCostsHeuristic();
   double getUpperBound();
   /**
@@ -41,10 +38,10 @@ public:
    */
   double getSolution(ClusterEditingSolutions& solution);
   void start();
-  
+
 private:
   void init(ParameterizedInstance& inst);
-  
+
   double _upperBound;
   ClusterEditingInstance _instance;
   ParameterizedInstance* _parameterizedInstance;

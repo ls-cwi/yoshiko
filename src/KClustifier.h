@@ -34,10 +34,14 @@ public:
 
 private:
 
+	void calculateCostMatrix(std::vector<std::vector<int>>& solution);
 	void mergeCheapest(std::vector<std::vector<int>>& solution);
 	double calculateMergeDifference(std::vector<int> cluster1, std::vector<int> cluster2);
 
 
+	void printMergeCosts();
+
+	std::map<std::pair<int,int>,double> _mergeCosts;
 	ClusterEditingSolutions* _solutions;
 	ClusterEditingInstance* _instance;
 };
