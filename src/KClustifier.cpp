@@ -22,7 +22,7 @@ KClustifier::~KClustifier(){};
  */
 void KClustifier::kClustify(unsigned int k, size_t solutionID){
 	//Fetch the actual solution we want to modify
-	vector<vector<int>> solution = _solutions->getSolution(solutionID);
+	vector<vector<int>>& solution = _solutions->getSolution(solutionID);
 	if (solution.size() == k){
 		//We already have the desired amount of clusters
 	}
@@ -41,6 +41,7 @@ void KClustifier::kClustify(unsigned int k, size_t solutionID){
 			KClustifier::mergeCheapest(solution);
 			if (verbosity > 4 ){
 				KClustifier::printMergeCosts();
+				_solutions->printSolution(solutionID);
 			}
 		}
 	}
@@ -63,7 +64,7 @@ void KClustifier::mergeCheapest(vector<vector<int>>& solution){
 	solution[targetClusters.first].insert(solution[targetClusters.first].end(),solution[targetClusters.second].begin(),solution[targetClusters.second].end());
 	//Delete the second cluster
 
-	solution.erase(solution.begin()+targetClusters.second-1);
+	solution.erase(solution.begin()+targetClusters.second);
 
 	//Adjust merge costs (for all indices beyond the one of the second cluster)
 	for (auto const &entry : _mergeCosts){
@@ -145,7 +146,7 @@ void KClustifier::calculateCostMatrix(vector<vector<int>>& solution){
  * @param cluster2 One of the two clusters that are to be merged
  * @return The editing costs as double
  */
-double KClustifier::calculateMergeDifference(vector<int> cluster1, vector<int> cluster2){
+double KClustifier::calculateMergeDifference(vector<int> cluster1,vector<int> cluster2){
 	//Initialize the merge difference as 0
 	double diff = 0.0;
 	//We iterate over all nodes from cluster 1

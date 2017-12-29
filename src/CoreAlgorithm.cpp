@@ -212,6 +212,8 @@ namespace ysk {
 		_result->setFlags(flags);
 
 	  //K-Cluster postprocessing if desired
+		if (verbosity >= 2)
+			cout << "Aiming for the following cluster count: "<<_parameter.targetClusterCount << endl;
 	  if (_parameter.targetClusterCount != -1){
 			//Generate a new k-clustifier instance
 			KClustifier clustifier(_instance,_result);
@@ -219,6 +221,9 @@ namespace ysk {
 			for(size_t solutionID = 0; solutionID < _result->getNumberOfSolutions();solutionID++) {
 				  clustifier.kClustify(_parameter.targetClusterCount, solutionID);
 			}
+	  }
+
+	  if (verbosity > 3){
 	  }
 
 		return _result;

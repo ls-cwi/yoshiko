@@ -91,4 +91,15 @@ namespace ysk {
 		_flags = f;
 	}
 
+	void ClusterEditingSolutions::printSolution(size_t index){
+		for(auto &entry : _solutions[index]){
+			cout << "Cluster: ";
+			for (auto i = entry.begin(); i != entry.end(); ++i)
+			    cout << *i<<" ";
+			cout <<endl;
+		}
+		cout << endl;
+	}
+
+
 } // namespace ysk

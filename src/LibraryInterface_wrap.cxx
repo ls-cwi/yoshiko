@@ -1523,6 +1523,19 @@ SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_C
 }
 
 
+SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_ClusterEditingSolutions_1printSolution(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+  ysk::ClusterEditingSolutions *arg1 = (ysk::ClusterEditingSolutions *) 0 ;
+  size_t arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(ysk::ClusterEditingSolutions **)&jarg1; 
+  arg2 = (size_t)jarg2; 
+  (arg1)->printSolution(arg2);
+}
+
+
 SWIGEXPORT jlong JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_new_1ClusterEditingSolutions(JNIEnv *jenv, jclass jcls) {
   jlong jresult = 0 ;
   ysk::ClusterEditingSolutions *result = 0 ;
@@ -1851,7 +1864,7 @@ SWIGEXPORT void JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_s
 }
 
 
-SWIGEXPORT jlong JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_getRun(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jstring jarg3, jdouble jarg4, jboolean jarg5, jboolean jarg6, jboolean jarg7) {
+SWIGEXPORT jlong JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_getRun(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jstring jarg3, jdouble jarg4, jboolean jarg5, jboolean jarg6, jboolean jarg7, jint jarg8) {
   jlong jresult = 0 ;
   yskInput::LibraryInput *arg1 = (yskInput::LibraryInput *) 0 ;
   int arg2 ;
@@ -1860,6 +1873,7 @@ SWIGEXPORT jlong JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_
   bool arg5 ;
   bool arg6 ;
   bool arg7 ;
+  int arg8 ;
   ysk::CoreAlgorithm *result = 0 ;
   
   (void)jenv;
@@ -1879,7 +1893,8 @@ SWIGEXPORT jlong JNICALL Java_de_hhu_ba_yoshikoWrapper_swig_LibraryInterfaceJNI_
   arg5 = jarg5 ? true : false; 
   arg6 = jarg6 ? true : false; 
   arg7 = jarg7 ? true : false; 
-  result = (ysk::CoreAlgorithm *)yskLib::getRun(arg1,arg2,arg3,arg4,arg5,arg6,arg7);
+  arg8 = (int)jarg8; 
+  result = (ysk::CoreAlgorithm *)yskLib::getRun(arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8);
   *(ysk::CoreAlgorithm **)&jresult = result; 
   return jresult;
 }
