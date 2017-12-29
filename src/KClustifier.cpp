@@ -66,6 +66,9 @@ void KClustifier::mergeCheapest(vector<vector<int>>& solution){
 
 	solution.erase(solution.begin()+targetClusters.second);
 
+	//Adjust editing costs
+	_solutions->getFlags().totalCost += _mergeCosts[targetClusters];
+
 	//Adjust merge costs (for all indices beyond the one of the second cluster)
 	for (auto const &entry : _mergeCosts){
 
