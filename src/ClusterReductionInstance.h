@@ -12,15 +12,17 @@
 #define NUMBER_OF_REDUCTION_RULES 6
 
 #include "ClusterEditingInstance.h"
+#include "CplexInformer.h"
 #include "Globals.h"
-#include "HeavyEdgeRule3in1.h"
-#include "CriticalCliqueRule.h"
 #include "WorkingCopyInstance.h"
-#include "AlmostCliqueRule.h"
-#include "SimilarNeighboorhoodRule.h"
-#include "MergingRule.h"
-#include "ParameterDependentReductionRule.h"
-#include "CliqueRule.h"
+
+#include "reductionRules/HeavyEdgeRule3in1.h"
+#include "reductionRules/CriticalCliqueRule.h"
+#include "reductionRules/AlmostCliqueRule.h"
+#include "reductionRules/SimilarNeighborhoodRule.h"
+#include "reductionRules/MergingRule.h"
+#include "reductionRules/ParameterDependentReductionRule.h"
+#include "reductionRules/CliqueRule.h"
 
 #include <lemon/connectivity.h>
 
@@ -43,15 +45,17 @@ public:
     , _conserveMultipleSolutions(conserveMultipleSolutions)
   {
   }
-  
-  int applyReductionRules();
-  
+
+  int applyReductionRules(yskLib::CplexInformer* informer);
+
   ClusterEditingInstance* getInstance();
-  
+
   int computeConnectedComponents(WorkingCopyGraph::NodeMap<int>& connectedComps);
-  
+
   void computeChildInstances(std::vector<ClusterReductionInstance*>& childInstances);
-  
+
+  bool operator < (const ClusterReductionInstance& c) const{ return (_instance->getSize() < c._instance->getSize());}
+
 private:
   int _lastSuccessRule;
   int _currentRule;
@@ -62,5 +66,5 @@ private:
 };
 
 } // namespace ysk
-  
+
 #endif /* CLUSTERREDUCTIONINSTANCE_H */

@@ -2,69 +2,126 @@ cmake_minimum_required( VERSION 2.8 )
 
 project( Yoshiko )
 
+OPTION(BUILD_AS_EXEC "Build as command line tool instead of library" OFF)
+OPTION(BUILD_STATIC "Link libraries static" OFF)
+
+set (Yoshiko_Version "2.1.2")
+
 set( Yoshiko_Hdr
-  src/AlmostCliqueRule.h
-  src/CliqueRule.h
+
   src/ClusterEditingInstance.h
-  src/ClusterEditingOutput.h
   src/ClusterEditingReduction.h
   src/ClusterEditingSolutions.h
   src/ClusterReductionInstance.h
   src/config.h
   src/config.h.in
-  src/CriticalCliqueRule.h
-  src/CSVOutput.h
+  src/CoreAlgorithm.h
+  src/CplexInformer.h
   src/Delta.h
   src/DynProgTable.h
-  src/FPTReductionRule.h
   src/Globals.h
-  src/GMLOutput.h
-  src/HeavyEdgeRule3in1.h
   src/Helpers.h
+  src/ILPSolver.h
   src/InducedCostsHeuristic.h
-  src/MergingRule.h
-  src/NullOutput.h
-  src/PajekOutput.h
-  src/ParameterDependentReductionRule.h
+  src/KClustifier.h
   src/ParameterizedInstance.h
-  src/SimilarNeighboorhoodRule.h
-  src/TableOutput.h
-  src/TableAppOutput.h
   src/WorkingCopyInstance.h
-  src/XGMMLOutput.h
-  src/Yoshiko.h
+
+  src/input/ClusterEditingInput.h
+
+  src/reductionRules/AlmostCliqueRule.h
+  src/reductionRules/CliqueRule.h
+  src/reductionRules/CriticalCliqueRule.h
+  src/reductionRules/FPTReductionRule.h
+  src/reductionRules/HeavyEdgeRule3in1.h
+  src/reductionRules/MergingRule.h
+  src/reductionRules/ParameterDependentReductionRule.h
+  src/reductionRules/SimilarNeighborhoodRule.h
+
 )
 
 set( Yoshiko_Src
-  src/AlmostCliqueRule.cpp
-  src/ClusterReductionInstance.cpp
-  src/HeavyEdgeRule3in1.cpp
-  src/ParameterizedInstance.cpp
-  src/CSVOutput.cpp
-  src/CriticalCliqueRule.cpp
-  src/Helpers.cpp
-  src/SimilarNeighboorhoodRule.cpp
-  src/CliqueRule.cpp
-  src/Delta.cpp
-  src/InducedCostsHeuristic.cpp
-  src/TableOutput.cpp
-  src/TableAppOutput.cpp
   src/ClusterEditingInstance.cpp
-  src/DynProgTable.cpp
-  src/MergingRule.cpp
-  src/WorkingCopyInstance.cpp
-  src/ClusterEditingOutput.cpp
-  src/FPTReductionRule.cpp
-  src/NullOutput.cpp
-  src/XGMMLOutput.cpp
   src/ClusterEditingReduction.cpp
-  src/GMLOutput.cpp
-  src/PajekOutput.cpp
-  src/Yoshiko.cpp
   src/ClusterEditingSolutions.cpp
+  src/ClusterReductionInstance.cpp
+  src/CoreAlgorithm.cpp
+  src/Delta.cpp
+  src/DynProgTable.cpp
   src/Globals.cpp
-  src/ParameterDependentReductionRule.cpp
-  src/yoshiko_main.cpp
+  src/Helpers.cpp
+  src/ILPSolver.cpp
+  src/InducedCostsHeuristic.cpp
+  src/KClustifier.cpp
+  src/ParameterizedInstance.cpp
+  src/WorkingCopyInstance.cpp
+
+  src/input/ClusterEditingInput.cpp
+
+  src/reductionRules/AlmostCliqueRule.cpp
+  src/reductionRules/CliqueRule.cpp
+  src/reductionRules/CriticalCliqueRule.cpp
+  src/reductionRules/FPTReductionRule.cpp
+  src/reductionRules/HeavyEdgeRule3in1.cpp
+  src/reductionRules/MergingRule.cpp
+  src/reductionRules/ParameterDependentReductionRule.cpp
+  src/reductionRules/SimilarNeighborhoodRule.cpp
+
+)
+
+
+set (YoshikoApp_Src
+
+  src/main.cpp
+
+  src/input/JENAInput.cpp
+  src/input/RowSimInput.cpp
+  src/input/SIFInput.cpp
+
+  src/output/ClusterEditingOutput.cpp
+  src/output/CSVOutput.cpp
+  src/output/GMLOutput.cpp
+  src/output/MCLOutput.cpp
+  src/output/XGMMLOutput.cpp
+  src/output/PajekOutput.cpp
+  src/output/TableOutput.cpp
+  src/output/TableAppOutput.cpp
+  src/output/TransClustOutput.cpp
+
+  ${Yoshiko_Src}
+)
+
+set (YoshikoApp_Hdr
+
+  src/input/JENAInput.h
+  src/input/RowSimInput.h
+  src/input/SIFInput.h
+  src/input/StreamInput.h
+
+  src/output/ClusterEditingOutput.h
+  src/output/CSVOutput.h
+  src/output/GMLOutput.h
+  src/output/MCLOutput.h
+  src/output/PajekOutput.h
+  src/output/TableOutput.h
+  src/output/TableAppOutput.h
+  src/output/TransClustOutput.h
+  src/output/XGMMLOutput.h
+
+  ${Yoshiko_Hdr}
+)
+
+set (YoshikoLib_Src
+	src/input/LibraryInput.cpp
+	src/LibraryInterface.cpp
+	src/LibraryInterface_wrap.cxx
+	${Yoshiko_Src}
+)
+
+set (YoshikoLib_Hdr
+	src/input/LibraryInput.h
+	src/LibraryInterface.h
+	${Yoshiko_Hdr}
 )
 
 set( GitCommand1 "symbolic-ref HEAD 2> /dev/null | cut -b 12-" )
@@ -73,9 +130,12 @@ execute_process( COMMAND git symbolic-ref HEAD  WORKING_DIRECTORY ${PROJECT_SOUR
 set( GitCommand2 "log --pretty=format:\\\"%h\\\" -1" )
 execute_process( COMMAND git log --pretty=format:%h WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
                  COMMAND head -n 1  COMMAND tr -d "\\n" OUTPUT_VARIABLE GitHashtag )
+
 set( YOSHIKO_VERSION \"${GitBranch}-${GitHashtag}\" )
 
 set( LIBLEMON_ROOT "$ENV{HOME}/lemon" CACHE PATH "Additional search directory for lemon library" )
+
+find_package(JNI)
 
 if( NOT CPLEX_INC_DIR OR NOT CPLEX_LIB_DIR OR NOT CONCERT_INC_DIR OR NOT CONCERT_LIB_DIR )
 	set( CPLEX_AUTODETECTION_PREFIXES "$ENV{HOME}/Applications/IBM/ILOG; $ENV{HOME}/ILOG;/opt/ibm/ILOG;$ENV{HOME}/Applications/IBM/ILOG" CACHE STRING "CPLEX automatic lookup directories" )
@@ -124,21 +184,23 @@ if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build, options are: Debug Release Profile" FORCE)
 endif(NOT CMAKE_BUILD_TYPE)
 
-set(CMAKE_CXX_FLAGS_DEBUG "-Wall -Wextra -Wno-long-long -Wno-unused-parameter -Wno-unknown-pragmas -g -ggdb -O0 -DDEBUG -DVERBOSE")
-set(CMAKE_CXX_FLAGS_RELEASE "-Wall -Wextra -Wno-long-long -Wno-unused-parameter -Wno-unknown-pragmas -O3 -DNDEBUG")
-set(CMAKE_CXX_FLAGS_PROFILE "-Wall -Wextra -Wno-long-long -Wno-unused-parameter -Wno-unknown-pragmas -O3 -g -ggdb -DNDEBUG")
-set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-write-strings" )
-add_definitions( -DIL_STD )
+set(CMAKE_CXX_FLAGS_DEBUG "-Wall -Wextra -Wno-long-long -Wno-unused-parameter  -Wno-unknown-pragmas -g -ggdb -O0 -DDEBUG -DVERBOSE")
+set(CMAKE_CXX_FLAGS_RELEASE "-Wall -Wextra -Wno-long-long -Wno-unused-parameter  -Wno-unknown-pragmas -O3 -DNDEBUG")
+set(CMAKE_CXX_FLAGS_PROFILE "-Wall -Wextra -Wno-long-long -Wno-unused-parameter  -Wno-unknown-pragmas -O3 -g -ggdb -DNDEBUG")
+set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-write-strings -fno-strict-aliasing -std=c++0x" )
+add_definitions( -DIL_STD ) #???
 configure_file( src/config.h.in ${PROJECT_SOURCE_DIR}/src/config.h )
 
 
 if( ${CMAKE_SYSTEM_NAME} MATCHES "Darwin" )
   set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libstdc++ " )
   set( CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY "libstdc++" )
+else()
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -z noexecstack")
 endif()
 
-include_directories( ${CPLEX_INC_DIR} ${CONCERT_INC_DIR} "${LIBLEMON_ROOT}/include" "src" "src/externlib" )
-link_directories( ${CPLEX_LIB_DIR} ${CONCERT_LIB_DIR} "${LIBLEMON_ROOT}/lib" )
+include_directories( ${CPLEX_INC_DIR} ${CONCERT_INC_DIR} ${JNI_INCLUDE_DIRS} "${LIBLEMON_ROOT}/include" "src" "src/externlib" )
+link_directories( ${CPLEX_LIB_DIR} ${CONCERT_LIB_DIR}  "${LIBLEMON_ROOT}/lib" )
 
 set( CommonLibs
 	m
@@ -149,5 +211,21 @@ set( CommonLibs
 	emon
 )
 
-add_executable( yoshiko ${Yoshiko_Src} ${Yoshiko_Hdr} ${CommonObjs} )
-target_link_libraries( yoshiko ${CommonLibs} )
+if (BUILD_AS_EXEC)
+	message("Building Executable")
+	add_executable( yoshiko ${YoshikoApp_Src} ${YoshikoApp_Hdr})
+else()
+	if (BUILD_STATIC)
+		add_library(yoshiko STATIC ${YoshikoLib_Src} ${YoshikoLib_Hdr} )
+	else()
+		add_library(yoshiko SHARED ${YoshikoLib_Src} ${YoshikoLib_Hdr} )
+	endif()
+endif()
+
+set_target_properties(yoshiko PROPERTIES OUTPUT_NAME "yoshiko.${Yoshiko_Version}")
+
+if (BUILD_STATIC)
+	target_link_libraries( yoshiko ${CommonLibs} "-static")
+else()
+	target_link_libraries( yoshiko ${CommonLibs})
+endif()
