@@ -220,11 +220,13 @@ namespace ysk {
 			//Iterate over all clusters and k-clustify them
 			for(size_t solutionID = 0; solutionID < _result->getNumberOfSolutions();solutionID++) {
 				  clustifier.kClustify(_parameter.targetClusterCount, solutionID);
+				  flags.totalCost += clustifier.getCosts();
 			}
+		    if (verbosity > 2)
+		    	cout << "Total cost (post k-clustifier): " << flags.totalCost << endl;
 	  }
 
-	  if (verbosity > 3){
-	  }
+
 
 		return _result;
 	}
