@@ -1,0 +1,6 @@
+/Build
+/.cproject
+/.project
+/.settings
+*.sh
+src/config.h

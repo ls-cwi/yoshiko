@@ -1,10 +1,7 @@
-//
 //  InducedCostsHeuristic.h
-//  lemon-first-steps
 //
 //  Created by Emanuel Laude on 26.10.12.
 //  Copyright (c) 2012 Emanuel Laude. All rights reserved.
-//
 
 #ifndef INDUCEDCOSTSHEURISTIC_H
 #define INDUCEDCOSTSHEURISTIC_H
@@ -30,15 +27,21 @@ public:
   {
     init(inst);
   }
-  
+
   virtual ~InducedCostsHeuristic();
   double getUpperBound();
-  void getSolution(ClusterEditingSolutions& solution);
+  /**
+   * Applies the heuristic and saves the result as a CES in the given instance.
+   * Note that this requires a previous initialization of this class via ParametrizedInstance
+   * @param solution The solution as CES that is to be used as a target
+   * @return The cost of applying the heuristic as double
+   */
+  double getSolution(ClusterEditingSolutions& solution);
   void start();
-  
+
 private:
   void init(ParameterizedInstance& inst);
-  
+
   double _upperBound;
   ClusterEditingInstance _instance;
   ParameterizedInstance* _parameterizedInstance;

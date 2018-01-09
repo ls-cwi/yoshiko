@@ -19,15 +19,6 @@ Get yoshiko from github:
 
 First, LEMON 1.3 needs to be installed:
 
-Note: On Mac OS 10.9, comment out the following two lines and add the code below at line 162 in `CMakeLists.txt` before `make install`
-
-    #ADD_SUBDIRECTORY(demo)
-    #ADD_SUBDIRECTORY(tools)
-
-    if( ${CMAKE_SYSTEM_NAME} MATCHES "Darwin" )
-      set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libstdc++ " )
-    endif()
-
     wget http://lemon.cs.elte.hu/pub/sources/lemon-1.3.tar.gz
     tar xvzf lemon-1.3.tar.gz
     cd lemon-1.3
@@ -56,6 +47,11 @@ In case auto-detection of LEMON or CPLEX fails, do
     -DCONCERT_LIB_DIR=~/ILOG/concert/lib/x86-64_osx/static_pic \
     -DCONCERT_INC_DIR=~/ILOG/concert/include/ ..
 
+## CMake-Flags
+
+-DBUILD_AS_EXEC = Builds a stand-alone command line tool instead of the yoshiko library
+-DBUILD_STATIC = Enables static linking
+
 ## Running yoshiko
 
 To run yoshiko on the test instance:
@@ -65,22 +61,3 @@ To run yoshiko on the test instance:
 Get a list of options:
 
     ./yoshiko -h
-
-
-## Documentation
-
-### Data formats
-
-The tool supports different line-oriented file formats. Each line is terminated by a line feed.
-
-* The **Jena** file format is as follows (see also the example in `data/fusarium.txt`) and can be used to input weighted or unweighted instances of the cluster editing problem.
-
-  First line: number of nodes, say n.
-
-  Next n lines: user-defined node labels.
-
-  Next n-1 lines: upper triangular matrix specifying the node weights. That is, the `j`th entry of line `i` specifies the weight `w_i,i+j`. As conventional, we interpret positive values as deletion costs of existing edges and negative values as insertion costs of non-existing edges.
-
-* The **SIF** file format is the file format used by Cytoscape and can be used to input an unweighted version of cluster editing, which is just given as an unweighted graph. For documentation, see http://wiki.cytoscape.org/Cytoscape_User_Manual/Network_Formats. Here is a small example:
-
-        ./yoshiko -f data/test/simple_sif_example.sif -F 2 -v 4
