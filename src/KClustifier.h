@@ -24,13 +24,20 @@ class KClustifier {
 public:
 	KClustifier(ClusterEditingInstance* instance, ClusterEditingSolutions* solutions):
 	_solutions(solutions),
-	_instance(instance)
+	_instance(instance),
+	_editingCosts(0)
 	{}
 	;
 
     virtual ~KClustifier();
 
 	void kClustify(unsigned int k, size_t solutionID);
+
+	/**
+	 * Returns the costs that were paid for k-clustifying
+	 * @return
+	 */
+	double getCosts();
 
 private:
 
@@ -41,9 +48,13 @@ private:
 
 	void printMergeCosts();
 
+
+
 	std::map<std::pair<int,int>,double> _mergeCosts;
 	ClusterEditingSolutions* _solutions;
 	ClusterEditingInstance* _instance;
+	double _editingCosts;
+
 };
 
 } /* namespace ysk */
