@@ -49,7 +49,7 @@ In case auto-detection of LEMON or CPLEX fails, do
 
 ## CMake-Flags
 
--DBUILD_AS_EXEC = Builds a stand-alone command line tool instead of the yoshiko library
+-DBUILD_AS_EXEC = Builds a stand-alone command line tool instead of the yoshiko library \
 -DBUILD_STATIC = Enables static linking
 
 ## Running yoshiko
