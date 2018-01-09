@@ -49,12 +49,13 @@ In case auto-detection of LEMON or CPLEX fails, do
 
 ## CMake-Flags
 
--DBUILD_AS_EXEC = Builds a stand-alone command line tool instead of the yoshiko library \
--DBUILD_STATIC = Enables static linking
+-DBUILD_AS_EXEC=ON -> Builds a standalone command line tool instead of the yoshiko library \
+-DBUILD_STATIC=ON -> Enables static linking
 
-## Running yoshiko
+## Running Yoshiko (Standalone)
+Requires you to build Yoshiko as a standalone program (see CMake-Flags)\
 
-To run yoshiko on the test instance:
+To run yoshiko on the test instance (without producing any output):
 
     ./yoshiko -f ../data/test/fusarium.txt -v 4
 
