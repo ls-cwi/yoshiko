@@ -30,12 +30,18 @@ typedef lemon::SubGraph<const lemon::FullGraph> WorkingCopyGraph;
 class ClusterEditingInstance;
 
 class WorkingCopyInstance {
+
 public:
+
+	/**
+	 * The default constructor for WCI
+	 * @param inst
+	 */
   WorkingCopyInstance(ClusterEditingInstance* inst)
     : _instance(inst)
     , _dirty(false)
 	, _vectorCleanList(std::vector<std::vector<int>*>())
-
+	//References
 	, _graph(nullptr)
 	, _edges(nullptr)
 	, _forbidden(nullptr)
@@ -95,6 +101,8 @@ public:
   bool isDirty() const;
 
   friend std::ostream& operator <<(std::ostream &os, WorkingCopyInstance &inst);
+
+
 private:
   ClusterEditingInstance* _instance;
 

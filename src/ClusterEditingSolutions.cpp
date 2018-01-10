@@ -24,7 +24,8 @@ namespace ysk {
 	}
 
 	vector<vector<int> >& ClusterEditingSolutions::getSolution(size_t i) {
-	  return _solutions[i];
+		//TODO: Throw exception if the index is invalid?
+		return _solutions[i];
 	}
 
 	void ClusterEditingSolutions::resize(long numberOfSolutions) {

@@ -37,13 +37,15 @@ using namespace yskInput;
  =========================================================================
  * validate input data. !!! -> Now part of the separate input classes
  * heuristik, set starting value
- * separation triangles
+ * separation triangles (isnt this already implemented???)
  * separation partition cuts
  * separation (mueller)
  * enumerating optimal solutions (isnt this already implemented?)
  *
  * check whether new code produces same sol as old code (in presence of partition constraints) (Which old code, yosh 1.0?)
  * check partition constraints (--> paper!)
+ *
+ * Streamline the licensing / Use one unified license, style for marking authors / contributions
  *
  * svn link with Xcode (still needed?)
  * document... how? -> doxygen. on it!

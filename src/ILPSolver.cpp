@@ -296,7 +296,7 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
     //cplex.setParam(IloCplex::NodeFileInd,2);
 
 
-    // set all generic cuts off
+    //Set all generic cuts off
     cplex.setParam(IloCplex::Cliques, -1);
     cplex.setParam(IloCplex::Covers, -1);
     cplex.setParam(IloCplex::DisjCuts, -1);
@@ -313,7 +313,7 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
         cout << n << " nodes" << endl;
     }
 
-    // generate variables:
+    //generate variables:
 
     IloBoolVarArray x(cplexEnv, g.edgeNum());
     for (FullGraph::EdgeIt e(g); e != INVALID; ++e) {

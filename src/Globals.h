@@ -32,10 +32,13 @@ namespace ysk {
 
 	extern bool isTerminated;
 
+	/**
+	 * The different states that can occur during the clustering process
+	 */
 	enum EdgeType{
-		UNDECIDED = 0,
-		PERMANENT = 1,
-		FORBIDDEN = 2
+		UNDECIDED = 0,//!< UNDECIDED The edge is not yet included or excluded from the solution
+		PERMANENT = 1,//!< PERMANENT The edge is part of the solution
+		FORBIDDEN = 2 //!< FORBIDDEN The edge is not part of the solution
 	};
 
 

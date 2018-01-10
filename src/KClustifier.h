@@ -22,6 +22,11 @@ namespace ysk {
  */
 class KClustifier {
 public:
+	/**
+	 * Default constructor for KClustifier
+	 * @param instance The ClusterEditingInstance on which the KClustifier is to be used
+	 * @param solutions The ClusterEditingSolutions from the run
+	 */
 	KClustifier(ClusterEditingInstance* instance, ClusterEditingSolutions* solutions):
 	_solutions(solutions),
 	_instance(instance),
@@ -29,8 +34,16 @@ public:
 	{}
 	;
 
+	/**
+	 * Destructor
+	 */
     virtual ~KClustifier();
 
+    /**
+     * Transforms the solution identified by the solutionID into k clusters
+     * @param k
+     * @param solutionID
+     */
 	void kClustify(unsigned int k, size_t solutionID);
 
 	/**
@@ -41,6 +54,10 @@ public:
 
 private:
 
+	/**
+	 * Calculates the cost matrix (TODO: Rename variables to clearly identify merging/splitting) for the merge process for a given solution
+	 * @param solution The solution
+	 */
 	void calculateCostMatrix(std::vector<std::vector<int>>& solution);
 	void mergeCheapest(std::vector<std::vector<int>>& solution);
 	double calculateMergeDifference(const std::vector<int> cluster1, const std::vector<int> cluster2);
@@ -51,6 +68,8 @@ private:
 
 
 	std::map<std::pair<int,int>,double> _mergeCosts;
+	std::map<lemon::FullGraph::Edge,double> _separationCosts;
+
 	ClusterEditingSolutions* _solutions;
 	ClusterEditingInstance* _instance;
 	double _editingCosts;
