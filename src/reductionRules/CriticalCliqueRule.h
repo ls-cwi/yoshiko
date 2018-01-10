@@ -29,14 +29,14 @@ public:
   {
   }
   void apply();
-  
+
   virtual ~CriticalCliqueRule();
-  
+
 private:
   void computeClosedNeighborhood(std::vector<int>* neighborhood,
                                  WorkingCopyGraph::Node& u);
   void mergeCriticalCliques();
-  
+
   //temporary graph to store/compute critical cliques and neighborhoods
   lemon::ListGraph _temp;
   lemon::ListGraph::NodeMap <std::vector<int>* > _neighborhood;

@@ -35,6 +35,9 @@ namespace ysk {
 
 		void registerCplexInformer(yskLib::CplexInformer* informer);
 
+		/**
+		 * Attempts a "clean" interrupt of the solving process by stopping CPLEX and setting a kill-flag which is checked throughout the process
+		 */
 		void cancel();
 
 		private:

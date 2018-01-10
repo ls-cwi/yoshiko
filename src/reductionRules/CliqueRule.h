@@ -19,10 +19,11 @@ namespace ysk {
 class CliqueRule : public FPTReductionRule {
 public:
   CliqueRule(WorkingCopyInstance& inst)
+  	//TODO: Represent CliqueRule as Enum or other abstract object here?
     : FPTReductionRule(inst, "Clique Rule", true)
   {
   }
-  
+
   void apply();
 };
 
