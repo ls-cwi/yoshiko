@@ -61,3 +61,9 @@ To run yoshiko on the test instance:
 Get a list of options:
 
     ./yoshiko -h
+    
+## Cytoscape App (Graphical User Interface)
+
+If you are looking for a graphical user interface, you can find a Cytoscape implementation building on this software at:
+    
+https://gitlab.cs.uni-duesseldorf.de/spohr/YoshikoWrapper
