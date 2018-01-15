@@ -34,10 +34,10 @@ public:
 	: _sep_triangles(st)
 	, _sep_partition_cuts(sp)
 	, _num_opt_sol(num_opt_sol)
-	,_cplexInitialized(false)
-	,_informer(nullptr)
 	,_useKCluster(false)
 	,_clusterCount(0)
+	,_cplexInitialized(false)
+	,_informer(nullptr)
 	{};
 
 	// alternative constructor for k-cluster variant
@@ -45,10 +45,10 @@ public:
 	: _sep_triangles(st)
 	, _sep_partition_cuts(sp)
 	, _num_opt_sol(num_opt_sol)
-	,_cplexInitialized(false)
-	,_informer(nullptr)
 	,_useKCluster(true)
 	,_clusterCount(clusterCount)
+	,_cplexInitialized(false)
+	,_informer(nullptr)
 	{};
 
 

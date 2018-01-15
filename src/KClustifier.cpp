@@ -21,6 +21,7 @@ KClustifier::~KClustifier(){};
  * @param solutionID
  */
 void KClustifier::kClustify(unsigned int k, size_t solutionID){
+	_editingCosts = 0;
 	//Fetch the actual solution we want to modify
 	vector<vector<int>>& solution = _solutions->getSolution(solutionID);
 	if (solution.size() == k){
@@ -44,6 +45,13 @@ void KClustifier::kClustify(unsigned int k, size_t solutionID){
 				_solutions->printSolution(solutionID);
 			}
 		}
+	}
+	else if (solution.size()<k){
+		//We don't have enough clusters, time to split!
+		if (verbosity > 3){
+			cout << "Not enough clusters generated (" << solution.size() << "), we need: " << k <<endl;
+		}
+		KClustifier::calculateLowerBoundSplitCosts(solution);
 	}
 }
 
@@ -141,6 +149,106 @@ void KClustifier::calculateCostMatrix(vector<vector<int>>& solution){
 		}
 	}
 
+}
+
+void KClustifier::calculateLowerBoundSplitCosts(vector<vector<int>>& solution){
+	_lowerBoundSplitCosts = std::map<int,Separation>();
+
+	int indexCluster = 0;
+
+	//iterate over clusters
+	for(vector<vector<int>>::iterator it = solution.begin(); it != solution.end(); ++it, ++ indexCluster) {
+		Separation suggestedSeparation = KClustifier::suggestSeparation(*it);
+		if (verbosity > 4){
+			cout << "Suggested Split for cluster " << indexCluster << ":" << endl;
+
+			cout << "Nodes: ";
+			for (vector<int>::iterator sep1 = suggestedSeparation.cluster1.begin(); sep1 != suggestedSeparation.cluster1.end(); ++sep1){
+				cout << _instance->getNodeName(_instance->getOrig().nodeFromId(*sep1));
+			}
+			cout << endl;
+
+			cout << "Nodes: ";
+			for (vector<int>::iterator sep2 = suggestedSeparation.cluster2.begin(); sep2 != suggestedSeparation.cluster2.end(); ++sep2){
+				cout << _instance->getNodeName(_instance->getOrig().nodeFromId(*sep2));
+			}
+			cout << endl;
+
+			cout << "Cost: " << suggestedSeparation.cost << endl << endl;
+		}
+		_lowerBoundSplitCosts[indexCluster] = suggestedSeparation;
+	}
+}
+
+/**
+ * Suggests a possible split based on the InducedCostsOfSeparation heuristic
+ */
+Separation KClustifier::suggestSeparation(vector<int>& cluster){
+
+	//TODO: Speed-Up AND/OR Improve
+
+	//This is what we will return
+	Separation suggestion;
+	suggestion.cost = std::numeric_limits<double>::infinity();
+
+	//Check all edges in the cluster and assume them as separators
+	for (vector<int>::iterator it = cluster.begin(); it != cluster.end(); ++it){
+		FullGraph::Node node1 = _instance->getOrig().nodeFromId(*it);
+		for (vector<int>::iterator it2 = it; it2 != cluster.end(); ++it2){
+
+			//We initialize a new separation
+			Separation separation;
+			separation.cost = 0;
+
+			//We fetch the lemon objects for quicker reference
+			FullGraph::Node node2 = _instance->getOrig().nodeFromId(*it2);
+			FullGraph::Edge edge = _instance->getOrig().findEdge(node1, node2, INVALID);
+
+			//We assume that those two nodes are in different clusters
+			//We therefore put them both into different clusters in the suggested separation
+			separation.cluster1.push_back(*it);
+			separation.cluster2.push_back(*it2);
+			//We will also pay the costs of removing the edge
+			separation.cost += _instance->getWeight(edge);
+
+			//We then check for each other node what the cheapest option would be, ignoring relationships between the nodes
+			for (vector<int>::iterator it3 = cluster.begin();it3 != cluster.end(); ++it3){
+				if (it3 == it || it3 == it2) continue; //We don't want that
+				//Fetch lemon objects and associated edge weights
+				FullGraph::Node node3 = _instance-> getOrig().nodeFromId(*it3);
+				FullGraph::Edge from1to3 = _instance->getOrig().findEdge(node1, node3, INVALID);
+				FullGraph::Edge from2to3 = _instance->getOrig().findEdge(node2, node3, INVALID);
+
+				double costFrom1to3 = _instance->getWeight(from1to3);
+				double costFrom2to3 = _instance->getWeight(from2to3);
+
+				//TODO: Here could be a good place to start improving this heuristic
+				//For instance, the case = could be treated differently with a more in-depth calculation, recognizing more connections
+
+				//Pick the cheaper option
+
+				if (costFrom1to3 > costFrom2to3){
+					//Keep the Connection 1--3, remove the Connection 2--3
+					separation.cluster1.push_back(*it3);
+					separation.cost += costFrom2to3;
+				}
+
+				if (costFrom1to3 <= costFrom2to3){ //TODO: Reduce to only <
+					//Keep the Connection 2--3, remove the Connection 1--3
+					separation.cluster2.push_back(*it3);
+					separation.cost += costFrom1to3;
+				}
+
+
+			}
+			//If it is good, we keep it!
+			if (separation.cost < suggestion.cost){
+				suggestion = separation;
+			}
+		}
+	}
+
+	return suggestion;
 }
 
 /**

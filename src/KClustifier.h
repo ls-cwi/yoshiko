@@ -17,6 +17,12 @@
 
 namespace ysk {
 
+struct Separation{
+	double cost;
+	std::vector<int> cluster1;
+	std::vector<int> cluster2;
+};
+
 /**
  *  Class enabling post-processing to adjust a solution in order to generate a fixed cluster count.
  */
@@ -59,15 +65,22 @@ private:
 	 * @param solution The solution
 	 */
 	void calculateCostMatrix(std::vector<std::vector<int>>& solution);
+
+	/**
+	 * Calculates the lower bound split costs for each cluster
+	 */
+	void calculateLowerBoundSplitCosts(std::vector<std::vector<int>>& solution);
+
 	void mergeCheapest(std::vector<std::vector<int>>& solution);
 	double calculateMergeDifference(const std::vector<int> cluster1, const std::vector<int> cluster2);
-
-
 	void printMergeCosts();
+
+	Separation suggestSeparation(std::vector<int>& cluster);
 
 
 
 	std::map<std::pair<int,int>,double> _mergeCosts;
+	std::map<int,ysk::Separation> _lowerBoundSplitCosts;
 	std::map<lemon::FullGraph::Edge,double> _separationCosts;
 
 	ClusterEditingSolutions* _solutions;
@@ -75,6 +88,8 @@ private:
 	double _editingCosts;
 
 };
+
+
 
 } /* namespace ysk */
 
