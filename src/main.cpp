@@ -17,6 +17,7 @@
 #include "ClusterEditingSolutions.h"
 #include "CoreAlgorithm.h"
 #include "Globals.h"
+#include "measurement/SilhouetteValue.h"
 
 #include "output/ClusterEditingOutput.h"
 
@@ -74,6 +75,7 @@ int main(int argc, char * const argv[]) {
   int inputFileFormat = 0;
   int outputFileFormat = 0;
   bool exportLP = false;
+  bool printSilhouetteValue = false;
 
   YParameterSet parameter;
 
@@ -95,7 +97,9 @@ int main(int argc, char * const argv[]) {
   ap.refOption("m", "multiplicative factor for real valued edge weights in SimilarNeighborhoodRule (the higher the better the reduction results and the slower the performance) [1]", parameter.multiplicativeFactor, false);
   ap.refOption("g", "graph label []", graphLabel, false);
   ap.refOption("r", "explicitly turn on/off reduction rules, bit string (right to left): bit 0 = CliqueRule, bit 1 = CriticalCliqueRule, bit 2 = AlmostCliqueRule, bit 3 = HeavyEdgeRule3in1, bit 4 = ParameterDependentReductionRule, bit 5 = SimilarNeighborhoodRule [111111]", parameter.rulesBitMask, false);
-  ap.refOption("k", "[EXPERIMENTAL!!!]define the number of desired clusters, -1 determines this value automatically [-1]",parameter.targetClusterCount,false);
+  ap.refOption("k", "[EXPERIMENTAL!!!] Define the number of desired clusters, -1 determines this value automatically [-1]",parameter.targetClusterCount,false);
+  ap.refOption("s", "[EXPERIMENTAL!!!] Prints the silhouette value at the end of the run",printSilhouetteValue,false);
+
 
   // Perform the parsing process
   // (in case of any error it terminates the program) -> tb improved
@@ -126,6 +130,8 @@ int main(int argc, char * const argv[]) {
     std::cout << "      -g: " << graphLabel << std::endl;
     std::cout << "      -r: " << parameter.rulesBitMask << std::endl;
     std::cout << "      -k: " << parameter.targetClusterCount << std::endl;
+    std::cout << "      -s: " << printSilhouetteValue << std::endl;
+
   }
 
   ifstream is(inputFilename.c_str());
@@ -176,6 +182,14 @@ int main(int argc, char * const argv[]) {
   );
 
   ClusterEditingSolutions* ces = core->run();
+
+  //Print Silhouette Value if required
+  //TODO: Make accessible from library, add support for printing it to certain output formats if required
+  if (printSilhouetteValue){
+	  for (unsigned int i = 0; i < ces->getNumberOfSolutions(); i++){
+		  cout << "Silhouette Value: " << SilhouetteValue(instance,ces->getSolution(i)).getValue() << endl;
+	  }
+  }
 
   //Output generation
   ClusterEditingOutput* output;

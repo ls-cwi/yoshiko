@@ -28,6 +28,8 @@ set( Yoshiko_Hdr
   src/WorkingCopyInstance.h
 
   src/input/ClusterEditingInput.h
+  
+  src/measurement/SilhouetteValue.h
 
   src/reductionRules/AlmostCliqueRule.h
   src/reductionRules/CliqueRule.h
@@ -57,6 +59,8 @@ set( Yoshiko_Src
   src/WorkingCopyInstance.cpp
 
   src/input/ClusterEditingInput.cpp
+  
+  src/measurement/SilhouetteValue.cpp
 
   src/reductionRules/AlmostCliqueRule.cpp
   src/reductionRules/CliqueRule.cpp
