@@ -143,11 +143,23 @@ namespace ysk {
 			if (!_parameter.useHeuristic) {
 
 				//ILP
-				_solver = new ILPSolver (
-						_parameter.separateTriangles,
-						_parameter.separatePartitionCuts,
-						_parameter.nrOptimalSolutions
-				);
+				if (_parameter.targetClusterCount != -1 && !_parameter.useHeuristic)
+				{
+					_solver = new ILPSolver (
+							_parameter.separateTriangles,
+							_parameter.separatePartitionCuts,
+							_parameter.nrOptimalSolutions,
+							_parameter.targetClusterCount
+					);
+				}
+				else
+				{
+					_solver = new ILPSolver (
+							_parameter.separateTriangles,
+							_parameter.separatePartitionCuts,
+							_parameter.nrOptimalSolutions
+					);
+				}
 
 				if (_informer != nullptr){
 					_solver->registerInformer(_informer);
@@ -211,10 +223,11 @@ namespace ysk {
 		//Restore timeout flag
 		_result->setFlags(flags);
 
-	  //K-Cluster postprocessing if desired
-		if (verbosity >= 2)
-			cout << "Aiming for the following cluster count: "<<_parameter.targetClusterCount << endl;
-	  if (_parameter.targetClusterCount != -1){
+	  //Heuristic K-Cluster postprocessing if desired
+
+	  if (_parameter.targetClusterCount != -1 && _parameter.useHeuristic){
+			if (verbosity >= 2)
+				cout << "Aiming for the following cluster count: "<<_parameter.targetClusterCount << endl;
 			//Generate a new k-clustifier instance
 			KClustifier clustifier(_instance,_result);
 			//Iterate over all clusters and k-clustify them
