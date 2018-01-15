@@ -28,6 +28,9 @@ void KClustifier::kClustify(unsigned int k, size_t solutionID){
 		//We already have the desired amount of clusters
 	}
 	else if (solution.size()>k){
+
+		if (k < 1) return; //little sanity check
+
 		//We have too many clusters, time to merge
 		if (verbosity > 3){
 			cout << "Too many clusters generated (" << solution.size() << "), we need: " << k <<endl;
@@ -47,6 +50,10 @@ void KClustifier::kClustify(unsigned int k, size_t solutionID){
 		}
 	}
 	else if (solution.size()<k){
+		if (k>_instance->getSize()){
+			cout << "More clusters requested than nodes are available!!!" << endl;
+			return;
+		}
 		//We don't have enough clusters, time to split!
 		if (verbosity > 3){
 			cout << "Not enough clusters generated (" << solution.size() << "), we need: " << k <<endl;
@@ -190,6 +197,8 @@ Separation KClustifier::suggestSeparation(vector<int>& cluster){
 	//This is what we will return
 	Separation suggestion;
 	suggestion.cost = std::numeric_limits<double>::infinity();
+
+	if (cluster.size() == 1) return suggestion;
 
 	//Check all edges in the cluster and assume them as separators
 	for (vector<int>::iterator it = cluster.begin(); it != cluster.end(); ++it){
