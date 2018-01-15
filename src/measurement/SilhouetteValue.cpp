@@ -17,6 +17,23 @@ namespace ysk{
 	SilhouetteValue::~SilhouetteValue(){};
 
 	double SilhouetteValue::getValue(){
+
+
+		//Treat negative values as offsets OR zeros?
+		const bool negativeToZero = true;
+		const bool negativeOffset = true;
+
+		double minimumEdgeWeight = 0;
+
+		if (negativeOffset){
+			for (FullGraph::EdgeIt it(_instance->getOrig()); it != INVALID; ++it){
+				if (_instance->getWeight(it) < minimumEdgeWeight){
+					minimumEdgeWeight = _instance->getWeight(it);
+				}
+			}
+			if (verbosity > 4) cout << "Minimum edge weight: " << minimumEdgeWeight <<endl;
+		}
+
 		//Calculate average dissimilarities to own clusters (a(i))
 		map<int,double> _averageDissimilaritiesOwn = map<int,double>();
 		for(auto const &cluster : _solution){
@@ -30,7 +47,13 @@ namespace ysk{
 							_instance->getOrig().nodeFromId(node),
 							_instance->getOrig().nodeFromId(otherNode),
 					INVALID);
-					sum += _instance->getWeight(edge);
+					double edgeWeight = negativeOffset ? _instance->getWeight(edge) - minimumEdgeWeight : _instance->getWeight(edge) ;
+					if (negativeToZero){
+						sum += edgeWeight > 0 ? edgeWeight : 0.0;
+					}
+					else{
+						sum += edgeWeight;
+					}
 				}
 				//cout << dissim << " " << sum << endl;
 				dissim *= sum;
@@ -61,7 +84,13 @@ namespace ysk{
 								_instance->getOrig().nodeFromId(node),
 								_instance->getOrig().nodeFromId(otherNode),
 						INVALID);
-						sum += _instance->getWeight(edge);
+						double edgeWeight = negativeOffset ? _instance->getWeight(edge)- minimumEdgeWeight: _instance->getWeight(edge) ;
+						if (negativeToZero){
+							sum += edgeWeight > 0 ? edgeWeight : 0.0;
+						}
+						else{
+							sum += edgeWeight;
+						}
 					}
 				}
 				dissim *= sum;
@@ -96,7 +125,7 @@ namespace ysk{
 		//Calculate silhouette value
 
 		double factor = 1.0/_instance->getSize();
-		int sum = 0.0;
+		double sum = 0.0;
 
 		for (auto const &cluster : _solution){
 			for (auto const &node : cluster){
