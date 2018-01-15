@@ -26,7 +26,7 @@ void InducedCostsHeuristic::init(ParameterizedInstance& inst) {
 
   FullGraph::NodeIt x(_instance.getOrig());
   WorkingCopyGraph::NodeIt u(inst.getWorkingCopyInstance().getGraph());
-  for(; u != INVALID; ++u, ++x) {
+  for(; u != INVALID; ++u, ++x) { //TODO: This is a while loop -> Codestyle
     _instance.initNode(x, inst.getWorkingCopyInstance().getNodeName(u), *(inst.getWorkingCopyInstance().getClusters()[u]));
 
     FullGraph::NodeIt y(_instance.getOrig(), x);

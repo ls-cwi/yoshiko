@@ -8,8 +8,10 @@
 #ifndef SRC_YPARAMETERSET_H_
 #define SRC_YPARAMETERSET_H_
 
+
 namespace ysk {
 
+const unsigned int DEFAULT_VALUE_OPTIMAL_SOLUTION_COUNT = 1;
 
 /**
  * A struct containing all parameters defining a Yoshiko run
@@ -19,10 +21,11 @@ struct YParameterSet {
 
 	/**
 	 * Default constructor, sets all operation parameters to their default value
-	 * TODO: Define Macro Values to have a more elegant way of changing those default values on the fly
+	 * TODO: Define Const Values to have a more elegant way of changing those default values on the fly
+	 * TODO: Make sure that both this file and Globals.h have their correct variables
 	 */
 	YParameterSet()
-	:nrOptimalSolutions(1)
+	:nrOptimalSolutions(DEFAULT_VALUE_OPTIMAL_SOLUTION_COUNT)
 	,rulesBitMask("111111")
 	,multiplicativeFactor(1)
 	,useHeuristic(false),
@@ -34,7 +37,7 @@ struct YParameterSet {
 	/**
 	 * The number of solutions that is to be calculated
 	 */
-	int nrOptimalSolutions;
+	int nrOptimalSolutions; //TODO: (Minor) Should be unsigned? But might not be supported by apref
 	/**
 	 * This is super akward having a String, would be way better to have a different structure I think, maybe just calculate something and represent as Byte?
 	 */

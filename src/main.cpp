@@ -37,7 +37,7 @@ using namespace yskInput;
  TODO
  =========================================================================
  * validate input data. !!! -> Now part of the separate input classes
- * heuristik, set starting value
+ * heuristic, set starting value
  * separation triangles (isnt this already implemented???)
  * separation partition cuts
  * separation (mueller)
@@ -46,20 +46,18 @@ using namespace yskInput;
  * check whether new code produces same sol as old code (in presence of partition constraints) (Which old code, yosh 1.0?)
  * check partition constraints (--> paper!)
  *
- * Streamline the licensing / Use one unified license, style for marking authors / contributions
  *
  * svn link with Xcode (still needed?)
  * document... how? -> doxygen. on it!
  * layout graphs...? -> use cytoscape pretty much done
  * Setup unified logging system and streamline all cout//exception calls, apply verbosity globally
- * put in NINA
+ * put in NINA (?)
  * edge index. make faster by directly computing index from i and j. think about (common) solution for directed and undirected graphs
  *
  * K Cluster Approaches
  * Strictly ILP (Add additional constraints)
  * Add k Cluster Centers with M +e Cost (Sum of edge weights)
  * Specify/Choose clusters
- * Merge/Cut clusters
  */
 
 

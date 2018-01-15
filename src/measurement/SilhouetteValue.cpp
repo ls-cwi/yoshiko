@@ -70,14 +70,14 @@ namespace ysk{
 			}
 		}
 
-		if (verbosity > 4){
-			cout << "Average Dissimilarities to other clusters" << endl << endl;
-			for (auto const &cluster : _solution){
-				for (auto const &node: cluster){
-					cout << node << " : " << _averageDissimilaritiesForeign[node]<< endl;
-				}
-			}
-		}
+//		if (verbosity > 4){
+//			cout << "Average Dissimilarities to other clusters" << endl << endl;
+//			for (auto const &cluster : _solution){
+//				for (auto const &node: cluster){
+//					cout << node << " : " << _averageDissimilaritiesForeign[node]<< endl;
+//				}
+//			}
+//		}
 
 		//Calculate silhouettes
 		map<int,double> _silhouettes= map<int,double>();

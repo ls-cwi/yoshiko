@@ -282,6 +282,7 @@ void KClustifier::calculateLowerBoundSplitCosts(vector<vector<int>>& solution){
 Separation KClustifier::suggestSeparation(vector<int>& cluster){
 
 	//TODO: Speed-Up AND/OR Improve
+	//Ideas: Maybe do a 2-pass run, construct actual merging costs for separation then pick best actual merging costs
 
 	//This is what we will return
 	Separation suggestion;
