@@ -17,8 +17,6 @@
 #include "ClusterEditingSolutions.h"
 #include "WorkingCopyInstance.h"
 
-//TODO: Add Console Output -> Redundant (Verbosity is sufficient?)
-
 namespace ysk {
 
 class ClusterEditingOutput {

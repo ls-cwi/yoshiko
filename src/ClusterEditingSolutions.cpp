@@ -24,7 +24,10 @@ namespace ysk {
 	}
 
 	vector<vector<int> >& ClusterEditingSolutions::getSolution(size_t i) {
-		//TODO: Throw exception if the index is invalid?
+		//Out of bounds
+		if(i >= _solutions.size()){
+			throw new Exception("Attempted to access solution with index: "+i);
+		}
 		return _solutions[i];
 	}
 
