@@ -156,7 +156,7 @@ bool ClusterEditingInstance::isDirty() const {
   return _workingCopyInstance->isDirty();
 }
 
-int ClusterEditingInstance::getSize() const{
+unsigned int ClusterEditingInstance::getSize() const{
 	return _orig.maxNodeId()+1;
 }
 

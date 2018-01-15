@@ -2,7 +2,7 @@
  * KClustifier.cpp
  *
  *  Created on: Dec 18, 2017
- *      Author: philipp
+ *      Author: Philipp Spohr
  */
 
 #include "KClustifier.h"
@@ -59,7 +59,96 @@ void KClustifier::kClustify(unsigned int k, size_t solutionID){
 			cout << "Not enough clusters generated (" << solution.size() << "), we need: " << k <<endl;
 		}
 		KClustifier::calculateLowerBoundSplitCosts(solution);
+		//We then simply split until we reach the required number of clusters
+		while (solution.size()<k){
+			KClustifier::splitCheapest(solution);
+			if (verbosity > 4 ){
+				_solutions->printSolution(solutionID);
+			}
+		}
 	}
+}
+
+void KClustifier::splitCheapest(vector<vector<int>>& solution){
+	//Pick the minimum first
+	Separation cheapestSeparation;
+	cheapestSeparation.cost = std::numeric_limits<double>::infinity();
+	int targetCluster = -1;
+
+	for (auto const &entry : _lowerBoundSplitCosts){
+		if (entry.second.cost < cheapestSeparation.cost){
+			cheapestSeparation = entry.second;
+			targetCluster = entry.first;
+		}
+	}
+
+	if (targetCluster == -1){
+		cerr << "Critical Error: Could not find a valid split, should not happen at this step!" << endl;
+		exit(-1);
+	}
+
+	if (verbosity > 4){
+		cout << "Splitting cluster: " << targetCluster << endl;
+		cout << "Into: " << endl;
+		cout << "Nodes: " <<endl;
+		for (vector<int>::iterator sep1 = cheapestSeparation.cluster1.begin(); sep1 != cheapestSeparation.cluster1.end(); ++sep1){
+			cout << *sep1 << " ";
+		}
+		cout << endl;
+
+		cout << "Nodes: "<<endl;
+		for (vector<int>::iterator sep2 = cheapestSeparation.cluster2.begin(); sep2 != cheapestSeparation.cluster2.end(); ++sep2){
+			cout << *sep2 << " ";
+		}
+		cout << endl <<endl;
+	}
+
+	//Delete the original cluster and add the new ones, remember the positions
+	solution.erase(solution.begin()+targetCluster);
+	int indexCluster1 = solution.size();
+	solution.push_back(cheapestSeparation.cluster1);
+	int indexCluster2 = solution.size();
+	solution.push_back(cheapestSeparation.cluster2);
+
+	_editingCosts += cheapestSeparation.cost;
+
+	//We need to add the edge weights between all the other nodes which we ignored in the heuristic step
+	for (auto const &node1 : cheapestSeparation.cluster1){
+		for (auto const &node2 : cheapestSeparation.cluster2){
+			FullGraph::Edge edge = _instance->getOrig().findEdge(_instance->getOrig().nodeFromId(node1) , _instance->getOrig().nodeFromId(node2) , INVALID);
+			_editingCosts += _instance->getWeight(edge);
+		}
+	}
+
+	//Update the lower bound splitting table for further splits
+
+	//Define a new map
+	std::map<int,Separation> newBounds = std::map<int,Separation>();
+
+	//Copy and modify entries as appropriate
+	for (auto const &entry : _lowerBoundSplitCosts){
+		if (entry.first < targetCluster){ //Copy such entries
+			newBounds[entry.first] = entry.second;
+		}
+		else if (entry.first == targetCluster){
+			//This entry is obsolete as the cluster no longer exists
+		}
+		else if (entry.first > targetCluster){
+			newBounds[entry.first - 1] = entry.second;
+		}
+
+	}
+
+	//Now we need entries for our two new clusters
+
+	newBounds[indexCluster1] = suggestSeparation(cheapestSeparation.cluster1);
+	newBounds[indexCluster2] = suggestSeparation(cheapestSeparation.cluster2);
+
+	//And replace it
+
+	_lowerBoundSplitCosts = newBounds;
+
+
 }
 
 void KClustifier::mergeCheapest(vector<vector<int>>& solution){
@@ -171,13 +260,13 @@ void KClustifier::calculateLowerBoundSplitCosts(vector<vector<int>>& solution){
 
 			cout << "Nodes: ";
 			for (vector<int>::iterator sep1 = suggestedSeparation.cluster1.begin(); sep1 != suggestedSeparation.cluster1.end(); ++sep1){
-				cout << _instance->getNodeName(_instance->getOrig().nodeFromId(*sep1));
+				cout << *sep1<< " ";
 			}
 			cout << endl;
 
 			cout << "Nodes: ";
 			for (vector<int>::iterator sep2 = suggestedSeparation.cluster2.begin(); sep2 != suggestedSeparation.cluster2.end(); ++sep2){
-				cout << _instance->getNodeName(_instance->getOrig().nodeFromId(*sep2));
+				cout << *sep2 << " ";
 			}
 			cout << endl;
 
@@ -204,6 +293,7 @@ Separation KClustifier::suggestSeparation(vector<int>& cluster){
 	for (vector<int>::iterator it = cluster.begin(); it != cluster.end(); ++it){
 		FullGraph::Node node1 = _instance->getOrig().nodeFromId(*it);
 		for (vector<int>::iterator it2 = it; it2 != cluster.end(); ++it2){
+			if (it == it2) continue;
 
 			//We initialize a new separation
 			Separation separation;

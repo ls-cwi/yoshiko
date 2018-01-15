@@ -93,11 +93,13 @@ namespace ysk {
 	}
 
 	void ClusterEditingSolutions::printSolution(size_t index){
+		int idx = 0;
 		for(auto &entry : _solutions[index]){
-			cout << "Cluster: ";
+			cout << "Cluster " << idx << ": ";
 			for (auto i = entry.begin(); i != entry.end(); ++i)
 			    cout << *i<<" ";
 			cout <<endl;
+			idx ++;
 		}
 		cout << endl;
 	}

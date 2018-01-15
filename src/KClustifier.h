@@ -76,7 +76,7 @@ private:
 	void printMergeCosts();
 
 	Separation suggestSeparation(std::vector<int>& cluster);
-
+	void splitCheapest(std::vector<std::vector<int>>& solution);
 
 
 	std::map<std::pair<int,int>,double> _mergeCosts;

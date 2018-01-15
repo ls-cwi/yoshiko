@@ -226,6 +226,7 @@ namespace ysk {
 	  //Heuristic K-Cluster postprocessing if desired
 
 	  if (_parameter.targetClusterCount != -1 && _parameter.useHeuristic){
+		  //TODO: Recursively attempt to merge or split, there are instances where a better score can be reached!
 			if (verbosity >= 2)
 				cout << "Aiming for the following cluster count: "<<_parameter.targetClusterCount << endl;
 			//Generate a new k-clustifier instance
