@@ -2,7 +2,7 @@
  * SilhouetteValue.h
  *
  *  Created on: Jan 15, 2018
- *      Author: philipp
+ *      Author: Philipp Spohr
  */
 
 #ifndef SRC_MEASUREMENT_SILHOUETTEVALUE_H_
@@ -15,6 +15,15 @@
 #include <lemon/connectivity.h>
 
 namespace ysk{
+	/**
+	 *  Implementation of the Silhouette Value as described in
+	 *  Peter J. Rousseeuw. “Silhouettes: A graphical aid to the interpretation and validation of cluster analysis”.
+	 *	In: Journal  of  Computational  and Applied  Mathematics
+	 *	20.Supplement C (1987), pp. 53–65.
+	 *  issn: 0377-0427.
+	 *	doi: https://doi.org/10.1016/0377-0427(87)90125-7
+	 *	url: http://www.sciencedirect.com/science/article/pii/0377042787901257
+	 */
 	class SilhouetteValue {
 	public:
 		SilhouetteValue(ClusterEditingInstance* instance,std::vector<std::vector<int>>& solution):

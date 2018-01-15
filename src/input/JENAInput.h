@@ -8,6 +8,8 @@
 
 #include "StreamInput.h"
 
+#include <stdio.h>
+
 namespace yskInput{
 
 	/**

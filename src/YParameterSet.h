@@ -2,7 +2,7 @@
  * YParameterSet.h
  *
  *  Created on: Sep 4, 2017
- *      Author: philipp
+ *      Author: Philipp Spohr
  */
 
 #ifndef SRC_YPARAMETERSET_H_
@@ -36,7 +36,7 @@ struct YParameterSet {
 	 */
 	int nrOptimalSolutions;
 	/**
-	 * TODO: This is super akward having a String, would be way better to have a different structure I think, maybe just calculate something and represent as Byte?
+	 * This is super akward having a String, would be way better to have a different structure I think, maybe just calculate something and represent as Byte?
 	 */
 	std::string rulesBitMask;
 	double multiplicativeFactor;

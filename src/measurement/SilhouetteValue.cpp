@@ -2,7 +2,7 @@
  * SilhouetteValue.cpp
  *
  *  Created on: Jan 15, 2018
- *      Author: philipp
+ *      Author: Philipp Spohr
  */
 
 #include "SilhouetteValue.h"
@@ -107,5 +107,3 @@ namespace ysk{
 		return factor*sum;
 	}
 }
-
-

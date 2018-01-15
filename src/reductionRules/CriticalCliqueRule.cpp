@@ -12,8 +12,6 @@ using namespace lemon;
 
 namespace ysk {
 
-//TODO: MERGING LEAKS MEMORY
-
 void CriticalCliqueRule::apply() {
   
   for (WorkingCopyGraph::NodeIt v(_instance.getGraph()); v != INVALID; ++v) {
