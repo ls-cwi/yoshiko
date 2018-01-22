@@ -92,14 +92,16 @@ void KClustifier::splitCheapest(vector<vector<int>>& solution){
 		cout << "Into: " << endl;
 		cout << "Nodes: " <<endl;
 		for (vector<int>::iterator sep1 = cheapestSeparation.cluster1.begin(); sep1 != cheapestSeparation.cluster1.end(); ++sep1){
-			cout << *sep1 << " ";
+			cout << _instance->getNodeName(_instance->getOrig().nodeFromId(*sep1)) << " ";
 		}
 		cout << endl;
 
 		cout << "Nodes: "<<endl;
 		for (vector<int>::iterator sep2 = cheapestSeparation.cluster2.begin(); sep2 != cheapestSeparation.cluster2.end(); ++sep2){
-			cout << *sep2 << " ";
+			cout << _instance->getNodeName(_instance->getOrig().nodeFromId(*sep2)) << " ";
 		}
+		cout << endl;
+		cout << "Cost: " << cheapestSeparation.cost << endl;
 		cout << endl <<endl;
 	}
 
@@ -254,13 +256,13 @@ void KClustifier::calculateLowerBoundSplitCosts(vector<vector<int>>& solution){
 
 			cout << "Nodes: ";
 			for (vector<int>::iterator sep1 = suggestedSeparation.cluster1.begin(); sep1 != suggestedSeparation.cluster1.end(); ++sep1){
-				cout << *sep1<< " ";
+				cout << _instance->getNodeName(_instance->getOrig().nodeFromId(*sep1)) << " ";
 			}
 			cout << endl;
 
 			cout << "Nodes: ";
 			for (vector<int>::iterator sep2 = suggestedSeparation.cluster2.begin(); sep2 != suggestedSeparation.cluster2.end(); ++sep2){
-				cout << *sep2 << " ";
+				cout << _instance->getNodeName(_instance->getOrig().nodeFromId(*sep2)) << " ";
 			}
 			cout << endl;
 
@@ -292,7 +294,6 @@ Separation KClustifier::suggestSeparation(vector<int>& cluster){
 
 			//We initialize a new separation
 			Separation separation;
-			separation.cost = 0;
 
 			//We fetch the lemon objects for quicker reference
 			FullGraph::Node node2 = _instance->getOrig().nodeFromId(*it2);
@@ -302,12 +303,15 @@ Separation KClustifier::suggestSeparation(vector<int>& cluster){
 			//We therefore put them both into different clusters in the suggested separation
 			separation.cluster1.push_back(*it);
 			separation.cluster2.push_back(*it2);
+
+			separation.cost = 0;
 			//We will also pay the costs of removing the edge
 			separation.cost += _instance->getWeight(edge);
 
 			//We then check for each other node what the cheapest option would be, ignoring relationships between the nodes
 			for (vector<int>::iterator it3 = cluster.begin();it3 != cluster.end(); ++it3){
 				if (it3 == it || it3 == it2) continue; //We don't want that
+
 				//Fetch lemon objects and associated edge weights
 				FullGraph::Node node3 = _instance-> getOrig().nodeFromId(*it3);
 				FullGraph::Edge from1to3 = _instance->getOrig().findEdge(node1, node3, INVALID);
@@ -335,6 +339,27 @@ Separation KClustifier::suggestSeparation(vector<int>& cluster){
 
 
 			}
+			if (verbosity > 4){
+				cout << "Possible Separation (Edge {";
+				cout <<_instance->getNodeName(_instance->getOrig().nodeFromId(*it));
+				cout <<",";
+				cout <<_instance->getNodeName(_instance->getOrig().nodeFromId(*it2));
+				cout << "})";
+				cout << endl;
+
+				cout << "Nodes: ";
+				for (vector<int>::iterator sep1 = separation.cluster1.begin(); sep1 != separation.cluster1.end(); ++sep1){
+					cout << _instance->getNodeName(_instance->getOrig().nodeFromId(*sep1)) << " ";
+				}
+				cout << endl;
+
+				cout << "Nodes: ";
+				for (vector<int>::iterator sep2 = separation.cluster2.begin(); sep2 != separation.cluster2.end(); ++sep2){
+					cout << _instance->getNodeName(_instance->getOrig().nodeFromId(*sep2)) << " ";
+				}
+				cout << endl;
+
+				cout << "Cost: " << separation.cost << endl << endl;			}
 			//If it is good, we keep it!
 			if (separation.cost < suggestion.cost){
 				suggestion = separation;
