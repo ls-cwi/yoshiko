@@ -20,7 +20,7 @@ namespace ysk{
 
 
 		//Treat negative values as offsets OR zeros?
-		const bool negativeToZero = true;
+		const bool negativeToZero = false;
 		const bool negativeOffset = true;
 
 		double minimumEdgeWeight = 0;
@@ -75,6 +75,10 @@ namespace ysk{
 		map<int,double> _averageDissimilaritiesForeign= map<int,double>();
 		for(auto const &cluster : _solution){
 			for (auto const &node : cluster){
+				if (_instance->getSize() == cluster.size()){
+					//We can't calculate this because there are no other clusters
+					//TODO: Output useful error msg
+				}
 				double dissim = 1.0/(_instance->getSize()-cluster.size());
 				//Sum Factor
 				double sum = 0.0;

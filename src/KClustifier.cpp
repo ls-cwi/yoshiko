@@ -112,13 +112,7 @@ void KClustifier::splitCheapest(vector<vector<int>>& solution){
 
 	_editingCosts += cheapestSeparation.cost;
 
-	//We need to add the edge weights between all the other nodes which we ignored in the heuristic step
-	for (auto const &node1 : cheapestSeparation.cluster1){
-		for (auto const &node2 : cheapestSeparation.cluster2){
-			FullGraph::Edge edge = _instance->getOrig().findEdge(_instance->getOrig().nodeFromId(node1) , _instance->getOrig().nodeFromId(node2) , INVALID);
-			_editingCosts += _instance->getWeight(edge);
-		}
-	}
+
 
 	//Update the lower bound splitting table for further splits
 
@@ -345,6 +339,14 @@ Separation KClustifier::suggestSeparation(vector<int>& cluster){
 			if (separation.cost < suggestion.cost){
 				suggestion = separation;
 			}
+		}
+	}
+
+	//We need to add the edge weights between all the other nodes which we ignored in the previous step
+	for (auto const &node1 : cluster){
+		for (auto const &node2 : cluster){
+			FullGraph::Edge edge = _instance->getOrig().findEdge(_instance->getOrig().nodeFromId(node1) , _instance->getOrig().nodeFromId(node2) , INVALID);
+			_editingCosts += _instance->getWeight(edge);
 		}
 	}
 
