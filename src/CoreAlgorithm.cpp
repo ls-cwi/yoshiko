@@ -1,8 +1,6 @@
 /*
  * CoreAlgorithm.cpp
  *
- *  Created on: Aug 11, 2017
- *      Author: philipp
  */
 
 #include "CoreAlgorithm.h"
@@ -22,8 +20,6 @@ namespace ysk {
 		//At the beginning of a run we set the global termination flag to false ->
 		//If we use this software as a lib it might have been set to true in a previous run
 		isTerminated = false;
-
-		//TODO: Add more 'breakpoints' where the task checks if it is already cancelled
 
 		if (verbosity >= 5)
 			cout << _instance << endl;

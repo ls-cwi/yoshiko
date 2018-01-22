@@ -182,7 +182,6 @@ int main(int argc, char * const argv[]) {
   ClusterEditingSolutions* ces = core->run();
 
   //Print Silhouette Value if required
-  //TODO: Make accessible from library, add support for printing it to certain output formats if required
   if (printSilhouetteValue){
 	  for (unsigned int i = 0; i < ces->getNumberOfSolutions(); i++){
 		  cout << "Silhouette Value: " << SilhouetteValue(instance,ces->getSolution(i)).getValue() << endl;

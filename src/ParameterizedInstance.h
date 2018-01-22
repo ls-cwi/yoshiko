@@ -6,8 +6,6 @@
 //  Copyright (c) 2012 Emanuel Laude. All rights reserved.
 //
 
-//TODO: Enable cancelling of heuristic
-
 #ifndef PARAMETERIZEDINSTANCE_H
 #define PARAMETERIZEDINSTANCE_H
 

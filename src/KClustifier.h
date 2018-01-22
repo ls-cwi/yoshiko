@@ -17,6 +17,9 @@
 
 namespace ysk {
 
+/**
+ * Simple helper construct, describes a separation of a cluster into two clusters as well as the associated editing costs caused by the process of splitting
+ */
 struct Separation{
 	double cost;
 	std::vector<int> cluster1;
@@ -24,7 +27,7 @@ struct Separation{
 };
 
 /**
- *  Class enabling post-processing to adjust a solution in order to generate a fixed cluster count.
+ *  Class enabling post-processing to adjust a solution in order to generate a fixed cluster count. This is done by either merging or splitting clusters recursively
  */
 class KClustifier {
 public:
@@ -88,8 +91,6 @@ private:
 	double _editingCosts;
 
 };
-
-
 
 } /* namespace ysk */
 

@@ -13,7 +13,9 @@ bool SIFInput::parseInput(std::istream &is){
 	try {
 		map<string, int> nodeID;
 		map<int, string> nodeName;
+
 		string line; int n = 0;
+
 		while (getline(is, line)) {
 			vector<string> tokens;
 			// gunnar: there was a bug in reading in SIF files (DOS line break). I added '\r' so it should work now
@@ -27,7 +29,9 @@ bool SIFInput::parseInput(std::istream &is){
 
 			}
 		}
-		//cout << "read " << n << " nodes" << endl;
+		if (verbosity > 4){
+			cout << "[SIF Parser]: Read " << n << " nodes" << endl;
+		}
 
 		//cout << "initializing... " << flush;
 		_instance->init(n);
