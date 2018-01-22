@@ -342,11 +342,12 @@ Separation KClustifier::suggestSeparation(vector<int>& cluster){
 		}
 	}
 
+	suggestion.cost = 0;
 	//We need to add the edge weights between all the other nodes which we ignored in the previous step
-	for (auto const &node1 : cluster){
-		for (auto const &node2 : cluster){
+	for (auto const &node1 : suggestion.cluster1){
+		for (auto const &node2 : suggestion.cluster2){
 			FullGraph::Edge edge = _instance->getOrig().findEdge(_instance->getOrig().nodeFromId(node1) , _instance->getOrig().nodeFromId(node2) , INVALID);
-			_editingCosts += _instance->getWeight(edge);
+			suggestion.cost += _instance->getWeight(edge);
 		}
 	}
 
