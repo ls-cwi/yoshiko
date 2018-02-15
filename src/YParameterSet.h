@@ -11,7 +11,10 @@
 
 namespace ysk {
 
+//Default Values for Yoshiko Parameters
 const unsigned int DEFAULT_VALUE_OPTIMAL_SOLUTION_COUNT = 1;
+const double DEFAULT_VALUE_MULTIPLICATIVE_FACTOR_SNR = 1;
+const bool DEFAULT_VALUE_USE_HEURISTIC = false;
 
 /**
  * A struct containing all parameters defining a Yoshiko run
@@ -27,8 +30,8 @@ struct YParameterSet {
 	YParameterSet()
 	:nrOptimalSolutions(DEFAULT_VALUE_OPTIMAL_SOLUTION_COUNT)
 	,rulesBitMask("111111")
-	,multiplicativeFactor(1)
-	,useHeuristic(false),
+	,multiplicativeFactor(DEFAULT_VALUE_MULTIPLICATIVE_FACTOR_SNR)
+	,useHeuristic(DEFAULT_VALUE_USE_HEURISTIC),
 	separatePartitionCuts(false),
 	separateTriangles(false),
 	targetClusterCount(-1)

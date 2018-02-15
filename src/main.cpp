@@ -70,8 +70,10 @@ int main(int argc, char * const argv[]) {
   ArgParser ap(argc, argv);
   string inputFilename, outputFilename;
   string graphLabel = "cluster_solution";
+
   int inputFileFormat = 0;
   int outputFileFormat = 0;
+
   bool exportLP = false;
   bool printSilhouetteValue = false;
 
@@ -84,17 +86,18 @@ int main(int argc, char * const argv[]) {
   ap.refOption("o", "Name of output file(s) []", outputFilename, false);
   ap.refOption("O", "output file format 0 = csv, 1 = table (line one: number of nodes, line two: number of clusters, column one: node name, column two: cluster ID), 2 = gml, 3 = xgmml (Cytoscape) 4 = Pajek [0], 5 = table (Cytoscape app), 6 = TransClust Format", outputFileFormat, false);
   ap.refOption("v", "verbosity, 0 = silent, 5 = full [0]", verbosity, false);
-  ap.refOption("H", "utilize heuristic instead of ILP, [false]", parameter.useHeuristic, false);
+  ap.refOption("H", "Utilize heuristic instead of ILP, ["+DEFAULT_VALUE_USE_HEURISTIC+"]", parameter.useHeuristic, false);
   ap.refOption("T", "CPU time limit (s) for the ILP component, -1 = no limit [-1]", time_limit, false);
   ap.refOption("t", "Threshold for RowSim format, Should be in range 0 <= t <= 1 [0.5]",threshold,false);
   ap.refOption("threads", "number of threads [max]", no_threads, false);
   ap.refOption("e", "export LP [false]", exportLP, false);
   ap.refOption("st", "separate triangles [false]", parameter.separateTriangles, false);
   ap.refOption("sp", "separate partition cuts [false]", parameter.separatePartitionCuts, false);
-  ap.refOption("n", "number of optimal solutions [1]", parameter.nrOptimalSolutions, false);
-  ap.refOption("m", "multiplicative factor for real valued edge weights in SimilarNeighborhoodRule (the higher the better the reduction results and the slower the performance) [1]", parameter.multiplicativeFactor, false);
+  ap.refOption("n", "number of optimal solutions ["+DEFAULT_VALUE_OPTIMAL_SOLUTION_COUNT+"]", parameter.nrOptimalSolutions, false);
+  ap.refOption("m", "multiplicative factor for real valued edge weights in SimilarNeighborhoodRule (the higher the better the reduction results and the slower the performance) ["+DEFAULT_VALUE_MULTIPLICATIVE_FACTOR_SNR+"]", parameter.multiplicativeFactor, false);
   ap.refOption("g", "graph label []", graphLabel, false);
   ap.refOption("r", "explicitly turn on/off reduction rules, bit string (right to left): bit 0 = CliqueRule, bit 1 = CriticalCliqueRule, bit 2 = AlmostCliqueRule, bit 3 = HeavyEdgeRule3in1, bit 4 = ParameterDependentReductionRule, bit 5 = SimilarNeighborhoodRule [111111]", parameter.rulesBitMask, false);
+
   ap.refOption("k", "[EXPERIMENTAL!!!] Define the number of desired clusters, -1 determines this value automatically [-1]",parameter.targetClusterCount,false);
   ap.refOption("s", "[EXPERIMENTAL!!!] Prints the silhouette value at the end of the run",printSilhouetteValue,false);
 
