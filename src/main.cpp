@@ -253,14 +253,10 @@ int main(int argc, char * const argv[]) {
   ap.refOption("m", "multiplicative factor for real valued edge weights in SimilarNeighborhoodRule (the higher the better the reduction results and the slower the performance) ["+DEFAULT_VALUE_MULTIPLICATIVE_FACTOR_SNR+"]", parameter.multiplicativeFactor, false);
   ap.refOption("g", "graph label []", graphLabel, false);
   ap.refOption("r", "explicitly turn on/off reduction rules, bit string (right to left): bit 0 = CliqueRule, bit 1 = CriticalCliqueRule, bit 2 = AlmostCliqueRule, bit 3 = HeavyEdgeRule3in1, bit 4 = ParameterDependentReductionRule, bit 5 = SimilarNeighborhoodRule [111111]", parameter.rulesBitMask, false);
-<<<<<<< HEAD
 
   ap.refOption("k", "[EXPERIMENTAL!!!] Define the number of desired clusters, -1 determines this value automatically [-1]",parameter.targetClusterCount,false);
   ap.refOption("s", "[EXPERIMENTAL!!!] Prints the silhouette value at the end of the run",printSilhouetteValue,false);
 
-=======
-  ap.refOption("k", "[EXPERIMENTAL!!!] define the number of clusters, -1 determines this value automatically [-1]",parameter.targetClusterCount,false);
->>>>>>> 3fde6b00547703503a9977f1c667081d210654f2
 
   // Perform the parsing process
   // (in case of any error it terminates the program) -> tb improved
