@@ -32,11 +32,11 @@ CPLEX is a commercial product owned by IBM. For academic purposes it can be obta
 
   http://www-03.ibm.com/ibm/university/academic/pub/page/membership
 
-Next, yoshiko can be compiled:
+Next, Yoshiko can be compiled:
 
     mkdir build
     cd build
-    cmake ..
+    cmake .. all
     make
 
 In case auto-detection of LEMON or CPLEX fails, do
@@ -50,11 +50,16 @@ In case auto-detection of LEMON or CPLEX fails, do
 
 ## CMake-Flags
 
--DBUILD_AS_EXEC=ON -> Builds a standalone command line tool instead of the yoshiko library \
 -DBUILD_STATIC=ON -> Enables static linking
 
+## Make-Targets
+
+executable -> The stand-alone executable of Yoshiko
+library -> The library (used for instance by the Cytoscape plugin)
+all -> Builds both
+
 ## Running Yoshiko (Standalone)
-Requires you to build Yoshiko as a standalone program (see CMake-Flags)\
+Requires you to build Yoshiko as a standalone program (see Make-Targets)\
 
 To run yoshiko on the test instance (without producing any output):
 
