@@ -42,6 +42,7 @@ namespace yskInput{
 		 */
 		JENAInput(ysk::ClusterEditingInstance* inst) : StreamInput(inst){};
 
+
 		/**
 		 * Parses the input (see StreamInput.h)
 		 * @param is The input stream from which the instance is to be parsed
@@ -49,6 +50,9 @@ namespace yskInput{
 		 * TODO: Thinking about a coherent way of exception handling, maybe throw exception and return void
 		 */
 		bool parseInput(std::istream &is);
+
+		bool parseInput_new(std::istream &is);
+
 
 	};
 

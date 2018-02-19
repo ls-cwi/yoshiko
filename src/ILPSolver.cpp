@@ -313,6 +313,8 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
         cout << n << " nodes" << endl;
     }
 
+        if (_useKCluster) cout << "k fixed" << endl;
+
     //generate variables:
 
     IloBoolVarArray x(cplexEnv, g.edgeNum());
@@ -324,8 +326,20 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
         //cout << g.id(g.source(a)) << " --> " << g.id(g.target(a)) << "\t" << g.id(a) << " " << g.edge_no(g.id(g.source(a)), g.id(g.target(a))) << endl;
     }
 
+    IloBoolVarArray y(cplexEnv, _clusterCount * g.nodeNum());
+    if (_useKCluster) { // add k auxiliary vertices and edges to all the others
+        for (int i = 0; i <  _clusterCount; ++i) {
+            for (FullGraph::NodeIt v(g); v != INVALID; ++v) {
+                std::stringstream var_name;
+                var_name << "y_" << i  << "_" << g.id(v);
+                y[i*_clusterCount + g.id(v)] = IloBoolVar(cplexEnv, var_name.str().c_str());
+                M.add(y[i*_clusterCount + g.id(v)]);
+            }
+        }
+    }
 
-    // build objective function
+
+            // build objective function
     IloExpr obj_expr(cplexEnv);
     for (FullGraph::EdgeIt e(g); e != INVALID; ++e)
         if (!inst.isForbidden(e) && !inst.isPermanent(e)) {

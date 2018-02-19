@@ -23,11 +23,16 @@ ClusterEditingInstance::~ClusterEditingInstance() {
 }
 
 void ClusterEditingInstance::init(int size) {
-  _orig.resize(size); //Creates a full graph of the given size
+  _orig.resize(size + _additional_target_clusters); //Creates a full graph of the given size
+	std::cout << "here we are with " << _additional_target_clusters << std::endl;
   //Initializes and creates a matching WorkingCopyInstance for the full graph
+  // letzte k Knoten werden center (in map)
+  // edge weights setzen
+  // forbidden setzen
   _workingCopyInstance = new WorkingCopyInstance(this);
   _workingCopyInstance->init();
   _isInitialized = true;
+	std::cout << "staying alive" << std::endl;
 }
 
 void ClusterEditingInstance::initNode(FullGraph::Node node, string name, vector<int>& cluster) {
