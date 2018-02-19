@@ -1,10 +1,3 @@
-/*
- * File:   SimilarNeighborhoodRule.h
- * Author: emanuellaude
- *
- * Created on 6. September 2012, 14:02
- */
-
 #ifndef SIMILARNEIGHBORHOODRULE_H
 #define	SIMILARNEIGHBORHOODRULE_H
 

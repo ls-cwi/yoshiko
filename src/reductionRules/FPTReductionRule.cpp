@@ -1,10 +1,3 @@
-/*
- * File:   FPTReductionRule.cpp
- * Author: emanuellaude
- *
- * Created on 26. August 2012, 12:14
- */
-
 #include "FPTReductionRule.h"
 
 using namespace std;

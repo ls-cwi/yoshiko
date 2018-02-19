@@ -1,10 +1,3 @@
-/*
- * File:   CriticalCliqueRule.cpp
- * Author: emanuellaude
- *
- * Created on 26. August 2012, 12:08
- */
-
 #include "CriticalCliqueRule.h"
 
 using namespace std;

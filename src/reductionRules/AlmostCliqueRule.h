@@ -1,10 +1,3 @@
-/*
- * File:   AlmostCliqueRule.h
- * Author: emanuellaude
- *
- * Created on 26. August 2012, 11:35
- */
-
 #ifndef ALMOSTCLIQUERULE_H
 #define	ALMOSTCLIQUERULE_H
 

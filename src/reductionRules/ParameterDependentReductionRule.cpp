@@ -1,11 +1,3 @@
-//
-//  ParameterDependentReductionRule.cpp
-//  lemon-first-steps
-//
-//  Created by Emanuel Laude on 20.10.12.
-//  Copyright (c) 2012 Emanuel Laude. All rights reserved.
-//
-
 #include "ParameterDependentReductionRule.h"
 
 using namespace std;

@@ -1,11 +1,3 @@
-//
-//  ParameterDependentReductionRule.h
-//  lemon-first-steps
-//
-//  Created by Emanuel Laude on 20.10.12.
-//  Copyright (c) 2012 Emanuel Laude. All rights reserved.
-//
-
 #ifndef PARAMETERDEPENDENTREDUCTIONRULE_H
 #define PARAMETERDEPENDENTREDUCTIONRULE_H
 

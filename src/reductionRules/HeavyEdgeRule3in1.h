@@ -1,10 +1,3 @@
-/*
- * File:   HeavyEdgeRule3in1.h
- * Author: emanuellaude
- *
- * Created on 27. August 2012, 14:24
- */
-
 #ifndef HEAVYEDGERULE3IN1_H
 #define	HEAVYEDGERULE3IN1_H
 

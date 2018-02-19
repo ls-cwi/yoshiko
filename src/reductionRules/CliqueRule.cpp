@@ -1,11 +1,3 @@
-//
-//  CliqueRule.cpp
-//  weighted-cluster-editing
-//
-//  Created by Emanuel Laude on 20.11.12.
-//  Copyright (c) 2012 Emanuel Laude. All rights reserved.
-//
-
 #include "CliqueRule.h"
 
 using namespace lemon;

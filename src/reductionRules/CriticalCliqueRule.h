@@ -1,10 +1,3 @@
-/*
- * File:   CriticalCliqueRule.h
- * Author: emanuellaude
- *
- * Created on 26. August 2012, 12:08
- */
-
 #ifndef CRITICALCLIQUERULE_H
 #define	CRITICALCLIQUERULE_H
 

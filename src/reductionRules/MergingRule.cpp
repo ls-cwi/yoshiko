@@ -1,10 +1,3 @@
-/*
- * File:   MergingRule.cpp
- * Author: emanuellaude
- *
- * Created on 27. August 2012, 13:06
- */
-
 #include "MergingRule.h"
 
 using namespace std;

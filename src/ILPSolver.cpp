@@ -321,9 +321,9 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
         M.add(x[g.id(e)]);
         //cout << g.id(g.source(a)) << " --> " << g.id(g.target(a)) << "\t" << g.id(a) << " " << g.edge_no(g.id(g.source(a)), g.id(g.target(a))) << endl;
     }
-
+    
+    IloBoolVarArray y(cplexEnv, _clusterCount * g.nodeNum());
     if (_useKCluster) { // add k auxiliary vertices and edges to all the others
-        IloBoolVarArray y(cplexEnv, _clusterCount * g.nodeNum());
         for (int i = 0; i <  _clusterCount; ++i) {
             for (FullGraph::NodeIt v(g); v != INVALID; ++v) {
                 std::stringstream var_name;
@@ -356,7 +356,14 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
             M.add(x[g.id(e)] == 1);
     }
 
-    //Set edges in between centers to forbidden
+    //Set edges in between centers to forbidden (Only in k-cluster mode)
+    //if (_useKCluster){
+        //for (int i = 0; i <  _clusterCount; ++i) {
+            //for (int j = 0; j <  _clusterCount; ++j) {
+                //TODO: As those edges don't even exist as variables, is this needed at all?
+            //}
+        //}
+    //}
     
     //CALLBACKS
 
@@ -384,8 +391,46 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
                 }
             }
         }
+        
+        //Additional Triangle Equalities for K-Cluster Problem
+        
+        if (_useKCluster){
+            for (int i = 0; i <  _clusterCount; ++i) {
+                for (FullGraph::NodeIt j(g); j != INVALID; ++j) {
+                    FullGraph::NodeIt k(g); k = j;
+                    for (++k; k != INVALID; ++k) {
+                        M.add( y[i*_clusterCount + g.id(j)] + x[g.id(g.edge(j, k))] - y[i*_clusterCount + g.id(k)] <= 1);
+                        M.add( y[i*_clusterCount + g.id(j)] - x[g.id(g.edge(j, k))] + y[i*_clusterCount + g.id(k)] <= 1);
+                        M.add(-y[i*_clusterCount + g.id(j)] + x[g.id(g.edge(j, k))] + y[i*_clusterCount + g.id(k)] <= 1);
+                    }
+                }
+            }
+        }
     }
+    
+    //Additional Constraints for K-Cluster problem
+    if(_useKCluster){
+        //First, we want to assure, that every node is connected to EXACTLY one cluster center,
+        //In other words we want to make sure that the number of edges from a given node to cluster centers is = 1
+        for (FullGraph::NodeIt i(g); i != INVALID; ++i) {
+            IloExpr node_association(cplexEnv);
+            for (int j = 0; j <  _clusterCount; ++j) {
+                node_association += y[j*_clusterCount + g.id(i)];
+            }
+            M.add(node_association == 1);
+        }
 
+        //Then we want to also guarantee that no cluster centers are "empty" meaning they should have at least one node associated
+        for (int j = 0; j <  _clusterCount; ++j) {
+            IloExpr cluster_association(cplexEnv);
+            for (FullGraph::NodeIt i(g); i != INVALID; ++i) {
+                cluster_association += y[j*_clusterCount + g.id(i)];
+            }
+            M.add(cluster_association >= 1);
+        }
+    
+    }
+    
     if (verbosity > 1)
         cout << "done." << endl;
 

@@ -1,10 +1,3 @@
-/*
- * File:   SimilarNeighborhoodRule.cpp
- * Author: emanuellaude
- *
- * Created on 6. September 2012, 14:02
- */
-
 #include "SimilarNeighborhoodRule.h"
 
 using namespace std;

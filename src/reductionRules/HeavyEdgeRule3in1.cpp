@@ -1,10 +1,3 @@
-/*
- * File:   HeavyEdgeRule.cpp
- * Author: emanuellaude
- *
- * Created on 27. August 2012, 14:24
- */
-
 #include "HeavyEdgeRule3in1.h"
 
 using namespace std;

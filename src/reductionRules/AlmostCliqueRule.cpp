@@ -1,10 +1,3 @@
-/*
- * File:   AlmostCliqueRule.cpp
- * Author: emanuellaude
- *
- * Created on 26. August 2012, 11:35
- */
-
 #include "AlmostCliqueRule.h"
 
 using namespace lemon;

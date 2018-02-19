@@ -1,10 +1,3 @@
-/*
- * File:   FPTReductionRule.h
- * Author: emanuellaude
- *
- * Created on 26. August 2012, 12:14
- */
-
 #ifndef FPTREDUCTIONRULE_H
 #define	FPTREDUCTIONRULE_H
 

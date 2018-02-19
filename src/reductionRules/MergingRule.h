@@ -1,10 +1,3 @@
-/*
- * File:   MergingRule.h
- * Author: emanuellaude
- *
- * Created on 27. August 2012, 13:06
- */
-
 #ifndef MERGINGRULE_H
 #define	MERGINGRULE_H
 

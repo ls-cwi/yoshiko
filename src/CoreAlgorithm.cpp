@@ -67,13 +67,19 @@ namespace ysk {
 		if (_informer != nullptr){
 			cer.registerInformer(_informer);
 		}
-		cer.perform(*_instance);
-
-		if (verbosity > 1) {
-			cout << "=========================" << endl;
-			cout << "FPT reduction rules applied exhaustively." << endl;
-			cout << "time:\t" << clk << endl;
-		}
+		//Reduction rules break k-clustering
+                if (!(_parameter.targetClusterCount != -1 && !_parameter.useHeuristic)){
+                    cer.perform(*_instance);
+                    if (verbosity > 1) {
+                        cout << "=========================" << endl;
+                        cout << "FPT reduction rules applied exhaustively." << endl;
+                        cout << "time:\t" << clk << endl;
+                    }
+                }
+                else
+                {
+                    cout << "Cannot perform reduction when using k-cluster variant in ILP mode" <<endl;
+                }
 
 		flags.totalCost += cer.getTotalCost();
 
@@ -89,7 +95,7 @@ namespace ysk {
 
 			cout << endl << "==================================" << endl
 					<< "==================================" << endl;
-			cout << endl << "solving (reduced) instances..." << endl;
+			cout << endl << "solving (possibly reduced) instances..." << endl;
 			cout << "-------------------------" << endl;
 		}
 
