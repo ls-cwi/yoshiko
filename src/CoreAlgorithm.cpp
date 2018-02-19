@@ -59,7 +59,7 @@ namespace ysk {
 		bitset<NUMBER_OF_REDUCTION_RULES> rules(_parameter.rulesBitMask);
 		//Generate new CER instance
 		ClusterEditingReduction cer(
-				rules,
+				(!_parameter.useHeuristic && _parameter.targetClusterCount != -1) ? bitset<NUMBER_OF_REDUCTION_RULES>("000000"): rules, //TODO: Flexible default value here
 				_parameter.multiplicativeFactor,
 				_parameter.nrOptimalSolutions > 1 ? true : false
 				);
@@ -67,19 +67,17 @@ namespace ysk {
 		if (_informer != nullptr){
 			cer.registerInformer(_informer);
 		}
-		//Reduction rules break k-clustering
-                if (!(_parameter.targetClusterCount != -1 && !_parameter.useHeuristic)){
-                    cer.perform(*_instance);
-                    if (verbosity > 1) {
-                        cout << "=========================" << endl;
-                        cout << "FPT reduction rules applied exhaustively." << endl;
-                        cout << "time:\t" << clk << endl;
-                    }
+                cer.perform(*_instance);
+                
+                if ((!_parameter.useHeuristic && _parameter.targetClusterCount != -1)){
+                    cout << "Warning: Reduction rules were ignored as they are not available in ILP k-cluster mode" << endl;
                 }
-                else
-                {
-                    cout << "Cannot perform reduction when using k-cluster variant in ILP mode" <<endl;
+                else if (verbosity > 1) {
+                    cout << "=========================" << endl;
+                    cout << "FPT reduction rules applied exhaustively." << endl;
+                    cout << "time:\t" << clk << endl;
                 }
+
 
 		flags.totalCost += cer.getTotalCost();
 

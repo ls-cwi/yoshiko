@@ -122,8 +122,6 @@ int main(int argc, char * const argv[]) {
 		std::cout << "      -sp: " << parameter.separatePartitionCuts << std::endl;
                 if ( ( ap.given("st") || ap.given("sp") ) && parameter.targetClusterCount != -1){
                     std::cout << "The Triangle Separation and Partition Cut callbacks are not available when aiming for a specific cluster count in ILP mode" << std::endl;
-                    parameter.separatePartitionCuts = false;
-                    parameter.separateTriangles = false;
                 }
                 if ((ap.given("st") || ap.given("sp")) && parameter.useHeuristic){
                     std::cout << "Triangle Separation and Partition Cut callbacks are ignored in heuristic mode!" << std::endl;
@@ -132,6 +130,9 @@ int main(int argc, char * const argv[]) {
 		std::cout << "      -m: " << parameter.multiplicativeFactor << std::endl;
 		std::cout << "      -g: " << graphLabel << std::endl;
 		std::cout << "      -r: " << parameter.rulesBitMask << std::endl;
+                if (parameter.targetClusterCount != -1 !&& parameter.useHeuristic && parameter.rulesBitMask != "000000"){
+                        std::cout << "" << endl;
+                }
 		std::cout << "      -k: " << parameter.targetClusterCount << std::endl;
 		std::cout << "      -s: " << printSilhouetteValue << std::endl;
 
