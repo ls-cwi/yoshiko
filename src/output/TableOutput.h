@@ -1,11 +1,3 @@
-//
-//  TableOutput.h
-//  weighted-cluster-editing
-//
-//  Created by Emanuel Laude on 21.03.13.
-//  Copyright (c) 2013 Emanuel Laude. All rights reserved.
-//
-
 #ifndef TABLEOUTPUT_H
 #define TABLEOUTPUT_H
 

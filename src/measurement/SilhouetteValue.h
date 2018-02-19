@@ -1,10 +1,3 @@
-/*
- * SilhouetteValue.h
- *
- *  Created on: Jan 15, 2018
- *      Author: Philipp Spohr
- */
-
 #ifndef SRC_MEASUREMENT_SILHOUETTEVALUE_H_
 #define SRC_MEASUREMENT_SILHOUETTEVALUE_H_
 

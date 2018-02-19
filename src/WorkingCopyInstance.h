@@ -1,10 +1,3 @@
-/*
- * File:   WorkingCopyInstance.h
- * Author: emanuellaude
- *
- * Created on 28. August 2012, 16:54
- */
-
 #ifndef WORKINGCOPYINSTANCE_H
 #define	WORKINGCOPYINSTANCE_H
 

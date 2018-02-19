@@ -1,9 +1,3 @@
-//  ILPSolver.h
-//
-//  Created by Gunnar Klau on 15-06-12.
-//  Copyright (c) 2012 Centrum Wiskunde & Informatica (CWI). All rights reserved.
-//  Contributions: Emanuel Laude, Philipp Spohr
-
 #ifndef ILPSOLVER_H
 #define ILPSOLVER_H
 

@@ -1,10 +1,3 @@
-/*
- * StreamInput.h
- *
- *  Created on: Aug 10, 2017
- *      Author: philipp
- */
-
 #ifndef SRC_INPUT_STREAMINPUT_H
 #define SRC_INPUT_STREAMINPUT_H
 

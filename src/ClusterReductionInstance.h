@@ -1,11 +1,3 @@
-//
-//  ClusterReductionInstance.h
-//  weighted-cluster-editing
-//
-//  Created by Emanuel Laude on 12.01.13.
-//  Copyright (c) 2013 Emanuel Laude. All rights reserved.
-//
-
 #ifndef CLUSTERREDUCTIONINSTANCE_H
 #define CLUSTERREDUCTIONINSTANCE_H
 

@@ -1,11 +1,3 @@
-//
-//  ClusterEditingReduction.cpp
-//  weighted-cluster-editing
-//
-//  Created by Emanuel Laude on 18.11.12.
-//  Copyright (c) 2012 Emanuel Laude. All rights reserved.
-//
-
 #include "ClusterEditingReduction.h"
 
 using namespace std;

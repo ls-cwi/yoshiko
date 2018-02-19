@@ -1,11 +1,3 @@
-//
-//  ClusterReductionInstance.cpp
-//  weighted-cluster-editing
-//
-//  Created by Emanuel Laude on 12.01.13.
-//  Copyright (c) 2013 Emanuel Laude. All rights reserved.
-//
-
 #include "ClusterReductionInstance.h"
 
 using namespace std;

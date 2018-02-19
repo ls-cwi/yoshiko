@@ -1,11 +1,3 @@
-//
-//  GMLOutput.cpp
-//  weighted-cluster-editing
-//
-//  Created by Emanuel Laude on 21.03.13.
-//  Copyright (c) 2013 Emanuel Laude. All rights reserved.
-//
-
 #include "../output/GMLOutput.h"
 
 using namespace std;

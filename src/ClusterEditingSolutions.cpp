@@ -1,12 +1,3 @@
-/*
- *  clusterEditingSolutions.cpp
- *
- *
- *  Created by Gunnar W. Klau on 30-11-2012.
- *  Copyright 2011 Centrum Wiskunde & Informatica (CWI). All rights reserved.
- *
- */
-
 #include "ClusterEditingSolutions.h"
 
 

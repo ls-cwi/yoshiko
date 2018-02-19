@@ -1,7 +1,8 @@
-# yoshiko
+# Yoshiko
 
 (Weighted) Cluster Editing
 
+Authors: Gunnar Klau, Emanuel Laude, Philipp Spohr
 
 ## Compilation instructions
 

@@ -1,10 +1,3 @@
-/*
- * KClustifier.h
- *
- *  Created on: Dec 18, 2017
- *      Author: philipp
- */
-
 #ifndef SRC_KCLUSTIFIER_H_
 #define SRC_KCLUSTIFIER_H_
 

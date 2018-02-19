@@ -1,10 +1,3 @@
-/*
- * TransClustOutput.cpp
- *
- *  Created on: Sep 17, 2017
- *      Author: philipp
- */
-
 #include "TransClustOutput.h"
 
 using namespace std;
@@ -13,7 +6,7 @@ namespace ysk {
 
 
 void TransClustOutput::writeHeader(string label, size_t solution, size_t numberOfNodes, size_t numberOfClusters) {
-	_os << threshold << "\t" << 1.0<<"\t";
+	_os << threshold << "\t" << 1.0<<"\t"; //TODO: Maybe add silhouette value or something useful here
 }
 
 void TransClustOutput::writeBeginNodes(size_t numberOfNodes) {

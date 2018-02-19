@@ -1,11 +1,3 @@
-//
-//  Delta.h
-//  weighted-cluster-editing
-//
-//  Created by Emanuel Laude on 24.01.13.
-//  Copyright (c) 2013 Emanuel Laude. All rights reserved.
-//
-
 #ifndef DELTA_H
 #define DELTA_H
 

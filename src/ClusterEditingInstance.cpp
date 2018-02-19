@@ -1,11 +1,3 @@
-/*
- * File:   ClusterEditingInstance.cpp
- * Author: emanuellaude, guwek
- *
- * Created on 25. August 2012, 14:50
- */
-
-
 #include "ClusterEditingInstance.h"
 
 using namespace std;
@@ -23,16 +15,14 @@ ClusterEditingInstance::~ClusterEditingInstance() {
 }
 
 void ClusterEditingInstance::init(int size) {
-  _orig.resize(size + _additional_target_clusters); //Creates a full graph of the given size
-	std::cout << "here we are with " << _additional_target_clusters << std::endl;
-  //Initializes and creates a matching WorkingCopyInstance for the full graph
-  // letzte k Knoten werden center (in map)
-  // edge weights setzen
-  // forbidden setzen
+  _orig.resize(size + _targetClusterCount); //Creates a full graph of the given size
+  if (verbosity > 3 && _targetClusterCount != 0){
+	  std::cout << "Initializing " << _targetClusterCount << " additional cluster center nodes ..."<<std::endl;
+  }
+
   _workingCopyInstance = new WorkingCopyInstance(this);
   _workingCopyInstance->init();
   _isInitialized = true;
-	std::cout << "staying alive" << std::endl;
 }
 
 void ClusterEditingInstance::initNode(FullGraph::Node node, string name, vector<int>& cluster) {

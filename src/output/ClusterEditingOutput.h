@@ -1,11 +1,3 @@
-//
-//  ClusterEditingOutput.h
-//  weighted-cluster-editing
-//
-//  Created by Emanuel Laude on 20.03.13.
-//  Copyright (c) 2013 Emanuel Laude. All rights reserved.
-//
-
 #ifndef CLUSTEREDITINGOUTPUT_H
 #define CLUSTEREDITINGOUTPUT_H
 

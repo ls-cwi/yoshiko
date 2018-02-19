@@ -1,11 +1,3 @@
-//
-//  XGMMLOutput.h
-//  weighted-cluster-editing
-//
-//  Created by Emanuel Laude on 20.03.13.
-//  Copyright (c) 2013 Emanuel Laude. All rights reserved.
-//
-
 #ifndef XGMMLOUTPUT_H
 #define XGMMLOUTPUT_H
 

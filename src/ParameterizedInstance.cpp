@@ -1,11 +1,3 @@
-//
-//  ParameterizedInstance.cpp
-//  lemon-first-steps
-//
-//  Created by Emanuel Laude on 22.10.12.
-//  Copyright (c) 2012 Emanuel Laude. All rights reserved.
-//
-
 #include "ParameterizedInstance.h"
 
 using namespace std;

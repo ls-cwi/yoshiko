@@ -1,8 +1,3 @@
-/*
- * JENAInput.h
- *      Author: Emanuel Laude, Philipp Spohr
- */
-
 #ifndef SRC_INPUT_JENAINPUT_H
 #define SRC_INPUT_JENAINPUT_H
 
@@ -50,9 +45,6 @@ namespace yskInput{
 		 * TODO: Thinking about a coherent way of exception handling, maybe throw exception and return void
 		 */
 		bool parseInput(std::istream &is);
-
-		bool parseInput_new(std::istream &is);
-
 
 	};
 

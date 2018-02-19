@@ -1,10 +1,3 @@
-/*
- * LibraryInput.h
- *
- *  Created on: Aug 9, 2017
- *      Author: Philipp Spohr
- */
-
 #ifndef SRC_INPUT_LIBRARYINPUT_H
 #define SRC_INPUT_LIBRARYINPUT_H
 

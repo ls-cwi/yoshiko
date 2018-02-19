@@ -1,11 +1,3 @@
-//
-//  InducedCostsHeuristic.cpp
-//  lemon-first-steps
-//
-//  Created by Emanuel Laude on 26.10.12.
-//  Copyright (c) 2012 Emanuel Laude. All rights reserved.
-//
-
 #include "InducedCostsHeuristic.h"
 
 using namespace std;

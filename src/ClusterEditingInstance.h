@@ -1,10 +1,3 @@
-/*
- * File:   ClusterEditingInstance.h
- * Author: emanuellaude
- *
- * Created on 25. August 2012, 14:50
- */
-
 #ifndef CLUSTEREDITINGINSTANCE_H
 #define	CLUSTEREDITINGINSTANCE_H
 
@@ -56,9 +49,6 @@ namespace ysk {
                 , _forbidden(_orig)
                 , _clusters(_orig)
                 , _workingCopyInstance(nullptr)
-                , _vectorCleanList(std::vector<std::vector<int>*>())
-                , _additional_target_clusters(0)
-                , _is_center(_orig)
         {
         }
 
@@ -110,16 +100,9 @@ namespace ysk {
 
         bool isDirty() const;
 
-        //void parseCleverFormat(std::istream &is);
-
         std::vector<int>* getCluster(lemon::FullGraph::Node u) const;
 
-
-
-
         unsigned int getSize() const;
-
-        void set_additional_target_cluster(int k) { _additional_target_clusters = k; }
 
         friend std::ostream& operator <<(std::ostream &os, ClusterEditingInstance &inst);
 
@@ -141,14 +124,12 @@ namespace ysk {
         double _costDeletion;
         bool _initializedCostInsertion;
         bool _initializedCostDeletion;
-        int _additional_target_clusters;
 
         lemon::FullGraph _orig;
         /**
          * Maps each node to a name (identifier)
          */
         lemon::FullGraph::NodeMap<std::string> _nodeNames;
-        lemon::FullGraph::NodeMap<bool> _is_center;
         lemon::FullGraph::EdgeMap<double> _weight;
         lemon::FullGraph::EdgeMap<bool> _permanent;
         lemon::FullGraph::EdgeMap<bool> _forbidden;
@@ -158,8 +139,6 @@ namespace ysk {
         lemon::FullGraph::NodeMap<std::vector<int>* > _clusters;
 
         WorkingCopyInstance* _workingCopyInstance;
-
-        std::vector<std::vector<int>*> _vectorCleanList;
 
     };
 

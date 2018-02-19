@@ -1,8 +1,3 @@
-//  InducedCostsHeuristic.h
-//
-//  Created by Emanuel Laude on 26.10.12.
-//  Copyright (c) 2012 Emanuel Laude. All rights reserved.
-
 #ifndef INDUCEDCOSTSHEURISTIC_H
 #define INDUCEDCOSTSHEURISTIC_H
 

@@ -1,11 +1,3 @@
-//
-//  ClusterEditingReduction.h
-//  weighted-cluster-editing
-//
-//  Created by Emanuel Laude on 18.11.12.
-//  Copyright (c) 2012 Emanuel Laude. All rights reserved.
-//
-
 #ifndef CLUSTEREDITINGREDUCTION_H
 #define CLUSTEREDITINGREDUCTION_H
 

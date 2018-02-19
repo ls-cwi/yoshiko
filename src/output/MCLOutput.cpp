@@ -1,10 +1,3 @@
-/*
- * MCLOutput.cpp
- *
- *  Created on: Sep 23, 2017
- *      Author: philipp
- */
-
 #include "MCLOutput.h"
 
 

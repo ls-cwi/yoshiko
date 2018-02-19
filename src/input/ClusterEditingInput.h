@@ -1,5 +1,3 @@
-//  ClusterEditingInput.h
-
 #ifndef CLUSTEREDITINGINPUT_H
 #define CLUSTEREDITINGINPUT_H
 

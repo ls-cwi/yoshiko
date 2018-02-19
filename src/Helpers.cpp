@@ -1,12 +1,3 @@
-/*
- *  Helpers.cpp
- *  yoshiko
- *
- *  Created by Gunnar W. Klau on 6/15/11.
- *  Copyright 2011 Centrum Wiskunde & Informatica (CWI). All rights reserved.
- *
- */
-
 #include "Helpers.h"
 
 using namespace std;

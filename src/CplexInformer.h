@@ -1,10 +1,3 @@
-/*
- * JavaInformer.h
- *
- *  Created on: Sep 3, 2017
- *      Author: philipp spohr
- */
-
 #ifndef SRC_CPLEXINFORMER_H_
 #define SRC_CPLEXINFORMER_H_
 

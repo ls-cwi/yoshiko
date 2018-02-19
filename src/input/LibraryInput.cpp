@@ -1,10 +1,3 @@
-/*
- * LibraryInput.cpp
- *
- *  Created on: Aug 10, 2017
- *      Author: philipp
- */
-
 #include "LibraryInput.h"
 
 using namespace lemon;

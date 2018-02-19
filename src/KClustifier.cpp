@@ -1,10 +1,3 @@
-/*
- * KClustifier.cpp
- *
- *  Created on: Dec 18, 2017
- *      Author: Philipp Spohr
- */
-
 #include "KClustifier.h"
 
 using namespace std;

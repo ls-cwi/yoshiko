@@ -1,11 +1,3 @@
-//
-//  PajekOutput.cpp
-//  weighted-cluster-editing
-//
-//  Created by Emanuel Laude on 26.03.13.
-//  Copyright (c) 2013 Emanuel Laude. All rights reserved.
-//
-
 #include "../output/PajekOutput.h"
 
 using namespace std;

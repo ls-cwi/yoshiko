@@ -1,10 +1,3 @@
-/*
- * File:   WorkingCopyInstance.cpp
- * Author: emanuellaude
- *
- * Created on 28. August 2012, 16:54
- */
-
 #include "WorkingCopyInstance.h"
 
 using namespace std;

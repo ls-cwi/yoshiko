@@ -1,11 +1,3 @@
-//
-//  ILPSolver.cpp
-//  yoshiko
-//
-//  Created by Gunnar Klau on 15-06-12.
-//  Copyright (c) 2012 Centrum Wiskunde & Informatica (CWI). All rights reserved.
-//
-
 #include "ILPSolver.h"
 
 using namespace std;
@@ -242,17 +234,17 @@ void ILPSolver::terminate(){
  */
 long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolutions& s, SolutionFlags& flags) {
 
-	if(inst.isDirty()) {
-		//TODO: Better error handling
+    if(inst.isDirty()) {
+	//TODO: Better error handling, when would this happen?
         cerr << "Fatal error: ClusterEditingInstance is dirty."<<endl;
         exit(-1);
     }
 
-    // get graph, I need it so often
+    //Fetch the full graph 
     const FullGraph g = inst.getOrig();
 
     //skip if size is 1 because cplex throws an error in this case.
-    //@gunnar, vielleicht kann man das auch schöner umgehen...
+    //@gunnar, vielleicht kann man das auch schöner umgehen... //TODO: Still relevant?
     if(g.nodeNum() <= 1) {
         if (verbosity > 1) {
             cout << "size of instance is 1. No further computation is necessary."<<endl;
@@ -272,7 +264,7 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
     cplex.use(_aborter);
     _cplexInitialized = true; //flag for external objects to check if a cplex instance is initialized (and can thus be stopped)
 
-    // shut up cplex
+    // shut up cplex (or don't)
     if (verbosity < 3) {
     	cplex.setOut(cplexEnv.getNullStream());
     	cplex.setWarning(cplexEnv.getNullStream());
@@ -283,6 +275,7 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
     	cplex.setOut(cout);
     }
 
+    //If applicable, set thread number
     if (no_threads != -1)
     	cplex.setParam(IloCplex::Threads, no_threads);
 
@@ -309,13 +302,16 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
     cplex.setParam(IloCplex::FlowPaths, -1);
 
     int n = g.nodeNum();
+
+                
+    //Some output because why not
     if (verbosity > 1) {
         cout << n << " nodes" << endl;
     }
 
         if (_useKCluster) cout << "k fixed" << endl;
 
-    //generate variables:
+    //Generate variables:
 
     IloBoolVarArray x(cplexEnv, g.edgeNum());
     for (FullGraph::EdgeIt e(g); e != INVALID; ++e) {
@@ -326,8 +322,8 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
         //cout << g.id(g.source(a)) << " --> " << g.id(g.target(a)) << "\t" << g.id(a) << " " << g.edge_no(g.id(g.source(a)), g.id(g.target(a))) << endl;
     }
 
-    IloBoolVarArray y(cplexEnv, _clusterCount * g.nodeNum());
     if (_useKCluster) { // add k auxiliary vertices and edges to all the others
+        IloBoolVarArray y(cplexEnv, _clusterCount * g.nodeNum());
         for (int i = 0; i <  _clusterCount; ++i) {
             for (FullGraph::NodeIt v(g); v != INVALID; ++v) {
                 std::stringstream var_name;
@@ -339,18 +335,19 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
     }
 
 
-            // build objective function
+    //Build objective function
     IloExpr obj_expr(cplexEnv);
-    for (FullGraph::EdgeIt e(g); e != INVALID; ++e)
+    for (FullGraph::EdgeIt e(g); e != INVALID; ++e){
         if (!inst.isForbidden(e) && !inst.isPermanent(e)) {
-            obj_expr -= inst.getWeight(e) * x[g.id(e)];
+            obj_expr -= inst.getWeight(e) * x[g.id(e)]; //-= is overload for adding a linear expression
             if (inst.getWeight(e) > 0)
                 obj_expr += inst.getWeight(e);
         }
-
+    }
+    
     M.add(IloObjective(cplexEnv, obj_expr, IloObjective::Minimize));
 
-    // add inequalities for forbidden/permanent edges:
+    //Add inequalities for forbidden/permanent edges:
     for (FullGraph::EdgeIt e(g); e != INVALID; ++e) {
         if (inst.isForbidden(e))
             M.add(x[g.id(e)] == 0);
@@ -359,7 +356,8 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
             M.add(x[g.id(e)] == 1);
     }
 
-
+    //Set edges in between centers to forbidden
+    
     //CALLBACKS
 
     if (_sep_triangles) cplex.use(triangle_callback(cplexEnv, inst, x)); // use triangle callback --> lazy constraints!
@@ -391,14 +389,16 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
     if (verbosity > 1)
         cout << "done." << endl;
 
-
-    //cout << "extracting (and exporting) ILP... " << flush;
+    //cout << "extracting (and exporting) ILP... " << flush; (TODO: Sinn? is anything happening here that I am missing?)
+    
     if (verbosity > 1) {
         cout << "extracting ILP... " << flush;
     }
 
     cplex.extract(M);
+    
     //if (verbose) cplex.exportModel("yoshiko.lp");
+    
     if (verbosity > 1) {
         cout << "done." << endl;
     }
@@ -413,7 +413,7 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
     }
 
     //Start Solver, returns true if the solution is feasible (not optimal!)
-	flags.ilpGenerated = true; //Mark solution as being generated by ILP
+    flags.ilpGenerated = true; //Mark solution as being generated by ILP
     bool feasible = cplex.solve();
 
     //Time-out handling

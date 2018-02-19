@@ -1,10 +1,3 @@
-/*
- * RowSimInput.h
- *
- *  Created on: Sep 13, 2017
- *      Author: philipp
- */
-
 #ifndef SRC_INPUT_ROWSIMINPUT_H_
 #define SRC_INPUT_ROWSIMINPUT_H_
 

@@ -1,10 +1,3 @@
-/*
- * SilhouetteValue.cpp
- *
- *  Created on: Jan 15, 2018
- *      Author: Philipp Spohr
- */
-
 #include "SilhouetteValue.h"
 
 using namespace std;

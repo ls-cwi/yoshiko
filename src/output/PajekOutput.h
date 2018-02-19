@@ -1,11 +1,3 @@
-//
-//  PajekOutput.h
-//  weighted-cluster-editing
-//
-//  Created by Emanuel Laude on 26.03.13.
-//  Copyright (c) 2013 Emanuel Laude. All rights reserved.
-//
-
 #ifndef PAJEKOUTPUT_H
 #define PAJEKOUTPUT_H
 

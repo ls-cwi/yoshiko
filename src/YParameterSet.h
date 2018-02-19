@@ -1,10 +1,3 @@
-/*
- * YParameterSet.h
- *
- *  Created on: Sep 4, 2017
- *      Author: Philipp Spohr
- */
-
 #ifndef SRC_YPARAMETERSET_H_
 #define SRC_YPARAMETERSET_H_
 

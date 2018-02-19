@@ -1,10 +1,3 @@
-/*
- * TransClustOutput.h
- *
- *  Created on: Sep 17, 2017
- *      Author: philipp
- */
-
 #ifndef SRC_OUTPUT_TRANSCLUSTOUTPUT_H_
 #define SRC_OUTPUT_TRANSCLUSTOUTPUT_H_
 

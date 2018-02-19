@@ -1,10 +1,3 @@
-/*
- * LibraryInterface.h
- *
- *  Created on: Aug 6, 2017
- *      Author: Philipp Spohr
- */
-
 #ifndef SRC_LIBRARYINTERFACE_H
 #define SRC_LIBRARYINTERFACE_H
 
