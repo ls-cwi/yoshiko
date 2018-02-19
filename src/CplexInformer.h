@@ -43,6 +43,5 @@ namespace yskLib{
 			virtual ~CplexInformer(){};
 	};
 
-
 }
 #endif /* SRC_CPLEXINFORMER_H_ */

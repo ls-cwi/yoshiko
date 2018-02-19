@@ -120,7 +120,6 @@ namespace ysk {
 
 		vector<vector<vector<vector<int> > > > instances;
 
-
 		//Iterate over the remaining reduced instances
 		for (vector<ClusterReductionInstance*>::iterator it = reduced.begin();
 				it != reduced.end(); it++, j++) {
@@ -219,7 +218,7 @@ namespace ysk {
 		//Restore timeout flag
 		_result->setFlags(flags);
 
-	  //Heuristic K-Cluster postprocessing if desired
+	  //Heuristic K-Cluster post-processing if desired
 
 	  if (_parameter.targetClusterCount != -1 && _parameter.useHeuristic){
 			if (verbosity >= 2)
@@ -289,5 +288,4 @@ namespace ysk {
 			mergeSolutions(i + 1, k, p, solutions, instances);
 		}
 	}
-
 }
