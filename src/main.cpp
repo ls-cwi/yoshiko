@@ -130,8 +130,8 @@ int main(int argc, char * const argv[]) {
 		std::cout << "      -m: " << parameter.multiplicativeFactor << std::endl;
 		std::cout << "      -g: " << graphLabel << std::endl;
 		std::cout << "      -r: " << parameter.rulesBitMask << std::endl;
-                if (parameter.targetClusterCount != -1 !&& parameter.useHeuristic && parameter.rulesBitMask != "000000"){
-                        std::cout << "" << endl;
+                if (parameter.targetClusterCount != -1 && !parameter.useHeuristic && parameter.rulesBitMask != "000000"){
+                        std::cout << "Reduction Rules are disabled in ILP k-cluster mode" << endl;
                 }
 		std::cout << "      -k: " << parameter.targetClusterCount << std::endl;
 		std::cout << "      -s: " << printSilhouetteValue << std::endl;
