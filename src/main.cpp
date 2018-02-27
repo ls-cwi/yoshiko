@@ -67,7 +67,7 @@ int main(int argc, char * const argv[]) {
 	int inputFileFormat = 0;
 	int outputFileFormat = 0;
 
-	bool exportLP = false;
+	bool exportLP = false; // << This is unused as far as I can tell TODO:
 	bool printSilhouetteValue = false;
 
 	YParameterSet parameter;

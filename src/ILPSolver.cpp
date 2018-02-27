@@ -34,8 +34,11 @@ ILOLAZYCONSTRAINTCALLBACK4(triangle_callback, const ClusterEditingInstance&, ins
         //We fetch the variables for further reference
         IloNumArray x_vals(env);
         IloNumArray y_vals(env);
+        //cout << "Fetching x and y values" << endl;
         getValues(x_vals, x);
+        //cout << "[X DONE]" << endl;
         getValues(y_vals, y);
+        //cout << "[Y DONE]" << endl;
 
         const FullGraph g = inst.getOrig();
         const int n = g.nodeNum();
@@ -47,14 +50,21 @@ ILOLAZYCONSTRAINTCALLBACK4(triangle_callback, const ClusterEditingInstance&, ins
             if (x_vals[g.id(e)] > 1.0 - eps) x_vals[g.id(e)] = 1.0;
             //if (x_vals[g.id(e)] > eps && x_vals[g.id(e)] < 1.0 - eps) fractional = true;
         }
+        
 
-        unsigned long long no_checks = n * (n-1) * (n-2) / 6, no_checked = 0;
+        //Round k-cluster stuff as well ???
+        for (int i = 0; i < clusterCount; i++){
+            //TODO: Maybe?
+        }
+
+        unsigned long long no_checks = (n+clusterCount) * (n+clusterCount-1) * (n+clusterCount-2) / 6, no_checked = 0; //TODO: Why long long?
+        
         //	   cout << " versus " << no_checks << endl;
 
         for (FullGraph::NodeIt i(g); i != INVALID; ++i) {
             if (time_limit != -1) {
                 if (clk.systemTime() > time_limit) //TOOD: Coherent use of time_limit in ALL of yoshiko
-                    throw("time limit exceeded in yoshiko triangle callback");
+                    throw("Time limit exceeded in yoshiko triangle callback");
 
                 cout << clk << endl;
             }
@@ -117,7 +127,7 @@ ILOLAZYCONSTRAINTCALLBACK4(triangle_callback, const ClusterEditingInstance&, ins
         return;
     }
     catch (IloException& e) {
-        env.out() << e << endl;
+        env.out() << e.getMessage() << endl;
         throw -1;
     }
     catch (Exception& e) {
@@ -318,6 +328,8 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
     //cplex.setParam(IloCplex::NodeFileInd,2);
 
 
+    //TODO: Potential for research, observe relations between cuts / running time / instance properties
+    
     //Set all generic cuts off
 //     cplex.setParam(IloCplex::Cliques, -1);
 //     cplex.setParam(IloCplex::Covers, -1);
@@ -352,6 +364,7 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
     }
     
     IloBoolVarArray y(cplexEnv, _clusterCount * g.nodeNum());
+    if (_useKCluster && _sep_triangles) M.add(y); //Explicit addition to model (as not used previously)
     if (_useKCluster) { // add k auxiliary vertices and edges to all the others
         for (int i = 0; i <  _clusterCount; ++i) {
             for (FullGraph::NodeIt v(g); v != INVALID; ++v) {
@@ -362,7 +375,6 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
             }
         }
     }
-
 
     //Build objective function
     IloExpr obj_expr(cplexEnv);
