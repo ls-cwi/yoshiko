@@ -319,16 +319,16 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
 
 
     //Set all generic cuts off
-    cplex.setParam(IloCplex::Cliques, -1);
-    cplex.setParam(IloCplex::Covers, -1);
-    cplex.setParam(IloCplex::DisjCuts, -1);
-    cplex.setParam(IloCplex::FlowCovers, -1);
-    cplex.setParam(IloCplex::FracCuts, -1);
-    cplex.setParam(IloCplex::GUBCovers, -1);
-    cplex.setParam(IloCplex::Cliques, -1);
-    cplex.setParam(IloCplex::ImplBd, -1);
-    cplex.setParam(IloCplex::MIRCuts, -1);
-    cplex.setParam(IloCplex::FlowPaths, -1);
+//     cplex.setParam(IloCplex::Cliques, -1);
+//     cplex.setParam(IloCplex::Covers, -1);
+//     cplex.setParam(IloCplex::DisjCuts, -1);
+//     cplex.setParam(IloCplex::FlowCovers, -1);
+//     cplex.setParam(IloCplex::FracCuts, -1);
+//     cplex.setParam(IloCplex::GUBCovers, -1);
+//     cplex.setParam(IloCplex::Cliques, -1);
+//     cplex.setParam(IloCplex::ImplBd, -1);
+//     cplex.setParam(IloCplex::MIRCuts, -1);
+//     cplex.setParam(IloCplex::FlowPaths, -1);
 
     int n = g.nodeNum();
 
