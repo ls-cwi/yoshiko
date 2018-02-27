@@ -55,18 +55,21 @@ public:
 	void registerInformer(yskLib::CplexInformer* informer);
 
 private:
-	bool _sep_triangles;
-	bool _sep_partition_cuts;
-	int _num_opt_sol;
+    /**
+     * Keeps track whether the triangle separation callback is used
+     */
+    bool _sep_triangles;
+    bool _sep_partition_cuts;
+    int _num_opt_sol;
 
-	//K-Cluster variables
-	bool _useKCluster;
-	int _clusterCount;
+    //K-Cluster variables
+    bool _useKCluster;
+    int _clusterCount;
 
-	IloCplex::Aborter _aborter;
-	bool _cplexInitialized;
+    IloCplex::Aborter _aborter;
+    bool _cplexInitialized;
 
-	yskLib::CplexInformer* _informer;
+    yskLib::CplexInformer* _informer;
 };
 
 } // namespace ysk
