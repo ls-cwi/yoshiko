@@ -120,9 +120,6 @@ int main(int argc, char * const argv[]) {
                 
 		std::cout << "      -st: " << parameter.separateTriangles << std::endl;
 		std::cout << "      -sp: " << parameter.separatePartitionCuts << std::endl;
-                if ( ( ap.given("st") || ap.given("sp") ) && parameter.targetClusterCount != -1){
-                    std::cout << "The Triangle Separation and Partition Cut callbacks are not available when aiming for a specific cluster count in ILP mode" << std::endl;
-                }
                 if ((ap.given("st") || ap.given("sp")) && parameter.useHeuristic){
                     std::cout << "Triangle Separation and Partition Cut callbacks are ignored in heuristic mode!" << std::endl;
                 }
