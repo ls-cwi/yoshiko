@@ -130,7 +130,7 @@ int main(int argc, char * const argv[]) {
 		std::cout << "      -m: " << parameter.multiplicativeFactor << std::endl;
 		std::cout << "      -g: " << graphLabel << std::endl;
 		std::cout << "      -r: " << parameter.rulesBitMask << std::endl;
-                if (parameter.targetClusterCount != -1 !&& parameter.useHeuristic && parameter.rulesBitMask != "000000"){
+                if (parameter.targetClusterCount != -1 && parameter.useHeuristic && parameter.rulesBitMask != "000000"){
                         std::cout << "" << endl;
                 }
 		std::cout << "      -k: " << parameter.targetClusterCount << std::endl;
