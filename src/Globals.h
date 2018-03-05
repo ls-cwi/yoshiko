@@ -1,11 +1,3 @@
-//
-//  globals.h
-//  yoshiko
-//
-//  Created by Gunnar Klau on 15-06-12.
-//  Copyright (c) 2012 Centrum Wiskunde & Informatica (CWI). All rights reserved.
-//
-
 #ifndef GLOBALS_H
 #define GLOBALS_H
 

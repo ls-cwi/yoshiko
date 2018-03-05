@@ -4,7 +4,7 @@ project( Yoshiko )
 
 OPTION(BUILD_STATIC "Link libraries static" OFF)
 
-set (Yoshiko_Version "2.1.2")
+set (Yoshiko_Version "2.2.0")
 
 set( Yoshiko_Hdr
 
@@ -140,6 +140,12 @@ set( LIBLEMON_ROOT "$ENV{HOME}/lemon" CACHE PATH "Additional search directory fo
 
 #find_package(JNI)
 
+if (!JNI_FOUND)
+    message("Could not find JNI, you will not be able to build the library!")
+else()
+    message("JNI found @: ${JNI_INCLUDE_DIRS}")
+endif()
+    
 if( NOT CPLEX_INC_DIR OR NOT CPLEX_LIB_DIR OR NOT CONCERT_INC_DIR OR NOT CONCERT_LIB_DIR )
 	set( CPLEX_AUTODETECTION_PREFIXES "$ENV{HOME}/ibm/ILOG;/Applications;$ENV{HOME}/Applications/IBM/ILOG; $ENV{HOME}/ILOG;/opt/ibm/ILOG;$ENV{HOME}/Applications/IBM/ILOG" CACHE STRING "CPLEX automatic lookup directories" )
 	foreach( CplexInstallPrefix ${CPLEX_AUTODETECTION_PREFIXES} )
@@ -209,22 +215,24 @@ set( CommonLibs
 	emon
 )
 
-add_executable( executable ${YoshikoApp_Src} ${YoshikoApp_Hdr})
-if (BUILD_STATIC)
-        add_library(library STATIC ${YoshikoLib_Src} ${YoshikoLib_Hdr} )
-else()
-        add_library(library SHARED ${YoshikoLib_Src} ${YoshikoLib_Hdr} )
+
+if (JNI_FOUND)
+    if (BUILD_STATIC)
+            add_library(library STATIC ${YoshikoLib_Src} ${YoshikoLib_Hdr} )
+            set_target_properties(library PROPERTIES OUTPUT_NAME "yoshiko.${Yoshiko_Version}")
+            target_link_libraries( library ${CommonLibs} "-static")
+    else()
+            add_library(library SHARED ${YoshikoLib_Src} ${YoshikoLib_Hdr} )
+            set_target_properties(library PROPERTIES OUTPUT_NAME "yoshiko.${Yoshiko_Version}")
+            target_link_libraries( library ${CommonLibs})
+    endif()
 endif()
 
-
+add_executable( executable ${YoshikoApp_Src} ${YoshikoApp_Hdr})
 set_target_properties(executable PROPERTIES OUTPUT_NAME "yoshiko.${Yoshiko_Version}")
-set_target_properties(library PROPERTIES OUTPUT_NAME "yoshiko.${Yoshiko_Version}")
-
 
 if (BUILD_STATIC)
 	target_link_libraries( executable ${CommonLibs} "-static")
-        target_link_libraries( library ${CommonLibs} "-static")
 else()
 	target_link_libraries( executable ${CommonLibs})
-        target_link_libraries( library ${CommonLibs})
 endif()

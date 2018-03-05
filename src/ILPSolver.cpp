@@ -21,18 +21,24 @@ ILOMIPINFOCALLBACK1(gap_callback,yskLib::CplexInformer*, informer) {
  * This callback procedure is called by Cplex during the computation
  * of the ILP.
  *************************************************************************/
-ILOLAZYCONSTRAINTCALLBACK2(triangle_callback, const ClusterEditingInstance&, inst,  const IloBoolVarArray&, x) {
+ILOLAZYCONSTRAINTCALLBACK4(triangle_callback, const ClusterEditingInstance&, inst,  const IloBoolVarArray&, x, const IloBoolVarArray&, y,  const int, clusterCount) {
 
     IloEnv env = getEnv();
     //const double epsilon = IloCplex::EpInt;  gunnar: EpInt ist falsch, aber vielleicht was anderes
     //cout << "in callback "  << endl;
     try {
 
-        int no_added = 0, no_added_triplet_cuts = 0; // no cuts added yet in this iteration
-        //bool fractional = false;
+        int no_added_triplet_cuts = 0; // no cuts added yet in this iteration
+        //bool fractional = false; //TODO: @Gunnar, is this still needed?
 
+        //We fetch the variables for further reference
         IloNumArray x_vals(env);
+        IloNumArray y_vals(env);
+        //cout << "Fetching x and y values" << endl;
         getValues(x_vals, x);
+        //cout << "[X DONE]" << endl;
+        getValues(y_vals, y);
+        //cout << "[Y DONE]" << endl;
 
         const FullGraph g = inst.getOrig();
         const int n = g.nodeNum();
@@ -44,14 +50,21 @@ ILOLAZYCONSTRAINTCALLBACK2(triangle_callback, const ClusterEditingInstance&, ins
             if (x_vals[g.id(e)] > 1.0 - eps) x_vals[g.id(e)] = 1.0;
             //if (x_vals[g.id(e)] > eps && x_vals[g.id(e)] < 1.0 - eps) fractional = true;
         }
+        
 
-        unsigned long long no_checks = n * (n-1) * (n-2) / 6, no_checked = 0;
+        //Round k-cluster stuff as well ???
+        for (int i = 0; i < clusterCount; i++){
+            //TODO: Maybe?
+        }
+
+        unsigned long long no_checks = (n+clusterCount) * (n+clusterCount-1) * (n+clusterCount-2) / 6, no_checked = 0; //TODO: Why long long?
+        
         //	   cout << " versus " << no_checks << endl;
 
         for (FullGraph::NodeIt i(g); i != INVALID; ++i) {
             if (time_limit != -1) {
                 if (clk.systemTime() > time_limit) //TOOD: Coherent use of time_limit in ALL of yoshiko
-                    throw("time limit exceeded in yoshiko triangle callback");
+                    throw("Time limit exceeded in yoshiko triangle callback");
 
                 cout << clk << endl;
             }
@@ -60,7 +73,7 @@ ILOLAZYCONSTRAINTCALLBACK2(triangle_callback, const ClusterEditingInstance&, ins
             for (++j; j != INVALID; ++j) {
                 if (verbosity > 1) // && ((no_checked++ % 10000) == 0))
                     cout << "\rchecking triangle inequalities... (" << (no_checked)/double(no_checks) * 100
-                    << " %) added " << no_added << "              " << flush;
+                    << " %) added " << no_added_triplet_cuts << "              " << flush;
 
                 FullGraph::NodeIt k(g); k = j;
                 //      for (++k; k != INVALID && no_added < 100000; ++k) { // if (k != i && k != j) {
@@ -68,19 +81,43 @@ ILOLAZYCONSTRAINTCALLBACK2(triangle_callback, const ClusterEditingInstance&, ins
                     ++no_checked;
                     if (x_vals[g.id(g.edge(i, j))] + x_vals[g.id(g.edge(j, k))] - x_vals[g.id(g.edge(i, k))] > 1 + 3 * eps) {
                         add(x[g.id(g.edge(i, j))] + x[g.id(g.edge(j, k))] - x[g.id(g.edge(i, k))] <= 1);
-                        ++no_added; ++no_added_triplet_cuts;
+                        ++no_added_triplet_cuts;
                     }
 
                     if (x_vals[g.id(g.edge(i, j))] - x_vals[g.id(g.edge(j, k))] + x_vals[g.id(g.edge(i, k))] > 1 + 3 * eps) {
                         add(x[g.id(g.edge(i, j))] - x[g.id(g.edge(j, k))] + x[g.id(g.edge(i, k))] <= 1);
-                        ++no_added; ++no_added_triplet_cuts;
+                        ++no_added_triplet_cuts;
                     }
 
                     if (-x_vals[g.id(g.edge(i, j))] + x_vals[g.id(g.edge(j, k))] + x_vals[g.id(g.edge(i, k))] > 1 + 3 * eps) {
                         add(-x[g.id(g.edge(i, j))] + x[g.id(g.edge(j, k))] + x[g.id(g.edge(i, k))] <= 1);
-                        ++no_added; ++no_added_triplet_cuts;
+                        ++no_added_triplet_cuts;
                     }
                 }
+                
+                //Additional conditions for virtual nodes / "cluster centers"
+                if (clusterCount != 0){ //This condition is probably redundant and only for easier readability
+                    for (int k = 0; k <  clusterCount; ++k) {
+                        //We increment the number of checked inequalities (to be precise we check 3 on each iteration)
+                        ++no_checked;
+                        
+                        if (y_vals[k*clusterCount + g.id(j)] + x_vals[g.id(g.edge(j, i))] - y_vals[k*clusterCount + g.id(i)] > 1 + 3 * eps) {
+                            add( y[k*clusterCount + g.id(j)] + x[g.id(g.edge(j, i))] - y[k*clusterCount + g.id(i)] <= 1);
+                            ++no_added_triplet_cuts;
+                        }
+                        
+                        if (y_vals[k*clusterCount + g.id(j)] - x_vals[g.id(g.edge(j, i))] + y_vals[k*clusterCount + g.id(i)] > 1 + 3 * eps) {
+                            add( y[k*clusterCount + g.id(j)] - x[g.id(g.edge(j, i))] + y[k*clusterCount + g.id(i)] <= 1);
+                            ++no_added_triplet_cuts;
+                        }
+                        
+                        if (y_vals[k*clusterCount + g.id(j)] + x_vals[g.id(g.edge(j, i))] + y_vals[k*clusterCount + g.id(i)] > 1 + 3 * eps) {
+                            add(-y[k*clusterCount + g.id(j)] + x[g.id(g.edge(j, i))] + y[k*clusterCount + g.id(i)] <= 1);
+                            ++no_added_triplet_cuts;
+                        }
+                    }       
+                }
+                
             }
         }
 
@@ -90,7 +127,7 @@ ILOLAZYCONSTRAINTCALLBACK2(triangle_callback, const ClusterEditingInstance&, ins
         return;
     }
     catch (IloException& e) {
-        env.out() << e << endl;
+        env.out() << e.getMessage() << endl;
         throw -1;
     }
     catch (Exception& e) {
@@ -278,6 +315,8 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
     //If applicable, set thread number
     if (no_threads != -1)
     	cplex.setParam(IloCplex::Threads, no_threads);
+    if (verbosity > 3)
+        cout << "Running CPLEX with " << no_threads << " threads ... " << endl;
 
     // set CPU time limit
     cplex.setParam(IloCplex::ClockType, 1);
@@ -289,17 +328,19 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
     //cplex.setParam(IloCplex::NodeFileInd,2);
 
 
+    //TODO: Potential for research, observe relations between cuts / running time / instance properties
+    
     //Set all generic cuts off
-    cplex.setParam(IloCplex::Cliques, -1);
-    cplex.setParam(IloCplex::Covers, -1);
-    cplex.setParam(IloCplex::DisjCuts, -1);
-    cplex.setParam(IloCplex::FlowCovers, -1);
-    cplex.setParam(IloCplex::FracCuts, -1);
-    cplex.setParam(IloCplex::GUBCovers, -1);
-    cplex.setParam(IloCplex::Cliques, -1);
-    cplex.setParam(IloCplex::ImplBd, -1);
-    cplex.setParam(IloCplex::MIRCuts, -1);
-    cplex.setParam(IloCplex::FlowPaths, -1);
+//     cplex.setParam(IloCplex::Cliques, -1);
+//     cplex.setParam(IloCplex::Covers, -1);
+//     cplex.setParam(IloCplex::DisjCuts, -1);
+//     cplex.setParam(IloCplex::FlowCovers, -1);
+//     cplex.setParam(IloCplex::FracCuts, -1);
+//     cplex.setParam(IloCplex::GUBCovers, -1);
+//     cplex.setParam(IloCplex::Cliques, -1);
+//     cplex.setParam(IloCplex::ImplBd, -1);
+//     cplex.setParam(IloCplex::MIRCuts, -1);
+//     cplex.setParam(IloCplex::FlowPaths, -1);
 
     int n = g.nodeNum();
 
@@ -323,6 +364,7 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
     }
     
     IloBoolVarArray y(cplexEnv, _clusterCount * g.nodeNum());
+    if (_useKCluster && _sep_triangles) M.add(y); //Explicit addition to model (as not used previously)
     if (_useKCluster) { // add k auxiliary vertices and edges to all the others
         for (int i = 0; i <  _clusterCount; ++i) {
             for (FullGraph::NodeIt v(g); v != INVALID; ++v) {
@@ -333,7 +375,6 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
             }
         }
     }
-
 
     //Build objective function
     IloExpr obj_expr(cplexEnv);
@@ -367,7 +408,7 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
     
     //CALLBACKS
 
-    if (_sep_triangles) cplex.use(triangle_callback(cplexEnv, inst, x)); // use triangle callback --> lazy constraints!
+    if (_sep_triangles) cplex.use(triangle_callback(cplexEnv, inst, x,y,_useKCluster ? _clusterCount : 0)); // use triangle callback --> lazy constraints!
     if (_sep_partition_cuts) cplex.use(partition_cut_callback(cplexEnv, inst, x)); // use partition callback --> user cuts!
     //if we're using an informer to report to any outside source we will register it here
     if (_informer != nullptr){

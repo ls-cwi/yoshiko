@@ -67,7 +67,7 @@ int main(int argc, char * const argv[]) {
 	int inputFileFormat = 0;
 	int outputFileFormat = 0;
 
-	bool exportLP = false;
+	bool exportLP = false; // << This is unused as far as I can tell TODO:
 	bool printSilhouetteValue = false;
 
 	YParameterSet parameter;
@@ -120,9 +120,6 @@ int main(int argc, char * const argv[]) {
                 
 		std::cout << "      -st: " << parameter.separateTriangles << std::endl;
 		std::cout << "      -sp: " << parameter.separatePartitionCuts << std::endl;
-                if ( ( ap.given("st") || ap.given("sp") ) && parameter.targetClusterCount != -1){
-                    std::cout << "The Triangle Separation and Partition Cut callbacks are not available when aiming for a specific cluster count in ILP mode" << std::endl;
-                }
                 if ((ap.given("st") || ap.given("sp")) && parameter.useHeuristic){
                     std::cout << "Triangle Separation and Partition Cut callbacks are ignored in heuristic mode!" << std::endl;
                 }
@@ -130,8 +127,8 @@ int main(int argc, char * const argv[]) {
 		std::cout << "      -m: " << parameter.multiplicativeFactor << std::endl;
 		std::cout << "      -g: " << graphLabel << std::endl;
 		std::cout << "      -r: " << parameter.rulesBitMask << std::endl;
-                if (parameter.targetClusterCount != -1 && parameter.useHeuristic && parameter.rulesBitMask != "000000"){
-                        std::cout << "" << endl;
+                if (parameter.targetClusterCount != -1 && !parameter.useHeuristic && parameter.rulesBitMask != "000000"){
+                        std::cout << "Reduction Rules are disabled in ILP k-cluster mode" << endl;
                 }
 		std::cout << "      -k: " << parameter.targetClusterCount << std::endl;
 		std::cout << "      -s: " << printSilhouetteValue << std::endl;
