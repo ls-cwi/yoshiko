@@ -61,7 +61,11 @@ namespace ysk {
                     cout << "Warning: Reduction rules were ignored as they are not available in ILP k-cluster mode" << endl;
                 }
                 
-                else if (verbosity > 1) {
+                else if (_parameter.rulesBitMask == "000000"){
+                    cout << "No Reduction Rules selected ... skipping reduction phase" << endl;
+                }
+                
+                else {
                     
                     //Apply reduction rules//
 
