@@ -53,43 +53,61 @@ namespace ysk {
 		//Initialize the flags for the solution
 		SolutionFlags flags;
 
+                //Initialize a vector holding the instances that need to be solved (will only be one instance if no reduction is applied)
+                vector<ClusterEditingInstance*> clusterEditingInstances;
 
-		//Apply reduction rules//
-
-		bitset<NUMBER_OF_REDUCTION_RULES> rules(_parameter.rulesBitMask);
-		//Generate new CER instance
-		ClusterEditingReduction cer(
-				(!_parameter.useHeuristic && _parameter.targetClusterCount != -1) ? bitset<NUMBER_OF_REDUCTION_RULES>("000000"): rules, //TODO: Flexible default value here
-				_parameter.multiplicativeFactor,
-				_parameter.nrOptimalSolutions > 1 ? true : false
-				);
-		//If an informer is used register it with the CER to receive info
-		if (_informer != nullptr){
-			cer.registerInformer(_informer);
-		}
-                cer.perform(*_instance);
                 
                 if ((!_parameter.useHeuristic && _parameter.targetClusterCount != -1)){
                     cout << "Warning: Reduction rules were ignored as they are not available in ILP k-cluster mode" << endl;
                 }
+                
                 else if (verbosity > 1) {
-                    cout << "=========================" << endl;
-                    cout << "FPT reduction rules applied exhaustively." << endl;
-                    cout << "time:\t" << clk << endl;
+                    
+                    //Apply reduction rules//
+
+                    bitset<NUMBER_OF_REDUCTION_RULES> rules(_parameter.rulesBitMask);
+                    //Generate new CER instance
+                    ClusterEditingReduction cer(
+                                    (!_parameter.useHeuristic && _parameter.targetClusterCount != -1) ? bitset<NUMBER_OF_REDUCTION_RULES>("000000"): rules, //TODO: Flexible default value here
+                                    _parameter.multiplicativeFactor,
+                                    _parameter.nrOptimalSolutions > 1 ? true : false
+                                    );
+                    //If an informer is used register it with the CER to receive info
+                    if (_informer != nullptr){
+                            cer.registerInformer(_informer);
+                    }
+                    
+                    cer.perform(*_instance);
+                    
+                    flags.totalCost += cer.getTotalCost();
+                
+                    if (verbosity > 1){
+                    
+                        cout << "=========================" << endl;
+                        cout << "FPT reduction rules applied exhaustively." << endl;
+                        cout << "time:\t" << clk << endl;
+                        cout << "total cost of reduction:\t" << cer.getTotalCost() << endl;
+                        cout << "number of instances:\t" << clusterEditingInstances.size() << endl;
+                    }
+                    
+                    
+                    vector<ClusterReductionInstance*>& reduced = cer.getInstances();
+                    flags.reducedInstances = reduced.size();
+
+                                        
+                        //Move reduced instances 
+			for (vector<ClusterReductionInstance*>::iterator it = reduced.begin();
+					it != reduced.end(); it++) {
+                            clusterEditingInstances.push_back((*it)->getInstance());
+			}
                 }
-
-
-		flags.totalCost += cer.getTotalCost();
-
-		vector<ClusterReductionInstance*>& reduced = cer.getInstances();
-		flags.reducedInstances = reduced.size();
+                
 
 		//Sort CRI by size ascending to guarantee that the small instances are solved first
-		std::sort(reduced.begin(),reduced.end());
+		std::sort(clusterEditingInstances.begin(),clusterEditingInstances.end());
 
 		if (verbosity > 1) {
-			cout << "total cost:\t" << cer.getTotalCost() << endl;
-			cout << "number of instances:\t" << reduced.size() << endl;
+
 
 			cout << endl << "==================================" << endl
 					<< "==================================" << endl;
@@ -98,9 +116,9 @@ namespace ysk {
 		}
 
 		if (verbosity > 3){
-			for (vector<ClusterReductionInstance*>::iterator it = reduced.begin();
-					it != reduced.end(); it++) {
-				cout << "[INSTANCE]" << (*it)->getInstance()->getSize() <<endl;
+			for (vector<ClusterEditingInstance*>::iterator it = clusterEditingInstances.begin();
+					it != clusterEditingInstances.end(); it++) {
+				cout << "[INSTANCE]" << (*it)->getSize() <<endl;
 
 			}
 		}
@@ -111,9 +129,9 @@ namespace ysk {
 		// (That would also get rid of the work around in the solver for instances of size 1 !
 		if (isTerminated){
 			//Delete reduced instances
-			for (vector<ClusterReductionInstance*>::iterator it = reduced.begin();
-					it != reduced.end(); it++) {
-				delete (*it)->getInstance();
+			for (vector<ClusterEditingInstance*>::iterator it = clusterEditingInstances.begin();
+					it != clusterEditingInstances.end(); it++) {
+				delete (*it);
 			}
 			return 0;
 		}
@@ -122,17 +140,18 @@ namespace ysk {
 
 		long totalNumberOfSolutions = 1;
 
+                //This will hold a simplified representation of the instances in the end
 		vector<vector<vector<vector<int> > > > instances;
 
 		//Iterate over the remaining reduced instances
-		for (vector<ClusterReductionInstance*>::iterator it = reduced.begin();
-				it != reduced.end(); it++, j++) {
+		for (vector<ClusterEditingInstance*>::iterator it = clusterEditingInstances.begin();
+				it != clusterEditingInstances.end(); it++, j++) {
 
 			if (verbosity > 1) {
 				cout << "solving instance 'no " << j << "'..." << endl;
 			}
 
-			ClusterEditingInstance& i = *(*it)->getInstance();
+			ClusterEditingInstance& i = *(*it);
 
 			ClusterEditingSolutions s;
 
@@ -201,7 +220,7 @@ namespace ysk {
 				cout << endl << "==================================" << endl
 						<< endl;
 
-			delete (*it)->getInstance();
+			delete (*it);
 		}
 		if (verbosity > 1) {
 			cout << "all instances solved." << endl;
