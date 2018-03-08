@@ -252,6 +252,7 @@ namespace ysk {
 	  if (_parameter.targetClusterCount != -1 && _parameter.useHeuristic){
 			if (verbosity >= 2)
 				cout << "Aiming for the following cluster count: "<<_parameter.targetClusterCount << endl;
+                                cout << "Modification Costs (pre k-clustifier):" << flags.totalCost << endl;
 			//Generate a new k-clustifier instance
 			KClustifier clustifier(_instance,_result);
 			//Iterate over all clusters and k-clustify them
@@ -259,7 +260,7 @@ namespace ysk {
 				  clustifier.kClustify(_parameter.targetClusterCount, solutionID);
 				  flags.totalCost += clustifier.getCosts();
 			}
-		    if (verbosity > 2)
+		    if (verbosity >= 2)
 		    	cout << "Total cost (post k-clustifier): " << flags.totalCost << endl;
 	  }
 
