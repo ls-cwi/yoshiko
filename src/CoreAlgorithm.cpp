@@ -39,15 +39,10 @@ namespace ysk {
 			}
 		}
 
-		if (verbosity > 1) {
-			cout << endl << "applying FPT reduction rules..." << endl;
-			cout << "number of nodes:\t"
-					<< countNodes(_instance->getWorkingCopyInstance().getGraph())
-					<< endl;
-		}
-
+	
+                //Just a killswitch to prevent the program from running if the user has already cancelled it at this point
 		if (isTerminated){
-			return 0;
+                    return 0;
 		}
 
 		//Initialize the flags for the solution
@@ -59,16 +54,25 @@ namespace ysk {
                 
                 if ((!_parameter.useHeuristic && _parameter.targetClusterCount != -1)){
                     cout << "Warning: Reduction rules were ignored as they are not available in ILP k-cluster mode" << endl;
+                    clusterEditingInstances.push_back(_instance);
                 }
                 
                 else if (_parameter.rulesBitMask == "000000"){
                     cout << "No Reduction Rules selected ... skipping reduction phase" << endl;
+                    clusterEditingInstances.push_back(_instance);
                 }
                 
                 else {
                     
                     //Apply reduction rules//
-
+                    
+                    if (verbosity > 1) {
+                            cout << endl << "applying FPT reduction rules..." << endl;
+                            cout << "number of nodes:\t"
+                                            << countNodes(_instance->getWorkingCopyInstance().getGraph())
+                                            << endl;
+                    }
+                    
                     bitset<NUMBER_OF_REDUCTION_RULES> rules(_parameter.rulesBitMask);
                     //Generate new CER instance
                     ClusterEditingReduction cer(
@@ -111,10 +115,8 @@ namespace ysk {
 		std::sort(clusterEditingInstances.begin(),clusterEditingInstances.end());
 
 		if (verbosity > 1) {
-
-
 			cout << endl << "==================================" << endl
-					<< "==================================" << endl;
+                                     << "==================================" << endl;
 			cout << endl << "solving (possibly reduced) instances..." << endl;
 			cout << "-------------------------" << endl;
 		}
