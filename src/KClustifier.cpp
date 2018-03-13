@@ -390,7 +390,7 @@ double KClustifier::calculateMergeDifference(vector<int> cluster1,vector<int> cl
 			//Get the edge
 			FullGraph::Edge edge = _instance->getOrig().findEdge(node1, node2, INVALID);
 			double weight = _instance->getWeight(edge);
-			diff += weight;
+			diff -= weight;
 			if (verbosity > 4){
 				cout << "Found relevant edge, weight " << weight << " between nodes " << _instance->getNodeName(node1) << " and " <<  _instance->getNodeName(node2) << endl;
 			}
