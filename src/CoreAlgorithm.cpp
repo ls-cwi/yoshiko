@@ -268,7 +268,8 @@ namespace ysk {
 
 
 
-		return _result;
+        return _result;
+        
 	}
 
 	void CoreAlgorithm::cancel(){

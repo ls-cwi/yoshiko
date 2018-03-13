@@ -162,6 +162,7 @@ int main(int argc, char * const argv[]) {
 		input = new RowSimInput(instance,threshold);
 		break;
 	default:
+
 		//Should never be reached
 		cout << endl<<"Warning: Input Format not specified, assuming JENA"<<endl;
 		input = new JENAInput(instance);
@@ -205,11 +206,16 @@ int main(int argc, char * const argv[]) {
 	}
 
 	//Final cleanup
+	if (verbosity >4) cout << "deleting core algorithm ..." << endl;
 	delete core;
-	delete instance;
+        if (verbosity >4) cout << "deleting input ..." << endl;
 	delete input;
+        if (verbosity >4) cout << "deleting cluster editing solutions ..." << endl;
 	delete ces;
-	delete output;
+        if (output != nullptr){
+                if (verbosity >4) cout << "deleting output ..." << endl;
+            	delete output;
+        }
 
 	//Output runtime if desired
 	if (verbosity > 2) cout << "Total runtime: " << double( clock() - startTime ) / (double)CLOCKS_PER_SEC<< " seconds." << endl;

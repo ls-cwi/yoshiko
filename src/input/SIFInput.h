@@ -12,7 +12,6 @@ namespace yskInput{
 		SIFInput(ysk::ClusterEditingInstance* inst) : StreamInput(inst){};
 
 		bool parseInput(std::istream &is);
-
 	};
 
 }
