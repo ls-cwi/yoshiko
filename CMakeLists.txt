@@ -208,12 +208,12 @@ link_directories( ${CPLEX_LIB_DIR} ${CONCERT_LIB_DIR}  "${LIBLEMON_ROOT}/lib" )
 
 set( CommonLibs
 	m
+	emon
 	ilocplex
 	cplex
 	concert
 	pthread
-	emon
-	lm # since CPLEX 12.8
+	dl
 )
 
 
