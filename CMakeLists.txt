@@ -138,7 +138,7 @@ set( YOSHIKO_VERSION \"${GitBranch}-${GitHashtag}\" )
 
 set( LIBLEMON_ROOT "$ENV{HOME}/lemon" CACHE PATH "Additional search directory for lemon library" )
 
-#find_package(JNI)
+find_package(JNI)
 
 if (!JNI_FOUND)
     message("Could not find JNI, you will not be able to build the library!")
