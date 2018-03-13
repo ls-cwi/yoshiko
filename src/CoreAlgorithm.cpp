@@ -38,6 +38,14 @@ namespace ysk {
 					cout << _instance->getEdgeName(e) << "\tpermanent" << endl;
 			}
 		}
+		
+		//Some sanity checking
+		if (_instance->getSize() < _parameter.targetClusterCount){
+                    cout << "Critical: More clusters required than nodes are available, this will not work!" << endl;
+                    delete _instance;
+                    isTerminated = true;
+                }
+ 
 
 	
                 //Just a killswitch to prevent the program from running if the user has already cancelled it at this point
