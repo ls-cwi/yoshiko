@@ -138,7 +138,7 @@ set( YOSHIKO_VERSION \"${GitBranch}-${GitHashtag}\" )
 
 set( LIBLEMON_ROOT "$ENV{HOME}/lemon" CACHE PATH "Additional search directory for lemon library" )
 
-find_package(JNI)
+#find_package(JNI)
 
 if (!JNI_FOUND)
     message("Could not find JNI, you will not be able to build the library!")
@@ -147,7 +147,7 @@ else()
 endif()
     
 if( NOT CPLEX_INC_DIR OR NOT CPLEX_LIB_DIR OR NOT CONCERT_INC_DIR OR NOT CONCERT_LIB_DIR )
-	set( CPLEX_AUTODETECTION_PREFIXES "/Applications;$ENV{HOME}/Applications/IBM/ILOG; $ENV{HOME}/ILOG;/opt/ibm/ILOG;$ENV{HOME}/Applications/IBM/ILOG" CACHE STRING "CPLEX automatic lookup directories" )
+	set( CPLEX_AUTODETECTION_PREFIXES "$ENV{HOME}/ibm/ILOG;/Applications;$ENV{HOME}/Applications/IBM/ILOG; $ENV{HOME}/ILOG;/opt/ibm/ILOG;$ENV{HOME}/Applications/IBM/ILOG" CACHE STRING "CPLEX automatic lookup directories" )
 	foreach( CplexInstallPrefix ${CPLEX_AUTODETECTION_PREFIXES} )
 		file( GLOB_RECURSE CplexLibraryPaths ${CplexInstallPrefix}/*/cplex/lib/*/libcplex.a )
 		if( CplexLibraryPaths )
@@ -213,6 +213,7 @@ set( CommonLibs
 	concert
 	pthread
 	emon
+	lm # since CPLEX 12.8
 )
 
 
