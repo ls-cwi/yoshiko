@@ -4,7 +4,7 @@ project( Yoshiko )
 
 OPTION(BUILD_STATIC "Link libraries static" OFF)
 
-set (Yoshiko_Version "2.2.1")
+set (Yoshiko_Version "2.2.0")
 
 set( Yoshiko_Hdr
 
