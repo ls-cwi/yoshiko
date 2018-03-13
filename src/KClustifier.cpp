@@ -145,7 +145,7 @@ void KClustifier::mergeCheapest(vector<vector<int>>& solution){
 	std::map<std::pair<int,int>,double> newMergeCosts = std::map<std::pair<int,int>,double>();
 	//Find minimum
 	using pair_type = decltype(_mergeCosts)::value_type;
-	std::pair<int,int> targetClusters = std::max_element(_mergeCosts.begin(),_mergeCosts.end(),
+	std::pair<int,int> targetClusters = std::min_element(_mergeCosts.begin(),_mergeCosts.end(),
 			 [] (const pair_type & p1, const pair_type & p2) {
 			        return p1.second < p2.second;
 			    }

@@ -176,7 +176,7 @@ int main(int argc, char * const argv[]) {
 	is.close(); //Close input stream
 
 	instance = input->getProblemInstance();
-
+        
 	CoreAlgorithm* core = new CoreAlgorithm(
 			instance,
 			parameter
