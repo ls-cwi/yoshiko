@@ -213,6 +213,7 @@ set( CommonLibs
 	concert
 	pthread
 	emon
+	lm # since CPLEX 12.8
 )
 
 
