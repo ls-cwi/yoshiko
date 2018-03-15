@@ -183,6 +183,11 @@ int main(int argc, char * const argv[]) {
 	);
 
 	ClusterEditingSolutions* ces = core->run();
+        
+        if (ces == nullptr){
+            cout << "No valid solution found!" << endl;
+            return 0;
+        }
 
 	//Print Silhouette Value if required
 	if (printSilhouetteValue){
@@ -208,6 +213,8 @@ int main(int argc, char * const argv[]) {
 	//Final cleanup
 	if (verbosity >4) cout << "deleting core algorithm ..." << endl;
 	delete core;
+        if (verbosity >4) cout << "deleting cluster editing instance ..." << endl;
+	delete instance;
         if (verbosity >4) cout << "deleting input ..." << endl;
 	delete input;
         if (verbosity >4) cout << "deleting cluster editing solutions ..." << endl;

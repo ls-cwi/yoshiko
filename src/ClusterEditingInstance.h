@@ -35,7 +35,8 @@ namespace ysk {
          * Default constructor, initializes an empty instance of the dwgc-problem. This instance is by default unweighted and adjusts its specification when edges, matching a more specific instance, are added.
          */
         ClusterEditingInstance()
-                :  _isInitialized(false)
+                : isOriginalInstance(false) 
+                , _isInitialized(false)
                 ,  _unweighted(true)
                 , _dualWeighted(true)
                 , _realValued(false)
@@ -105,7 +106,8 @@ namespace ysk {
         unsigned int getSize() const;
 
         friend std::ostream& operator <<(std::ostream &os, ClusterEditingInstance &inst);
-
+        
+        bool isOriginalInstance; //TODO: Hacky workaround for now ... don't like this at all
 
     private:
 

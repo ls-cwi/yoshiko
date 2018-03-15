@@ -40,17 +40,20 @@ namespace ysk {
 		}
 		
 		//Some sanity checking
-		if (_instance->getSize() < _parameter.targetClusterCount){
-                    cout << "Critical: More clusters required than nodes are available, this will not work!" << endl;
-                    delete _instance;
-                    isTerminated = true;
-                }
+		if (_parameter.targetClusterCount != -1){ //Check if casting is allowed
+                    unsigned int clusterCount = unsigned(_parameter.targetClusterCount);
+                    if (_instance->getSize() < clusterCount){
+                        cout << "Critical: More clusters required than nodes are available, this will not work!" << endl;
+                        isTerminated = true;
+                    }
  
+                }
+
 
 	
                 //Just a killswitch to prevent the program from running if the user has already cancelled it at this point
 		if (isTerminated){
-                    return 0;
+                    return nullptr;
 		}
 
 		//Initialize the flags for the solution
@@ -58,6 +61,9 @@ namespace ysk {
 
                 //Initialize a vector holding the instances that need to be solved (will only be one instance if no reduction is applied)
                 vector<ClusterEditingInstance*> clusterEditingInstances;
+                
+                //We "flag" the original instance so we don't get it mixed up with the others
+                _instance->isOriginalInstance = true;
 
                 
                 if ((!_parameter.useHeuristic && _parameter.targetClusterCount != -1)){
@@ -145,9 +151,9 @@ namespace ysk {
 			//Delete reduced instances
 			for (vector<ClusterEditingInstance*>::iterator it = clusterEditingInstances.begin();
 					it != clusterEditingInstances.end(); it++) {
-				delete (*it);
+                            if (!(*it)->isOriginalInstance) delete (*it);
 			}
-			return 0;
+			return nullptr;
 		}
 
 		int j = 0;
@@ -234,7 +240,7 @@ namespace ysk {
 				cout << endl << "==================================" << endl
 						<< endl;
 
-			delete (*it);
+			if (!(*it)->isOriginalInstance) delete (*it);
 		}
 		if (verbosity > 1) {
 			cout << "all instances solved." << endl;

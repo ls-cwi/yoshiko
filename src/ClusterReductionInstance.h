@@ -47,7 +47,7 @@ public:
   void computeChildInstances(std::vector<ClusterReductionInstance*>& childInstances);
 
   bool operator < (const ClusterReductionInstance& c) const{ return (_instance->getSize() < c._instance->getSize());}
-
+  
 private:
   int _lastSuccessRule;
   int _currentRule;
@@ -55,6 +55,7 @@ private:
   std::bitset<NUMBER_OF_REDUCTION_RULES> _active;
   double _multiplicativeFactor;
   bool _conserveMultipleSolutions;
+  
 };
 
 } // namespace ysk
