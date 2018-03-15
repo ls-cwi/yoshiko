@@ -166,18 +166,14 @@ void KClustifier::mergeCheapest(vector<vector<int>>& solution){
 	for (auto const &entry : _mergeCosts){
 
 		//We skip entries for the cluster that just got deleted
-		if (entry.first.first == targetClusters.second || entry.first.second == targetClusters.second) continue;
-
+		if (entry.first.first == targetClusters.second || entry.first.second == targetClusters.second){  
+                    continue;
+                }
+                
 		std::pair<int,int> index = entry.first;
 		double costs = entry.second;
 
-		//All cluster indices beyond the deleted one need to be decremented
-		if (entry.first.first > targetClusters.second){
-			index.first --;
-		}
-		if (entry.first.second > targetClusters.second){
-			index.second --;
-		}
+
 		//All entries from the first cluster need to be updated
 		if (entry.first.first == targetClusters.first){
 			//We look for the other entry and add them
@@ -186,7 +182,7 @@ void KClustifier::mergeCheapest(vector<vector<int>>& solution){
 					costs += entry2.second;
 					break;
 				}
-				if (entry2.first.second == targetClusters.second && entry2.first.first == entry.first.first){
+				if (entry2.first.second == targetClusters.second && entry2.first.first == entry.first.second){
 					costs += entry2.second;
 					break;
 				}
@@ -206,6 +202,15 @@ void KClustifier::mergeCheapest(vector<vector<int>>& solution){
 				}
 			}
 		}
+		
+		//All cluster indices beyond the deleted one need to be decremented
+		if (entry.first.first > targetClusters.second){
+			index.first --;
+		}
+		if (entry.first.second > targetClusters.second){
+			index.second --;
+		}
+		
 		newMergeCosts[index] = costs;
 	}
 	//Replace the old merge costs
@@ -227,9 +232,9 @@ void KClustifier::calculateCostMatrix(vector<vector<int>>& solution){
 			//We can trivially set the merge difference from a cluster to itself to 0
 			double mergeDifference = KClustifier::calculateMergeDifference(*it,*it2);
 			_mergeCosts[std::make_pair(indexCluster1,indexCluster2)] = mergeDifference;
-			if (verbosity > 3){
+/**			if (verbosity > 3){
 				cout << "Found a merge-difference of " << mergeDifference << " for clusters " << indexCluster1 << " and " << indexCluster2 <<endl;
-			}
+			} **/
 
 		}
 	}
@@ -391,9 +396,9 @@ double KClustifier::calculateMergeDifference(vector<int> cluster1,vector<int> cl
 			FullGraph::Edge edge = _instance->getOrig().findEdge(node1, node2, INVALID);
 			double weight = _instance->getWeight(edge);
 			diff -= weight;
-			if (verbosity > 4){
+/**			if (verbosity > 4){
 				cout << "Found relevant edge, weight " << weight << " between nodes " << _instance->getNodeName(node1) << " and " <<  _instance->getNodeName(node2) << endl;
-			}
+			} **/
 		}
 	}
 	return diff;

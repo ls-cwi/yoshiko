@@ -21,9 +21,25 @@ namespace ysk {
 		//If we use this software as a lib it might have been set to true in a previous run
 		isTerminated = false;
 
-		if (verbosity >= 5)
+		if (verbosity >= 5){ //Just some Debug-Output
 			cout << _instance << endl;
-
+                        
+                        int edgeWeightSum = 0;
+                        int positiveEdgeWeightSum = 0;
+                        
+                        const WorkingCopyGraph g = _instance->getWorkingCopyInstance().getGraph();
+                        for (WorkingCopyGraph::EdgeIt e(g); e != INVALID; ++e) {
+                            double edgeWeight = _instance->getWorkingCopyInstance().getWeight(e);
+                            if (edgeWeight > 0){
+                                positiveEdgeWeightSum += edgeWeight;
+                            }
+                            edgeWeightSum += edgeWeight;
+			}
+                        cout << "Sum of all edges: " << edgeWeightSum << endl;
+                        cout << "Sum of all positive edges: " << positiveEdgeWeightSum << endl;
+                        cout << "Difference: " << positiveEdgeWeightSum-edgeWeightSum << endl;
+                }
+                
 		// warn user about permanent and forbidden edges
 		const WorkingCopyGraph g = _instance->getWorkingCopyInstance().getGraph();
 		if (verbosity > 1) {
