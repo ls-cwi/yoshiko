@@ -55,6 +55,7 @@ set( Yoshiko_Hdr
   src/InducedCostsHeuristic.h
   src/KClustifier.h
   src/ParameterizedInstance.h
+  src/SolutionChecker.h
   src/WorkingCopyInstance.h
 
   src/input/ClusterEditingInput.h
@@ -86,6 +87,7 @@ set( Yoshiko_Src
   src/InducedCostsHeuristic.cpp
   src/KClustifier.cpp
   src/ParameterizedInstance.cpp
+  src/SolutionChecker.cpp
   src/WorkingCopyInstance.cpp
 
   src/input/ClusterEditingInput.cpp
