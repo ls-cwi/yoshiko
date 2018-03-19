@@ -1,4 +1,35 @@
-cmake_minimum_required( VERSION 2.8 )
+cmake_minimum_required( VERSION 3.9 )
+
+#############################################
+
+#GTesting
+
+# Download and unpack googletest at configure time
+configure_file(CMakeLists.txt.in googletest-download/CMakeLists.txt)
+execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
+  RESULT_VARIABLE result
+  WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/googletest-download )
+if(result)
+  message(FATAL_ERROR "CMake step for googletest failed: ${result}")
+endif()
+execute_process(COMMAND ${CMAKE_COMMAND} --build .
+  RESULT_VARIABLE result
+  WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/googletest-download )
+if(result)
+  message(FATAL_ERROR "Build step for googletest failed: ${result}")
+endif()
+
+# Prevent overriding the parent project's compiler/linker
+# settings on Windows
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+
+# Add googletest directly to our build. This defines
+# the gtest and gtest_main targets.
+add_subdirectory(${CMAKE_BINARY_DIR}/googletest-src
+                 ${CMAKE_BINARY_DIR}/googletest-build
+                 EXCLUDE_FROM_ALL)
+
+#############################################
 
 project( Yoshiko )
 
@@ -127,6 +158,17 @@ set (YoshikoLib_Hdr
 	${Yoshiko_Hdr}
 )
 
+set(YoshikoTest_Src
+    src/test/runAllTests.cpp
+    src/test/verifyExamples.cpp
+    ${Yoshiko_Src}
+    ${Yoshiko_Hdr}
+    src/input/SIFInput.h
+    src/input/JENAInput.h
+    src/input/JENAInput.cpp
+    src/input/SIFInput.cpp
+)
+
 set( GitCommand1 "symbolic-ref HEAD 2> /dev/null | cut -b 12-" )
 execute_process( COMMAND git symbolic-ref HEAD  WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
                  COMMAND tail -c -7 COMMAND tr -d "\\n" OUTPUT_VARIABLE GitBranch )
@@ -216,6 +258,16 @@ set( CommonLibs
 	dl
 )
 
+#############################
+
+#GTest Target
+
+enable_testing()
+add_executable(unitTests ${YoshikoTest_Src} )
+target_link_libraries(unitTests gtest_main ${CommonLibs})
+add_test(unitTests unitTests)
+
+#############################
 
 if (JNI_FOUND)
     if (BUILD_STATIC)
@@ -237,3 +289,5 @@ if (BUILD_STATIC)
 else()
 	target_link_libraries( executable ${CommonLibs})
 endif()
+
+
