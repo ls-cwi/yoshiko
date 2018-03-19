@@ -204,6 +204,7 @@ int main(int argc, char * const argv[]) {
 	//Verify Solution if wanted
 	if (verifySolution){
                 SolutionChecker::verifySolutionCosts(*instance,*ces);
+                SolutionChecker::verifySolutionIsCliqueGraph(*instance,*ces);
         }
 
 	//Output generation

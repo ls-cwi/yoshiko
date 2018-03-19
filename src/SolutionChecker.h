@@ -15,7 +15,7 @@ namespace ysk{
 class SolutionChecker
 {
 public:
-    static bool verifySolutionIsCliqueGraph();
+    static bool verifySolutionIsCliqueGraph(ClusterEditingInstance & instance,  ClusterEditingSolutions & solutions);
     static bool verifySolutionCosts(ClusterEditingInstance & instance, ClusterEditingSolutions & solution);
 };
 
