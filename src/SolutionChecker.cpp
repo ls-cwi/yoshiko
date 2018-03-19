@@ -33,7 +33,9 @@ for (unsigned int i = 0; i < solutions.getNumberOfSolutions(); i++){
         //int correctAmountOfTriangles = (instance.getSize()*(instance.getSize()-1)*(instance.getSize()-2))/6;
         //int countTriangles = 0;
         //TODO: fancy flush function to display progress?
-        cout << "Expecting " << correctAmountOfTriangles << " triangles ...";
+        //cout << "Expecting " << correctAmountOfTriangles << " triangles ...";
+        
+        
         //Check for conflict triples, intentionally not using the Lemon Node iterator, more variance is good for testing :)
         for (unsigned int x = 0; x < instance.getSize(); x++){
             for (unsigned int y = x+1; y < instance.getSize(); y++){
