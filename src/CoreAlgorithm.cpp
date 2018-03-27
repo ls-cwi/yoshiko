@@ -192,6 +192,24 @@ namespace ysk {
 			ClusterEditingSolutions s;
 
 			long numberOfSolutions = 1;
+                        
+                        //Run the heuristic in any case
+                        
+                        if (verbosity > 1){
+                                cout << "Starting heuristic!" << endl;
+                        }
+                        //HEURISTIC
+                        ParameterizedInstance parameterizedInstance(
+                                        i.getWorkingCopyInstance(),
+                                        numeric_limits<double>::signaling_NaN());
+                        parameterizedInstance.init();
+                        InducedCostsHeuristic h(parameterizedInstance);
+                        h.start();
+                        
+                        //If we are running only in heuristic mode, those costs are our final editing costs
+                        if (_parameter.useHeuristic){
+                            flags.totalCost += h.getSolution(s);
+                        }
 
 			//Solve the remaining and reduced instance either with the heuristic or the ILP
 			if (!_parameter.useHeuristic) {
@@ -200,24 +218,27 @@ namespace ysk {
 				if (_parameter.targetClusterCount != -1 && !_parameter.useHeuristic)
 				{
 					_solver = new ILPSolver (
-							_parameter.separateTriangles,
-							_parameter.separatePartitionCuts,
-							_parameter.nrOptimalSolutions,
-							_parameter.targetClusterCount
+                                                    _parameter.separateTriangles,
+                                                    _parameter.separatePartitionCuts,
+                                                    _parameter.nrOptimalSolutions,
+                                                    _parameter.targetClusterCount
 					);
 				}
 				else
 				{
 					_solver = new ILPSolver (
-							_parameter.separateTriangles,
-							_parameter.separatePartitionCuts,
-							_parameter.nrOptimalSolutions
+                                                    _parameter.separateTriangles,
+                                                    _parameter.separatePartitionCuts,
+                                                    _parameter.nrOptimalSolutions
 					);
 				}
 
 				if (_informer != nullptr){
 					_solver->registerInformer(_informer);
 				}
+				
+				//We register the previously found solution with the solver
+				_solver->addHeuristicSolution(s.getSolution(0),s.getFlags().totalCost);
 
 				try {
 					numberOfSolutions = _solver->solve(i, s, flags);
@@ -226,19 +247,6 @@ namespace ysk {
 				}
 				_solver->terminate();
 				delete _solver;
-
-			} else {
-				if (verbosity > 1){
-					cout << "Starting heuristic!" << endl;
-				}
-				//HEURISTIC
-				ParameterizedInstance parameterizedInstance(
-						i.getWorkingCopyInstance(),
-						numeric_limits<double>::signaling_NaN());
-				parameterizedInstance.init();
-				InducedCostsHeuristic h(parameterizedInstance);
-				h.start();
-				flags.totalCost += h.getSolution(s);
 			}
 
 			if (verbosity > 1)

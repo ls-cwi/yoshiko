@@ -53,6 +53,11 @@ public:
 	void terminate();
 
 	void registerInformer(yskLib::CplexInformer* informer);
+        
+        /**
+         * Adds a previously calculated heuristic solution as a starting point for CPLEX, resulting (hopefully) in a speed-up
+         **/
+        void addHeuristicSolution(std::vector<std::vector<int>>& solution, double & editingCosts);
 
 private:
     /**
@@ -65,6 +70,14 @@ private:
     //K-Cluster variables
     bool _useKCluster;
     int _clusterCount;
+    
+    //Heuristic Solution Variables
+    std::vector<std::vector<int>> _heuristicSolution;
+    double _heuristicSolutionCosts;
+    
+    IloBoolArray getHeuristicXVals();
+    IloBoolArray getHeuristicYVals();
+
 
     IloCplex::Aborter _aborter;
     bool _cplexInitialized;

@@ -311,6 +311,7 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
     	cplex.setParam(IloCplex::MIPDisplay,5);
     	cplex.setOut(cout);
     }
+    
 
     //If applicable, set thread number
     if (no_threads != -1)
@@ -350,7 +351,7 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
         cout << n << " nodes" << endl;
     }
 
-        if (_useKCluster) cout << "k fixed" << endl;
+    if (_useKCluster) cout << "k fixed" << endl;
 
     //Generate variables:
 
@@ -375,6 +376,11 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
             }
         }
     }
+    
+    cplex.addMIPStart();
+    
+    cplex.addMIPStart(x,getHeuristicXVals());
+    cplex.addMIPStart(y,getHeuristicYVals());
 
     //Build objective function
     IloExpr obj_expr(cplexEnv);
@@ -448,6 +454,7 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
             }
         }
     } 
+    
     
     //Additional Constraints for K-Cluster problem
     if(_useKCluster){
@@ -589,4 +596,11 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
 
     return numsol;
 }
+
+void ILPSolver::addHeuristicSolution(std::vector<std::vector<int>>& solution, double & editingCosts){
+    _heuristicSolution = solution;
+    _heuristicSolutionCosts = editingCosts;
+}
+
+
 } // namespace ysk
