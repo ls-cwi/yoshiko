@@ -10,6 +10,7 @@
 #include "ClusterEditingSolutions.h"
 #include "CoreAlgorithm.h"
 #include "Globals.h"
+#include "SolutionChecker.h"
 #include "measurement/SilhouetteValue.h"
 
 #include "output/ClusterEditingOutput.h"
@@ -64,6 +65,8 @@ int main(int argc, char * const argv[]) {
 	string inputFilename, outputFilename;
 	string graphLabel = "cluster_solution";
 
+        bool verifySolution = false;
+        
 	int inputFileFormat = 0;
 	int outputFileFormat = 0;
 
@@ -93,6 +96,8 @@ int main(int argc, char * const argv[]) {
 	ap.refOption("k", "Define the number of desired clusters, -1 determines this value automatically [-1]",parameter.targetClusterCount,false);
 
 	ap.refOption("s", "Prints the silhouette value at the end of the run [false]",printSilhouetteValue,false);
+        
+	ap.refOption("c", "Verify the solution (Check if the solution is indeed a clique graph and has the costs that are proposed [false]",verifySolution,false);
 
 
 	// Perform the parsing process
@@ -195,6 +200,12 @@ int main(int argc, char * const argv[]) {
 			cout << "Silhouette Value: " << SilhouetteValue(instance,ces->getSolution(i)).getValue() << endl;
 		}
 	}
+	
+	//Verify Solution if wanted
+	if (verifySolution){
+                SolutionChecker::verifySolutionCosts(*instance,*ces);
+                SolutionChecker::verifySolutionIsCliqueGraph(*instance,*ces);
+        }
 
 	//Output generation
 	ClusterEditingOutput* output;
