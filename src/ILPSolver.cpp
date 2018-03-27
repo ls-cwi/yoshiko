@@ -379,7 +379,7 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
     }
     
     IloBoolArray heuristicXVals(cplexEnv, g.edgeNum());
-    IloBoolArray heuristicYVals(cplexEnv,  _clusterCount * g.nodeNum());
+    IloBoolArray heuristicYVals(cplexEnv,  _heuristicSolution.size() * g.nodeNum());
     
     populateHeuristicXVals(heuristicXVals,inst);
     populateHeuristicYVals(heuristicYVals,inst);
