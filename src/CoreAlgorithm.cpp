@@ -213,7 +213,7 @@ namespace ysk {
 
 			//Solve the remaining and reduced instance either with the heuristic or the ILP
 			if (!_parameter.useHeuristic) {
-
+                                
 				//ILP
 				if (_parameter.targetClusterCount != -1 && !_parameter.useHeuristic)
 				{
@@ -238,7 +238,7 @@ namespace ysk {
 				}
 				
 				//We register the previously found solution with the solver
-				_solver->addHeuristicSolution(s.getSolution(0),s.getFlags().totalCost);
+				_solver->addHeuristicSolution(s.getSolution(0));
 
 				try {
 					numberOfSolutions = _solver->solve(i, s, flags);

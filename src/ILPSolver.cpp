@@ -356,6 +356,7 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
     //Generate variables:
 
     IloBoolVarArray x(cplexEnv, g.edgeNum());
+     
     for (FullGraph::EdgeIt e(g); e != INVALID; ++e) {
         std::stringstream var_name;
         var_name << "x_" << g.id(g.u(e)) << "_" << g.id(g.v(e));
@@ -377,10 +378,14 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
         }
     }
     
-    cplex.addMIPStart();
+    IloBoolArray heuristicXVals(cplexEnv, g.edgeNum());
+    IloBoolArray heuristicYVals(cplexEnv,  _clusterCount * g.nodeNum());
     
-    cplex.addMIPStart(x,getHeuristicXVals());
-    cplex.addMIPStart(y,getHeuristicYVals());
+    populateHeuristicXVals(heuristicXVals,inst);
+    populateHeuristicYVals(heuristicYVals,inst);
+    
+    cplex.addMIPStart(x.toNumVarArray(),heuristicXVals.toNumArray());
+    cplex.addMIPStart(y.toNumVarArray(),heuristicYVals.toNumArray());
 
     //Build objective function
     IloExpr obj_expr(cplexEnv);
@@ -597,9 +602,55 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
     return numsol;
 }
 
-void ILPSolver::addHeuristicSolution(std::vector<std::vector<int>>& solution, double & editingCosts){
+void ILPSolver::addHeuristicSolution(std::vector<std::vector<int>>& solution){
     _heuristicSolution = solution;
-    _heuristicSolutionCosts = editingCosts;
+}
+
+void ILPSolver::populateHeuristicXVals(IloBoolArray & xvals,const ClusterEditingInstance& instance){
+    
+        //TODO: Way too much effort ... can save a lot by getting rid of lemon I would assume ...
+        set<FullGraph::Edge> existingEdges;
+        
+        
+        //Check which edges exist in the proposed solution //TODO: Redundant code from SolutionChecker -> Move to CES?
+        for (unsigned int c = 0; c < _heuristicSolution.size(); c++){
+            vector<int> cluster = _heuristicSolution[c];
+            //cout << "Cluster" << c <<endl;
+
+            for (unsigned int m = 0; m < cluster.size()-1; m++) {
+                for (unsigned int n = m+1; n < cluster.size(); n++) {
+                    //Edge exists
+                    FullGraph::Node node1 = instance.getOrig().nodeFromId(cluster[m]);
+                    FullGraph::Node node2 = instance.getOrig().nodeFromId(cluster[n]);
+                    FullGraph::Edge edge = instance.getOrig().findEdge(node1,node2);
+                    existingEdges.insert(edge);
+                }
+            }
+        }
+        
+        for (FullGraph::EdgeIt e(instance.getOrig()); e != INVALID; ++e) {
+            int edgeID = instance.getOrig().id(e);
+            xvals[edgeID] = (existingEdges.find(e) != existingEdges.end()) ? 1.0 : 0.0;
+        }
+}
+
+void ILPSolver::populateHeuristicYVals(IloBoolArray & yvals,const ClusterEditingInstance& instance){
+    
+        
+        //Check which edges exist in the proposed solution //TODO: Redundant code from SolutionChecker -> Move to CES?
+        for (unsigned int c = 0; c < _heuristicSolution.size(); c++){
+            vector<int> cluster = _heuristicSolution[c];
+            //cout << "Cluster" << c <<endl;
+
+            for (unsigned int n = 0; n < cluster.size(); n++) {
+                yvals[c*instance.getSize()+cluster[n]] = 1.0;
+            }
+        }
+        
+        //TODO: Better idea? Maybe CPLEX doesn't even need this ...
+        for (unsigned int all = 0; all < instance.getSize()*_heuristicSolution.size(); all++) {
+            yvals[all] = yvals[all] == 1.0 ? 1.0 : 0.0;
+        }
 }
 
 

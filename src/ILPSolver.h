@@ -18,6 +18,9 @@
 #include <lemon/list_graph.h>
 #include <lemon/connectivity.h>
 
+#include <set>
+
+
 namespace ysk {
 
 class ILPSolver {
@@ -57,7 +60,7 @@ public:
         /**
          * Adds a previously calculated heuristic solution as a starting point for CPLEX, resulting (hopefully) in a speed-up
          **/
-        void addHeuristicSolution(std::vector<std::vector<int>>& solution, double & editingCosts);
+        void addHeuristicSolution(std::vector<std::vector<int>>& solution);
 
 private:
     /**
@@ -73,11 +76,8 @@ private:
     
     //Heuristic Solution Variables
     std::vector<std::vector<int>> _heuristicSolution;
-    double _heuristicSolutionCosts;
-    
-    IloBoolArray getHeuristicXVals();
-    IloBoolArray getHeuristicYVals();
-
+    void populateHeuristicXVals(IloBoolArray& xvals, const ClusterEditingInstance& instance);
+    void populateHeuristicYVals(IloBoolArray & yvals,const ClusterEditingInstance& instance);
 
     IloCplex::Aborter _aborter;
     bool _cplexInitialized;
