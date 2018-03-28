@@ -6,17 +6,17 @@ using namespace lemon;
 namespace ysk {
 
 ParameterizedInstance::~ParameterizedInstance() {
-  for(WorkingCopyGraph::NodeIt u(_instance.getGraph()); u != INVALID; ++u) {
-    delete _icpCrossRef[u];
-    delete _icp[u];
-
-    delete _icfCrossRef[u];
-    delete _icf[u];
-  }
-
-  for(vector<WorkingCopyGraph::Node*>::iterator uvw = _conflictTriples.begin(); uvw != _conflictTriples.end(); ++uvw) {
-    delete [] *uvw;
-  }
+//   for(WorkingCopyGraph::NodeIt u(_instance.getGraph()); u != INVALID; ++u) {
+//     delete _icpCrossRef[u];
+//     delete _icp[u];
+// 
+//     delete _icfCrossRef[u];
+//     delete _icf[u];
+//   }
+// 
+//   for(vector<WorkingCopyGraph::Node*>::iterator uvw = _conflictTriples.begin(); uvw != _conflictTriples.end(); ++uvw) {
+//     delete [] *uvw;
+//   }
 }
 
 WorkingCopyInstance& ParameterizedInstance::getWorkingCopyInstance() {

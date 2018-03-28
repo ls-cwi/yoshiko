@@ -205,10 +205,10 @@ namespace ysk {
                         parameterizedInstance.init();
                         InducedCostsHeuristic h(parameterizedInstance);
                         h.start();
-                        
+                        double heuristicCosts = h.getSolution(s);
                         //If we are running only in heuristic mode, those costs are our final editing costs
                         if (_parameter.useHeuristic){
-                            flags.totalCost += h.getSolution(s);
+                            flags.totalCost += heuristicCosts;
                         }
 
 			//Solve the remaining and reduced instance either with the heuristic or the ILP

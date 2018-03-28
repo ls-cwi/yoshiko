@@ -381,11 +381,7 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
     IloBoolArray heuristicXVals(cplexEnv, g.edgeNum());
     IloBoolArray heuristicYVals(cplexEnv,  _heuristicSolution.size() * g.nodeNum());
     
-    populateHeuristicXVals(heuristicXVals,inst);
-    populateHeuristicYVals(heuristicYVals,inst);
-    
-    cplex.addMIPStart(x.toNumVarArray(),heuristicXVals.toNumArray());
-    cplex.addMIPStart(y.toNumVarArray(),heuristicYVals.toNumArray());
+
 
     //Build objective function
     IloExpr obj_expr(cplexEnv);
@@ -494,6 +490,12 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
     }
 
     cplex.extract(M);
+    
+    populateHeuristicXVals(heuristicXVals,inst);
+    populateHeuristicYVals(heuristicYVals,inst);
+    
+    cplex.addMIPStart(x.toNumVarArray(),heuristicXVals.toNumArray());
+    cplex.addMIPStart(y.toNumVarArray(),heuristicYVals.toNumArray());
     
     //if (verbose) cplex.exportModel("yoshiko.lp");
     

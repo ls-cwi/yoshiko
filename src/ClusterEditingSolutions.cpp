@@ -19,7 +19,8 @@ namespace ysk {
 		if(i >= _solutions.size()){
 			//throw new Exception("Attempted to access solution with index: "+i);
 			cerr << "Attempted to access solution with index: " <<i << endl;
-			exit(-1);
+                        
+			throw Exception();
 		}
 		return _solutions[i];
 	}
