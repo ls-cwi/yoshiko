@@ -29,8 +29,8 @@ public:
 	 * @param instance The ClusterEditingInstance on which the KClustifier is to be used
 	 * @param solutions The ClusterEditingSolutions from the run
 	 */
-	KClustifier(ClusterEditingInstance* instance, ClusterEditingSolutions* solutions):
-	_solutions(solutions),
+	KClustifier(ClusterEditingInstance* instance, std::vector<std::vector<int>>& solution):
+	_solution(solution),
 	_instance(instance),
 	_editingCosts(0)
 	{}
@@ -44,9 +44,8 @@ public:
     /**
      * Transforms the solution identified by the solutionID into k clusters
      * @param k
-     * @param solutionID
      */
-	void kClustify(unsigned int k, size_t solutionID);
+	void kClustify(unsigned int k);
 
 	/**
 	 * Returns the costs that were paid for k-clustifying
@@ -79,7 +78,7 @@ private:
 	std::map<int,ysk::Separation> _lowerBoundSplitCosts;
 	std::map<lemon::FullGraph::Edge,double> _separationCosts;
 
-	ClusterEditingSolutions* _solutions;
+	std::vector<std::vector<int>>& _solution;
 	ClusterEditingInstance* _instance;
 	double _editingCosts;
 

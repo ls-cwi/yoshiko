@@ -76,8 +76,7 @@ private:
     
     //Heuristic Solution Variables
     std::vector<std::vector<int>> _heuristicSolution;
-    void populateHeuristicXVals(IloBoolArray& xvals, const ClusterEditingInstance& instance);
-    void populateHeuristicYVals(IloBoolArray & yvals,const ClusterEditingInstance& instance);
+    void populateHeuristicVals(IloBoolArray& vals, const ClusterEditingInstance& instance);
 
     IloCplex::Aborter _aborter;
     bool _cplexInitialized;

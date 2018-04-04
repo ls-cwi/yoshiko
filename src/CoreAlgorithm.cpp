@@ -203,6 +203,7 @@ namespace ysk {
                                         i.getWorkingCopyInstance(),
                                         numeric_limits<double>::signaling_NaN());
                         parameterizedInstance.init();
+                        
                         InducedCostsHeuristic h(parameterizedInstance);
                         h.start();
                         double heuristicCosts = h.getSolution(s);
@@ -210,8 +211,30 @@ namespace ysk {
                         if (_parameter.useHeuristic){
                             flags.totalCost += heuristicCosts;
                         }
+                        
+                        //Heuristic K-Cluster post-processing if desired
 
-			//Solve the remaining and reduced instance either with the heuristic or the ILP
+                        if (_parameter.targetClusterCount != -1){
+                            if (verbosity >= 2){
+                                    cout << "Aiming for the following cluster count: "<<_parameter.targetClusterCount << endl;
+                            }
+                            //Iterate over all clusters and k-clustify them
+                            for(size_t solutionID = 0; solutionID < s.getNumberOfSolutions();solutionID++) {
+                                //Generate a new k-clustifier instance
+                                KClustifier clustifier(_instance,s.getSolution(solutionID));
+                                clustifier.kClustify(_parameter.targetClusterCount);
+                                if(_parameter.useHeuristic){ //In this case those costs are actually relevant
+                                    flags.totalCost += solutionID == 0 ? clustifier.getCosts() : 0.0; //TODO: Unelegant hackfix
+                                    if (verbosity >= 2){
+                                        cout << "Total cost (post k-clustifier): " << flags.totalCost << endl;
+                                    }
+                                }
+                            }
+
+                        }
+                        
+                        //If we are in ILP mode we now continue computing the exact solution
+	  
 			if (!_parameter.useHeuristic) {
                                 
 				//ILP
@@ -285,24 +308,7 @@ namespace ysk {
 		//Restore timeout flag
 		_result->setFlags(flags);
 
-	  //Heuristic K-Cluster post-processing if desired
 
-	  if (_parameter.targetClusterCount != -1 && _parameter.useHeuristic){
-                if (verbosity >= 2){
-                        cout << "Aiming for the following cluster count: "<<_parameter.targetClusterCount << endl;
-                        cout << "Modification Costs (pre k-clustifier):" << flags.totalCost << endl;
-                }
-                //Generate a new k-clustifier instance
-                KClustifier clustifier(_instance,_result);
-                //Iterate over all clusters and k-clustify them
-                for(size_t solutionID = 0; solutionID < _result->getNumberOfSolutions();solutionID++) {
-                            clustifier.kClustify(_parameter.targetClusterCount, solutionID);
-                            flags.totalCost += clustifier.getCosts();
-                }
-                if (verbosity >= 2){
-                    cout << "Total cost (post k-clustifier): " << flags.totalCost << endl;
-                }
-	  }
 
 
 

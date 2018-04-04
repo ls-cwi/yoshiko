@@ -11,12 +11,10 @@ KClustifier::~KClustifier(){};
  * Modifies the given solution so that it consists of k clusters.
  * TODO: Documentation
  * @param k
- * @param solutionID
  */
-void KClustifier::kClustify(unsigned int k, size_t solutionID){
+void KClustifier::kClustify(unsigned int k){
 	_editingCosts = 0;
-	//Fetch the actual solution we want to modify
-	vector<vector<int>>& solution = _solutions->getSolution(solutionID);
+	vector<vector<int>>& solution = _solution;
 	if (solution.size() == k){
 		//We already have the desired amount of clusters
 	}
@@ -38,7 +36,6 @@ void KClustifier::kClustify(unsigned int k, size_t solutionID){
 			KClustifier::mergeCheapest(solution);
 			if (verbosity > 4 ){
 				KClustifier::printMergeCosts();
-				_solutions->printSolution(solutionID);
 			}
 		}
 	}
@@ -55,9 +52,6 @@ void KClustifier::kClustify(unsigned int k, size_t solutionID){
 		//We then simply split until we reach the required number of clusters
 		while (solution.size()<k){
 			KClustifier::splitCheapest(solution);
-			if (verbosity > 4 ){
-				_solutions->printSolution(solutionID);
-			}
 		}
 	}
 }

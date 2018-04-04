@@ -378,9 +378,9 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
         }
     }
     
-    IloBoolArray heuristicXVals(cplexEnv, g.edgeNum());
-    IloBoolArray heuristicYVals(cplexEnv,  _heuristicSolution.size() * g.nodeNum());
-    
+    //If we are using k-clustering we need to account for the additional values
+    //cout << "Heuristic Solution Size:" << _heuristicSolution.size();
+    IloBoolArray heuristicVals(cplexEnv, _useKCluster ?_heuristicSolution.size() * g.nodeNum() + g.edgeNum() : g.edgeNum());
 
 
     //Build objective function
@@ -491,11 +491,9 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
 
     cplex.extract(M);
     
-    populateHeuristicXVals(heuristicXVals,inst);
-    populateHeuristicYVals(heuristicYVals,inst);
+    populateHeuristicVals(heuristicVals,inst);
     
-    cplex.addMIPStart(x.toNumVarArray(),heuristicXVals.toNumArray());
-    cplex.addMIPStart(y.toNumVarArray(),heuristicYVals.toNumArray());
+    cplex.addMIPStart(x.toNumVarArray(),heuristicVals.toNumArray());
     
     //if (verbose) cplex.exportModel("yoshiko.lp");
     
@@ -608,7 +606,7 @@ void ILPSolver::addHeuristicSolution(std::vector<std::vector<int>>& solution){
     _heuristicSolution = solution;
 }
 
-void ILPSolver::populateHeuristicXVals(IloBoolArray & xvals,const ClusterEditingInstance& instance){
+void ILPSolver::populateHeuristicVals(IloBoolArray & vals,const ClusterEditingInstance& instance){
     
         //TODO: Way too much effort ... can save a lot by getting rid of lemon I would assume ...
         set<FullGraph::Edge> existingEdges;
@@ -632,26 +630,28 @@ void ILPSolver::populateHeuristicXVals(IloBoolArray & xvals,const ClusterEditing
         
         for (FullGraph::EdgeIt e(instance.getOrig()); e != INVALID; ++e) {
             int edgeID = instance.getOrig().id(e);
-            xvals[edgeID] = (existingEdges.find(e) != existingEdges.end()) ? 1.0 : 0.0;
+            vals[edgeID] = (existingEdges.find(e) != existingEdges.end()) ? 1.0 : 0.0;
         }
-}
-
-void ILPSolver::populateHeuristicYVals(IloBoolArray & yvals,const ClusterEditingInstance& instance){
-    
         
-        //Check which edges exist in the proposed solution //TODO: Redundant code from SolutionChecker -> Move to CES?
-        for (unsigned int c = 0; c < _heuristicSolution.size(); c++){
-            vector<int> cluster = _heuristicSolution[c];
-            //cout << "Cluster" << c <<endl;
+        if (_useKCluster){
+            
+            unsigned int offset = instance.getOrig().edgeNum();
+            
+            for (unsigned int c = 0; c < _heuristicSolution.size(); c++){
+                vector<int> cluster = _heuristicSolution[c];
+                //cout << "Cluster" << c <<endl;
 
-            for (unsigned int n = 0; n < cluster.size(); n++) {
-                yvals[c*instance.getSize()+cluster[n]] = 1.0;
+                for (unsigned int n = 0; n < cluster.size(); n++) {
+                    vals[offset+c*instance.getSize()+cluster[n]] = 1.0;
+                }
             }
-        }
-        
-        //TODO: Better idea? Maybe CPLEX doesn't even need this ...
-        for (unsigned int all = 0; all < instance.getSize()*_heuristicSolution.size(); all++) {
-            yvals[all] = yvals[all] == 1.0 ? 1.0 : 0.0;
+            
+            //TODO: Better idea? Maybe CPLEX doesn't even need this ...
+            for (unsigned int all = 0; all < instance.getSize()*_heuristicSolution.size(); all++) {
+                vals[offset+all] = vals[offset+all] == 1.0 ? 1.0 : 0.0;
+            }
+            
+            cout << "Heuristic Solution:"<< vals << "Length:" << vals.getSize();
         }
 }
 
