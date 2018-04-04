@@ -13,6 +13,8 @@
 #include "KClustifier.h"
 #include "ILPSolver.h"
 #include "YParameterSet.h"
+#include "ClusterEditingSolutionLight.h"
+#include "InducedCostHeuristicLight.h"
 
 namespace ysk {
 

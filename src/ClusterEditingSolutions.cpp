@@ -51,6 +51,18 @@ namespace ysk {
 		}
 	  }
 	}
+	
+	void ClusterEditingSolutions::setSolution(int k, const ClusterEditingSolutionLight& sol) {
+	  _solutions[k].resize(sol.getNumClusters());
+	  for (unsigned int i = 0; i < sol.getNumClusters(); i++) {
+// 	    for (vector<LightCompleteGraph::NodeId>::iterator it = sol.getCluster(i).begin(); it != sol.getCluster(i).end(); ++it) {
+// 	      _solutions[k][i].push_back((int)(*it));
+// 	    }
+	    for (LightCompleteGraph::NodeId id : sol.getCluster(i)) {
+	      _solutions[k][i].push_back((int)(id));
+	    }
+	  }
+	}
 
 	void ClusterEditingSolutions::setSolution(int k, const IloNumArray &x_vals, const ClusterEditingInstance &i) {
 	  // compute clusters

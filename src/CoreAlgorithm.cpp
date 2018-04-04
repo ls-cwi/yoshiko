@@ -232,13 +232,21 @@ namespace ysk {
 					cout << "Starting heuristic!" << endl;
 				}
 				//HEURISTIC
-				ParameterizedInstance parameterizedInstance(
-						i.getWorkingCopyInstance(),
-						numeric_limits<double>::signaling_NaN());
-				parameterizedInstance.init();
-				InducedCostsHeuristic h(parameterizedInstance);
-				h.start();
-				flags.totalCost += h.getSolution(s);
+// 				ParameterizedInstance parameterizedInstance(
+// 						i.getWorkingCopyInstance(),
+// 						numeric_limits<double>::signaling_NaN());
+// 				parameterizedInstance.init();
+// 				InducedCostsHeuristic h(parameterizedInstance);
+// 				h.start();
+// 				flags.totalCost += h.getSolution(s);
+				
+				// NEW HEURISTIC
+				LightCompleteGraph g(i.getWorkingCopyInstance());
+				InducedCostHeuristicLight hl(g);
+				ClusterEditingSolutionLight sol = hl.solve();
+				flags.totalCost += sol.getTotalCost();
+				s.resize(1);
+				s.setSolution(0, sol);
 			}
 
 			if (verbosity > 1)

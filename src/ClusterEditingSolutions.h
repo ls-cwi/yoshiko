@@ -6,6 +6,7 @@
 #include "Helpers.h"
 #include "SolutionFlags.h"
 #include "WorkingCopyInstance.h"
+#include "ClusterEditingSolutionLight.h"
 
 #include <ilconcert/iloalg.h>
 
@@ -40,6 +41,9 @@ public:
 
   void setSolution(int k,
                    const WorkingCopyInstance& inst);
+  
+  void setSolution(int k, 
+		   const ClusterEditingSolutionLight& sol);
 
   size_t getNumberOfSolutions() const;
 

@@ -41,6 +41,7 @@ set( Yoshiko_Hdr
 
   src/ClusterEditingInstance.h
   src/ClusterEditingReduction.h
+  src/ClusterEditingSolutionLight.h
   src/ClusterEditingSolutions.h
   src/ClusterReductionInstance.h
   src/config.h
@@ -49,11 +50,14 @@ set( Yoshiko_Hdr
   src/CplexInformer.h
   src/Delta.h
   src/DynProgTable.h
+  src/EdgeHeap.h
   src/Globals.h
   src/Helpers.h
   src/ILPSolver.h
   src/InducedCostsHeuristic.h
+  src/InducedCostHeuristicLight.h
   src/KClustifier.h
+  src/LightCompleteGraph.h
   src/ParameterizedInstance.h
   src/SolutionChecker.h
   src/WorkingCopyInstance.h
@@ -76,16 +80,20 @@ set( Yoshiko_Hdr
 set( Yoshiko_Src
   src/ClusterEditingInstance.cpp
   src/ClusterEditingReduction.cpp
+  src/ClusterEditingSolutionLight.cpp
   src/ClusterEditingSolutions.cpp
   src/ClusterReductionInstance.cpp
   src/CoreAlgorithm.cpp
   src/Delta.cpp
   src/DynProgTable.cpp
+  src/EdgeHeap.cpp
   src/Globals.cpp
   src/Helpers.cpp
   src/ILPSolver.cpp
   src/InducedCostsHeuristic.cpp
+  src/InducedCostHeuristicLight.cpp
   src/KClustifier.cpp
+  src/LightCompleteGraph.cpp
   src/ParameterizedInstance.cpp
   src/SolutionChecker.cpp
   src/WorkingCopyInstance.cpp
