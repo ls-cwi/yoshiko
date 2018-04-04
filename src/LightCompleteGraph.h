@@ -30,22 +30,25 @@ public:
     NodeId v;
     
     Edge(NodeId pu, NodeId pv) {
-      if (pu > pv) {
-	u = pu;
-	v = pv;
-      } else {
-	u = pv;
-	v = pu;
-      }
+      int ordered = pu > pv;
+      u = ordered*pu + (1-ordered)*pv;
+      v = ordered*pv + (1-ordered)*pu;
+//       if (pu > pv) {
+// 	u = pu;
+// 	v = pv;
+//       } else {
+// 	u = pv;
+// 	v = pu;
+//       }
     }
     
-    Edge() : u(0), v(0) {};
+    Edge() : u(1), v(0) {};
     
     /**
      * Returns the id of this edge for a triangle adjacency matrix representation.
      */
     EdgeId id() const {
-      return u*(u+1)/2 + v;
+      return u*(u-1)/2 + v;
     }
     
     bool operator==(const Edge& other) const {
