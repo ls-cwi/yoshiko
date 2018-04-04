@@ -33,13 +33,6 @@ public:
       int ordered = pu > pv;
       u = ordered*pu + (1-ordered)*pv;
       v = ordered*pv + (1-ordered)*pu;
-//       if (pu > pv) {
-// 	u = pu;
-// 	v = pv;
-//       } else {
-// 	u = pv;
-// 	v = pu;
-//       }
     }
     
     Edge() : u(1), v(0) {};
@@ -60,11 +53,6 @@ public:
   static const EdgeWeight Permanent;
   static const Edge InvalidEdge;
   static const EdgeId InvalidEdgeId;
-  
-//   const EdgeWeight Forbidden = -std::numeric_limits< EdgeWeight >::infinity();
-//   const EdgeWeight Permanent = std::numeric_limits< EdgeWeight >::infinity();
-//   const Edge InvalidEdge = {0, 1};
-//   const EdgeId InvalidEdgeId = -1;
 
   /**
    * Constructs a new graph using the provided lemon graph.
@@ -89,7 +77,7 @@ public:
   /**
    * Returns the number of edges in the graph.
    */
-  unsigned int numEdges() const;
+  unsigned long numEdges() const;
   
 private:
   unsigned int size;

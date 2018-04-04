@@ -12,7 +12,6 @@ EdgeHeap::EdgeHeap(LightCompleteGraph& param_graph) :
   icf(param_graph.numEdges(), 0.0),
   icp(param_graph.numEdges(), 0.0)
 {
-//   std::cout<<"1.2"<<std::endl;
   initInducedCosts();
 }
 
@@ -44,7 +43,6 @@ void EdgeHeap::initInducedCosts() {
 	icf[id] += getIcf(w_uv, w_uw, w_vw);
 	icp[id] += getIcp(w_uv, w_uw, w_vw);
       }
-//       std::cout<<"Icf/Icp of ("<<u<<","<<v<<") = "<<icf[id]<<"/"<<icp[id]<<" at weight "<<graph.getWeight(uv)<<std::endl;
     }
   }
 }
@@ -67,19 +65,13 @@ EdgeWeight EdgeHeap::getIcp(const Edge e) const {
 
 void EdgeHeap::updateIcf(const Edge e, const EdgeWeight w) {
   if (icf[e.id()] >= 0) {
-    EdgeWeight old = icf[e.id()];
     icf[e.id()] = w;
-//     if (old != w)
-//       std::cout<<"Icf("<<e.u<<","<<e.v<<") "<<old<<" -> "<<icf[e.id()]<<std::endl;
   }
 }
 
 void EdgeHeap::updateIcp(const Edge e, const EdgeWeight w) {
   if (icp[e.id()] >= 0) {
-    EdgeWeight old = icp[e.id()];
     icp[e.id()] = w;
-//     if (old != w)
-//       std::cout<<"Icp("<<e.u<<","<<e.v<<") "<<old<<" -> "<<icp[e.id()]<<std::endl;
   }
 }
 
@@ -89,33 +81,29 @@ void EdgeHeap::removeEdge(const Edge e) {
 }
 
 LightCompleteGraph::EdgeWeight EdgeHeap::getIcf(const EdgeWeight uv, const EdgeWeight uw, const EdgeWeight vw) {
-  // This implementation slows down everything significantly!
-//   if (uw > 0 && vw > 0) {
-//     // if both other edges present, remove the cheapest of both
-//     return std::min(uw, vw); 
-//   } else {
-//     return 0;
-//   }
+  if (uw > 0 && vw > 0) {
+    // if both other edges present, remove the cheapest of both
+    return std::min(uw, vw); 
+  } else {
+    return 0;
+  }
   
   // if both other edges present, remove the cheapest of both
-  int uw_l = uw < vw;
-  return (uw > 0) * (vw > 0) * ((uw_l) * uw + (1 - uw_l) * vw);
+//   return (uw > 0) * (vw > 0) * (std::min(uw, vw));
 }
 
 LightCompleteGraph::EdgeWeight EdgeHeap::getIcp(const EdgeWeight uv, const EdgeWeight uw, const EdgeWeight vw) {
   if (uw < 0 && vw > 0) {
-//     std::cout<<"getIcp_("<<uw<<","<<vw<<") "<<std::min(vw, -uw)<<std::endl;
     return std::min(vw, -uw); 	// either add uw or remove vw
   } else if (uw > 0 && vw < 0) {
-//     std::cout<<"getIcp_("<<uw<<","<<vw<<") "<<std::min(-vw, uw)<<std::endl;
     return std::min(-vw, uw); 	// either add vw or remove uw
   } else {
-//     std::cout<<"getIcp_("<<uw<<","<<vw<<") "<<0<<std::endl;
     return 0;
   }
   
-  int uw_l0 = uw < 0;
-  return (((uw_l0) + (vw < 0)) % 2) * ((uw_l0) * std::min(vw, -uw) + (1 - uw_l0) * std::min(-vw, uw));
+  // either add vw or remove uw if different sign
+//   int uw_l0 = uw < 0;
+//   return (((uw_l0) + (vw < 0)) % 2) * ((uw_l0) * std::min(vw, -uw) + (1 - uw_l0) * std::min(-vw, uw));
 }
 
 Edge EdgeHeap::getMaxEdge(const std::vector<EdgeWeight>& vec) const {
