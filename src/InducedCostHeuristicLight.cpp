@@ -18,8 +18,8 @@ ClusterEditingSolutionLight InducedCostHeuristicLight::solve() {
   // execute algorithm
   std::cout<<"Running heuristic."<<std::endl;
   for (unsigned int i = 0; i < graph.numEdges() + 1; i++) {
-    if (i%10000 == 0) {
-      std::cout<<"Completed "<<(i*100/graph.numEdges())<<"%."<<std::endl;
+    if (i%250 == 0) {
+      std::cout<<"Completed "<<(i*100/graph.numEdges())<<"%\r"<<std::flush;
     }
     Edge eIcf = edges.getMaxIcfEdge();
     Edge eIcp = edges.getMaxIcpEdge();
@@ -44,6 +44,7 @@ ClusterEditingSolutionLight InducedCostHeuristicLight::solve() {
   std::vector<int> clusterOfNode(graph.numNodes(), -1);
   for (NodeId u = 0; u < graph.numNodes(); u++) {
     // add cluster if not explored yet
+    std::cout<<"Completed "<<(u*100/graph.numNodes())<<"%\r"<<std::flush;
     if (clusterOfNode[u] == -1) {
       int c = clusters.size();
       clusterOfNode[u] = c;
