@@ -57,10 +57,21 @@ private:
    * Returns the edge id with the highest cost inside the provided vector.
    */
   LightCompleteGraph::Edge getMaxEdge(const std::vector<LightCompleteGraph::EdgeWeight>& vec) const;
+  /**
+   * Ensures that the heap structure of the given heap stays intact after the icf/icp value of an edge has been modified. 
+   * Provided are the id of the modified edge, new and old value, an index (which maps edge ids to their position in the heap)
+   * and a score vector (which maps an edge id to either its icf or icp).
+   */
+  void updateHeap(std::vector<LightCompleteGraph::EdgeId>& heap, const LightCompleteGraph::EdgeId e, const LightCompleteGraph::EdgeWeight newW, 
+		  const LightCompleteGraph::EdgeWeight oldW, std::vector<LightCompleteGraph::EdgeId>& index, const std::vector<LightCompleteGraph::EdgeWeight>& score);
   
   LightCompleteGraph& graph;
-  std::vector<LightCompleteGraph::EdgeWeight> icf;
-  std::vector<LightCompleteGraph::EdgeWeight> icp;
+  std::vector<LightCompleteGraph::EdgeWeight> icf;		// edge id -> icf of edge
+  std::vector<LightCompleteGraph::EdgeWeight> icp;		// edge id -> icp of edge
+  std::vector<LightCompleteGraph::EdgeId> forb_rank2edge;	// max-heap over edge ids, sorted by icf
+  std::vector<LightCompleteGraph::EdgeId> perm_rank2edge;	// max-heap over edge ids, sorted by icp
+  std::vector<LightCompleteGraph::EdgeId> edge2forb_rank;	// edge id -> position in icf-heap
+  std::vector<LightCompleteGraph::EdgeId> edge2perm_rank;	// edge id -> position in icp-heap
 };
 
 } // namespace ysk;
