@@ -66,8 +66,10 @@ void InducedCostHeuristicLight::setForbidden(const Edge e) {
   for (NodeId w = 0; w < graph.numNodes(); w++) {
     if (w == u || w == v)
       continue;
-    updateTripleForbiddenUW(u, v, w);
-    updateTripleForbiddenUW(v, u, w);
+    Edge uw(u, w);
+    Edge vw(v, w);
+    updateTripleForbiddenUW(e, uw, vw);
+    updateTripleForbiddenUW(e, vw, uw);
   }
   if (graph.getWeight(e) > 0)
     totalCost += graph.getWeight(e);
@@ -80,30 +82,32 @@ void InducedCostHeuristicLight::setPermanent(const Edge e) {
   for (NodeId w = 0; w < graph.numNodes(); w++) {
     if (w == u || w == v)
       continue;
-    updateTriplePermanentUW(u, v, w);
-    updateTriplePermanentUW(v, u, w);
+    Edge uw(u, w);
+    Edge vw(v, w);
+    updateTriplePermanentUW(e, uw, vw);
+    updateTriplePermanentUW(e, vw, uw);
   }
   if (graph.getWeight(e) < 0)
     totalCost -= graph.getWeight(e);
   graph.setWeight(e, LightCompleteGraph::Permanent);
 }
 
-void InducedCostHeuristicLight::updateTripleForbiddenUW(const NodeId u, const NodeId v, const NodeId w) {
-  EdgeWeight icf_old = edges.getIcf(graph.getWeight(Edge(u,w)), graph.getWeight(Edge(u,v)), graph.getWeight(Edge(v,w)));
-  EdgeWeight icf_new = edges.getIcf(graph.getWeight(Edge(u,w)), LightCompleteGraph::Forbidden, graph.getWeight(Edge(v,w)));
-  EdgeWeight icp_old = edges.getIcp(graph.getWeight(Edge(u,w)), graph.getWeight(Edge(u,v)), graph.getWeight(Edge(v,w)));
-  EdgeWeight icp_new = edges.getIcp(graph.getWeight(Edge(u,w)), LightCompleteGraph::Forbidden, graph.getWeight(Edge(v,w)));
-  edges.updateIcf(Edge(u,w), edges.getIcf(Edge(u,w)) + icf_new - icf_old);
-  edges.updateIcp(Edge(u,w), edges.getIcp(Edge(u,w)) + icp_new - icp_old);
+void InducedCostHeuristicLight::updateTripleForbiddenUW(const Edge uv, const Edge uw, const Edge vw) {
+  EdgeWeight icf_old = edges.getIcf(graph.getWeight(uv), graph.getWeight(vw));
+  EdgeWeight icf_new = edges.getIcf(LightCompleteGraph::Forbidden, graph.getWeight(vw));
+  EdgeWeight icp_old = edges.getIcp(graph.getWeight(uv), graph.getWeight(vw));
+  EdgeWeight icp_new = edges.getIcp(LightCompleteGraph::Forbidden, graph.getWeight(vw));
+  edges.increaseIcf(uw, icf_new - icf_old);
+  edges.increaseIcp(uw, icp_new - icp_old);
 }
 
-void InducedCostHeuristicLight::updateTriplePermanentUW(const NodeId u, const NodeId v, const NodeId w) {
-  EdgeWeight icf_old = edges.getIcf(graph.getWeight(Edge(u,w)), graph.getWeight(Edge(u,v)), graph.getWeight(Edge(v,w)));
-  EdgeWeight icf_new = edges.getIcf(graph.getWeight(Edge(u,w)), LightCompleteGraph::Permanent, graph.getWeight(Edge(v,w)));
-  EdgeWeight icp_old = edges.getIcp(graph.getWeight(Edge(u,w)), graph.getWeight(Edge(u,v)), graph.getWeight(Edge(v,w)));
-  EdgeWeight icp_new = edges.getIcp(graph.getWeight(Edge(u,w)), LightCompleteGraph::Permanent, graph.getWeight(Edge(v,w)));
-  edges.updateIcf(Edge(u,w), edges.getIcf(Edge(u,w)) + icf_new - icf_old);
-  edges.updateIcp(Edge(u,w), edges.getIcp(Edge(u,w)) + icp_new - icp_old);
+void InducedCostHeuristicLight::updateTriplePermanentUW(const Edge uv, const Edge uw, const Edge vw) {
+  EdgeWeight icf_old = edges.getIcf(graph.getWeight(uv), graph.getWeight(vw));
+  EdgeWeight icf_new = edges.getIcf(LightCompleteGraph::Permanent, graph.getWeight(vw));
+  EdgeWeight icp_old = edges.getIcp(graph.getWeight(uv), graph.getWeight(vw));
+  EdgeWeight icp_new = edges.getIcp(LightCompleteGraph::Permanent, graph.getWeight(vw));
+  edges.increaseIcf(uw, icf_new - icf_old);
+  edges.increaseIcp(uw, icp_new - icp_old);
 }
 
 } // namespace ysk

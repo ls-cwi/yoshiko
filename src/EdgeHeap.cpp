@@ -44,8 +44,8 @@ void EdgeHeap::initInducedCosts() {
         Edge vw(v,w);
         EdgeWeight w_uw = graph.getWeight(uw);
         EdgeWeight w_vw = graph.getWeight(vw);
-        icf[id] += getIcf(w_uv, w_uw, w_vw);
-        icp[id] += getIcp(w_uv, w_uw, w_vw);
+        icf[id] += getIcf(w_uw, w_vw);
+        icp[id] += getIcp(w_uw, w_vw);
       }
     }
   }
@@ -55,8 +55,8 @@ void EdgeHeap::initInducedCosts() {
     forb_rank2edge.push_back(i);
     perm_rank2edge.push_back(i);
   }
-  std::sort(forb_rank2edge.begin(), forb_rank2edge.end(), [this] (NodeId& a, NodeId& b) { return icf[a] > icf[b]; });
-  std::sort(perm_rank2edge.begin(), perm_rank2edge.end(), [this] (NodeId& a, NodeId& b) { return icp[a] > icp[b]; });
+  std::sort(forb_rank2edge.begin(), forb_rank2edge.end(), [this] (EdgeId& a, EdgeId& b) { return icf[a] > icf[b]; });
+  std::sort(perm_rank2edge.begin(), perm_rank2edge.end(), [this] (EdgeId& a, EdgeId& b) { return icp[a] > icp[b]; });
   
   // save index in sorted vectors for each edge
   for (EdgeId i = 0; i < graph.numEdges(); i++) {
@@ -107,35 +107,31 @@ EdgeWeight EdgeHeap::getIcp(const Edge e) const {
   return icp[e.id()];
 }
 
-void EdgeHeap::updateIcf(const Edge e, const EdgeWeight w) {
+void EdgeHeap::increaseIcf(const Edge e, const EdgeWeight w) {
   EdgeId id = e.id();
-  EdgeWeight old = icf[id];
-  if (old != w && icf[id] >= 0) {
-    icf[id] = w;
-    updateHeap(forb_rank2edge, id, w, old, edge2forb_rank, icf);
+  if (w != 0 && icf[id] >= 0) {
+    icf[id] += w;
+    updateHeap(forb_rank2edge, id, w, edge2forb_rank, icf);
   }
 }
 
-void EdgeHeap::updateIcp(const Edge e, const EdgeWeight w) {
+void EdgeHeap::increaseIcp(const Edge e, const EdgeWeight w) {
   EdgeId id = e.id();
-  EdgeWeight old = icp[id];
-  if (old != w && icp[id] >= 0) {
-    icp[id] = w;
-    updateHeap(perm_rank2edge, id, w, old, edge2perm_rank, icp);
+  if (w != 0 && icp[id] >= 0) {
+    icp[id] += w;
+    updateHeap(perm_rank2edge, id, w, edge2perm_rank, icp);
   }
 }
 
 void EdgeHeap::removeEdge(const Edge e) {
   EdgeId id = e.id();
-  EdgeWeight oldF = icf[id];
-  EdgeWeight oldP = icp[id];
   icf[id] = LightCompleteGraph::Forbidden;
   icp[id] = LightCompleteGraph::Forbidden;
-  updateHeap(forb_rank2edge, id, LightCompleteGraph::Forbidden, oldF, edge2forb_rank, icf);
-  updateHeap(perm_rank2edge, id, LightCompleteGraph::Forbidden, oldP, edge2perm_rank, icp);
+  updateHeap(forb_rank2edge, id, LightCompleteGraph::Forbidden, edge2forb_rank, icf);
+  updateHeap(perm_rank2edge, id, LightCompleteGraph::Forbidden, edge2perm_rank, icp);
 }
 
-LightCompleteGraph::EdgeWeight EdgeHeap::getIcf(const EdgeWeight uv, const EdgeWeight uw, const EdgeWeight vw) {
+LightCompleteGraph::EdgeWeight EdgeHeap::getIcf(const EdgeWeight uw, const EdgeWeight vw) const {
   if (uw > 0 && vw > 0) {
     // if both other edges present, remove the cheapest of both
     return std::min(uw, vw); 
@@ -147,7 +143,7 @@ LightCompleteGraph::EdgeWeight EdgeHeap::getIcf(const EdgeWeight uv, const EdgeW
 //   return (uw > 0) * (vw > 0) * (std::min(uw, vw));
 }
 
-LightCompleteGraph::EdgeWeight EdgeHeap::getIcp(const EdgeWeight uv, const EdgeWeight uw, const EdgeWeight vw) {
+LightCompleteGraph::EdgeWeight EdgeHeap::getIcp(const EdgeWeight uw, const EdgeWeight vw) const {
   if (uw < 0 && vw > 0) {
     return std::min(vw, -uw); 	// either add uw or remove vw
   } else if (uw > 0 && vw < 0) {
@@ -179,9 +175,9 @@ Edge EdgeHeap::getMaxEdge(const std::vector<EdgeWeight>& vec) const {
   return Edge(u, v);
 }
 
-void EdgeHeap::updateHeap(std::vector<EdgeId>& heap, const EdgeId e, const EdgeWeight newW, const EdgeWeight oldW, std::vector<EdgeId>& index, const std::vector<EdgeWeight>& score) {
+void EdgeHeap::updateHeap(std::vector<EdgeId>& heap, const EdgeId e, const EdgeWeight change, std::vector<EdgeId>& index, const std::vector<EdgeWeight>& score) {
   unsigned int pos = index[e];
-  if (newW > oldW) {
+  if (change > 0) {
     // value increased -> move edge upwards in heap
     while(score[heap[pos/2]] < score[heap[pos]]) {
       // swap pos and pos/2

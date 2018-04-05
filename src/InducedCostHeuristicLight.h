@@ -18,14 +18,15 @@ private:
   void init();
   void setForbidden(const LightCompleteGraph::Edge e);
   void setPermanent(const LightCompleteGraph::Edge e);
+  
   /**
    * Updates icf and icp for the edge uw under the assumption that edge uv will be set to forbidden.
    */
-  void updateTripleForbiddenUW(const LightCompleteGraph::NodeId u, const LightCompleteGraph::NodeId v, const LightCompleteGraph::NodeId w);
+  void updateTripleForbiddenUW(const LightCompleteGraph::Edge uv, const LightCompleteGraph::Edge uw, const LightCompleteGraph::Edge vw);
   /**
    * Updates icf and icp for the edge uw under the assumption that edge uv will be set to permanent.
    */
-  void updateTriplePermanentUW(const LightCompleteGraph::NodeId u, const LightCompleteGraph::NodeId v, const LightCompleteGraph::NodeId w);
+  void updateTriplePermanentUW(const LightCompleteGraph::Edge uv, const LightCompleteGraph::Edge uw, const LightCompleteGraph::Edge vw);
   
   LightCompleteGraph graph;
   EdgeHeap edges;

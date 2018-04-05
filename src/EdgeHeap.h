@@ -31,13 +31,13 @@ LightCompleteGraph::EdgeWeight getIcf(const LightCompleteGraph::Edge e) const;
  */
 LightCompleteGraph::EdgeWeight getIcp(const LightCompleteGraph::Edge e) const;
 /**
- * Sets the icf for the provided edge to the new value.
+ * Adds the provided value to the icf of the given edge.
  */
-void updateIcf(const LightCompleteGraph::Edge e, const LightCompleteGraph::EdgeWeight w);
+void increaseIcf(const LightCompleteGraph::Edge e, const LightCompleteGraph::EdgeWeight w);
 /**
- * Sets the icp for the provided edge to the new value.
+ * Adds the provided value to the icp of the given edge.
  */
-void updateIcp(const LightCompleteGraph::Edge e, const LightCompleteGraph::EdgeWeight w);
+void increaseIcp(const LightCompleteGraph::Edge e, const LightCompleteGraph::EdgeWeight w);
 /**
  * Removes the specified edge.
  */
@@ -45,11 +45,11 @@ void removeEdge(const LightCompleteGraph::Edge e);
   /**
    * Computes the induced cost for the the triple uvw, if uv is set to forbidden
    */
-  LightCompleteGraph::EdgeWeight getIcf(const LightCompleteGraph::EdgeWeight uv, const LightCompleteGraph::EdgeWeight uw, const LightCompleteGraph::EdgeWeight vw);
+LightCompleteGraph::EdgeWeight getIcf(const LightCompleteGraph::EdgeWeight uw, const LightCompleteGraph::EdgeWeight vw) const;
   /**
    * Computes the induced cost for the the triple uvw, if uv is set to permanent
    */
-  LightCompleteGraph::EdgeWeight getIcp(const LightCompleteGraph::EdgeWeight uv, const LightCompleteGraph::EdgeWeight uw, const LightCompleteGraph::EdgeWeight vw);
+LightCompleteGraph::EdgeWeight getIcp(const LightCompleteGraph::EdgeWeight uw, const LightCompleteGraph::EdgeWeight vw) const;
 
 private:
   void initInducedCosts();
@@ -62,8 +62,8 @@ private:
    * Provided are the id of the modified edge, new and old value, an index (which maps edge ids to their position in the heap)
    * and a score vector (which maps an edge id to either its icf or icp).
    */
-  void updateHeap(std::vector<LightCompleteGraph::EdgeId>& heap, const LightCompleteGraph::EdgeId e, const LightCompleteGraph::EdgeWeight newW, 
-		  const LightCompleteGraph::EdgeWeight oldW, std::vector<LightCompleteGraph::EdgeId>& index, const std::vector<LightCompleteGraph::EdgeWeight>& score);
+  void updateHeap(std::vector<LightCompleteGraph::EdgeId>& heap, const LightCompleteGraph::EdgeId e, const LightCompleteGraph::EdgeWeight change, 
+		  std::vector<LightCompleteGraph::EdgeId>& index, const std::vector<LightCompleteGraph::EdgeWeight>& score);
   
   LightCompleteGraph& graph;
   std::vector<LightCompleteGraph::EdgeWeight> icf;		// edge id -> icf of edge
