@@ -18,9 +18,6 @@ ClusterEditingSolutionLight InducedCostHeuristicLight::solve() {
   // execute algorithm
   std::cout<<"Running heuristic."<<std::endl;
   for (unsigned int i = 0; i < graph.numEdges() + 1; i++) {
-    if (i%250 == 0) {
-      std::cout<<"Completed "<<(i*100/graph.numEdges())<<"%\r"<<std::flush;
-    }
     Edge eIcf = edges.getMaxIcfEdge();
     Edge eIcp = edges.getMaxIcpEdge();
     if (eIcf == LightCompleteGraph::InvalidEdge || eIcp == LightCompleteGraph::InvalidEdge)
@@ -35,6 +32,9 @@ ClusterEditingSolutionLight InducedCostHeuristicLight::solve() {
       // set eIcp fo forbidden
       setForbidden(eIcp);
       edges.removeEdge(eIcp);
+    }
+    if (i%250 == 0) {
+      std::cout<<"Completed "<<(i*100/graph.numEdges())<<"%\r"<<std::flush;
     }
   }
   
