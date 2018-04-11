@@ -103,12 +103,22 @@ bool SolutionChecker::verifySolutionCosts( ClusterEditingInstance & instance,  C
             if (existingEdges.find(edge) != existingEdges.end()){
                 //Existing edges with negative weight add to our editing costs
                 if(instance.getWeight(edge) < 0){
+                    //Check for inclusion of forbidden edges
+                    if (instance.getWeight(edge) == -std::numeric_limits<double>::infinity()){
+                        cout << "Solution has included a forbidden edge: " << instance.getEdgeName(edge) << endl; 
+                        return false;
+                    }
                     calculatedCosts -= instance.getWeight(edge);
                 }
             }
             else{
                 //Non-existing edges with positive weight add to our editing costs
                 if(instance.getWeight(edge) > 0){
+                    //Check for deletion of permanent edges
+                    if (instance.getWeight(edge) == std::numeric_limits<double>::infinity()){
+                        cout << "Solution has deleted a permanent edge: " << instance.getEdgeName(edge) << endl; 
+                        return false;
+                    }
                     calculatedCosts += instance.getWeight(edge);
                 }
             }
