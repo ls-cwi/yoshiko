@@ -53,35 +53,60 @@ public:
   static const EdgeWeight Permanent;
   static const Edge InvalidEdge;
   static const EdgeId InvalidEdgeId;
+  static const NodeId InvalidNodeId;
 
   /**
    * Constructs a new graph using the provided lemon graph.
    */
   LightCompleteGraph(WorkingCopyInstance& inst);
+  
   /**
    * Creates a hard copy of the provided graph.
    */
   LightCompleteGraph(LightCompleteGraph& other);
+  
   /**
    * Returns the weight of an edge.
    */
   double getWeight(const Edge e) const;
+  
   /**
    * Modifies the weight of an edge.
    */
   void setWeight(const Edge e, const EdgeWeight w);
+  
   /**
    * Returns the number of nodes in the graph.
    */
   unsigned int numNodes() const;
+  
   /**
    * Returns the number of edges in the graph.
    */
   unsigned long numEdges() const;
+
+  /**
+   * Contracts the specified edge, merging the two end nodes together. This will change the internal addresses of the nodes,
+   * so the other two methods for addressing (getInternalId and getOriginalIds) should be used.
+   */
+  void contract(const Edge e);
+  
+  /**
+   * For a node id of the original graph, returns the id of the internal node, which contains the given node.
+   */
+  NodeId getInternalId(const NodeId v) const;
+  
+  /**
+   * For an internal node id, returns the set of original node ids, which are contained in the internal node. The multiplicity
+   * might be greater than 1, if edges have been contracted on this graph.
+   */
+  vector<NodeId> getOriginalIds(const NodeId v) const;
   
 private:
   unsigned int size;
   vector<double> weights;
+  vector<NodeId> origToCompr;
+  vector<vector<NodeId>> comprToOrig;
 };
 
 } //namespace ysk

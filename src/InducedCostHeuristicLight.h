@@ -29,7 +29,7 @@ private:
   void updateTriplePermanentUW(const LightCompleteGraph::Edge uv, const LightCompleteGraph::Edge uw, const LightCompleteGraph::Edge vw);
   
   LightCompleteGraph graph;
-  EdgeHeap edges;
+  EdgeHeap edgeHeap;
   LightCompleteGraph::EdgeWeight totalCost;
 };
 

@@ -30,9 +30,9 @@ void EdgeHeap::initInducedCosts() {
       
       // costs for the edge uv itself
       if (w_uv >= 0) {	
-	      icf[id] += w_uv;	// costs for removing uv
+	icf[id] += w_uv;	// costs for removing uv
       } else {
-	      icp[id] += -w_uv;	// costs for adding uv
+	icp[id] += -w_uv;	// costs for adding uv
       }
       
       // look at all triangles uvw containing uv:
@@ -130,9 +130,6 @@ LightCompleteGraph::EdgeWeight EdgeHeap::getIcf(const EdgeWeight uw, const EdgeW
   } else {
     return 0;
   }
-  
-  // if both other edges present, remove the cheapest of both
-//   return (uw > 0) * (vw > 0) * (std::min(uw, vw));
 }
 
 LightCompleteGraph::EdgeWeight EdgeHeap::getIcp(const EdgeWeight uw, const EdgeWeight vw) const {
@@ -143,10 +140,6 @@ LightCompleteGraph::EdgeWeight EdgeHeap::getIcp(const EdgeWeight uw, const EdgeW
   } else {
     return 0;
   }
-  
-  // either add vw or remove uw if different sign
-//   int uw_l0 = uw < 0;
-//   return (((uw_l0) + (vw < 0)) % 2) * ((uw_l0) * std::min(vw, -uw) + (1 - uw_l0) * std::min(-vw, uw));
 }
 
 Edge EdgeHeap::getMaxEdge(const std::vector<EdgeWeight>& vec) const {
