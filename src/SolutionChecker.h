@@ -15,6 +15,8 @@ namespace ysk{
 class SolutionChecker
 {
 public:
+    static const int MARGIN_OF_ERROR = 1;
+    
     static bool verifySolutionIsCliqueGraph(ClusterEditingInstance & instance,  ClusterEditingSolutions & solutions);
     static bool verifySolutionCosts(ClusterEditingInstance & instance, ClusterEditingSolutions & solution);
 };

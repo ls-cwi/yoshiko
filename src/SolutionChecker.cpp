@@ -114,9 +114,11 @@ bool SolutionChecker::verifySolutionCosts( ClusterEditingInstance & instance,  C
             }
             //cout << calculatedCosts << " after processing edge " << instance.getEdgeName(edge) << endl;
         }
+        
+        cout << "Yoshiko calculated costs:" << solutions.getFlags().totalCost << " Checker calculated costs: " << calculatedCosts << endl;
 
-        if (solutions.getFlags().totalCost != calculatedCosts){
-                cout << "Could not verify the editing costs ... found :" << solutions.getFlags().totalCost << " while it should be " << calculatedCosts << endl;
+        if (abs(solutions.getFlags().totalCost - calculatedCosts) > MARGIN_OF_ERROR){
+                cout << "Could not verify the editing costs!" << endl;
                 return false;
         }
     }
