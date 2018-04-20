@@ -41,6 +41,9 @@ public:
   void setSolution(int k,
                    const WorkingCopyInstance& inst);
 
+  /**
+   * Returns the number of solutions (with equal cost) that this object contains
+   */
   size_t getNumberOfSolutions() const;
 
   ysk::SolutionFlags getFlags();
