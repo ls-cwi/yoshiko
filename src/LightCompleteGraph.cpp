@@ -52,27 +52,29 @@ unsigned long LightCompleteGraph::numEdges() const {
 void LightCompleteGraph::contract(const LightCompleteGraph::Edge e) {
   NodeId u = e.u;
   NodeId v = e.v;
+  NodeId last = numNodes() - 1;
   
-  // combine edge weights of u and v
   for (NodeId w = 0; w < numNodes(); w++) {
     if (w == u || w == v)
       continue;
     Edge uw(u, w);
     Edge vw(v, w);
-    setWeight(uw, getWeight(uw) + getWeight(vw);
-    setWeight(vw, 0);	// not really neceassary, but to show that the edges of v are gone
+    Edge wl(w, last);
+    EdgeWeight weight_V = getWeight(vw);
+    // combine edge weights of u and v
+    setWeight(uw, getWeight(uw) + weight_V;
+    // swap v with last node, by assigning edge weights of last node to v
+    setWeight(wl, weight_V);
   }
   
-  // swap v with the last internal node
-  //TODO: Implement
-  for (NodeId w = 0; w < numNodes(); w++) {
-    if (w == u || w == v)
-      continue;
-    
-  }
+  // link changes
+  origToCompr[last] = v;
+  origToCompr[v] = u;
+  comprToOrig[u].push_back(v);
   
   // delete last internal node
-  //TODO: Implement
+  size--;
+  weights.resize(size*(size-1)/2);
 }
 
 LightCompleteGraph::NodeId LightCompleteGraph::getInternalId(const LightCompleteGraph::NodeId v) const {
