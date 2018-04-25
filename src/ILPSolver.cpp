@@ -469,7 +469,32 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
             }
             M.add(cluster_association >= 1);
         }
+        
+        //Even more Constraints:
+        /** Those are adapted from Bulhões et al. 2017 (http://dx.doi.org/10.1016/j.dam.2016.10.026)
+         * 
+         */
     
+        // |E|-Bounds Inequalities
+        IloExpr edgeCountTotal(cplexEnv);
+        for (FullGraph::EdgeIt i(g); i != INVALID; ++i){
+                edgeCountTotal += x[g.id(i)];
+        }
+        // Upper Bound
+        M.add(
+            edgeCountTotal <= (
+                (g.nodeNum()-(_clusterCount -1))*(g.nodeNum()-(_clusterCount -1)-1)
+            )/2
+        );
+        // Lower Bound
+        int q = std::floor(g.nodeNum()/_clusterCount);
+        M.add(
+            edgeCountTotal >= 
+                (g.nodeNum() % _clusterCount)*
+                ((q*(q+1))/2) +
+                (_clusterCount-(g.nodeNum() % _clusterCount))*
+                ((q*(q-1))/2)
+        );
     }
     
     if (verbosity > 1)
