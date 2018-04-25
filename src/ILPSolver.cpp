@@ -470,6 +470,10 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
             M.add(cluster_association >= 1);
         }
         
+        
+        //Naive symmetry breaking -> Simply force node with id 0 to be in cluster with id 0
+        M.add(y[0] == 1);
+        
         //Even more Constraints:
         /** Those are adapted from Bulhões et al. 2017 (http://dx.doi.org/10.1016/j.dam.2016.10.026)
          * 
