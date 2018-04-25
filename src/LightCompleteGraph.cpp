@@ -62,7 +62,7 @@ void LightCompleteGraph::contract(const LightCompleteGraph::Edge e) {
     Edge wl(w, last);
     EdgeWeight weight_V = getWeight(vw);
     // combine edge weights of u and v
-    setWeight(uw, getWeight(uw) + weight_V;
+    setWeight(uw, getWeight(uw) + weight_V);
     // swap v with last node, by assigning edge weights of last node to v
     setWeight(wl, weight_V);
   }
