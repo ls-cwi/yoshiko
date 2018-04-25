@@ -471,8 +471,18 @@ long ILPSolver::solve(const ClusterEditingInstance& inst, ClusterEditingSolution
         }
         
         
-        //Naive symmetry breaking -> Simply force node with id 0 to be in cluster with id 0
-        M.add(y[0] == 1);
+        //Symmetry-Breaker
+        //Force each node to be in a cluster with index smaller than its own id
+        for (FullGraph::NodeIt i(g); i != INVALID; ++i) {
+            
+            int nodeID = g.id(i);
+            
+            if (nodeID+1 > _clusterCount-1) continue;
+            
+            for (int j = nodeID+1; j <  _clusterCount; ++j) {
+                M.add(y[j*g.nodeNum()+ g.id(i)] == 0);
+            }
+        }
         
         //Even more Constraints:
         /** Those are adapted from Bulhões et al. 2017 (http://dx.doi.org/10.1016/j.dam.2016.10.026)
