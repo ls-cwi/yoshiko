@@ -21,6 +21,7 @@ void KClustifier::kClustify(unsigned int k, size_t solutionID){
 		//We already have the desired amount of clusters
 	}
 	else if (solution.size()>k){
+		std::cout << "Merging clusters." << std::endl;
 
 		if (k < 1) return; //little sanity check
 
@@ -30,11 +31,13 @@ void KClustifier::kClustify(unsigned int k, size_t solutionID){
 		}
 		//We populate the costMatrix (only upper triangular path is relevant)
 		KClustifier::calculateCostMatrix(solution);
+		std::cout << "Calculated cost matrix." << std::endl;
 		if (verbosity > 4 ){
 			KClustifier::printMergeCosts();
 		}
 		//We then simply merge until we reach the required number of clusters
 		while (solution.size()>k){
+			std::cout << solution.size() << " clusters left." << std::endl;
 			KClustifier::mergeCheapest(solution);
 			if (verbosity > 4 ){
 				KClustifier::printMergeCosts();

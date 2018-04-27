@@ -1,4 +1,5 @@
 #include "EdgeHeap.h"
+#include <cmath>
 
 namespace ysk {
   
@@ -50,6 +51,17 @@ void EdgeHeap::initInducedCosts() {
     }
   }
   
+  for (unsigned int i = 0; i < icf.size(); i++){
+    if(std::isnan(icf[i])) {
+      std::cout<<"NaN! in icf"<<std::endl;
+      break;
+    }
+    if(std::isnan(icp[i])) {
+      std::cout<<"NaN! in icp"<<std::endl;
+      break;
+    }
+  }
+  
   // sort edges by icf and icp values
   for (EdgeId i = 0; i < graph.numEdges(); i++) {
     forb_rank2edge.push_back(i);
@@ -67,10 +79,22 @@ void EdgeHeap::initInducedCosts() {
 
 Edge EdgeHeap::getMaxIcfEdge() const {
   if (forb_rank2edge.size() <= 0) {
+    std::cout << "forb_rank2edge.size() <= 0" << std::endl;
     return LightCompleteGraph::InvalidEdge;
   }
   EdgeId ei = forb_rank2edge[0];
   if (icf[ei] < 0) {
+    NodeId u = std::ceil(std::sqrt(2*(ei+1)+0.25) - 0.5);
+    NodeId v = ei - u * (u-1) / 2;
+    std::cout << "icf["<<u<<","<<v<<"] < 0 ("<< icf[ei]<<")" << std::endl;
+    ei = forb_rank2edge[1];
+    u = std::ceil(std::sqrt(2*(ei+1)+0.25) - 0.5);
+    v = ei - u * (u-1) / 2;
+    std::cout << "borb_rank2edge[1] = ("<<u<<","<<v<<") icf="<< icf[ei] << std::endl;
+    ei = forb_rank2edge[2];
+    u = std::ceil(std::sqrt(2*(ei+1)+0.25) - 0.5);
+    v = ei - u * (u-1) / 2;
+    std::cout << "borb_rank2edge[2] = ("<<u<<","<<v<<") icf="<< icf[ei] << std::endl;
     return LightCompleteGraph::InvalidEdge;
   }
   NodeId u = std::ceil(std::sqrt(2*(ei+1)+0.25) - 0.5);
@@ -101,16 +125,24 @@ EdgeWeight EdgeHeap::getIcp(const Edge e) const {
 
 void EdgeHeap::increaseIcf(const Edge e, const EdgeWeight w) {
   EdgeId id = e.id();
+  if (std::isnan(w)) {
+    std::cout<<"NaN! increaseIcf"<<std::endl;
+  }
   if (w != 0 && icf[id] >= 0) {
     icf[id] += w;
+    icf[id] = std::max(icf[id], 0.0);
     updateHeap(forb_rank2edge, id, w, edge2forb_rank, icf);
   }
 }
 
 void EdgeHeap::increaseIcp(const Edge e, const EdgeWeight w) {
   EdgeId id = e.id();
+  if (std::isnan(w)) {
+    std::cout<<"NaN! increaseIcp"<<std::endl;
+  }
   if (w != 0 && icp[id] >= 0) {
     icp[id] += w;
+    icp[id] = std::max(icp[id], 0.0);
     updateHeap(perm_rank2edge, id, w, edge2perm_rank, icp);
   }
 }

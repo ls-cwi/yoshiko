@@ -16,14 +16,16 @@ InducedCostHeuristicLight::InducedCostHeuristicLight(LightCompleteGraph& param_g
 
 ClusterEditingSolutionLight InducedCostHeuristicLight::solve() {
   // execute algorithm
-  std::cout<<"Running heuristic."<<std::endl;
+  std::cout<<"Running heuristic." << "."<<std::endl;
   for (unsigned int i = 0; i < graph.numEdges() + 1; i++) {
     Edge eIcf = edgeHeap.getMaxIcfEdge();
     Edge eIcp = edgeHeap.getMaxIcpEdge();
-    if (eIcf == LightCompleteGraph::InvalidEdge || eIcp == LightCompleteGraph::InvalidEdge)
+    if (eIcf == LightCompleteGraph::InvalidEdge || eIcp == LightCompleteGraph::InvalidEdge) {
       break;
+    }
     EdgeWeight mIcf = edgeHeap.getIcf(eIcf);
     EdgeWeight mIcp = edgeHeap.getIcp(eIcp);
+//     std::cout<<"mIcf = ("<< mIcf <<")  mIcp = ("<< mIcp <<")"<<std::endl;
     if (mIcf >= mIcp) {
       // set eIcf to permanent
       setPermanent(eIcf);
@@ -61,6 +63,9 @@ ClusterEditingSolutionLight InducedCostHeuristicLight::solve() {
 }
 
 void InducedCostHeuristicLight::setForbidden(const Edge e) {
+  if (graph.getWeight(e) == LightCompleteGraph::Forbidden) {
+    return;
+  }
   NodeId u = e.u;
   NodeId v = e.v;
   for (NodeId w = 0; w < graph.numNodes(); w++) {
@@ -77,6 +82,9 @@ void InducedCostHeuristicLight::setForbidden(const Edge e) {
 }
 
 void InducedCostHeuristicLight::setPermanent(const Edge e) {
+  if (graph.getWeight(e) == LightCompleteGraph::Permanent) {
+    return;
+  }
   NodeId u = e.u;
   NodeId v = e.v;
   for (NodeId w = 0; w < graph.numNodes(); w++) {
@@ -106,6 +114,8 @@ void InducedCostHeuristicLight::updateTriplePermanentUW(const Edge uv, const Edg
   EdgeWeight icf_new = edgeHeap.getIcf(LightCompleteGraph::Permanent, graph.getWeight(vw));
   EdgeWeight icp_old = edgeHeap.getIcp(graph.getWeight(uv), graph.getWeight(vw));
   EdgeWeight icp_new = edgeHeap.getIcp(LightCompleteGraph::Permanent, graph.getWeight(vw));
+  edgeHeap.increaseIcf(uw, icf_new - icf_old);
+  edgeHeap.increaseIcp(uw, icp_new - icp_old);
   edgeHeap.increaseIcf(uw, icf_new - icf_old);
   edgeHeap.increaseIcp(uw, icp_new - icp_old);
 }

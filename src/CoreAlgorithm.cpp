@@ -282,9 +282,6 @@ namespace ysk {
 		vector<vector<int> > p;
 		mergeSolutions(0, k, p, *_result, instances);
 
-		//Restore timeout flag
-		_result->setFlags(flags);
-
 	  //Heuristic K-Cluster post-processing if desired
 
 	  if (_parameter.targetClusterCount != -1 && _parameter.useHeuristic){
@@ -304,7 +301,8 @@ namespace ysk {
                 }
 	  }
 
-
+	//Set the flags of the return object 
+        _result->setFlags(flags);
 
         return _result;
         
