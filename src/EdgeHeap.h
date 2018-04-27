@@ -54,10 +54,6 @@ LightCompleteGraph::EdgeWeight getIcp(const LightCompleteGraph::EdgeWeight uw, c
 private:
   void initInducedCosts();
   /**
-   * Returns the edge id with the highest cost inside the provided vector.
-   */
-  LightCompleteGraph::Edge getMaxEdge(const std::vector<LightCompleteGraph::EdgeWeight>& vec) const;
-  /**
    * Ensures that the heap structure of the given heap stays intact after the icf/icp value of an edge has been modified. 
    * Provided are the id of the modified edge, new and old value, an index (which maps edge ids to their position in the heap)
    * and a score vector (which maps an edge id to either its icf or icp).

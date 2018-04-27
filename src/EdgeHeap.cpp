@@ -19,10 +19,12 @@ EdgeHeap::EdgeHeap(LightCompleteGraph& param_graph) :
 }
 
 void EdgeHeap::initInducedCosts() {
-  std::cout<<"Compute induced cost."<<std::endl;
+  if (verbosity >= 1)
+    std::cout<<"Compute induced cost."<<std::endl;
   // compute array: edge -> icf/icp
   for (NodeId u = 0; u < graph.numNodes(); u++) {
-    std::cout<<"Completed "<<(u*100/graph.numNodes())<<"%\r"<<std::flush;
+    if (verbosity >= 2)
+      std::cout<<"Completed "<<(u*100/graph.numNodes())<<"%\r"<<std::flush;
     for (NodeId v = u + 1; v < graph.numNodes(); v++) {
       // iterate over all edges uv
       Edge uv(u,v);
@@ -79,22 +81,10 @@ void EdgeHeap::initInducedCosts() {
 
 Edge EdgeHeap::getMaxIcfEdge() const {
   if (forb_rank2edge.size() <= 0) {
-    std::cout << "forb_rank2edge.size() <= 0" << std::endl;
     return LightCompleteGraph::InvalidEdge;
   }
   EdgeId ei = forb_rank2edge[0];
   if (icf[ei] < 0) {
-    NodeId u = std::ceil(std::sqrt(2*(ei+1)+0.25) - 0.5);
-    NodeId v = ei - u * (u-1) / 2;
-    std::cout << "icf["<<u<<","<<v<<"] < 0 ("<< icf[ei]<<")" << std::endl;
-    ei = forb_rank2edge[1];
-    u = std::ceil(std::sqrt(2*(ei+1)+0.25) - 0.5);
-    v = ei - u * (u-1) / 2;
-    std::cout << "borb_rank2edge[1] = ("<<u<<","<<v<<") icf="<< icf[ei] << std::endl;
-    ei = forb_rank2edge[2];
-    u = std::ceil(std::sqrt(2*(ei+1)+0.25) - 0.5);
-    v = ei - u * (u-1) / 2;
-    std::cout << "borb_rank2edge[2] = ("<<u<<","<<v<<") icf="<< icf[ei] << std::endl;
     return LightCompleteGraph::InvalidEdge;
   }
   NodeId u = std::ceil(std::sqrt(2*(ei+1)+0.25) - 0.5);
@@ -172,24 +162,6 @@ LightCompleteGraph::EdgeWeight EdgeHeap::getIcp(const EdgeWeight uw, const EdgeW
   } else {
     return 0;
   }
-}
-
-Edge EdgeHeap::getMaxEdge(const std::vector<EdgeWeight>& vec) const {
-  EdgeWeight maxIcf = LightCompleteGraph::Forbidden;
-  EdgeId maxId = LightCompleteGraph::InvalidEdgeId;
-  for (unsigned int i = 0; i < vec.size(); i++) {
-    if (vec[i] > maxIcf) {
-      maxIcf = vec[i];
-      maxId = i;
-    }
-  }
-  if (maxId == LightCompleteGraph::InvalidEdgeId) {
-    return graph.InvalidEdge;
-  }
-  
-  NodeId u = std::ceil(std::sqrt(2*(maxId+1)+0.25) - 0.5);
-  NodeId v = maxId - u * (u-1) / 2;
-  return Edge(u, v);
 }
 
 void EdgeHeap::updateHeap(std::vector<EdgeId>& heap, const EdgeId e, const EdgeWeight change, std::vector<EdgeId>& index, const std::vector<EdgeWeight>& score) {

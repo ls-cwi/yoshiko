@@ -16,7 +16,8 @@ InducedCostHeuristicLight::InducedCostHeuristicLight(LightCompleteGraph& param_g
 
 ClusterEditingSolutionLight InducedCostHeuristicLight::solve() {
   // execute algorithm
-  std::cout<<"Running heuristic." << "."<<std::endl;
+  if (verbosity >= 1)
+    std::cout<<"Running heuristic." << "."<<std::endl;
   for (unsigned int i = 0; i < graph.numEdges() + 1; i++) {
     Edge eIcf = edgeHeap.getMaxIcfEdge();
     Edge eIcp = edgeHeap.getMaxIcpEdge();
@@ -35,13 +36,14 @@ ClusterEditingSolutionLight InducedCostHeuristicLight::solve() {
       setForbidden(eIcp);
       edgeHeap.removeEdge(eIcp);
     }
-    if (i%250 == 0) {
+    if (verbosity >= 2 && i%250 == 0) {
       std::cout<<"Completed "<<(i*100/graph.numEdges())<<"%\r"<<std::flush;
     }
   }
   
   // calculate clustering
-  std::cout<<"Constructing result."<<std::endl;
+  if (verbosity >= 1)
+    std::cout<<"Constructing result."<<std::endl;
   std::vector<std::vector<NodeId>> clusters;
   std::vector<int> clusterOfNode(graph.numNodes(), -1);
   for (NodeId u = 0; u < graph.numNodes(); u++) {
