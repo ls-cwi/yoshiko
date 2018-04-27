@@ -57,8 +57,8 @@ for (unsigned int i = 0; i < solutions.getNumberOfSolutions(); i++){
                     if (existingEdges.find(edge3) != existingEdges.end()){ edgeCount++;}
 
                     if (edgeCount == 2) {
-                        cout << "CONFLICT TRIPLE FOUND!!! ("<<x<<","<<y<<","<<z<<")" << endl;
-                        //return false;
+                        cout << "CONFLICT TRIPLE FOUND!!!" << endl;
+                        return false;
                     }
                 }
             }  
