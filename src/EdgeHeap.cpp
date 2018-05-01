@@ -10,10 +10,11 @@ using NodeId = LightCompleteGraph::NodeId;
 
 EdgeHeap::EdgeHeap(LightCompleteGraph& param_graph) :
   graph(param_graph),
+  unprocessed(0),
   icf(param_graph.numEdges(), 0.0),
   icp(param_graph.numEdges(), 0.0),
-  edge2forb_rank(param_graph.numEdges(), 0),
-  edge2perm_rank(param_graph.numEdges(), 0)
+  edge2forb_rank(2*param_graph.numEdges(), 0),
+  edge2perm_rank(2*param_graph.numEdges(), 0)
 {
   initInducedCosts();
 }
@@ -30,6 +31,14 @@ void EdgeHeap::initInducedCosts() {
       Edge uv(u,v);
       EdgeWeight w_uv = graph.getWeight(uv);
       EdgeId id = uv.id();
+      
+      if (w_uv == 0.0 || w_uv == LightCompleteGraph::Forbidden || w_uv == LightCompleteGraph::Permanent) {
+	icf[id] = LightCompleteGraph::Forbidden;
+	icp[id] = LightCompleteGraph::Forbidden;
+	continue;
+      } else {
+	unprocessed++;
+      }
       
       // costs for the edge uv itself
       if (w_uv >= 0) {	
@@ -69,11 +78,19 @@ void EdgeHeap::initInducedCosts() {
     forb_rank2edge.push_back(i);
     perm_rank2edge.push_back(i);
   }
+  
   std::sort(forb_rank2edge.begin(), forb_rank2edge.end(), [this] (EdgeId& a, EdgeId& b) { return icf[a] > icf[b]; });
   std::sort(perm_rank2edge.begin(), perm_rank2edge.end(), [this] (EdgeId& a, EdgeId& b) { return icp[a] > icp[b]; });
   
-  // save index in sorted vectors for each edge
   for (EdgeId i = 0; i < graph.numEdges(); i++) {
+    icf.push_back(LightCompleteGraph::Forbidden);
+    icp.push_back(LightCompleteGraph::Forbidden);
+    forb_rank2edge.push_back(graph.numEdges()+i);
+    perm_rank2edge.push_back(graph.numEdges()+i);
+  }
+  
+  // save index in sorted vectors for each edge
+  for (EdgeId i = 0; i < 2*graph.numEdges(); i++) {
     edge2forb_rank[forb_rank2edge[i]] = i;
     edge2perm_rank[perm_rank2edge[i]] = i;
   }
@@ -115,9 +132,6 @@ EdgeWeight EdgeHeap::getIcp(const Edge e) const {
 
 void EdgeHeap::increaseIcf(const Edge e, const EdgeWeight w) {
   EdgeId id = e.id();
-  if (std::isnan(w)) {
-    std::cout<<"NaN! increaseIcf"<<std::endl;
-  }
   if (w != 0 && icf[id] >= 0) {
     icf[id] += w;
     icf[id] = std::max(icf[id], 0.0);
@@ -127,9 +141,6 @@ void EdgeHeap::increaseIcf(const Edge e, const EdgeWeight w) {
 
 void EdgeHeap::increaseIcp(const Edge e, const EdgeWeight w) {
   EdgeId id = e.id();
-  if (std::isnan(w)) {
-    std::cout<<"NaN! increaseIcp"<<std::endl;
-  }
   if (w != 0 && icp[id] >= 0) {
     icp[id] += w;
     icp[id] = std::max(icp[id], 0.0);
@@ -139,10 +150,13 @@ void EdgeHeap::increaseIcp(const Edge e, const EdgeWeight w) {
 
 void EdgeHeap::removeEdge(const Edge e) {
   EdgeId id = e.id();
-  icf[id] = LightCompleteGraph::Forbidden;
-  icp[id] = LightCompleteGraph::Forbidden;
-  updateHeap(forb_rank2edge, id, LightCompleteGraph::Forbidden, edge2forb_rank, icf);
-  updateHeap(perm_rank2edge, id, LightCompleteGraph::Forbidden, edge2perm_rank, icp);
+  if (icf[id] != LightCompleteGraph::Forbidden && icp[id] != LightCompleteGraph::Forbidden) {
+    icf[id] = LightCompleteGraph::Forbidden;
+    icp[id] = LightCompleteGraph::Forbidden;
+    updateHeap(forb_rank2edge, id, LightCompleteGraph::Forbidden, edge2forb_rank, icf);
+    updateHeap(perm_rank2edge, id, LightCompleteGraph::Forbidden, edge2perm_rank, icp);
+    unprocessed--;
+  }
 }
 
 LightCompleteGraph::EdgeWeight EdgeHeap::getIcf(const EdgeWeight uw, const EdgeWeight vw) const {
@@ -164,6 +178,10 @@ LightCompleteGraph::EdgeWeight EdgeHeap::getIcp(const EdgeWeight uw, const EdgeW
   }
 }
 
+int EdgeHeap::numUnprocessed() const {
+  return unprocessed;
+}
+
 void EdgeHeap::updateHeap(std::vector<EdgeId>& heap, const EdgeId e, const EdgeWeight change, std::vector<EdgeId>& index, const std::vector<EdgeWeight>& score) {
   unsigned int pos = index[e];
   if (change > 0) {
@@ -176,24 +194,24 @@ void EdgeHeap::updateHeap(std::vector<EdgeId>& heap, const EdgeId e, const EdgeW
       pos = pos/2;
     }
   } else {
-    // value decreased -> move edge downwards in heap
-    while((2*pos < heap.size() && score[heap[pos]] < score[heap[2*pos]])
-	|| (2*pos+1 < heap.size() && score[heap[pos]] < score[heap[2*pos+1]]) ) {
-      if (2*pos+1 < heap.size() && score[heap[2*pos]] < score[heap[2*pos+1]]) {
-	// element 2*pos+1 exists and is larger than 2*pos -> swap pos with 2*pos+1
-	std::swap(heap[pos], heap[2*pos+1]);
-	index[heap[pos]] = pos;
-	index[heap[pos*2+1]] = pos*2+1;
-	pos = 2*pos+1;
-      } else {
-	// else swap with 2*pos
-	std::swap(heap[pos], heap[2*pos]);
-	index[heap[pos]] = pos;
-	index[heap[pos*2]] = pos*2;
-	pos = 2*pos;
-      }
+  // value decreased -> move edge downwards in heap
+  while((2*pos < heap.size() && score[heap[pos]] < score[heap[2*pos]])
+      || (2*pos+1 < heap.size() && score[heap[pos]] < score[heap[2*pos+1]]) ) {
+    if (2*pos+1 < heap.size() && score[heap[2*pos]] < score[heap[2*pos+1]]) {
+      // element 2*pos+1 exists and is larger than 2*pos -> swap pos with 2*pos+1
+      std::swap(heap[pos], heap[2*pos+1]);
+      index[heap[pos]] = pos;
+      index[heap[pos*2+1]] = pos*2+1;
+      pos = 2*pos+1;
+    } else {
+      // else swap with 2*pos
+      std::swap(heap[pos], heap[2*pos]);
+      index[heap[pos]] = pos;
+      index[heap[pos*2]] = pos*2;
+      pos = 2*pos;
     }
   }
+}
 //   bool wrong = false;
 //   unsigned int where = 0;
 //   for (unsigned int i = 0; i < heap.size()/2; i++) {

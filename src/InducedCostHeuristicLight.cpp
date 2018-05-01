@@ -18,6 +18,8 @@ ClusterEditingSolutionLight InducedCostHeuristicLight::solve() {
   // execute algorithm
   if (verbosity >= 1)
     std::cout<<"Running heuristic." << "."<<std::endl;
+  
+  int totalEdges = edgeHeap.numUnprocessed();
   for (unsigned int i = 0; i < graph.numEdges() + 1; i++) {
     Edge eIcf = edgeHeap.getMaxIcfEdge();
     Edge eIcp = edgeHeap.getMaxIcpEdge();
@@ -26,18 +28,42 @@ ClusterEditingSolutionLight InducedCostHeuristicLight::solve() {
     }
     EdgeWeight mIcf = edgeHeap.getIcf(eIcf);
     EdgeWeight mIcp = edgeHeap.getIcp(eIcp);
-//     std::cout<<"mIcf = ("<< mIcf <<")  mIcp = ("<< mIcp <<")"<<std::endl;
     if (mIcf >= mIcp) {
       // set eIcf to permanent
       setPermanent(eIcf);
       edgeHeap.removeEdge(eIcf);
+
+      std::vector<NodeId> uClique(graph.getCliqueOf(eIcf.u));
+      std::vector<NodeId> vClique(graph.getCliqueOf(eIcf.v));
+      for (NodeId x : uClique) {
+	for (NodeId y : vClique) {
+	  if (x == y)
+	    continue;
+	  Edge e = Edge(x,y);
+	  setPermanent(e);
+	  edgeHeap.removeEdge(e);
+	}
+      }
     } else {
       // set eIcp fo forbidden
       setForbidden(eIcp);
       edgeHeap.removeEdge(eIcp);
+      
+      // resolve implications
+      std::vector<NodeId> uClique(graph.getCliqueOf(eIcp.u));
+      std::vector<NodeId> vClique(graph.getCliqueOf(eIcp.v));
+      for (NodeId x : uClique) {
+	for (NodeId y : vClique) {
+	  if (x == y)
+	    continue;
+	  Edge e = Edge(x,y);
+	  setForbidden(e);
+	  edgeHeap.removeEdge(e);
+	}
+      }
     }
-    if (verbosity >= 2 && i%250 == 0) {
-      std::cout<<"Completed "<<(i*100/graph.numEdges())<<"%\r"<<std::flush;
+    if (verbosity >= 2 && i % 100 == 0) {
+      std::cout<<"Completed "<<((totalEdges - edgeHeap.numUnprocessed())*100 / totalEdges)<<"%\r"<<std::flush;
     }
   }
   
@@ -70,13 +96,20 @@ void InducedCostHeuristicLight::setForbidden(const Edge e) {
   }
   NodeId u = e.u;
   NodeId v = e.v;
-  for (NodeId w = 0; w < graph.numNodes(); w++) {
-    if (w == u || w == v)
+  EdgeWeight uv = graph.getWeight(e);
+  for (NodeId w : graph.getRealNeighbours(u)) {
+    if (w == v)
       continue;
     Edge uw(u, w);
     Edge vw(v, w);
-    updateTripleForbiddenUW(e, uw, vw);
-    updateTripleForbiddenUW(e, vw, uw);
+    updateTripleForbiddenUW(uv, uw, graph.getWeight(vw));
+  }
+  for (NodeId w : graph.getRealNeighbours(v)) {
+    if (w == u)
+      continue;
+    Edge uw(u, w);
+    Edge vw(v, w);
+    updateTripleForbiddenUW(uv, vw, graph.getWeight(uw));
   }
   if (graph.getWeight(e) > 0)
     totalCost += graph.getWeight(e);
@@ -89,35 +122,40 @@ void InducedCostHeuristicLight::setPermanent(const Edge e) {
   }
   NodeId u = e.u;
   NodeId v = e.v;
-  for (NodeId w = 0; w < graph.numNodes(); w++) {
-    if (w == u || w == v)
+  EdgeWeight uv = graph.getWeight(e);
+  for (NodeId w : graph.getRealNeighbours(u)) {
+    if (w == v)
       continue;
     Edge uw(u, w);
     Edge vw(v, w);
-    updateTriplePermanentUW(e, uw, vw);
-    updateTriplePermanentUW(e, vw, uw);
+    updateTriplePermanentUW(uv, uw, graph.getWeight(vw));
+  }
+  for (NodeId w : graph.getRealNeighbours(v)) {
+    if (w == u)
+      continue;
+    Edge uw(u, w);
+    Edge vw(v, w);
+    updateTriplePermanentUW(uv, vw, graph.getWeight(uw));
   }
   if (graph.getWeight(e) < 0)
     totalCost -= graph.getWeight(e);
   graph.setWeight(e, LightCompleteGraph::Permanent);
 }
 
-void InducedCostHeuristicLight::updateTripleForbiddenUW(const Edge uv, const Edge uw, const Edge vw) {
-  EdgeWeight icf_old = edgeHeap.getIcf(graph.getWeight(uv), graph.getWeight(vw));
-  EdgeWeight icf_new = edgeHeap.getIcf(LightCompleteGraph::Forbidden, graph.getWeight(vw));
-  EdgeWeight icp_old = edgeHeap.getIcp(graph.getWeight(uv), graph.getWeight(vw));
-  EdgeWeight icp_new = edgeHeap.getIcp(LightCompleteGraph::Forbidden, graph.getWeight(vw));
+void InducedCostHeuristicLight::updateTripleForbiddenUW(const EdgeWeight uv, const Edge uw, const EdgeWeight vw) {
+  EdgeWeight icf_old = edgeHeap.getIcf(uv, vw);
+  EdgeWeight icf_new = 0.0;
+  EdgeWeight icp_old = edgeHeap.getIcp(uv, vw);
+  EdgeWeight icp_new = std::max(0.0, vw);
   edgeHeap.increaseIcf(uw, icf_new - icf_old);
   edgeHeap.increaseIcp(uw, icp_new - icp_old);
 }
 
-void InducedCostHeuristicLight::updateTriplePermanentUW(const Edge uv, const Edge uw, const Edge vw) {
-  EdgeWeight icf_old = edgeHeap.getIcf(graph.getWeight(uv), graph.getWeight(vw));
-  EdgeWeight icf_new = edgeHeap.getIcf(LightCompleteGraph::Permanent, graph.getWeight(vw));
-  EdgeWeight icp_old = edgeHeap.getIcp(graph.getWeight(uv), graph.getWeight(vw));
-  EdgeWeight icp_new = edgeHeap.getIcp(LightCompleteGraph::Permanent, graph.getWeight(vw));
-  edgeHeap.increaseIcf(uw, icf_new - icf_old);
-  edgeHeap.increaseIcp(uw, icp_new - icp_old);
+void InducedCostHeuristicLight::updateTriplePermanentUW(const EdgeWeight uv, const Edge uw, const EdgeWeight vw) {
+  EdgeWeight icf_old = edgeHeap.getIcf(uv, vw);
+  EdgeWeight icf_new = std::max(0.0, vw);
+  EdgeWeight icp_old = edgeHeap.getIcp(uv, vw);
+  EdgeWeight icp_new = std::max(0.0, -vw);
   edgeHeap.increaseIcf(uw, icf_new - icf_old);
   edgeHeap.increaseIcp(uw, icp_new - icp_old);
 }

@@ -22,11 +22,12 @@ private:
   /**
    * Updates icf and icp for the edge uw under the assumption that edge uv will be set to forbidden.
    */
-  void updateTripleForbiddenUW(const LightCompleteGraph::Edge uv, const LightCompleteGraph::Edge uw, const LightCompleteGraph::Edge vw);
+  void updateTripleForbiddenUW(const LightCompleteGraph::EdgeWeight uv, const LightCompleteGraph::Edge uw, const LightCompleteGraph::EdgeWeight vw);
+
   /**
    * Updates icf and icp for the edge uw under the assumption that edge uv will be set to permanent.
    */
-  void updateTriplePermanentUW(const LightCompleteGraph::Edge uv, const LightCompleteGraph::Edge uw, const LightCompleteGraph::Edge vw);
+  void updateTriplePermanentUW(const LightCompleteGraph::EdgeWeight uv, const LightCompleteGraph::Edge uw, const LightCompleteGraph::EdgeWeight vw);
   
   LightCompleteGraph graph;
   EdgeHeap edgeHeap;

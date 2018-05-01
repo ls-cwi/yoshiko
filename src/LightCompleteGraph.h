@@ -84,29 +84,45 @@ public:
    * Returns the number of edges in the graph.
    */
   unsigned long numEdges() const;
+  
+  /**
+   * For a node v, returns all adjacent nodes, which are connected to v via a perment edge, including v itself.
+   */
+  const std::vector<NodeId>& getCliqueOf(const NodeId v) const;
+  
+  /**
+   * For a node v, returns all adjacent nodes, which are connected to v via a real valued, non-zero edge.
+   */
+  const std::vector<NodeId>& getRealNeighbours(const NodeId v) const;
 
   /**
    * Contracts the specified edge, merging the two end nodes together. This will change the internal addresses of the nodes,
    * so the other two methods for addressing (getInternalId and getOriginalIds) should be used.
    */
-  void contract(const Edge e);
+//   void contract(const Edge e);
   
   /**
    * For a node id of the original graph, returns the id of the internal node, which contains the given node.
    */
-  NodeId getInternalId(const NodeId v) const;
+//   NodeId getInternalId(const NodeId v) const;
   
   /**
    * For an internal node id, returns the set of original node ids, which are contained in the internal node. The multiplicity
    * might be greater than 1, if edges have been contracted on this graph.
    */
-  vector<NodeId> getOriginalIds(const NodeId v) const;
+//   vector<NodeId> getOriginalIds(const NodeId v) const;
   
 private:
   unsigned int size;
   vector<double> weights;
-  vector<NodeId> origToCompr;
-  vector<vector<NodeId>> comprToOrig;
+//   vector<NodeId> origToCompr;
+//   vector<vector<NodeId>> comprToOrig;
+  vector<vector<NodeId>> cliqueOf;
+  vector<vector<NodeId>> nonZeroRealNeighbours;
+  /**
+   * Removes a specific node id from the vector.
+   */
+  bool removeFromVector(std::vector<NodeId> vec, NodeId v);
 };
 
 } //namespace ysk
