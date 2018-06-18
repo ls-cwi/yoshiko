@@ -7,9 +7,10 @@ using EdgeWeight = LightCompleteGraph::EdgeWeight;
 using EdgeId = LightCompleteGraph::EdgeId;
 using NodeId = LightCompleteGraph::NodeId;
 
-InducedCostHeuristicLight::InducedCostHeuristicLight(LightCompleteGraph& param_graph) :
+InducedCostHeuristicLight::InducedCostHeuristicLight(LightCompleteGraph& param_graph, bool param_pruneZeroEdges) :
+  pruneZeroEdges(param_pruneZeroEdges),
   graph(param_graph),
-  edgeHeap(graph),
+  edgeHeap(graph, param_pruneZeroEdges),
   totalCost(0.0)
 {
 }
@@ -33,6 +34,7 @@ ClusterEditingSolutionLight InducedCostHeuristicLight::solve() {
       setPermanent(eIcf);
       edgeHeap.removeEdge(eIcf);
 
+      // resolve implications
       std::vector<NodeId> uClique(graph.getCliqueOf(eIcf.u));
       std::vector<NodeId> vClique(graph.getCliqueOf(eIcf.v));
       for (NodeId x : uClique) {
@@ -97,14 +99,14 @@ void InducedCostHeuristicLight::setForbidden(const Edge e) {
   NodeId u = e.u;
   NodeId v = e.v;
   EdgeWeight uv = graph.getWeight(e);
-  for (NodeId w : graph.getRealNeighbours(u)) {
+  for (NodeId w : graph.getUnprunedNeighbours(u)) {
     if (w == v)
       continue;
     Edge uw(u, w);
     Edge vw(v, w);
     updateTripleForbiddenUW(uv, uw, graph.getWeight(vw));
   }
-  for (NodeId w : graph.getRealNeighbours(v)) {
+  for (NodeId w : graph.getUnprunedNeighbours(v)) {
     if (w == u)
       continue;
     Edge uw(u, w);
@@ -123,14 +125,14 @@ void InducedCostHeuristicLight::setPermanent(const Edge e) {
   NodeId u = e.u;
   NodeId v = e.v;
   EdgeWeight uv = graph.getWeight(e);
-  for (NodeId w : graph.getRealNeighbours(u)) {
+  for (NodeId w : graph.getUnprunedNeighbours(u)) {
     if (w == v)
       continue;
     Edge uw(u, w);
     Edge vw(v, w);
     updateTriplePermanentUW(uv, uw, graph.getWeight(vw));
   }
-  for (NodeId w : graph.getRealNeighbours(v)) {
+  for (NodeId w : graph.getUnprunedNeighbours(v)) {
     if (w == u)
       continue;
     Edge uw(u, w);

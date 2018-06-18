@@ -13,7 +13,7 @@ public:
   /**
   * Constructs a new instance using the provided graph to precompute all icf and icp values.
   */
-  EdgeHeap(LightCompleteGraph& param_graph);
+  EdgeHeap(LightCompleteGraph& param_graph, bool param_pruneZeroEdges);
 
   /**
   * Returns the edge with the highest icf.
@@ -64,6 +64,7 @@ private:
   void updateHeap(std::vector<LightCompleteGraph::EdgeId>& heap, const LightCompleteGraph::EdgeId e, const LightCompleteGraph::EdgeWeight change, 
 		  std::vector<LightCompleteGraph::EdgeId>& index, const std::vector<LightCompleteGraph::EdgeWeight>& score);
   
+  bool pruneZeroEdges;
   LightCompleteGraph& graph;
   int unprocessed;
   std::vector<LightCompleteGraph::EdgeWeight> icf;		// edge id -> icf of edge

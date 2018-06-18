@@ -11,7 +11,7 @@ class InducedCostHeuristicLight {
   
 
 public:
-  InducedCostHeuristicLight(LightCompleteGraph& param_graph);
+  InducedCostHeuristicLight(LightCompleteGraph& param_graph, bool param_pruneZeroEdges);
   ClusterEditingSolutionLight solve();
 
 private:    
@@ -29,6 +29,7 @@ private:
    */
   void updateTriplePermanentUW(const LightCompleteGraph::EdgeWeight uv, const LightCompleteGraph::Edge uw, const LightCompleteGraph::EdgeWeight vw);
   
+  bool pruneZeroEdges;
   LightCompleteGraph graph;
   EdgeHeap edgeHeap;
   LightCompleteGraph::EdgeWeight totalCost;

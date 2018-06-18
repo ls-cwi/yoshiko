@@ -58,7 +58,7 @@ public:
   /**
    * Constructs a new graph using the provided lemon graph.
    */
-  LightCompleteGraph(WorkingCopyInstance& inst);
+  LightCompleteGraph(WorkingCopyInstance& inst, bool param_pruneZeroEdges);
   
   /**
    * Creates a hard copy of the provided graph.
@@ -93,7 +93,7 @@ public:
   /**
    * For a node v, returns all adjacent nodes, which are connected to v via a real valued, non-zero edge.
    */
-  const std::vector<NodeId>& getRealNeighbours(const NodeId v) const;
+  const std::vector<NodeId>& getUnprunedNeighbours(const NodeId v) const;
 
   /**
    * Contracts the specified edge, merging the two end nodes together. This will change the internal addresses of the nodes,
@@ -115,10 +115,11 @@ public:
 private:
   unsigned int size;
   vector<double> weights;
+  bool pruneZeroEdges;
 //   vector<NodeId> origToCompr;
 //   vector<vector<NodeId>> comprToOrig;
   vector<vector<NodeId>> cliqueOf;
-  vector<vector<NodeId>> nonZeroRealNeighbours;
+  vector<vector<NodeId>> unprunedNeighbours;
   /**
    * Removes a specific node id from the vector.
    */

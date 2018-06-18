@@ -8,7 +8,8 @@ using EdgeWeight = LightCompleteGraph::EdgeWeight;
 using EdgeId = LightCompleteGraph::EdgeId;
 using NodeId = LightCompleteGraph::NodeId;
 
-EdgeHeap::EdgeHeap(LightCompleteGraph& param_graph) :
+EdgeHeap::EdgeHeap(LightCompleteGraph& param_graph, bool param_pruneZeroEdges) :
+  pruneZeroEdges(param_pruneZeroEdges),
   graph(param_graph),
   unprocessed(0),
   icf(param_graph.numEdges(), 0.0),

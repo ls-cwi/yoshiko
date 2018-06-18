@@ -8,13 +8,14 @@ const LightCompleteGraph::Edge LightCompleteGraph::InvalidEdge = {std::numeric_l
 const LightCompleteGraph::EdgeId LightCompleteGraph::InvalidEdgeId = -1;
 const LightCompleteGraph::NodeId LightCompleteGraph::InvalidNodeId = -1;
   
-LightCompleteGraph::LightCompleteGraph(WorkingCopyInstance& inst) :
+LightCompleteGraph::LightCompleteGraph(WorkingCopyInstance& inst, bool param_pruneZeroEdges) :
   size(inst.getGraph().nodeNum()),
   weights(size*(size-1)/2),
+  pruneZeroEdges(param_pruneZeroEdges),
 //   origToCompr(inst.getGraph().nodeNum()),
 //   comprToOrig(inst.getGraph().nodeNum(), vector<NodeId>(1, InvalidNodeId)),
   cliqueOf(inst.getGraph().nodeNum()),
-  nonZeroRealNeighbours(inst.getGraph().nodeNum(), vector<NodeId>(0))
+  unprunedNeighbours(inst.getGraph().nodeNum(), vector<NodeId>(0))
 {
   for (int i = 0; i < inst.getGraph().nodeNum(); i++) {
     cliqueOf[i].push_back(i);
@@ -25,9 +26,9 @@ LightCompleteGraph::LightCompleteGraph(WorkingCopyInstance& inst) :
       if (weights[e.id()] == Permanent) {
 	cliqueOf[i].push_back(j);
 	cliqueOf[j].push_back(i);
-      } else if (weights[e.id()] != Forbidden && weights[e.id()] != Permanent && weights[e.id()] != 0.0) {
-	nonZeroRealNeighbours[i].push_back(j);
-	nonZeroRealNeighbours[j].push_back(i);
+      } else if (weights[e.id()] != Forbidden && weights[e.id()] != Permanent && (weights[e.id()] != 0.0 || !pruneZeroEdges)) {
+	unprunedNeighbours[i].push_back(j);
+	unprunedNeighbours[j].push_back(i);
       }
     }
 //     origToCompr[i] = i;
@@ -38,10 +39,11 @@ LightCompleteGraph::LightCompleteGraph(WorkingCopyInstance& inst) :
 LightCompleteGraph::LightCompleteGraph(LightCompleteGraph& other) :
   size(other.size),
   weights(other.weights),
+  pruneZeroEdges(other.pruneZeroEdges),
 //   origToCompr(other.origToCompr),
 //   comprToOrig(other.comprToOrig),
   cliqueOf(other.cliqueOf),
-  nonZeroRealNeighbours(other.nonZeroRealNeighbours)
+  unprunedNeighbours(other.unprunedNeighbours)
 {
 }
 
@@ -59,13 +61,13 @@ void LightCompleteGraph::setWeight(const Edge e, const EdgeWeight w) {
     if (!removeFromVector(cliqueOf[e.v], e.u))
       std::cout<<"Error: Permanent neighbour not found"<<std::endl;
   }
-  if ((weights[e.id()] == Forbidden || weights[e.id()] == Permanent || weights[e.id()] == 0.0) && (w != 0.0 && w != Forbidden && w != Permanent)) {
-    nonZeroRealNeighbours[e.u].push_back(e.v);
-    nonZeroRealNeighbours[e.v].push_back(e.u);
-  } else if (weights[e.id()] != Forbidden && weights[e.id()] != Permanent && weights[e.id()] != 0.0 && (w == 0.0 || w == Forbidden || w == Permanent)) {
-    if (!removeFromVector(nonZeroRealNeighbours[e.u], e.v))
+  if ((weights[e.id()] == Forbidden || weights[e.id()] == Permanent || (weights[e.id()] == 0.0 && pruneZeroEdges)) && ((w != 0.0 || !pruneZeroEdges) && w != Forbidden && w != Permanent)) {
+    unprunedNeighbours[e.u].push_back(e.v);
+    unprunedNeighbours[e.v].push_back(e.u);
+  } else if (weights[e.id()] != Forbidden && weights[e.id()] != Permanent && (weights[e.id()] != 0.0 || !pruneZeroEdges) && ((w == 0.0 && pruneZeroEdges) || w == Forbidden || w == Permanent)) {
+    if (!removeFromVector(unprunedNeighbours[e.u], e.v))
       std::cout<<"Error: Non-zero real neighbour not found"<<std::endl;
-    if (!removeFromVector(nonZeroRealNeighbours[e.v], e.u))
+    if (!removeFromVector(unprunedNeighbours[e.v], e.u))
       std::cout<<"Error: Non-zero real neighbour not found"<<std::endl;
   }
   weights[e.id()] = w;
@@ -83,8 +85,8 @@ const std::vector<LightCompleteGraph::NodeId>& LightCompleteGraph::getCliqueOf(c
   return cliqueOf[v];
 }
 
-const std::vector<LightCompleteGraph::NodeId>& LightCompleteGraph::getRealNeighbours(const LightCompleteGraph::NodeId v) const {
-  return nonZeroRealNeighbours[v];
+const std::vector<LightCompleteGraph::NodeId>& LightCompleteGraph::getUnprunedNeighbours(const LightCompleteGraph::NodeId v) const {
+  return unprunedNeighbours[v];
 }
 
 // void LightCompleteGraph::contract(const LightCompleteGraph::Edge e) {

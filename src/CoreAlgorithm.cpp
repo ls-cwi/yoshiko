@@ -241,8 +241,9 @@ namespace ysk {
 // 				flags.totalCost += h.getSolution(s);
 				
 				// NEW HEURISTIC
-				LightCompleteGraph g(i.getWorkingCopyInstance());
-				InducedCostHeuristicLight hl(g);
+				bool pruneZeroEdges = true;
+				LightCompleteGraph g(i.getWorkingCopyInstance(), pruneZeroEdges);
+				InducedCostHeuristicLight hl(g, pruneZeroEdges);
 				ClusterEditingSolutionLight sol = hl.solve();
 				flags.totalCost += sol.getTotalCost();
 				s.resize(1);
