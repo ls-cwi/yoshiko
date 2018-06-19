@@ -103,20 +103,32 @@ bool SolutionChecker::verifySolutionCosts( ClusterEditingInstance & instance,  C
             if (existingEdges.find(edge) != existingEdges.end()){
                 //Existing edges with negative weight add to our editing costs
                 if(instance.getWeight(edge) < 0){
+                    //Check for inclusion of forbidden edges
+                    if (instance.getWeight(edge) == -std::numeric_limits<double>::infinity()){
+                        cout << "Solution has included a forbidden edge: " << instance.getEdgeName(edge) << endl; 
+                        return false;
+                    }
                     calculatedCosts -= instance.getWeight(edge);
                 }
             }
             else{
                 //Non-existing edges with positive weight add to our editing costs
                 if(instance.getWeight(edge) > 0){
+                    //Check for deletion of permanent edges
+                    if (instance.getWeight(edge) == std::numeric_limits<double>::infinity()){
+                        cout << "Solution has deleted a permanent edge: " << instance.getEdgeName(edge) << endl; 
+                        return false;
+                    }
                     calculatedCosts += instance.getWeight(edge);
                 }
             }
             //cout << calculatedCosts << " after processing edge " << instance.getEdgeName(edge) << endl;
         }
+        
+        cout << "Yoshiko calculated costs:" << solutions.getFlags().totalCost << " Checker calculated costs: " << calculatedCosts << endl;
 
-        if (solutions.getFlags().totalCost != calculatedCosts){
-                cout << "Could not verify the editing costs ... found :" << solutions.getFlags().totalCost << " while it should be " << calculatedCosts << endl;
+        if (abs(solutions.getFlags().totalCost - calculatedCosts) > MARGIN_OF_ERROR){
+                cout << "Could not verify the editing costs!" << endl;
                 return false;
         }
     }
