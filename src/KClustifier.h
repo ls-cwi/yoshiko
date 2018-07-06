@@ -61,6 +61,12 @@ private:
 	 * @param solution The solution
 	 */
 	void calculateCostMatrix(std::vector<std::vector<int>>& solution);
+	
+	/**
+	 * Calculates the cost matrix (TODO: Rename variables to clearly identify merging/splitting) for the merge process for a given solution
+	 * @param solution The solution
+	 */
+	void calculateCostMatrix2(const std::vector<std::vector<int>>& solution, const unsigned int k);
 
 	/**
 	 * Calculates the lower bound split costs for each cluster
@@ -68,14 +74,17 @@ private:
 	void calculateLowerBoundSplitCosts(std::vector<std::vector<int>>& solution);
 
 	void mergeCheapest(std::vector<std::vector<int>>& solution);
+	void mergeCheapest2(std::vector<std::vector<int>>& solution, const unsigned int k);
 	double calculateMergeDifference(const std::vector<int> cluster1, const std::vector<int> cluster2);
 	void printMergeCosts();
+	int address(const unsigned int i, const unsigned int j) const;
 
 	Separation suggestSeparation(std::vector<int>& cluster);
 	void splitCheapest(std::vector<std::vector<int>>& solution);
 
 
 	std::map<std::pair<int,int>,double> _mergeCosts;
+	std::vector<double> _mergeCosts2;
 	std::map<int,ysk::Separation> _lowerBoundSplitCosts;
 	std::map<lemon::FullGraph::Edge,double> _separationCosts;
 

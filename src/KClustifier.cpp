@@ -28,16 +28,22 @@ void KClustifier::kClustify(unsigned int k, size_t solutionID){
 		if (verbosity > 3){
 			cout << "Too many clusters generated (" << solution.size() << "), we need: " << k <<endl;
 		}
+		
+		//Sort clusters by size, descending
+		std::sort(solution.begin(), solution.end(), [this] (vector<int>& c1, vector<int>& c2) { return c1.size() > c2.size(); });
+		
 		//We populate the costMatrix (only upper triangular path is relevant)
-		KClustifier::calculateCostMatrix(solution);
-		if (verbosity > 4 ){
-			KClustifier::printMergeCosts();
-		}
+// 		KClustifier::calculateCostMatrix(solution);
+		calculateCostMatrix2(solution, k);
+// 		if (verbosity > 4 ){
+// 			KClustifier::printMergeCosts();
+// 		}
 		//We then simply merge until we reach the required number of clusters
 		while (solution.size()>k){
-			KClustifier::mergeCheapest(solution);
+			//KClustifier::mergeCheapest(solution);
+			mergeCheapest2(solution, k);
 			if (verbosity > 4 ){
-				KClustifier::printMergeCosts();
+				//KClustifier::printMergeCosts();
 				_solutions->printSolution(solutionID);
 			}
 		}
@@ -217,6 +223,53 @@ void KClustifier::mergeCheapest(vector<vector<int>>& solution){
 	_mergeCosts = newMergeCosts;
 }
 
+void KClustifier::mergeCheapest2(vector<vector<int>>& solution, const unsigned int k){
+	// find cluster pair with minimum costs
+	unsigned int min_i = -1;
+	unsigned int min_j = -1;
+	double min = std::numeric_limits<double>::infinity();
+	for (unsigned int i = 1; i < k+1; i++) {
+	    for (unsigned int j = 0; j < i; j++) {
+		if (_mergeCosts2[address(i, j)] < min) {
+		    min = _mergeCosts2[address(i, j)];
+		    min_i = i;
+		    min_j = j;
+		}
+	    }
+	}
+	if (verbosity > 3){
+		cout << "Merging clusters " << min_j << " and " << min_i << endl;
+	}
+	
+	// move cluster i into j
+	solution[min_j].insert(solution[min_j].end(), solution[min_i].begin(), solution[min_i].end());
+	
+	// if only k+1 clusters were left: just delete the cluster i and be finished
+	if (solution.size() <= k+1) {
+	    solution.erase(solution.begin()+min_i);
+	    return;
+	}
+	    
+	// overwrite cluster i with cluster k+2 (and hence delete i) & delete cluster k+2
+	solution[min_i].clear();
+	solution[min_i].insert(solution[min_i].end(), solution[k+1].begin(), solution[k+1].end());
+	solution.erase(solution.begin()+(k+1));
+
+	// add merge costs from deleted to merged cluster
+  	for (unsigned int i = 0; i < k+1; i++) {
+	    if (i == min_i || i == min_j)
+		continue;
+	    _mergeCosts2[address(i, min_j)] += _mergeCosts2[address(i, min_i)];
+	}
+	
+	// calculate merge costs for new cluster k+2 (which now has index min_i)
+	for (unsigned int i = 0; i < k+1; i++) {
+	    if (i == min_i)
+		continue;
+	    _mergeCosts2[address(i, min_i)] = calculateMergeDifference(solution[min_i], solution[i]);
+	}
+}
+
 void KClustifier::calculateCostMatrix(vector<vector<int>>& solution){
 	//initialize empty map used for storing the merging costs
 	_mergeCosts = std::map<std::pair<int,int>,double>();
@@ -239,6 +292,33 @@ void KClustifier::calculateCostMatrix(vector<vector<int>>& solution){
 		}
 	}
 
+}
+
+void KClustifier::calculateCostMatrix2(const vector<vector<int>>& solution, const unsigned int k){
+	//initialize empty map used for storing the merging costs
+	_mergeCosts2 = std::vector<double>((k+2)*(k+1)/2);
+	
+	for (unsigned int i = 1; i < k+1; i++) {
+	    for (unsigned int j = 0; j < i; j++) {
+		if (verbosity > 3){
+		    cout << "Merging costs (" << address(i, j) << ") -> " << calculateMergeDifference(solution[i], solution[j]) << std::endl;
+		}
+		_mergeCosts2[address(i, j)] = calculateMergeDifference(solution[i], solution[j]);
+		
+	    }
+	}
+	if (verbosity > 3){
+	    for (unsigned int i = 1; i < k+1; i++) {
+		for (unsigned int j = 0; j < i; j++) {
+		    cout << "Address (" << i << ", " << j << ") = " << address(i, j) << std::endl;
+		    cout << "Merging costs (" << i << ", " << j << ") = " << calculateMergeDifference(solution[i], solution[j]) << " / " << _mergeCosts2[address(i, j)] << std::endl;
+		}
+	    }
+	}
+}
+
+int KClustifier::address(const unsigned int i, const unsigned int j) const {
+  	return i > j ? i*(i-1)/2+j : j*(j-1)/2+i;
 }
 
 void KClustifier::calculateLowerBoundSplitCosts(vector<vector<int>>& solution){
