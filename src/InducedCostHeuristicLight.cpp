@@ -64,7 +64,7 @@ ClusterEditingSolutionLight InducedCostHeuristicLight::solve() {
 	}
       }
     }
-    if (verbosity >= 2 && i % 100 == 0) {
+    if (verbosity >= 1 && i % 100 == 0) {
       std::cout<<"Completed "<<((totalEdges - edgeHeap.numUnprocessed())*100 / totalEdges)<<"%\r"<<std::flush;
     }
   }

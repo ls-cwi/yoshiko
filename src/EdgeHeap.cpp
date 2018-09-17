@@ -23,10 +23,22 @@ EdgeHeap::EdgeHeap(LightCompleteGraph& param_graph, bool param_pruneZeroEdges) :
 void EdgeHeap::initInducedCosts() {
   if (verbosity >= 1)
     std::cout<<"Compute induced cost."<<std::endl;
+  // preprocessing: sorted vector of non-zero neighbours for each node
+  std::vector<std::vector<NodeId>> nonZeroNeighbours;
+  for (NodeId u = 0; u < graph.numNodes(); u++) {
+    std::vector<NodeId> n;
+    for (NodeId v = 0; v < graph.numNodes(); v++) {
+      if (u != v && graph.getWeight(Edge(u,v)) != 0.0) {
+	n.push_back(v);
+      }
+    }
+    nonZeroNeighbours.push_back(n);
+  }
+  
   // compute array: edge -> icf/icp
   for (NodeId u = 0; u < graph.numNodes(); u++) {
-    if (verbosity >= 2)
-      std::cout<<"Completed "<<(u*100/graph.numNodes())<<"%\r"<<std::flush;
+    if (verbosity >= 1)
+      std::cout<<"Completed "<<(((2*graph.numNodes()-u)*(u+1)/2)*100/graph.numEdges())<<"%\r"<<std::flush;
     for (NodeId v = u + 1; v < graph.numNodes(); v++) {
       // iterate over all edges uv
       Edge uv(u,v);
@@ -48,16 +60,16 @@ void EdgeHeap::initInducedCosts() {
 	icp[id] += -w_uv;	// costs for adding uv
       }
       
-      // look at all triangles uvw containing uv:
-      for (NodeId w = 0; w < graph.numNodes(); w++) {
-        if (u == w || v == w) {
-          continue;
-        }
-        Edge uw(u,w);
+      // look at all triangles uvw containing uv. Triangles with a zero edge can be ignored
+      std::vector<NodeId> w_vec;
+      std::set_intersection(nonZeroNeighbours[u].begin(), nonZeroNeighbours[u].end(), nonZeroNeighbours[v].begin(), nonZeroNeighbours[v].end(), back_inserter(w_vec));
+
+      for (NodeId w : w_vec) {
+	Edge uw(u,w);
         Edge vw(v,w);
         EdgeWeight w_uw = graph.getWeight(uw);
         EdgeWeight w_vw = graph.getWeight(vw);
-        icf[id] += getIcf(w_uw, w_vw);
+	icf[id] += getIcf(w_uw, w_vw);
         icp[id] += getIcp(w_uw, w_vw);
       }
     }
