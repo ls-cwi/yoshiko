@@ -36,8 +36,8 @@ Next, Yoshiko can be compiled:
 
     mkdir build
     cd build
-    cmake .. all
-    make
+    cmake ..
+    make all
 
 In case auto-detection of LEMON or CPLEX fails, do
 
