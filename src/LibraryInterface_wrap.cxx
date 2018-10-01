@@ -826,10 +826,10 @@ void SwigDirector_CplexInformer::swig_connect_director(JNIEnv *jenv, jobject jse
     jmethodID base_methid;
   } methods[] = {
     {
-      "updateStatus", "(LYoshikoState;)V", NULL 
+      "updateStatus", "(Lswig/YoshikoState;)V", NULL 
     },
     {
-      "updateStatus", "(LYoshikoState;D)V", NULL 
+      "updateStatus", "(Lswig/YoshikoState;D)V", NULL 
     },
     {
       "continueOnTimeout", "()Z", NULL 
@@ -840,7 +840,7 @@ void SwigDirector_CplexInformer::swig_connect_director(JNIEnv *jenv, jobject jse
   
   if (swig_set_self(jenv, jself, swig_mem_own, weak_global)) {
     if (!baseclass) {
-      baseclass = jenv->FindClass("CplexInformer");
+      baseclass = jenv->FindClass("swig/CplexInformer");
       if (!baseclass) return;
       baseclass = (jclass) jenv->NewGlobalRef(baseclass);
     }
@@ -866,7 +866,7 @@ void SwigDirector_CplexInformer::swig_connect_director(JNIEnv *jenv, jobject jse
 extern "C" {
 #endif
 
-SWIGEXPORT jlong JNICALL Java_LibraryInterfaceJNI_new_1SolutionFlags(JNIEnv *jenv, jclass jcls) {
+SWIGEXPORT jlong JNICALL Java_swig_LibraryInterfaceJNI_new_1SolutionFlags(JNIEnv *jenv, jclass jcls) {
   jlong jresult = 0 ;
   ysk::SolutionFlags *result = 0 ;
   
@@ -878,7 +878,7 @@ SWIGEXPORT jlong JNICALL Java_LibraryInterfaceJNI_new_1SolutionFlags(JNIEnv *jen
 }
 
 
-SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_SolutionFlags_1totalCost_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jdouble jarg2) {
+SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_SolutionFlags_1totalCost_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jdouble jarg2) {
   ysk::SolutionFlags *arg1 = (ysk::SolutionFlags *) 0 ;
   double arg2 ;
   
@@ -891,7 +891,7 @@ SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_SolutionFlags_1totalCost_1set(J
 }
 
 
-SWIGEXPORT jdouble JNICALL Java_LibraryInterfaceJNI_SolutionFlags_1totalCost_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jdouble JNICALL Java_swig_LibraryInterfaceJNI_SolutionFlags_1totalCost_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jdouble jresult = 0 ;
   ysk::SolutionFlags *arg1 = (ysk::SolutionFlags *) 0 ;
   double result;
@@ -906,7 +906,7 @@ SWIGEXPORT jdouble JNICALL Java_LibraryInterfaceJNI_SolutionFlags_1totalCost_1ge
 }
 
 
-SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_SolutionFlags_1timedOut_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jboolean jarg2) {
+SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_SolutionFlags_1timedOut_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jboolean jarg2) {
   ysk::SolutionFlags *arg1 = (ysk::SolutionFlags *) 0 ;
   bool arg2 ;
   
@@ -919,7 +919,7 @@ SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_SolutionFlags_1timedOut_1set(JN
 }
 
 
-SWIGEXPORT jboolean JNICALL Java_LibraryInterfaceJNI_SolutionFlags_1timedOut_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jboolean JNICALL Java_swig_LibraryInterfaceJNI_SolutionFlags_1timedOut_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jboolean jresult = 0 ;
   ysk::SolutionFlags *arg1 = (ysk::SolutionFlags *) 0 ;
   bool result;
@@ -934,7 +934,7 @@ SWIGEXPORT jboolean JNICALL Java_LibraryInterfaceJNI_SolutionFlags_1timedOut_1ge
 }
 
 
-SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_SolutionFlags_1ilpGenerated_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jboolean jarg2) {
+SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_SolutionFlags_1ilpGenerated_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jboolean jarg2) {
   ysk::SolutionFlags *arg1 = (ysk::SolutionFlags *) 0 ;
   bool arg2 ;
   
@@ -947,7 +947,7 @@ SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_SolutionFlags_1ilpGenerated_1se
 }
 
 
-SWIGEXPORT jboolean JNICALL Java_LibraryInterfaceJNI_SolutionFlags_1ilpGenerated_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jboolean JNICALL Java_swig_LibraryInterfaceJNI_SolutionFlags_1ilpGenerated_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jboolean jresult = 0 ;
   ysk::SolutionFlags *arg1 = (ysk::SolutionFlags *) 0 ;
   bool result;
@@ -962,7 +962,7 @@ SWIGEXPORT jboolean JNICALL Java_LibraryInterfaceJNI_SolutionFlags_1ilpGenerated
 }
 
 
-SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_SolutionFlags_1optimal_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jboolean jarg2) {
+SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_SolutionFlags_1optimal_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jboolean jarg2) {
   ysk::SolutionFlags *arg1 = (ysk::SolutionFlags *) 0 ;
   bool arg2 ;
   
@@ -975,7 +975,7 @@ SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_SolutionFlags_1optimal_1set(JNI
 }
 
 
-SWIGEXPORT jboolean JNICALL Java_LibraryInterfaceJNI_SolutionFlags_1optimal_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jboolean JNICALL Java_swig_LibraryInterfaceJNI_SolutionFlags_1optimal_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jboolean jresult = 0 ;
   ysk::SolutionFlags *arg1 = (ysk::SolutionFlags *) 0 ;
   bool result;
@@ -990,7 +990,7 @@ SWIGEXPORT jboolean JNICALL Java_LibraryInterfaceJNI_SolutionFlags_1optimal_1get
 }
 
 
-SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_SolutionFlags_1reducedInstances_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_SolutionFlags_1reducedInstances_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
   ysk::SolutionFlags *arg1 = (ysk::SolutionFlags *) 0 ;
   int arg2 ;
   
@@ -1003,7 +1003,7 @@ SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_SolutionFlags_1reducedInstances
 }
 
 
-SWIGEXPORT jint JNICALL Java_LibraryInterfaceJNI_SolutionFlags_1reducedInstances_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jint JNICALL Java_swig_LibraryInterfaceJNI_SolutionFlags_1reducedInstances_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jint jresult = 0 ;
   ysk::SolutionFlags *arg1 = (ysk::SolutionFlags *) 0 ;
   int result;
@@ -1018,7 +1018,7 @@ SWIGEXPORT jint JNICALL Java_LibraryInterfaceJNI_SolutionFlags_1reducedInstances
 }
 
 
-SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_SolutionFlags_1solvedInstances_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_SolutionFlags_1solvedInstances_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
   ysk::SolutionFlags *arg1 = (ysk::SolutionFlags *) 0 ;
   int arg2 ;
   
@@ -1031,7 +1031,7 @@ SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_SolutionFlags_1solvedInstances_
 }
 
 
-SWIGEXPORT jint JNICALL Java_LibraryInterfaceJNI_SolutionFlags_1solvedInstances_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jint JNICALL Java_swig_LibraryInterfaceJNI_SolutionFlags_1solvedInstances_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jint jresult = 0 ;
   ysk::SolutionFlags *arg1 = (ysk::SolutionFlags *) 0 ;
   int result;
@@ -1046,7 +1046,7 @@ SWIGEXPORT jint JNICALL Java_LibraryInterfaceJNI_SolutionFlags_1solvedInstances_
 }
 
 
-SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_SolutionFlags_1lastGap_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jdouble jarg2) {
+SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_SolutionFlags_1lastGap_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jdouble jarg2) {
   ysk::SolutionFlags *arg1 = (ysk::SolutionFlags *) 0 ;
   double arg2 ;
   
@@ -1059,7 +1059,7 @@ SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_SolutionFlags_1lastGap_1set(JNI
 }
 
 
-SWIGEXPORT jdouble JNICALL Java_LibraryInterfaceJNI_SolutionFlags_1lastGap_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jdouble JNICALL Java_swig_LibraryInterfaceJNI_SolutionFlags_1lastGap_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jdouble jresult = 0 ;
   ysk::SolutionFlags *arg1 = (ysk::SolutionFlags *) 0 ;
   double result;
@@ -1074,7 +1074,7 @@ SWIGEXPORT jdouble JNICALL Java_LibraryInterfaceJNI_SolutionFlags_1lastGap_1get(
 }
 
 
-SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_delete_1SolutionFlags(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_delete_1SolutionFlags(JNIEnv *jenv, jclass jcls, jlong jarg1) {
   ysk::SolutionFlags *arg1 = (ysk::SolutionFlags *) 0 ;
   
   (void)jenv;
@@ -1084,7 +1084,7 @@ SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_delete_1SolutionFlags(JNIEnv *j
 }
 
 
-SWIGEXPORT jlong JNICALL Java_LibraryInterfaceJNI_new_1IntVector_1_1SWIG_10(JNIEnv *jenv, jclass jcls) {
+SWIGEXPORT jlong JNICALL Java_swig_LibraryInterfaceJNI_new_1IntVector_1_1SWIG_10(JNIEnv *jenv, jclass jcls) {
   jlong jresult = 0 ;
   std::vector< int > *result = 0 ;
   
@@ -1096,7 +1096,7 @@ SWIGEXPORT jlong JNICALL Java_LibraryInterfaceJNI_new_1IntVector_1_1SWIG_10(JNIE
 }
 
 
-SWIGEXPORT jlong JNICALL Java_LibraryInterfaceJNI_new_1IntVector_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+SWIGEXPORT jlong JNICALL Java_swig_LibraryInterfaceJNI_new_1IntVector_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1) {
   jlong jresult = 0 ;
   std::vector< int >::size_type arg1 ;
   std::vector< int > *result = 0 ;
@@ -1110,7 +1110,7 @@ SWIGEXPORT jlong JNICALL Java_LibraryInterfaceJNI_new_1IntVector_1_1SWIG_11(JNIE
 }
 
 
-SWIGEXPORT jlong JNICALL Java_LibraryInterfaceJNI_IntVector_1size(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jlong JNICALL Java_swig_LibraryInterfaceJNI_IntVector_1size(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jlong jresult = 0 ;
   std::vector< int > *arg1 = (std::vector< int > *) 0 ;
   std::vector< int >::size_type result;
@@ -1125,7 +1125,7 @@ SWIGEXPORT jlong JNICALL Java_LibraryInterfaceJNI_IntVector_1size(JNIEnv *jenv, 
 }
 
 
-SWIGEXPORT jlong JNICALL Java_LibraryInterfaceJNI_IntVector_1capacity(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jlong JNICALL Java_swig_LibraryInterfaceJNI_IntVector_1capacity(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jlong jresult = 0 ;
   std::vector< int > *arg1 = (std::vector< int > *) 0 ;
   std::vector< int >::size_type result;
@@ -1140,7 +1140,7 @@ SWIGEXPORT jlong JNICALL Java_LibraryInterfaceJNI_IntVector_1capacity(JNIEnv *je
 }
 
 
-SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_IntVector_1reserve(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_IntVector_1reserve(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
   std::vector< int > *arg1 = (std::vector< int > *) 0 ;
   std::vector< int >::size_type arg2 ;
   
@@ -1153,7 +1153,7 @@ SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_IntVector_1reserve(JNIEnv *jenv
 }
 
 
-SWIGEXPORT jboolean JNICALL Java_LibraryInterfaceJNI_IntVector_1isEmpty(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jboolean JNICALL Java_swig_LibraryInterfaceJNI_IntVector_1isEmpty(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jboolean jresult = 0 ;
   std::vector< int > *arg1 = (std::vector< int > *) 0 ;
   bool result;
@@ -1168,7 +1168,7 @@ SWIGEXPORT jboolean JNICALL Java_LibraryInterfaceJNI_IntVector_1isEmpty(JNIEnv *
 }
 
 
-SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_IntVector_1clear(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_IntVector_1clear(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   std::vector< int > *arg1 = (std::vector< int > *) 0 ;
   
   (void)jenv;
@@ -1179,7 +1179,7 @@ SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_IntVector_1clear(JNIEnv *jenv, 
 }
 
 
-SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_IntVector_1add(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_IntVector_1add(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
   std::vector< int > *arg1 = (std::vector< int > *) 0 ;
   std::vector< int >::value_type *arg2 = 0 ;
   std::vector< int >::value_type temp2 ;
@@ -1194,7 +1194,7 @@ SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_IntVector_1add(JNIEnv *jenv, jc
 }
 
 
-SWIGEXPORT jint JNICALL Java_LibraryInterfaceJNI_IntVector_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+SWIGEXPORT jint JNICALL Java_swig_LibraryInterfaceJNI_IntVector_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
   jint jresult = 0 ;
   std::vector< int > *arg1 = (std::vector< int > *) 0 ;
   int arg2 ;
@@ -1218,7 +1218,7 @@ SWIGEXPORT jint JNICALL Java_LibraryInterfaceJNI_IntVector_1get(JNIEnv *jenv, jc
 }
 
 
-SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_IntVector_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jint jarg3) {
+SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_IntVector_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jint jarg3) {
   std::vector< int > *arg1 = (std::vector< int > *) 0 ;
   int arg2 ;
   std::vector< int >::value_type *arg3 = 0 ;
@@ -1242,7 +1242,7 @@ SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_IntVector_1set(JNIEnv *jenv, jc
 }
 
 
-SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_delete_1IntVector(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_delete_1IntVector(JNIEnv *jenv, jclass jcls, jlong jarg1) {
   std::vector< int > *arg1 = (std::vector< int > *) 0 ;
   
   (void)jenv;
@@ -1252,7 +1252,7 @@ SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_delete_1IntVector(JNIEnv *jenv,
 }
 
 
-SWIGEXPORT jlong JNICALL Java_LibraryInterfaceJNI_new_1DoubleVector_1_1SWIG_10(JNIEnv *jenv, jclass jcls) {
+SWIGEXPORT jlong JNICALL Java_swig_LibraryInterfaceJNI_new_1DoubleVector_1_1SWIG_10(JNIEnv *jenv, jclass jcls) {
   jlong jresult = 0 ;
   std::vector< double > *result = 0 ;
   
@@ -1264,7 +1264,7 @@ SWIGEXPORT jlong JNICALL Java_LibraryInterfaceJNI_new_1DoubleVector_1_1SWIG_10(J
 }
 
 
-SWIGEXPORT jlong JNICALL Java_LibraryInterfaceJNI_new_1DoubleVector_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+SWIGEXPORT jlong JNICALL Java_swig_LibraryInterfaceJNI_new_1DoubleVector_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1) {
   jlong jresult = 0 ;
   std::vector< double >::size_type arg1 ;
   std::vector< double > *result = 0 ;
@@ -1278,7 +1278,7 @@ SWIGEXPORT jlong JNICALL Java_LibraryInterfaceJNI_new_1DoubleVector_1_1SWIG_11(J
 }
 
 
-SWIGEXPORT jlong JNICALL Java_LibraryInterfaceJNI_DoubleVector_1size(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jlong JNICALL Java_swig_LibraryInterfaceJNI_DoubleVector_1size(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jlong jresult = 0 ;
   std::vector< double > *arg1 = (std::vector< double > *) 0 ;
   std::vector< double >::size_type result;
@@ -1293,7 +1293,7 @@ SWIGEXPORT jlong JNICALL Java_LibraryInterfaceJNI_DoubleVector_1size(JNIEnv *jen
 }
 
 
-SWIGEXPORT jlong JNICALL Java_LibraryInterfaceJNI_DoubleVector_1capacity(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jlong JNICALL Java_swig_LibraryInterfaceJNI_DoubleVector_1capacity(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jlong jresult = 0 ;
   std::vector< double > *arg1 = (std::vector< double > *) 0 ;
   std::vector< double >::size_type result;
@@ -1308,7 +1308,7 @@ SWIGEXPORT jlong JNICALL Java_LibraryInterfaceJNI_DoubleVector_1capacity(JNIEnv 
 }
 
 
-SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_DoubleVector_1reserve(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_DoubleVector_1reserve(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
   std::vector< double > *arg1 = (std::vector< double > *) 0 ;
   std::vector< double >::size_type arg2 ;
   
@@ -1321,7 +1321,7 @@ SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_DoubleVector_1reserve(JNIEnv *j
 }
 
 
-SWIGEXPORT jboolean JNICALL Java_LibraryInterfaceJNI_DoubleVector_1isEmpty(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jboolean JNICALL Java_swig_LibraryInterfaceJNI_DoubleVector_1isEmpty(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jboolean jresult = 0 ;
   std::vector< double > *arg1 = (std::vector< double > *) 0 ;
   bool result;
@@ -1336,7 +1336,7 @@ SWIGEXPORT jboolean JNICALL Java_LibraryInterfaceJNI_DoubleVector_1isEmpty(JNIEn
 }
 
 
-SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_DoubleVector_1clear(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_DoubleVector_1clear(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   std::vector< double > *arg1 = (std::vector< double > *) 0 ;
   
   (void)jenv;
@@ -1347,7 +1347,7 @@ SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_DoubleVector_1clear(JNIEnv *jen
 }
 
 
-SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_DoubleVector_1add(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jdouble jarg2) {
+SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_DoubleVector_1add(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jdouble jarg2) {
   std::vector< double > *arg1 = (std::vector< double > *) 0 ;
   std::vector< double >::value_type *arg2 = 0 ;
   std::vector< double >::value_type temp2 ;
@@ -1362,7 +1362,7 @@ SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_DoubleVector_1add(JNIEnv *jenv,
 }
 
 
-SWIGEXPORT jdouble JNICALL Java_LibraryInterfaceJNI_DoubleVector_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+SWIGEXPORT jdouble JNICALL Java_swig_LibraryInterfaceJNI_DoubleVector_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
   jdouble jresult = 0 ;
   std::vector< double > *arg1 = (std::vector< double > *) 0 ;
   int arg2 ;
@@ -1386,7 +1386,7 @@ SWIGEXPORT jdouble JNICALL Java_LibraryInterfaceJNI_DoubleVector_1get(JNIEnv *je
 }
 
 
-SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_DoubleVector_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jdouble jarg3) {
+SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_DoubleVector_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jdouble jarg3) {
   std::vector< double > *arg1 = (std::vector< double > *) 0 ;
   int arg2 ;
   std::vector< double >::value_type *arg3 = 0 ;
@@ -1410,7 +1410,7 @@ SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_DoubleVector_1set(JNIEnv *jenv,
 }
 
 
-SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_delete_1DoubleVector(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_delete_1DoubleVector(JNIEnv *jenv, jclass jcls, jlong jarg1) {
   std::vector< double > *arg1 = (std::vector< double > *) 0 ;
   
   (void)jenv;
@@ -1420,7 +1420,7 @@ SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_delete_1DoubleVector(JNIEnv *je
 }
 
 
-SWIGEXPORT jlong JNICALL Java_LibraryInterfaceJNI_ClusterEditingSolutions_1getNumberOfClusters(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+SWIGEXPORT jlong JNICALL Java_swig_LibraryInterfaceJNI_ClusterEditingSolutions_1getNumberOfClusters(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
   jlong jresult = 0 ;
   ysk::ClusterEditingSolutions *arg1 = (ysk::ClusterEditingSolutions *) 0 ;
   size_t arg2 ;
@@ -1437,7 +1437,7 @@ SWIGEXPORT jlong JNICALL Java_LibraryInterfaceJNI_ClusterEditingSolutions_1getNu
 }
 
 
-SWIGEXPORT jlong JNICALL Java_LibraryInterfaceJNI_ClusterEditingSolutions_1getCluster(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jlong jarg3) {
+SWIGEXPORT jlong JNICALL Java_swig_LibraryInterfaceJNI_ClusterEditingSolutions_1getCluster(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jlong jarg3) {
   jlong jresult = 0 ;
   ysk::ClusterEditingSolutions *arg1 = (ysk::ClusterEditingSolutions *) 0 ;
   size_t arg2 ;
@@ -1456,7 +1456,7 @@ SWIGEXPORT jlong JNICALL Java_LibraryInterfaceJNI_ClusterEditingSolutions_1getCl
 }
 
 
-SWIGEXPORT jlong JNICALL Java_LibraryInterfaceJNI_ClusterEditingSolutions_1getSolution(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+SWIGEXPORT jlong JNICALL Java_swig_LibraryInterfaceJNI_ClusterEditingSolutions_1getSolution(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
   jlong jresult = 0 ;
   ysk::ClusterEditingSolutions *arg1 = (ysk::ClusterEditingSolutions *) 0 ;
   size_t arg2 ;
@@ -1473,7 +1473,7 @@ SWIGEXPORT jlong JNICALL Java_LibraryInterfaceJNI_ClusterEditingSolutions_1getSo
 }
 
 
-SWIGEXPORT jlong JNICALL Java_LibraryInterfaceJNI_ClusterEditingSolutions_1getNumberOfSolutions(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jlong JNICALL Java_swig_LibraryInterfaceJNI_ClusterEditingSolutions_1getNumberOfSolutions(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jlong jresult = 0 ;
   ysk::ClusterEditingSolutions *arg1 = (ysk::ClusterEditingSolutions *) 0 ;
   size_t result;
@@ -1488,7 +1488,7 @@ SWIGEXPORT jlong JNICALL Java_LibraryInterfaceJNI_ClusterEditingSolutions_1getNu
 }
 
 
-SWIGEXPORT jlong JNICALL Java_LibraryInterfaceJNI_ClusterEditingSolutions_1getFlags(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jlong JNICALL Java_swig_LibraryInterfaceJNI_ClusterEditingSolutions_1getFlags(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jlong jresult = 0 ;
   ysk::ClusterEditingSolutions *arg1 = (ysk::ClusterEditingSolutions *) 0 ;
   ysk::SolutionFlags result;
@@ -1503,7 +1503,7 @@ SWIGEXPORT jlong JNICALL Java_LibraryInterfaceJNI_ClusterEditingSolutions_1getFl
 }
 
 
-SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_ClusterEditingSolutions_1setFlags(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_ClusterEditingSolutions_1setFlags(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
   ysk::ClusterEditingSolutions *arg1 = (ysk::ClusterEditingSolutions *) 0 ;
   ysk::SolutionFlags arg2 ;
   ysk::SolutionFlags *argp2 ;
@@ -1523,7 +1523,7 @@ SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_ClusterEditingSolutions_1setFla
 }
 
 
-SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_ClusterEditingSolutions_1printSolution(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_ClusterEditingSolutions_1printSolution(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
   ysk::ClusterEditingSolutions *arg1 = (ysk::ClusterEditingSolutions *) 0 ;
   size_t arg2 ;
   
@@ -1536,7 +1536,7 @@ SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_ClusterEditingSolutions_1printS
 }
 
 
-SWIGEXPORT jlong JNICALL Java_LibraryInterfaceJNI_new_1ClusterEditingSolutions(JNIEnv *jenv, jclass jcls) {
+SWIGEXPORT jlong JNICALL Java_swig_LibraryInterfaceJNI_new_1ClusterEditingSolutions(JNIEnv *jenv, jclass jcls) {
   jlong jresult = 0 ;
   ysk::ClusterEditingSolutions *result = 0 ;
   
@@ -1548,7 +1548,7 @@ SWIGEXPORT jlong JNICALL Java_LibraryInterfaceJNI_new_1ClusterEditingSolutions(J
 }
 
 
-SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_delete_1ClusterEditingSolutions(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_delete_1ClusterEditingSolutions(JNIEnv *jenv, jclass jcls, jlong jarg1) {
   ysk::ClusterEditingSolutions *arg1 = (ysk::ClusterEditingSolutions *) 0 ;
   
   (void)jenv;
@@ -1558,7 +1558,7 @@ SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_delete_1ClusterEditingSolutions
 }
 
 
-SWIGEXPORT jlong JNICALL Java_LibraryInterfaceJNI_new_1LibraryInput(JNIEnv *jenv, jclass jcls) {
+SWIGEXPORT jlong JNICALL Java_swig_LibraryInterfaceJNI_new_1LibraryInput(JNIEnv *jenv, jclass jcls) {
   jlong jresult = 0 ;
   yskInput::LibraryInput *result = 0 ;
   
@@ -1570,7 +1570,7 @@ SWIGEXPORT jlong JNICALL Java_LibraryInterfaceJNI_new_1LibraryInput(JNIEnv *jenv
 }
 
 
-SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_delete_1LibraryInput(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_delete_1LibraryInput(JNIEnv *jenv, jclass jcls, jlong jarg1) {
   yskInput::LibraryInput *arg1 = (yskInput::LibraryInput *) 0 ;
   
   (void)jenv;
@@ -1580,7 +1580,7 @@ SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_delete_1LibraryInput(JNIEnv *je
 }
 
 
-SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_LibraryInput_1addEdge_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jlong jarg3, jdouble jarg4) {
+SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_LibraryInput_1addEdge_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jlong jarg3, jdouble jarg4) {
   yskInput::LibraryInput *arg1 = (yskInput::LibraryInput *) 0 ;
   unsigned long arg2 ;
   unsigned long arg3 ;
@@ -1597,7 +1597,7 @@ SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_LibraryInput_1addEdge_1_1SWIG_1
 }
 
 
-SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_LibraryInput_1addEdge_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jlong jarg3, jdouble jarg4, jboolean jarg5, jboolean jarg6) {
+SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_LibraryInput_1addEdge_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jlong jarg3, jdouble jarg4, jboolean jarg5, jboolean jarg6) {
   yskInput::LibraryInput *arg1 = (yskInput::LibraryInput *) 0 ;
   unsigned long arg2 ;
   unsigned long arg3 ;
@@ -1618,7 +1618,7 @@ SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_LibraryInput_1addEdge_1_1SWIG_1
 }
 
 
-SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_LibraryInput_1setSize(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_LibraryInput_1setSize(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
   yskInput::LibraryInput *arg1 = (yskInput::LibraryInput *) 0 ;
   unsigned long arg2 ;
   
@@ -1631,7 +1631,7 @@ SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_LibraryInput_1setSize(JNIEnv *j
 }
 
 
-SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_LibraryInput_1setDefaultInsertionCost(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jdouble jarg2) {
+SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_LibraryInput_1setDefaultInsertionCost(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jdouble jarg2) {
   yskInput::LibraryInput *arg1 = (yskInput::LibraryInput *) 0 ;
   double arg2 ;
   
@@ -1644,7 +1644,7 @@ SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_LibraryInput_1setDefaultInserti
 }
 
 
-SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_CplexInformer_1updateStatus_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_CplexInformer_1updateStatus_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
   yskLib::CplexInformer *arg1 = (yskLib::CplexInformer *) 0 ;
   yskLib::YoshikoState arg2 ;
   
@@ -1657,7 +1657,7 @@ SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_CplexInformer_1updateStatus_1_1
 }
 
 
-SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_CplexInformer_1updateStatusSwigExplicitCplexInformer_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_CplexInformer_1updateStatusSwigExplicitCplexInformer_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
   yskLib::CplexInformer *arg1 = (yskLib::CplexInformer *) 0 ;
   yskLib::YoshikoState arg2 ;
   
@@ -1670,7 +1670,7 @@ SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_CplexInformer_1updateStatusSwig
 }
 
 
-SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_CplexInformer_1updateStatus_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jdouble jarg3) {
+SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_CplexInformer_1updateStatus_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jdouble jarg3) {
   yskLib::CplexInformer *arg1 = (yskLib::CplexInformer *) 0 ;
   yskLib::YoshikoState arg2 ;
   double arg3 ;
@@ -1685,7 +1685,7 @@ SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_CplexInformer_1updateStatus_1_1
 }
 
 
-SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_CplexInformer_1updateStatusSwigExplicitCplexInformer_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jdouble jarg3) {
+SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_CplexInformer_1updateStatusSwigExplicitCplexInformer_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jdouble jarg3) {
   yskLib::CplexInformer *arg1 = (yskLib::CplexInformer *) 0 ;
   yskLib::YoshikoState arg2 ;
   double arg3 ;
@@ -1700,7 +1700,7 @@ SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_CplexInformer_1updateStatusSwig
 }
 
 
-SWIGEXPORT jboolean JNICALL Java_LibraryInterfaceJNI_CplexInformer_1continueOnTimeout(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jboolean JNICALL Java_swig_LibraryInterfaceJNI_CplexInformer_1continueOnTimeout(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jboolean jresult = 0 ;
   yskLib::CplexInformer *arg1 = (yskLib::CplexInformer *) 0 ;
   bool result;
@@ -1715,7 +1715,7 @@ SWIGEXPORT jboolean JNICALL Java_LibraryInterfaceJNI_CplexInformer_1continueOnTi
 }
 
 
-SWIGEXPORT jboolean JNICALL Java_LibraryInterfaceJNI_CplexInformer_1continueOnTimeoutSwigExplicitCplexInformer(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jboolean JNICALL Java_swig_LibraryInterfaceJNI_CplexInformer_1continueOnTimeoutSwigExplicitCplexInformer(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jboolean jresult = 0 ;
   yskLib::CplexInformer *arg1 = (yskLib::CplexInformer *) 0 ;
   bool result;
@@ -1730,7 +1730,7 @@ SWIGEXPORT jboolean JNICALL Java_LibraryInterfaceJNI_CplexInformer_1continueOnTi
 }
 
 
-SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_delete_1CplexInformer(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_delete_1CplexInformer(JNIEnv *jenv, jclass jcls, jlong jarg1) {
   yskLib::CplexInformer *arg1 = (yskLib::CplexInformer *) 0 ;
   
   (void)jenv;
@@ -1740,7 +1740,7 @@ SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_delete_1CplexInformer(JNIEnv *j
 }
 
 
-SWIGEXPORT jlong JNICALL Java_LibraryInterfaceJNI_new_1CplexInformer(JNIEnv *jenv, jclass jcls) {
+SWIGEXPORT jlong JNICALL Java_swig_LibraryInterfaceJNI_new_1CplexInformer(JNIEnv *jenv, jclass jcls) {
   jlong jresult = 0 ;
   yskLib::CplexInformer *result = 0 ;
   
@@ -1752,7 +1752,7 @@ SWIGEXPORT jlong JNICALL Java_LibraryInterfaceJNI_new_1CplexInformer(JNIEnv *jen
 }
 
 
-SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_CplexInformer_1director_1connect(JNIEnv *jenv, jclass jcls, jobject jself, jlong objarg, jboolean jswig_mem_own, jboolean jweak_global) {
+SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_CplexInformer_1director_1connect(JNIEnv *jenv, jclass jcls, jobject jself, jlong objarg, jboolean jswig_mem_own, jboolean jweak_global) {
   yskLib::CplexInformer *obj = *((yskLib::CplexInformer **)&objarg);
   (void)jcls;
   SwigDirector_CplexInformer *director = dynamic_cast<SwigDirector_CplexInformer *>(obj);
@@ -1762,7 +1762,7 @@ SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_CplexInformer_1director_1connec
 }
 
 
-SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_CplexInformer_1change_1ownership(JNIEnv *jenv, jclass jcls, jobject jself, jlong objarg, jboolean jtake_or_release) {
+SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_CplexInformer_1change_1ownership(JNIEnv *jenv, jclass jcls, jobject jself, jlong objarg, jboolean jtake_or_release) {
   yskLib::CplexInformer *obj = *((yskLib::CplexInformer **)&objarg);
   SwigDirector_CplexInformer *director = dynamic_cast<SwigDirector_CplexInformer *>(obj);
   (void)jcls;
@@ -1772,7 +1772,7 @@ SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_CplexInformer_1change_1ownershi
 }
 
 
-SWIGEXPORT jlong JNICALL Java_LibraryInterfaceJNI_CoreAlgorithm_1run(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jlong JNICALL Java_swig_LibraryInterfaceJNI_CoreAlgorithm_1run(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jlong jresult = 0 ;
   ysk::CoreAlgorithm *arg1 = (ysk::CoreAlgorithm *) 0 ;
   ysk::ClusterEditingSolutions *result = 0 ;
@@ -1787,7 +1787,7 @@ SWIGEXPORT jlong JNICALL Java_LibraryInterfaceJNI_CoreAlgorithm_1run(JNIEnv *jen
 }
 
 
-SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_CoreAlgorithm_1registerCplexInformer(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_CoreAlgorithm_1registerCplexInformer(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
   ysk::CoreAlgorithm *arg1 = (ysk::CoreAlgorithm *) 0 ;
   yskLib::CplexInformer *arg2 = (yskLib::CplexInformer *) 0 ;
   
@@ -1801,7 +1801,7 @@ SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_CoreAlgorithm_1registerCplexInf
 }
 
 
-SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_CoreAlgorithm_1cancel(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_CoreAlgorithm_1cancel(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   ysk::CoreAlgorithm *arg1 = (ysk::CoreAlgorithm *) 0 ;
   
   (void)jenv;
@@ -1812,7 +1812,7 @@ SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_CoreAlgorithm_1cancel(JNIEnv *j
 }
 
 
-SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_delete_1CoreAlgorithm(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_delete_1CoreAlgorithm(JNIEnv *jenv, jclass jcls, jlong jarg1) {
   ysk::CoreAlgorithm *arg1 = (ysk::CoreAlgorithm *) 0 ;
   
   (void)jenv;
@@ -1822,7 +1822,7 @@ SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_delete_1CoreAlgorithm(JNIEnv *j
 }
 
 
-SWIGEXPORT jstring JNICALL Java_LibraryInterfaceJNI_getVersionString(JNIEnv *jenv, jclass jcls) {
+SWIGEXPORT jstring JNICALL Java_swig_LibraryInterfaceJNI_getVersionString(JNIEnv *jenv, jclass jcls) {
   jstring jresult = 0 ;
   std::string result;
   
@@ -1834,7 +1834,7 @@ SWIGEXPORT jstring JNICALL Java_LibraryInterfaceJNI_getVersionString(JNIEnv *jen
 }
 
 
-SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_setTimeLimit(JNIEnv *jenv, jclass jcls, jint jarg1) {
+SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_setTimeLimit(JNIEnv *jenv, jclass jcls, jint jarg1) {
   int arg1 ;
   
   (void)jenv;
@@ -1844,7 +1844,7 @@ SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_setTimeLimit(JNIEnv *jenv, jcla
 }
 
 
-SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_setThreadLimit(JNIEnv *jenv, jclass jcls, jint jarg1) {
+SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_setThreadLimit(JNIEnv *jenv, jclass jcls, jint jarg1) {
   int arg1 ;
   
   (void)jenv;
@@ -1854,7 +1854,7 @@ SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_setThreadLimit(JNIEnv *jenv, jc
 }
 
 
-SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_setVerbosity(JNIEnv *jenv, jclass jcls, jint jarg1) {
+SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_setVerbosity(JNIEnv *jenv, jclass jcls, jint jarg1) {
   int arg1 ;
   
   (void)jenv;
@@ -1864,7 +1864,7 @@ SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_setVerbosity(JNIEnv *jenv, jcla
 }
 
 
-SWIGEXPORT jlong JNICALL Java_LibraryInterfaceJNI_getRun(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jstring jarg3, jdouble jarg4, jboolean jarg5, jboolean jarg6, jboolean jarg7, jint jarg8) {
+SWIGEXPORT jlong JNICALL Java_swig_LibraryInterfaceJNI_getRun(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jstring jarg3, jdouble jarg4, jboolean jarg5, jboolean jarg6, jboolean jarg7, jint jarg8) {
   jlong jresult = 0 ;
   yskInput::LibraryInput *arg1 = (yskInput::LibraryInput *) 0 ;
   int arg2 ;
@@ -1900,7 +1900,7 @@ SWIGEXPORT jlong JNICALL Java_LibraryInterfaceJNI_getRun(JNIEnv *jenv, jclass jc
 }
 
 
-SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_swig_1module_1init(JNIEnv *jenv, jclass jcls) {
+SWIGEXPORT void JNICALL Java_swig_LibraryInterfaceJNI_swig_1module_1init(JNIEnv *jenv, jclass jcls) {
   int i;
   
   static struct {
@@ -1908,13 +1908,13 @@ SWIGEXPORT void JNICALL Java_LibraryInterfaceJNI_swig_1module_1init(JNIEnv *jenv
     const char *signature;
   } methods[3] = {
     {
-      "SwigDirector_CplexInformer_updateStatus__SWIG_0", "(LCplexInformer;I)V" 
+      "SwigDirector_CplexInformer_updateStatus__SWIG_0", "(Lswig/CplexInformer;I)V" 
     },
     {
-      "SwigDirector_CplexInformer_updateStatus__SWIG_1", "(LCplexInformer;ID)V" 
+      "SwigDirector_CplexInformer_updateStatus__SWIG_1", "(Lswig/CplexInformer;ID)V" 
     },
     {
-      "SwigDirector_CplexInformer_continueOnTimeout", "(LCplexInformer;)Z" 
+      "SwigDirector_CplexInformer_continueOnTimeout", "(Lswig/CplexInformer;)Z" 
     }
   };
   Swig::jclass_LibraryInterfaceJNI = (jclass) jenv->NewGlobalRef(jcls);

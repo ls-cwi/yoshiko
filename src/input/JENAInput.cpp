@@ -62,11 +62,19 @@ namespace yskInput{
 					else { //Weighted edges
 						weight = atof(tokens[j].c_str());
 						//Out of bounds values are assumed to be infinity
-						if (weight >= 1e+20) {
+// 						if (weight >= 1e+20) {
+// 							edgeType = PERMANENT;
+// 							weight = std::numeric_limits<double>::infinity();
+// 						}
+// 						else if (weight <= -1e+20) {
+// 							edgeType = FORBIDDEN;
+// 							weight = -std::numeric_limits<double>::infinity();
+// 						}
+						if (weight >= std::numeric_limits<double>::max()) {
 							edgeType = PERMANENT;
 							weight = std::numeric_limits<double>::infinity();
 						}
-						else if (weight <= -1e+20) {
+						else if (weight <= std::numeric_limits<double>::min()) {
 							edgeType = FORBIDDEN;
 							weight = -std::numeric_limits<double>::infinity();
 						}

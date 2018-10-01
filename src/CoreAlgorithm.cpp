@@ -42,7 +42,7 @@ namespace ysk {
                 
 		// warn user about permanent and forbidden edges
 		const WorkingCopyGraph g = _instance->getWorkingCopyInstance().getGraph();
-		if (verbosity > 1) {
+		if (verbosity >= 3) {
 			cout << endl
 					<< "Interpreting the following edges as forbidden/permanent: "
 					<< endl;

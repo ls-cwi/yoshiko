@@ -19,6 +19,8 @@ ClusterEditingSolutionLight InducedCostHeuristicLight::solve() {
   // execute algorithm
   if (verbosity >= 1)
     std::cout<<"Running heuristic." << "."<<std::endl;
+  if (verbosity >= 2)
+    std::cout<<"Size of graph: " << graph.numNodes() << " nodes."<<std::endl;
   
   int totalEdges = edgeHeap.numUnprocessed();
   for (unsigned int i = 0; i < graph.numEdges() + 1; i++) {
@@ -76,18 +78,29 @@ ClusterEditingSolutionLight InducedCostHeuristicLight::solve() {
   std::vector<int> clusterOfNode(graph.numNodes(), -1);
   for (NodeId u = 0; u < graph.numNodes(); u++) {
     // add cluster if not explored yet
-    std::cout<<"Completed "<<(u*100/graph.numNodes())<<"%\r"<<std::flush;
+    if (verbosity >= 1)
+      std::cout<<"Completed "<<(u*100/graph.numNodes())<<"%\r"<<std::flush;
     if (clusterOfNode[u] == -1) {
       int c = clusters.size();
       clusterOfNode[u] = c;
       clusters.push_back(std::vector<NodeId>(1, u));
       for (NodeId v = u+1; v < graph.numNodes(); v++) {
 	if (graph.getWeight(Edge(u, v)) == LightCompleteGraph::Permanent) {
+	  if (clusterOfNode[v] != -1) {
+	    std::cerr << "Conflicting clustering assignment for node " << v << std::endl;
+	  }
 	  clusterOfNode[v] = c;
 	  clusters[c].push_back(v);
 	}
       }
     }
+  }
+  if (verbosity >= 2) {
+    int sum = 0;
+    for (std::vector<NodeId>& cluster : clusters) {
+      sum += cluster.size();
+    }
+    std::cout<<"Found " << clusters.size() << " clusters with a total of "<< sum << " nodes." << std::endl;
   }
   return ClusterEditingSolutionLight(totalCost, clusters);
 }
