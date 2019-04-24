@@ -37,7 +37,7 @@ void EdgeHeap::initInducedCosts() {
   
   // compute array: edge -> icf/icp
   for (NodeId u = 0; u < graph.numNodes(); u++) {
-    if (verbosity >= 1)
+    if (verbosity >= 1 && graph.numEdges() > 0)
       std::cout<<"Completed "<<(((2*graph.numNodes()-u)*(u+1)/2)*100/graph.numEdges())<<"%\r"<<std::flush;
     for (NodeId v = u + 1; v < graph.numNodes(); v++) {
       // iterate over all edges uv
