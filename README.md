@@ -74,3 +74,7 @@ Get a list of options:
 If you are looking for a graphical user interface, you can find a Cytoscape implementation building on this software at:
     
 https://gitlab.cs.uni-duesseldorf.de/spohr/YoshikoWrapper
+
+Another stand-alone implementation (that does not require CPLEX) utilizing only the heuristic, is available here:
+
+https://github.com/AlBi-HHU/YoshikoStandalone
